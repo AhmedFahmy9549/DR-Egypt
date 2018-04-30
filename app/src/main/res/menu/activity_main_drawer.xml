@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!--<group android:checkableBehavior="single">
+
+
+    </group>-->
+
+    <item android:title="Medical Guide">
+        <menu>
+            <item
+                android:id="@+id/nav_hos"
+                android:title="Hospitals" />
+            <item
+                android:id="@+id/nav_cli"
+                android:title="Clinics" />
+            <item
+                android:id="@+id/nav_pha"
+                android:title="Pharmcy" />
+
+        </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/pro"
+        android:title="Products" />
+    <item
+        android:id="@+id/nav_job"
+        android:title="Jobs" />
+    <item
+        android:id="@+id/nav_cos"
+        android:title="Cosmetics" />
+
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_abo"
+                android:title="About Us" />
+            <item
+                android:id="@+id/nav_cont"
+                android:title="Contact Us" />
+
+        </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/nav_log"
+        android:title="Login" />
+</menu>
+
+
