@@ -1,6 +1,5 @@
 package com.example.gmsproduction.dregypt.ui.fragments.LoginFragments;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,27 +23,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 import com.example.gmsproduction.dregypt.utils.Utils;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Login_Fragment extends Fragment implements OnClickListener {
 	private static View view;
@@ -56,64 +40,22 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 	private static LinearLayout loginLayout;
 	private static Animation shakeAnimation;
 	private static FragmentManager fragmentManager;
-	private LoginButton loginButton;
-	private CallbackManager callbackManager;
-	private static final String EMAIL = "email";
-
-	String getID,getName,getEmail;
-
-	public Login_Fragment() {
-
-	}
-
+	Button facebookbtnLog;
+	BasePage basePage;
+	public Login_Fragment() {}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.login_layout, container, false);
 		initViews();
 		setListeners();
-		FacebookSdk.sdkInitialize(getApplicationContext());
-		AppEventsLogger.activateApp(getActivity());
-		callbackManager = CallbackManager.Factory.create();
-		loginButton = (LoginButton) view.findViewById(R.id.login_button);
-		loginButton.setReadPermissions(Arrays.asList(EMAIL));
-		loginButton.setFragment(this);
 
-
-		loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+		//facebook login button
+		facebookbtnLog = view.findViewById(R.id.fb_mang2);
+		facebookbtnLog.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onSuccess(LoginResult loginResult) {
-
-				GraphRequest request = GraphRequest.newMeRequest(
-						loginResult.getAccessToken(),
-						new GraphRequest.GraphJSONObjectCallback() {
-							@Override
-							public void onCompleted(JSONObject object, GraphResponse response) {
-								Log.e("tag",response.toString());
-								// Application code
-								try {
-									getID = object.getString("id");
-									getEmail = object.getString("email");
-									getName = object.getString("name"); // 01/31/1980 format
-								} catch (JSONException e) {
-									e.printStackTrace();
-								}
-							}
-						});
-				Bundle parameters = new Bundle();
-				parameters.putString("fields", "id,name,email,gender,birthday");
-				parameters.putString("email",getEmail);
-				parameters.putString("name",getName);
-				request.setParameters(parameters);
-				request.executeAsync();
-			}
-			@Override
-			public void onCancel() {
-				Log.e("tag","cancel");
-			}
-			@Override
-			public void onError(FacebookException error) {
-				Log.e("tag",error.toString());
+			public void onClick(View view) {
+				basePage.facebookMethod();
 			}
 		});
 
@@ -149,11 +91,6 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 		}
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		callbackManager.onActivityResult(requestCode,resultCode,data);
-		super.onActivityResult(requestCode, resultCode, data);
-	}
 	// Set Listeners
 	private void setListeners() {
 		loginButton2.setOnClickListener(this);

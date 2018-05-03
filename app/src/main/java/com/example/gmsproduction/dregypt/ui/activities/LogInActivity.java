@@ -1,9 +1,9 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 
 import com.example.gmsproduction.dregypt.R;
@@ -71,6 +71,8 @@ public class LogInActivity extends AppCompatActivity {
         // Find the tag of signup and forgot password fragment
         Fragment SignUp_Fragment = fragmentManager
                 .findFragmentByTag(Utils.SignUp_Fragment);
+        Fragment SignIn_Fragment = fragmentManager
+                .findFragmentByTag(Utils.Login_Fragment);
         Fragment ForgotPassword_Fragment = fragmentManager
                 .findFragmentByTag(Utils.ForgotPassword_Fragment);
         Fragment LogIn = fragmentManager.findFragmentByTag(Utils.Login_Fragment);
@@ -82,12 +84,14 @@ public class LogInActivity extends AppCompatActivity {
         if (LogIn != null)
             replaceBasePage();
         else if (SignUp_Fragment != null)
-            replaceLoginFragment();
+            replaceBasePage();
         else if (ForgotPassword_Fragment != null)
             replaceLoginFragment();
         else
             super.onBackPressed();
 
     }
+
+
 }
 

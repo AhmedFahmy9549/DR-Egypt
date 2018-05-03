@@ -65,10 +65,20 @@
             android:name=".ui.activities.MedicalGuideActivity"
             android:label="Medical Guide"
             android:parentActivityName=".ui.activities.MainActivity" />
-        <activity android:name=".ui.activities.ProductsActivity" />
         <activity android:name=".ui.activities.JobsActivity" />
         <activity android:name=".ui.activities.CosmeticsActivity" />
         <activity android:name=".ui.activities.HospitalsActivity"></activity>
+
+
+        <!-- Ibrahim -->
+
+        <activity android:name=".ui.activities.ProductsActivity"></activity>
+        <activity android:name=".ui.activities.DetailsProducts"></activity>
+
+
+
+
+
     </application>
 
 </manifest>
