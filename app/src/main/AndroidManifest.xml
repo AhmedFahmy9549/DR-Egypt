@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.gmsproduction.dregypt.DrEgyptApp"
+        android:name=".DrEgyptApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -39,16 +39,10 @@
 
         <!-- Activities -->
         <activity
-            android:name="com.example.gmsproduction.dregypt.ui.activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.example.gmsproduction.dregypt.ui.activities.LogInActivity" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.activities.LogInActivity" />
         <!-- Services -->
 
 
@@ -57,8 +51,24 @@
 
         <!-- Receivers -->
 
-        <activity android:name="com.example.gmsproduction.dregypt.ui.activities.DetailsActivity" />
-        <activity android:name="com.example.gmsproduction.dregypt.ui.activities.SplashActivity"></activity>
+        <activity android:name=".ui.activities.DetailsActivity" />
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.MedicalGuideActivity"
+            android:label="Medical Guide"
+            android:parentActivityName=".ui.activities.MainActivity" />
+        <activity android:name=".ui.activities.ProductsActivity" />
+        <activity android:name=".ui.activities.JobsActivity" />
+        <activity android:name=".ui.activities.CosmeticsActivity" />
+        <activity android:name=".ui.activities.HospitalsActivity"></activity>
     </application>
 
 </manifest>

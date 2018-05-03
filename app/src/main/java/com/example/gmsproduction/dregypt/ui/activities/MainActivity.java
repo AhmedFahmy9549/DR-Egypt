@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -21,34 +24,37 @@ import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.R;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Response.Listener<String>, Response.ErrorListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Response.Listener<String>, Response.ErrorListener, View.OnClickListener {
+    Toolbar toolbar;
+    FloatingActionButton fab;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
+    NavigationView navigationView;
 
+    LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        init();
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                Intent i = new Intent(MainActivity.this,LogInActivity.class);
-                startActivity(i);
-            }
-        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        fab.setOnClickListener(this);
+        medicalCard.setOnClickListener(this);
+        productsCard.setOnClickListener(this);
+        jobsCard.setOnClickListener(this);
+        cosmeticsCard.setOnClickListener(this);
+
+
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         //VolleyLIbUtils volleyLIbUtils=new VolleyLIbUtils(this, Request.Method.GET,"http://192.168.9.69/dregy/public/api/hospitals",this,this);
@@ -128,11 +134,69 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onResponse(String response) {
         Toast.makeText(this, response, Toast.LENGTH_SHORT).show();
-        Log.d("Response", "onResponse: ,"+response);
+        Log.d("Response", "onResponse: ," + response);
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+
+    private void init() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        medicalCard = findViewById(R.id.card_medical);
+        productsCard = findViewById(R.id.card_products);
+        jobsCard = findViewById(R.id.card_jobs);
+        cosmeticsCard = findViewById(R.id.card_cosmetics);
+
+
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        Log.e("Hi From", "" + id);
+        Intent intent;
+
+        switch (id) {
+
+            case R.id.fab:
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent i = new Intent(MainActivity.this, LogInActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.card_medical:
+                intent = new Intent(this, MedicalGuideActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.card_products:
+
+                intent = new Intent(this, ProductsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.card_jobs:
+
+                intent = new Intent(this, JobsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.card_cosmetics:
+
+                intent = new Intent(this, CosmeticsActivity.class);
+                startActivity(intent);
+                break;
+
+
+        }
     }
 }
