@@ -41,12 +41,13 @@ public class BasePage extends Fragment {
     private static View view;
     private static FragmentManager fragmentManager;
     private static Button btnsignIn;
-    private static TextView SignUphere,loginhere,notNow;
+    private static TextView SignUphere, loginhere, notNow;
     private CallbackManager callbackManager;
     private Button facebookbtn;
-    List< String > permissionNeeds = Arrays.asList("user_photos", "email",
+    List<String> permissionNeeds = Arrays.asList("user_photos", "email",
             "user_birthday", "public_profile");
-    String id,name,email,gender,birthday,profile_pic;
+    String id, name, email, gender, birthday, profile_pic;
+
     public BasePage() {
 
     }
@@ -99,7 +100,7 @@ public class BasePage extends Fragment {
         }
     }
 
-    private void Click(){
+    private void Click() {
 
         btnsignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,16 +143,16 @@ public class BasePage extends Fragment {
         notNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((LogInActivity)getActivity()).finish();
+                ((LogInActivity) getActivity()).finish();
             }
         });
 
     }
 
-    public void facebookMethod(){
+    public void facebookMethod() {
         LoginManager.getInstance().logInWithReadPermissions(
                 this,
-                Arrays.asList("user_photos", "email", "user_birthday", "public_profile")
+                permissionNeeds
         );
         LoginManager.getInstance().registerCallback(
                 callbackManager,
@@ -161,46 +162,52 @@ public class BasePage extends Fragment {
                         // Handle success
                         GraphRequest request = GraphRequest.newMeRequest(
                                 loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {@Override
-                                public void onCompleted(JSONObject object,
-                                                        GraphResponse response) {
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object,
+                                                            GraphResponse response) {
 
 
-                                    Log.i("LoginActivity",
-                                            response.toString());
-                                    try {
-                                        id = object.getString("id");
+                                        Log.e("LoginActivity",
+                                                response.toString());
                                         try {
-                                            URL profile_pic = new URL(
-                                                    "http://graph.facebook.com/" + id + "/picture?type=large");
-                                            Log.i("profile_pic",
-                                                    profile_pic + "");
+                                            id = object.getString("id");
+                                            try {
+                                                URL profile_pic = new URL(
+                                                        "http://graph.facebook.com/" + id + "/picture?type=large");
+                                                Log.i("profile_pic",
+                                                        profile_pic + "");
 
-                                        } catch (MalformedURLException e) {
+                                            } catch (MalformedURLException e) {
+                                                e.printStackTrace();
+                                            }
+                                            name = object.getString("name");
+                                            email = object.getString("email");
+                                            gender = object.getString("gender");
+                                            birthday = object.getString("birthday");
+                                            profile_pic = "http://graph.facebook.com/" + id + "/picture?type=large";
+                                        } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
-                                        name = object.getString("name");
-                                        email = object.getString("email");
-                                        gender = object.getString("gender");
-                                        birthday = object.getString("birthday");
-                                        profile_pic = "http://graph.facebook.com/" + id + "/picture?type=large";
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
                                     }
-                                }
                                 });
                         Bundle parameters = new Bundle();
                         parameters.putString("fields",
                                 "id,name,email,gender, birthday");
                         request.setParameters(parameters);
-                        request.executeAsync();                    }
+                        request.executeAsync();
+                    }
 
                     @Override
                     public void onCancel() {
+                        Log.e("LoginActivity",
+                                "onCancel");
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
+                        Log.e("LoginActivity",
+                                exception.toString());
                     }
                 }
         );

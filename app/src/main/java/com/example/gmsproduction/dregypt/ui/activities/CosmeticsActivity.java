@@ -11,6 +11,6 @@ public class CosmeticsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetics);
-        ///duckduckduck
+
     }
 }

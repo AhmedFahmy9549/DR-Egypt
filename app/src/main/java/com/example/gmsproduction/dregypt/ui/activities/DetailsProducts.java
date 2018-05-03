@@ -7,12 +7,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.utils.ProductsModel;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class DetailsProducts extends AppCompatActivity {
     ImageView imageView;
     TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1;
     String idz, titlez, description, price, status, image, address, created_at, phone_1, phone_2;
+    ProductsActivity productsActivity;
+    private ArrayList<ProductsModel> modelArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,9 +26,6 @@ public class DetailsProducts extends AppCompatActivity {
         Initialize();
         getExtra();
         Deploy();
-
-
-
 
     }
 
