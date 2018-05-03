@@ -14,7 +14,7 @@ import com.example.gmsproduction.dregypt.utils.LruBitmapCache;
  */
 
 public class DrEgyptApp extends Application {
-
+//ي
     public static final String TAG = DrEgyptApp.class
             .getSimpleName();
 
