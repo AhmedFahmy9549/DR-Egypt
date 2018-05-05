@@ -5,5 +5,5 @@ package com.example.gmsproduction.dregypt.utils;
  */
 
 public class Constants {
-    public final static String basicUrl="http://192.168.9.69/dregy/public/api";
+    public final static String basicUrl="https://dregy.frb.io/api";
 }

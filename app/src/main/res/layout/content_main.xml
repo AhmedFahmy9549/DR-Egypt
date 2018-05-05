@@ -20,6 +20,7 @@
         android:visibility="gone"
         android:id="@+id/view_hor"
         android:layout_width="match_parent"
+        android:scaleX="@integer/design_snackbar_text_max_lines"
         android:layout_height="1dp"
         android:background="@android:color/black"
         app:layout_constraintBottom_toBottomOf="@id/parent"

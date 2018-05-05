@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity
         init();
         setSupportActionBar(toolbar);
 
-
         fab.setOnClickListener(this);
         medicalCard.setOnClickListener(this);
         productsCard.setOnClickListener(this);
