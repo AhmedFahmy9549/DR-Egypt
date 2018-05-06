@@ -25,6 +25,8 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     private ArrayList<ProductsModel> mArrayList;
     int LastPosition = -1;
     RecyclerViewClickListener ClickListener;
+    String CheckStatus;
+    String status;
 
     public ProductAdsAdapter() {
     }
@@ -51,7 +53,12 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         final String title= currentItem.getTitlez();
         final String description= currentItem.getDescription();
         final String price= currentItem.getPrice();
-        final String status= currentItem.getStatus();
+        CheckStatus = currentItem.getStatus();
+        if (CheckStatus=="1"){
+            status= "New";
+        }else {
+            status= "Used";
+        }
         final String image= currentItem.getImage();
         final String address= currentItem.getAddress();
         final String created_at= currentItem.getCreated_at();
@@ -74,16 +81,13 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
                 intent.putExtra("pro_phone_2",phone_2);
 
                 mContext.startActivity(intent);
-
             }
         });
 
         holder.ProductTitle.setText(title);
-        holder.ProductPrice.setText(price+"$");
+        holder.ProductPrice.setText(price+"L.E");
         holder.ProductStatus.setText(status);
         Picasso.with(mContext).load(image).fit().centerCrop().into(holder.imageView);
-
-
         //setAnimation(holder.cardView,position);
     }
 
