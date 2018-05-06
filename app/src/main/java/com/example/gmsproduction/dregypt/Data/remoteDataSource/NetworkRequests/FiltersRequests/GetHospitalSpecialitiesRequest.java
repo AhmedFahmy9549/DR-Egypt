@@ -23,6 +23,7 @@ public class GetHospitalSpecialitiesRequest {
     }
     private void setValues(){
         url= Constants.basicUrl+"/hospitalSpecialities";
+
         methodId= Request.Method.GET;
     }
 

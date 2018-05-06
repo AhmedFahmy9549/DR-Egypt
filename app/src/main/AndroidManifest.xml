@@ -29,10 +29,8 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
@@ -41,17 +39,12 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".ui.activities.LogInActivity" />
-        <!-- Services -->
-
-
-        <!-- Provider -->
-
-
-        <!-- Receivers -->
 
         <activity android:name=".ui.activities.DetailsActivity" />
+
         <activity
             android:name=".ui.activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -61,20 +54,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activities.MedicalGuideActivity"
             android:label="Medical Guide"
             android:parentActivityName=".ui.activities.MainActivity" />
+
         <activity android:name=".ui.activities.JobsActivity" />
+
         <activity android:name=".ui.activities.CosmeticsActivity" />
-        <activity android:name=".ui.activities.HospitalsActivity"></activity>
+
+        <activity android:name=".ui.activities.HospitalsActivity"/>
+
+        <activity android:name=".ui.fragments.FragmentsFilters.SpecializationActivity"/>
+
+
+
+
+
+
+
 
 
         <!-- Ibrahim -->
 
-        <activity android:name=".ui.activities.ProductsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+        <activity android:name=".ui.activities.ProductsActivity"></activity>
         <activity android:name=".ui.activities.DetailsProducts"></activity>
 
 
