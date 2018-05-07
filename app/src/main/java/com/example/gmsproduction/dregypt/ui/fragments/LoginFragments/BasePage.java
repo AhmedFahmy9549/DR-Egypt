@@ -159,7 +159,23 @@ public class BasePage extends Fragment {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
+                        Log.e("LOgiiin",""+loginResult);
+
+
+
+
+
+
+
+
+
+
+
+
+
                         // Handle success
+
+
                         GraphRequest request = GraphRequest.newMeRequest(
                                 loginResult.getAccessToken(),
                                 new GraphRequest.GraphJSONObjectCallback() {

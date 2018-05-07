@@ -9,6 +9,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.fragments.HospitalsFragment;
 
 public class HospitalsActivity extends AppCompatActivity {
     float x ;
@@ -17,8 +18,15 @@ public class HospitalsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.row_hospitals);
+        setContentView(R.layout.activity_hospitals);
 
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container_hos,new HospitalsFragment(),"HospitalsFragment")
+                .commit();
+
+
+/*
 
         RatingBar ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         ratingBar.setRating(x);
@@ -26,9 +34,11 @@ public class HospitalsActivity extends AppCompatActivity {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 
-               /* Toast.makeText(HospitalsActivity.this,
+               */
+/* Toast.makeText(HospitalsActivity.this,
                         "Rating changed, current rating " + ratingBar.getRating(),
-                        Toast.LENGTH_SHORT).show();*/
+                        Toast.LENGTH_SHORT).show();*//*
+
 
 
             }
@@ -48,6 +58,7 @@ public class HospitalsActivity extends AppCompatActivity {
                 //getSupportFragmentManager().beginTransaction().add(new SpecializationFragments(),"spec").commit();
             }
         });
+*/
 
     }
 }

@@ -17,12 +17,12 @@ public class GetCitiesRequest {
     String url;
     int methodId;
 
-    public GetCitiesRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener){
-        setValues();
+    public GetCitiesRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener,int regionId){
+        setValues(regionId);
         volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
     }
-    private void setValues(){
-        url= Constants.basicUrl+"/cities";
+    private void setValues(int regionId){
+        url= Constants.basicUrl+"/regions/"+regionId;
         methodId= Request.Method.GET;
     }
 

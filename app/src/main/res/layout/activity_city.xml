@@ -2,9 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container_hos"
+
+    android:id="@+id/container13"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.gmsproduction.dregypt.ui.activities.HospitalsActivity">
+    tools:context="com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.CityActivity">
 
 </android.support.constraint.ConstraintLayout>

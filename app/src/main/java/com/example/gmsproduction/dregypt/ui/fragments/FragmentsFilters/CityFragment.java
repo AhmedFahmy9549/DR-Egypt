@@ -1,7 +1,6 @@
 package com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters;
 
-import android.content.Context;
-import android.nfc.Tag;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,15 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetCitiesRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetHospitalSpecialitiesRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.adapters.TextAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,48 +25,60 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by Ahmed Fahmy on 5/6/2018.
  */
 
-public class SpecializationsFragment extends Fragment implements Response.Listener<String>, Response.ErrorListener {
-    String TAG = "SpecializationsFragment";
-    View view;
+public class CityFragment extends Fragment implements Response.Listener<String>, Response.ErrorListener {
 
+
+    String TAG = "CityFragment";
     ArrayList<LocationModel> arrayList;
+    View view;
     RecyclerView recyclerView;
-    AdapterSpecializationRecylcer adapterx;
+    AdapterCityRecylcer adapterx;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.specialization_fragment, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.special_recycler);
-        GetHospitalSpecialitiesRequest getHospitalSpecialitiesRequest = new GetHospitalSpecialitiesRequest(getActivity(), this, this);
-        getHospitalSpecialitiesRequest.start();
+        view = inflater.inflate(R.layout.city_fragment, container, false);
+        recyclerView = view.findViewById(R.id.city_recycler);
+
+        SharedPreferences prefs = getActivity().getSharedPreferences("Location", MODE_PRIVATE);
+            int idName = prefs.getInt("region_id", 0); //0 is the default value.
+
+        GetCitiesRequest getCitiesRequest = new GetCitiesRequest(getActivity(), this, this,idName);
+        getCitiesRequest.start();
         return view;
+
     }
 
-
     @Override
-    public void onErrorResponse(VolleyError error) {
-        Log.e(TAG, "onResponse: ," + error);
-
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getActivity().setTitle("Select City");
     }
 
     @Override
     public void onResponse(String response) {
-
         Log.e(TAG, "onResponse: ," + response);
         arrayList = new ArrayList<>();
 
         try {
             JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            JSONObject jsonObject1 = jsonObject.getJSONObject("data");
+            JSONArray jsonArray=jsonObject1.getJSONArray("cities");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String specName = object.getString("en_name");
-                int specId = object.getInt("id");
-                LocationModel model = new LocationModel(specName, specId);
+                int regionId = object.getInt("id");
+
+                Log.e(TAG,"cityNames="+specName);
+                Log.e(TAG,"cityId="+regionId);
+
+                LocationModel model = new LocationModel(specName, regionId);
+
 
                 arrayList.add(model);
             }
@@ -77,9 +86,16 @@ public class SpecializationsFragment extends Fragment implements Response.Listen
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterSpecializationRecylcer(getActivity(), arrayList);
+        adapterx = new AdapterCityRecylcer(getActivity(), arrayList, 2);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+        Log.e(TAG, "onResponse: ," + error.toString());
+
     }
 }
