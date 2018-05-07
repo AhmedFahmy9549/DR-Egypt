@@ -1,7 +1,5 @@
 package com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters;
 
-import android.content.Context;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,15 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetHospitalSpecialitiesRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetCitiesRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetRegionsRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.adapters.TextAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,34 +28,36 @@ import java.util.ArrayList;
  * Created by Ahmed Fahmy on 5/6/2018.
  */
 
-public class SpecializationsFragment extends Fragment implements Response.Listener<String>, Response.ErrorListener {
-    String TAG = "SpecializationsFragment";
+public class RegionFragment extends Fragment implements Response.Listener<String>,Response.ErrorListener{
     View view;
-
+    String TAG = "RegionFragment";
     ArrayList<LocationModel> arrayList;
     RecyclerView recyclerView;
-    AdapterSpecializationRecylcer adapterx;
+    AdapterCityRecylcer adapterx;
 
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.specialization_fragment, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.special_recycler);
-        GetHospitalSpecialitiesRequest getHospitalSpecialitiesRequest = new GetHospitalSpecialitiesRequest(getActivity(), this, this);
-        getHospitalSpecialitiesRequest.start();
+        view= inflater.inflate(R.layout.region_fragment, container, false);
+        recyclerView = view.findViewById(R.id.region_recycler);
+
+        GetRegionsRequest getRegionsRequest = new GetRegionsRequest(getActivity(), this, this);
+        getRegionsRequest.start();
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Log.e(TAG, "onResponse: ," + error);
 
     }
 
     @Override
     public void onResponse(String response) {
-
-        Log.e(TAG, "onResponse: ," + response);
         arrayList = new ArrayList<>();
 
         try {
@@ -68,8 +66,10 @@ public class SpecializationsFragment extends Fragment implements Response.Listen
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String specName = object.getString("en_name");
-                int specId = object.getInt("id");
-                LocationModel model = new LocationModel(specName, specId);
+                int regionId = object.getInt("id");
+
+                LocationModel model=new LocationModel(specName,regionId);
+
 
                 arrayList.add(model);
             }
@@ -77,7 +77,7 @@ public class SpecializationsFragment extends Fragment implements Response.Listen
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterSpecializationRecylcer(getActivity(), arrayList);
+        adapterx= new AdapterCityRecylcer(getActivity(),arrayList,1);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);

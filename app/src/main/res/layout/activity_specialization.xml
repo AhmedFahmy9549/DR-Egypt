@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container12"
     tools:context="com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationActivity">
 
 </android.support.constraint.ConstraintLayout>
