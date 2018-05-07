@@ -18,6 +18,8 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationActivity;
+import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationsFragment;
 
 import java.util.HashMap;
 
@@ -101,7 +103,7 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
 
         switch (id){
             case R.id.next_name1:
-                intent=new Intent(this,HospitalsActivity.class);
+                intent=new Intent(this,SpecializationActivity.class);
                 startActivity(intent);
                 break;
 
