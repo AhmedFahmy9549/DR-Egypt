@@ -62,7 +62,9 @@
 
         <activity android:name=".ui.activities.JobsActivity" />
 
-        <activity android:name=".ui.activities.CosmeticsActivity" />
+        <activity android:name=".ui.activities.CosmeticsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
 
         <activity android:name=".ui.activities.HospitalsActivity"/>
 
@@ -78,7 +80,9 @@
 
         <!-- Ibrahim -->
 
-        <activity android:name=".ui.activities.ProductsActivity"></activity>
+        <activity android:name=".ui.activities.ProductsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
         <activity android:name=".ui.activities.DetailsProducts"></activity>
 
 

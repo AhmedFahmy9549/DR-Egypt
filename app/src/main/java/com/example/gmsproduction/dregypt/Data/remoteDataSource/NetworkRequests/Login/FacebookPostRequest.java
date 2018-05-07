@@ -1,4 +1,4 @@
-package com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests;
+package com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.Login;
 
 import android.content.Context;
 
@@ -10,27 +10,27 @@ import com.example.gmsproduction.dregypt.utils.Constants;
 import java.util.HashMap;
 
 /**
- * Created by mohmed mostafa on 23/04/2018.
+ * Created by Hima on 5/7/2018.
  */
 
-public class SearchCosmeticClinicsRequest {
-
+public class FacebookPostRequest {
     VolleyLIbUtils volleyLIbUtils;
     String url;
     int methodId;
 
-    public SearchCosmeticClinicsRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener){
+    public FacebookPostRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener){
         setValues();
         volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
     }
     private void setValues(){
-        url= Constants.basicUrl+"/cosmetic-clinics/search";
+        url= Constants.basicUrl+"/auth/facebook/callback";
         methodId= Request.Method.POST;
     }
 
     public void setBody(HashMap body){
         volleyLIbUtils.setParams(body);
     }
+
     public void start(){
         volleyLIbUtils.start();
     }

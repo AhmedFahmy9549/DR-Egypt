@@ -1,6 +1,7 @@
  package com.example.gmsproduction.dregypt.ui.adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,37 +9,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.AddCosmeticClinicsToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.DeleteCosmeticClinicsFromFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.RatingCosmeticClinicsRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.ViewsIncrementForCosmeticClinicsRequest;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.utils.CosmeticModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
  public class CosmeticClinicsAdapter extends RecyclerView.Adapter<CosmeticClinicsAdapter.MyViewHolder>  {
     final String basicImgUrl="http://gms-sms.com:89";
-     ArrayList  arrayList;
-    Context context;
+     Context context;
+     private ArrayList<CosmeticModel> mArrayList;
     int  LastPosition=-1;
-    RecyclerViewClickListener ClickListener ;
+    //RecyclerViewClickListener ClickListener ;
 
 
     public CosmeticClinicsAdapter(){}
-    public CosmeticClinicsAdapter(ArrayList arrayList, Context context){
-        this.arrayList =new ArrayList();
-        this.arrayList = arrayList;
-        this.context=context;
-    }
 
+     public CosmeticClinicsAdapter(Context context, ArrayList<CosmeticModel> mArrayList) {
+         this.context = context;
+         this.mArrayList = mArrayList;
+     }
 
-    public void setClickListener(RecyclerViewClickListener clickListener){
+    /* public void setClickListener(RecyclerViewClickListener clickListener){
         this.ClickListener= clickListener;
-    }
+    }*/
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.row_hospitals,parent,false);
@@ -47,14 +53,32 @@ import java.util.ArrayList;
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
+         CosmeticModel currentItem = mArrayList.get(position);
         // TODO set TextViews here
-        String name="";
+        String name= currentItem.getTitlez();
         holder.nameTextView.setText(name);
+        String adress=currentItem.getAddress();
+        holder.Adress.setText(adress);
+        String spec = currentItem.getDescription();
+        holder.specialities.setText(spec);
 
-        String details="";
-        holder.detailsTextView.setText(details);
+        /*String ratingCounts=String.valueOf(currentItem.getRating_counts());
+        holder.rating.setText(ratingCounts);*/
 
-        holder.favImageView.setOnClickListener(new View.OnClickListener() {
+        Picasso.with(context).load(currentItem.getImage()).fit().centerInside().into(holder.coverImageView);
+        holder.toggleButton.setChecked(false);
+        holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp_fill));
+                else
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            }
+        });
+
+        /*holder.favImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(holder.fav){
@@ -79,41 +103,51 @@ import java.util.ArrayList;
                 //TODO ues ViewsRequest
             }
         });
+*/
 
-
+/*
         setAnimation(holder.cardView,position);
+*/
     }
 
 
     @Override
     public int getItemCount() {
-        if(arrayList==null||arrayList.size()==0)
+        if(mArrayList==null||mArrayList.size()==0)
             return 0;
-        return arrayList.size();
+        return mArrayList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MyViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
 
         TextView nameTextView;
-        TextView detailsTextView;
+        TextView specialities;
+        TextView Adress;
+        TextView rating;
         ImageView coverImageView;
         ImageView favImageView;
         RatingBar ratingBar;
+        ToggleButton toggleButton;
         boolean fav;
 
         CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+/*
             itemView.setOnClickListener(this);
-            nameTextView=(TextView)itemView.findViewById(R.id.text_name);
-            detailsTextView=(TextView)itemView.findViewById(R.id.text_details);
-            ratingBar=(RatingBar)itemView.findViewById(R.id.ratingBar);
-            coverImageView=(ImageView)itemView.findViewById(R.id.img);
-            favImageView=(ImageView)itemView.findViewById(R.id.fav_img);
+*/
+            nameTextView = (TextView) itemView.findViewById(R.id.text_name);
+            Adress = (TextView) itemView.findViewById(R.id.text_address);
+            specialities = (TextView) itemView.findViewById(R.id.text_specialities);
+            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+            coverImageView = (ImageView) itemView.findViewById(R.id.image_hospital);
+            favImageView = (ImageView) itemView.findViewById(R.id.fav_img);
+            toggleButton = itemView.findViewById(R.id.myToggleButton);
+            rating = itemView.findViewById(R.id.text_rating);
         }
 
-        @Override
+     /*   @Override
         public void onClick(View view) {
             if(ClickListener!=null)
                 ClickListener.ItemClicked(view ,getAdapterPosition());
@@ -130,8 +164,8 @@ import java.util.ArrayList;
 
         public void ItemClicked(View v, int position);
     }
-
-    private void setAnimation(View viewToAnimate, int position)
+*/
+   /* private void setAnimation(View viewToAnimate, int position)
     {
 
         if (position > LastPosition)
@@ -146,22 +180,22 @@ import java.util.ArrayList;
     public void onViewDetachedFromWindow(MyViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.clearAnimation();
+    }*/
+
+
+        /************************* favourite requests ******************************/
+        AddCosmeticClinicsToFavouriteRequest addBeautyCenterToFavouriteRequest;
+        DeleteCosmeticClinicsFromFavouriteRequest deleteBeautyCenterFromFavouriteRequest;
+
+
+        /************************* rating requests ******************************/
+        RatingCosmeticClinicsRequest ratingBeautyCenterRequest;
+
+
+        /************************* views requests ******************************/
+        ViewsIncrementForCosmeticClinicsRequest viewsIncrementForBeautyCenterRequest;
+
+
     }
-
-
-    /************************* favourite requests ******************************/
-     AddCosmeticClinicsToFavouriteRequest addBeautyCenterToFavouriteRequest;
-     DeleteCosmeticClinicsFromFavouriteRequest deleteBeautyCenterFromFavouriteRequest;
-
-
-     /************************* rating requests ******************************/
-     RatingCosmeticClinicsRequest ratingBeautyCenterRequest;
-
-
-     /************************* views requests ******************************/
-     ViewsIncrementForCosmeticClinicsRequest viewsIncrementForBeautyCenterRequest;
-
-
-
 }
 

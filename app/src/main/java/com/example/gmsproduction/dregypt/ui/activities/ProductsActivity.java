@@ -48,41 +48,36 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
     SliderLayout mDemoSlider;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
-    FrameLayout frameLayout;
     String url = "https://dregy01.frb.io/api/product-ads/search";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_products);
-        /*searchProductAdRequest.setBody((HashMap) body);
-        searchProductAdRequest.start();*/
-        frameLayout = findViewById(R.id.testyy);
+
+
+        //Filters
         body.put("status", "2");
+
+        //Request for main products
         final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(this,url,this,this);
         searchProductAdRequest.setBody((HashMap) body);
         searchProductAdRequest.start();
+
         //slider
         mDemoSlider = (SliderLayout) findViewById(R.id.ProductsSilder);
-        //arrayLIST
+
         //recycler View horizon orientation
         mRecyclerView = findViewById(R.id.Recycler_Product);
         final LinearLayoutManager LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 3);
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.addOnScrollListener(new CustomScrollListener());
 
-
-
-
-
-
-
-
-
-
+        //Custom Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarxx);
         setSupportActionBar(toolbar);
 
+        //Search Related
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setVoiceSearch(false);
         searchView.setEllipsize(true);
@@ -236,7 +231,7 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
+    //Fetching JSON Method
     public void Responsey(String response){
         modelArrayList = new ArrayList<>();
 
@@ -267,7 +262,7 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
         }
     }
 }
-
+//custom class to detect when the recycleview reach it's end
  class CustomScrollListener extends RecyclerView.OnScrollListener {
     public CustomScrollListener() {
     }
