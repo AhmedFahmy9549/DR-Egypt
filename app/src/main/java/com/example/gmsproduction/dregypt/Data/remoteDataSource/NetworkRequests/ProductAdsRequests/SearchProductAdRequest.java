@@ -27,6 +27,7 @@ public class SearchProductAdRequest {
     }
     private void setValues(){
         //url= Constants.basicUrl+"/product-ads/search";
+
         methodId= Request.Method.POST;
     }
     public void setBody(HashMap body){
