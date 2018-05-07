@@ -185,7 +185,6 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
                 rating_counts = rateObject.getInt("count");*/
 
 
-
                 modelArrayList.add(new CosmeticModel(id, title, description, image, address, created_at, phone_1, phone_2,rating_read,rating_counts));
             }
             mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList);
