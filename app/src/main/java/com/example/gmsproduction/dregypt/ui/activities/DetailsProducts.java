@@ -2,7 +2,9 @@ package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,8 @@ import com.example.gmsproduction.dregypt.utils.ProductsModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DetailsProducts extends AppCompatActivity {
     ImageView imageView;
@@ -27,6 +31,18 @@ public class DetailsProducts extends AppCompatActivity {
         getExtra();
         Deploy();
         setTitle(titlez);
+
+        toggleButton.setChecked(false);
+        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp_fill));
+                else
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            }
+        });
 
     }
 
