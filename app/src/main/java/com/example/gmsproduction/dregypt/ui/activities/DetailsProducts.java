@@ -32,7 +32,7 @@ public class DetailsProducts extends AppCompatActivity {
         Deploy();
         setTitle(titlez);
 
-        toggleButton.setChecked(false);
+       /* toggleButton.setChecked(false);
         toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -42,7 +42,7 @@ public class DetailsProducts extends AppCompatActivity {
                 else
                     toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
             }
-        });
+        });*/
 
     }
 
