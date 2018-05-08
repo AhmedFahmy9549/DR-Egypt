@@ -67,6 +67,7 @@
             ></activity>
 
         <activity android:name=".ui.activities.HospitalsActivity"/>
+        <activity android:name=".ui.fragments.FragmentsFilters.RegionActivity"/>
 
         <activity android:name=".ui.fragments.FragmentsFilters.SpecializationActivity"/>
 
