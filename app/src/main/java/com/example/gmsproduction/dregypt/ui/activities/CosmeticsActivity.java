@@ -39,7 +39,7 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
     private RecyclerView mRecyclerView;
     private CosmeticClinicsAdapter mAdapter;
     private ArrayList<CosmeticModel> modelArrayList;
-    String id, title, description, price, image, status, address, created_at, phone_1, phone_2,rating_count;
+    String id, title, description, price, image, status, address, created_at, phone_1, phone_2,rating_count,email,website;
     Double rating_read;
     int rating_counts;
     MaterialSearchView searchView;
@@ -108,9 +108,7 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
                                                public void onSearchViewClosed() {
 
                                                }
-                                           }
-
-        );
+                                           });
 
     }
 
@@ -177,15 +175,17 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
                 address = dataObject.getString("en_address");
                 created_at = dataObject.getString("created_at");
                 description = dataObject.getString("en_note");
+                email = dataObject.getString("email");
+                website = dataObject.getString("website");
                 JSONArray phoneArray = dataObject.getJSONArray("phone");
                 phone_1 = (String) phoneArray.get(0);
                 phone_2 = (String) phoneArray.get(1);
-                /*JSONObject rateObject = object.getJSONObject("rate");
+                JSONObject rateObject = dataObject.getJSONObject("rate");
                 rating_read = rateObject.getDouble("rating");
-                rating_counts = rateObject.getInt("count");*/
+                rating_counts = rateObject.getInt("count");
 
 
-                modelArrayList.add(new CosmeticModel(id, title, description, image, address, created_at, phone_1, phone_2,rating_read,rating_counts));
+                modelArrayList.add(new CosmeticModel(id, title, description, image, address,email,website, created_at, phone_1, phone_2,rating_read,rating_counts));
             }
             mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList);
             mRecyclerView.setAdapter(mAdapter);

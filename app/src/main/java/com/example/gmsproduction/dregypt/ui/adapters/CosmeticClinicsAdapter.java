@@ -47,7 +47,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
     }*/
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.row_hospitals,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.row_cosmetic,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -56,16 +56,19 @@ import static com.facebook.FacebookSdk.getApplicationContext;
          CosmeticModel currentItem = mArrayList.get(position);
         // TODO set TextViews here
         String name= currentItem.getTitlez();
-        holder.nameTextView.setText(name);
+        holder.TXTname.setText(name);
         String adress=currentItem.getAddress();
-        holder.Adress.setText(adress);
-        String spec = currentItem.getDescription();
-        holder.specialities.setText(spec);
+        holder.TXTAdress.setText(adress);
+        String email = currentItem.getEmail();
+        holder.TXTemail.setText(email);
+        String site = currentItem.getWebsite();
+        holder.TXTwebsite.setText(site);
+        int ratingcount = currentItem.getRating_counts();
+        holder.TXTratingCount.setText(String.valueOf(ratingcount));
 
-        /*String ratingCounts=String.valueOf(currentItem.getRating_counts());
-        holder.rating.setText(ratingCounts);*/
 
-        Picasso.with(context).load(currentItem.getImage()).fit().centerInside().into(holder.coverImageView);
+        Picasso.with(context).load(currentItem.getImage()).fit().centerInside().into(holder.IMGcover);
+
         holder.toggleButton.setChecked(false);
         holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
         holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -78,6 +81,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
             }
         });
 
+
+        holder.ratingBar.setRating(currentItem.getRating().floatValue());
         /*holder.favImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,12 +125,12 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
     class MyViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
 
-        TextView nameTextView;
-        TextView specialities;
-        TextView Adress;
-        TextView rating;
-        ImageView coverImageView;
-        ImageView favImageView;
+        TextView TXTname;
+        TextView TXTratingCount;
+        TextView TXTAdress;
+        TextView TXTemail;
+        TextView TXTwebsite;
+        ImageView IMGcover;
         RatingBar ratingBar;
         ToggleButton toggleButton;
         boolean fav;
@@ -137,14 +142,14 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 /*
             itemView.setOnClickListener(this);
 */
-            nameTextView = (TextView) itemView.findViewById(R.id.text_name);
-            Adress = (TextView) itemView.findViewById(R.id.text_address);
-            specialities = (TextView) itemView.findViewById(R.id.text_specialities);
-            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
-            coverImageView = (ImageView) itemView.findViewById(R.id.image_hospital);
-            favImageView = (ImageView) itemView.findViewById(R.id.fav_img);
-            toggleButton = itemView.findViewById(R.id.myToggleButton);
-            rating = itemView.findViewById(R.id.text_rating);
+            TXTname =  itemView.findViewById(R.id.Cosmetic_Title);
+            TXTratingCount = itemView.findViewById(R.id.Cosmetic_ratingCounts);
+            TXTAdress =  itemView.findViewById(R.id.Cosmetic_adress);
+            TXTemail =  itemView.findViewById(R.id.Cosmetic_email);
+            TXTwebsite =  itemView.findViewById(R.id.Cosmetic_site);
+            IMGcover =  itemView.findViewById(R.id.Cosmetic_Image);
+            toggleButton = itemView.findViewById(R.id.Cosmetic_ToggleButton);
+            ratingBar = itemView.findViewById(R.id.Cosmetic_ratingBar);
         }
 
      /*   @Override

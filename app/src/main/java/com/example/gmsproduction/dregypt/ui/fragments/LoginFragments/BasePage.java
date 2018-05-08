@@ -162,17 +162,6 @@ public class BasePage extends Fragment {
                         Log.e("LOgiiin",""+loginResult);
 
 
-
-
-
-
-
-
-
-
-
-
-
                         // Handle success
 
 

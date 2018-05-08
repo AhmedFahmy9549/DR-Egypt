@@ -5,25 +5,23 @@ package com.example.gmsproduction.dregypt.utils;
  */
 
 public class CosmeticModel {
-    String idz, titlez,description, image ,address,created_at,phone_1,phone_2;
+    String idz, titlez,description, image ,address,email,website,created_at,phone_1,phone_2;
     Double rating;
     int rating_counts;
 
-    public CosmeticModel(String idz, String titlez, String description, String image, String address, String created_at, String phone_1, String phone_2, Double rating, int rating_counts) {
+    public CosmeticModel(String idz, String titlez, String description, String image, String address, String email, String website, String created_at, String phone_1, String phone_2, Double rating, int rating_counts) {
         this.idz = idz;
         this.titlez = titlez;
         this.description = description;
         this.image = image;
         this.address = address;
+        this.email = email;
+        this.website = website;
         this.created_at = created_at;
         this.phone_1 = phone_1;
         this.phone_2 = phone_2;
         this.rating = rating;
         this.rating_counts = rating_counts;
-    }
-
-    public int getRating_counts() {
-        return rating_counts;
     }
 
     public String getIdz() {
@@ -46,6 +44,14 @@ public class CosmeticModel {
         return address;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
     public String getCreated_at() {
         return created_at;
     }
@@ -60,5 +66,9 @@ public class CosmeticModel {
 
     public Double getRating() {
         return rating;
+    }
+
+    public int getRating_counts() {
+        return rating_counts;
     }
 }

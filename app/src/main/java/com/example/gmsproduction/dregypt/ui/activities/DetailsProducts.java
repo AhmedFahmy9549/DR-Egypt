@@ -26,6 +26,7 @@ public class DetailsProducts extends AppCompatActivity {
         Initialize();
         getExtra();
         Deploy();
+        setTitle(titlez);
 
     }
 
@@ -53,12 +54,12 @@ public class DetailsProducts extends AppCompatActivity {
 
     }
 
-    private void Deploy(){
+    private void Deploy() {
         TXTdescription.setText(description);
-        TXTprice.setText(price+"$");
+        TXTprice.setText(price + "$");
         TXTaddress.setText(address);
         TXTcreated_at.setText(created_at);
         TXTphone_1.setText(phone_1);
-        Picasso.with(this).load(image).fit().centerCrop().into(imageView);
+        Picasso.with(this).load(image).fit().centerInside().into(imageView);
     }
 }
