@@ -18,6 +18,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationsFragment;
 
@@ -25,7 +26,7 @@ import java.util.HashMap;
 
 public class MedicalGuideActivity extends AppCompatActivity implements View.OnClickListener , BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private SliderLayout mDemoSlider;
-    ImageView hospitalBtn;
+    ImageView hospitalBtn,ClinicBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +35,13 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
 
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         hospitalBtn=(ImageView) findViewById(R.id.next_name1);
+        ClinicBtn=(ImageView) findViewById(R.id.next_name2);
 
 
         hospitalBtn.setOnClickListener(this);
+        ClinicBtn.setOnClickListener(this);
+
+
         HashMap<String, Integer> url_maps = new HashMap<String, Integer>();
         url_maps.put("Hannibal", R.drawable.clinic_medical);
         url_maps.put("Big Bang Theory",  R.drawable.hospital_medical);
@@ -101,13 +106,19 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
         Intent intent;
         int id=view.getId();
 
-        switch (id){
+        switch (id) {
             case R.id.next_name1:
-                intent=new Intent(this,SpecializationActivity.class);
+                intent = new Intent(this, SpecializationActivity.class);
                 startActivity(intent);
                 break;
 
+
+            case R.id.next_name2:
+                intent = new Intent(this, ClinicsActivity.class);
+                startActivity(intent);
+                break;
         }
-    }
+
+        }
 }
 
