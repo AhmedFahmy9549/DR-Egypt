@@ -61,6 +61,12 @@
             <item name="android:layout_marginBottom">10dp</item>
         </style>
 
+        <style name="MyRatingBarTwo" parent="Widget.AppCompat.RatingBar">
+            <item name="android:progressDrawable">@drawable/stars_rating</item>
+            <item name="colorControlNormal">#f57c00</item>
+            <item name="colorControlActivated">#c51162</item>
+
+        </style>
 
 
 </resources>

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.gmsproduction.dregypt.R;
@@ -64,6 +65,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         final String created_at= currentItem.getCreated_at();
         final String phone_1= currentItem.getPhone_1();
         final String phone_2= currentItem.getPhone_2();
+        final String Category = currentItem.getCategory();
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,10 +86,11 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
             }
         });
 
+        holder.ProductCategory.setText(Category);
         holder.ProductTitle.setText(title);
         holder.ProductPrice.setText(price+"L.E");
         holder.ProductStatus.setText(status);
-        Picasso.with(mContext).load(image).fit().centerCrop().into(holder.imageView);
+        Picasso.with(mContext).load(image).fit().centerInside().into(holder.imageView);
         //setAnimation(holder.cardView,position);
     }
 
@@ -101,9 +104,9 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView ProductTitle, ProductDesc, ProductPrice, ProductStatus, ProductsMoreDetails;
+        TextView ProductTitle, ProductCategory, ProductPrice, ProductStatus, ProductsMoreDetails;
         ImageView imageView;
-        CardView cardView;
+        LinearLayout cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -113,6 +116,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
             imageView = itemView.findViewById(R.id.Products_Img);
             ProductsMoreDetails = itemView.findViewById(R.id.Products_More_Details);
             cardView = itemView.findViewById(R.id.Products_cardView);
+            ProductCategory = itemView.findViewById(R.id.Products_Category);
             itemView.setOnClickListener(this);
         }
 

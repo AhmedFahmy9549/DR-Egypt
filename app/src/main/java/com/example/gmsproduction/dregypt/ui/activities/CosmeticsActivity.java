@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -66,6 +67,18 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
         //Custom Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarxx_cosmetic);
         setSupportActionBar(toolbar);
+
+
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            finish();
+            }
+        });
 
         //Search Related
         searchView = (MaterialSearchView) findViewById(R.id.search_view_cosmetic);
@@ -183,7 +196,6 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
                 JSONObject rateObject = dataObject.getJSONObject("rate");
                 rating_read = rateObject.getDouble("rating");
                 rating_counts = rateObject.getInt("count");
-
 
                 modelArrayList.add(new CosmeticModel(id, title, description, image, address,email,website, created_at, phone_1, phone_2,rating_read,rating_counts));
             }

@@ -11,56 +11,30 @@
     >
 
 
-    <com.daimajia.slider.library.SliderLayout
-        android:id="@+id/ProductsSilder"
+    <RelativeLayout
+        android:id="@+id/RelativeBunner"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="2.5">
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="7.5"
+        android:background="@color/black"
         >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/Recycler_Product"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            >
 
-        <com.daimajia.slider.library.Indicators.PagerIndicator
-            android:id="@+id/custom_indicator_duck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center|bottom"
-            android:padding="5dp"
-            custom:selected_color="#0095BF"
-            custom:selected_height="6dp"
-            custom:selected_padding_left="2dp"
-            custom:selected_padding_right="2dp"
-            custom:selected_width="6dp"
-            custom:shape="rect"
-            custom:unselected_color="#55333333"
-            custom:unselected_height="6dp"
-            custom:unselected_padding_left="2dp"
-            custom:unselected_padding_right="2dp"
-            custom:unselected_width="6dp" />
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
-    </com.daimajia.slider.library.SliderLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="Products"
-        android:textColor="@color/bluoo"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/Recycler_Product"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="6">
-
-    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

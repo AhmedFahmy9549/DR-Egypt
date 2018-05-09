@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.ProductsModel;
@@ -20,8 +21,8 @@ public class DetailsProducts extends AppCompatActivity {
     ImageView imageView;
     TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1;
     String idz, titlez, description, price, status, image, address, created_at, phone_1, phone_2;
-    ProductsActivity productsActivity;
-    private ArrayList<ProductsModel> modelArrayList;
+    ToggleButton toggleButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +33,7 @@ public class DetailsProducts extends AppCompatActivity {
         Deploy();
         setTitle(titlez);
 
-       /* toggleButton.setChecked(false);
-        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp_fill));
-                else
-                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-            }
-        });*/
+
 
     }
 
@@ -53,6 +44,8 @@ public class DetailsProducts extends AppCompatActivity {
         TXTaddress = findViewById(R.id.Address_ProductDetails);
         TXTcreated_at = findViewById(R.id.Date_ProductDetails);
         TXTphone_1 = findViewById(R.id.Phone_ProductDetails);
+        toggleButton = (ToggleButton) findViewById(R.id.Details_ToggleButton);
+
     }
 
     private void getExtra() {
@@ -76,6 +69,17 @@ public class DetailsProducts extends AppCompatActivity {
         TXTaddress.setText(address);
         TXTcreated_at.setText(created_at);
         TXTphone_1.setText(phone_1);
-        Picasso.with(this).load(image).fit().centerInside().into(imageView);
+        Picasso.with(this).load(image).fit().centerCrop().into(imageView);
+        toggleButton.setChecked(false);
+        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp_fill));
+                else
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            }
+        });
     }
 }

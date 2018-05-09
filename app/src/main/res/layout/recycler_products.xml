@@ -9,12 +9,6 @@
     android:id="@+id/testyy"
     >
 
-    <include
-        layout="@layout/products_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize" />
-
     <FrameLayout
         android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
@@ -35,4 +29,10 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </FrameLayout>
+
+    <include
+        layout="@layout/products_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize" />
 </FrameLayout>
