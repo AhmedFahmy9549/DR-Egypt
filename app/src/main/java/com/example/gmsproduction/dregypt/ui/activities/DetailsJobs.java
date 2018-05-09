@@ -40,6 +40,7 @@ public class DetailsJobs extends AppCompatActivity {
         employment_type = extra.getStringExtra("JDemployment_type");
 
 
+
     }
 
     public void Deploy() {
