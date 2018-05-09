@@ -6,14 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetCitiesRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetRegionsRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
@@ -33,7 +31,7 @@ public class RegionFragment extends Fragment implements Response.Listener<String
     String TAG = "RegionFragment";
     ArrayList<LocationModel> arrayList;
     RecyclerView recyclerView;
-    AdapterCityRecylcer adapterx;
+    AdapterLocationRecylcer adapterx;
 
     @Nullable
     @Override
@@ -77,7 +75,7 @@ public class RegionFragment extends Fragment implements Response.Listener<String
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx= new AdapterCityRecylcer(getActivity(),arrayList,1);
+        adapterx= new AdapterLocationRecylcer(getActivity(),arrayList,1);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);

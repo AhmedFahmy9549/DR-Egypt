@@ -20,14 +20,14 @@ import java.util.ArrayList;
  * Created by Ahmed Fahmy on 12/5/2017.
  */
 
-public class AdapterCityRecylcer extends RecyclerView.Adapter<AdapterCityRecylcer.Myholder> {
+public class AdapterLocationRecylcer extends RecyclerView.Adapter<AdapterLocationRecylcer.Myholder> {
     private Context context;
     ArrayList<LocationModel> arrayList;
     String TAG = "CityFragmentl";
     int id;
     Intent intent;
 
-    public AdapterCityRecylcer(Context context, ArrayList<LocationModel> arrayList, int id) {
+    public AdapterLocationRecylcer(Context context, ArrayList<LocationModel> arrayList, int id) {
 
         this.context = context;
         this.arrayList = arrayList;

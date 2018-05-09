@@ -29,10 +29,8 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
@@ -41,9 +39,12 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity android:name=".ui.activities.LogInActivity" />
+
         <activity android:name=".ui.activities.DetailsActivity" />
+
         <activity
             android:name=".ui.activities.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -53,31 +54,45 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activities.MedicalGuideActivity"
             android:label="Medical Guide"
             android:parentActivityName=".ui.activities.MainActivity" />
-        <activity android:name=".ui.activities.JobsActivity" />
-        <activity
-            android:name=".ui.activities.CosmeticsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activities.HospitalsActivity" />
-        <activity
-            android:name=".ui.fragments.FragmentsFilters.RegionActivity"
+
+        <activity android:name=".ui.activities.JobsActivity"/>
+
+        <activity android:name=".ui.activities.CosmeticsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity android:name=".ui.activities.HospitalsActivity"/>
+        <activity android:name=".ui.fragments.FragmentsFilters.RegionActivity"
             android:label="Select Region" />
-        <activity
-            android:name=".ui.fragments.FragmentsFilters.SpecializationActivity"
+
+        <activity android:name=".ui.fragments.FragmentsFilters.SpecializationActivity"
             android:label="Select Specialization" />
+
+
+
+
+
+
+
+
 
         <!-- Ibrahim -->
 
-        <activity
-            android:name=".ui.activities.ProductsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activities.DetailsProducts"
-            android:parentActivityName=".ui.activities.ProductsActivity" />
-        <activity android:name=".ui.activities.DetailsJobs"></activity>
+        <activity android:name=".ui.activities.ProductsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".ui.activities.DetailsProducts"
+            android:parentActivityName=".ui.activities.ProductsActivity"/>
+
+
+
+
+
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters;
+package com.example.gmsproduction.dregypt.ui.fragments.Pharmacy;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetCitiesRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.AdapterLocationClinicRecylcer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,21 +31,21 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by Ahmed Fahmy on 5/6/2018.
  */
 
-public class CityFragment extends Fragment implements Response.Listener<String>, Response.ErrorListener {
+public class CityPharmacyFragment extends Fragment implements Response.Listener<String>, Response.ErrorListener {
 
 
-    String TAG = "CityFragment";
+    String TAG = "CityPharmacyFragment";
     ArrayList<LocationModel> arrayList;
     View view;
     RecyclerView recyclerView;
-    AdapterLocationRecylcer adapterx;
+    AdapterLocationPharmacyRecylcer adapterx;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.city_fragment, container, false);
         recyclerView = view.findViewById(R.id.city_recycler);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("Location", MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("LocationP", MODE_PRIVATE);
             int idName = prefs.getInt("region_id", 0); //0 is the default value.
 
         GetCitiesRequest getCitiesRequest = new GetCitiesRequest(getActivity(), this, this,idName);
@@ -85,7 +86,7 @@ public class CityFragment extends Fragment implements Response.Listener<String>,
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterLocationRecylcer(getActivity(), arrayList, 2);
+        adapterx = new AdapterLocationPharmacyRecylcer(getActivity(), arrayList, 2);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);

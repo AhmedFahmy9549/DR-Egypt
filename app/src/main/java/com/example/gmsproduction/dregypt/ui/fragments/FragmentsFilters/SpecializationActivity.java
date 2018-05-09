@@ -20,7 +20,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class SpecializationActivity extends AppCompatActivity  {
-    String TAG = "SpecializationsFragment";
+    String TAG = "SpecialClinicsFragment";
     View view;
 
     ArrayList<LocationModel> arrayList;
@@ -37,7 +37,7 @@ public class SpecializationActivity extends AppCompatActivity  {
         getHospitalSpecialitiesRequest.start();*/
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container12,new SpecializationsFragment(),"SpecializationsFragment")
+                .add(R.id.container12,new SpecializationsFragment(),"SpecialClinicsFragment")
                 .commit();
 
 

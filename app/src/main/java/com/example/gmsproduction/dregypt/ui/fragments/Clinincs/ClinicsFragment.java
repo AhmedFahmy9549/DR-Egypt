@@ -1,4 +1,4 @@
-package com.example.gmsproduction.dregypt.ui.fragments;
+package com.example.gmsproduction.dregypt.ui.fragments.Clinincs;
 
 
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.SearchClinicsRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.SearchHospitalsRequest;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
@@ -31,15 +32,15 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HospitalsFragment extends Fragment implements Response.Listener<String>, Response.ErrorListener {
+public class ClinicsFragment extends Fragment implements Response.Listener<String>, Response.ErrorListener {
     RecyclerView recyclerView;
     View view;
-    String TAG = "HospitalsFragment";
+    String TAG = "ClinicsFragment";
     HashMap<String, String> parms = new HashMap<>();
     ArrayList<HospitalModel> arrayList = new ArrayList<>();
     private AdapterHospitalRecylcer adapterx;
 
-    public HospitalsFragment() {
+    public ClinicsFragment() {
         // Required empty public constructor
     }
 
@@ -49,10 +50,13 @@ public class HospitalsFragment extends Fragment implements Response.Listener<Str
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_hospitals, container, false);
+
+        getActivity().setTitle("Clinics");
+
         recyclerView = view.findViewById(R.id.hospital_recycler);
 
 
-        SharedPreferences prefs = getActivity().getSharedPreferences("Location", MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("LocationC", MODE_PRIVATE);
         int city_id = prefs.getInt("city_id", 0); //0 is the default value.
         int region_id = prefs.getInt("region_id", 0);
         int special_id = prefs.getInt("specialId", 0);
@@ -64,9 +68,9 @@ public class HospitalsFragment extends Fragment implements Response.Listener<Str
         Log.e(TAG, "Region=" + region_id + "  City=" + city_id + "    SpecialName=" + special_id);
 
 
-        SearchHospitalsRequest searchHospitalsRequest = new SearchHospitalsRequest(getActivity(), this, this);
-        searchHospitalsRequest.setBody(parms);
-        searchHospitalsRequest.start();
+        SearchClinicsRequest searchClinicsRequest = new SearchClinicsRequest(getActivity(), this, this);
+        searchClinicsRequest.setBody(parms);
+        searchClinicsRequest.start();
         return view;
     }
 
