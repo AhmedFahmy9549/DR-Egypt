@@ -23,11 +23,15 @@ import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.Specializ
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationsFragment;
 import com.example.gmsproduction.dregypt.ui.fragments.Pharmacy.PharmacyActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 
 public class MedicalGuideActivity extends AppCompatActivity implements View.OnClickListener , BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private SliderLayout mDemoSlider;
     ImageView hospitalBtn,ClinicBtn,PharmacyBtn;
+    TextView hospitalText,ClinicText,PharmacyText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +43,17 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
         ClinicBtn=(ImageView) findViewById(R.id.next_name2);
         PharmacyBtn=(ImageView) findViewById(R.id.next_name3);
 
+        hospitalText=(TextView) findViewById(R.id.text_name1);
+        ClinicText=(TextView) findViewById(R.id.text_name2);
+        PharmacyText=(TextView) findViewById(R.id.text_name3);
+
 
         hospitalBtn.setOnClickListener(this);
         ClinicBtn.setOnClickListener(this);
         PharmacyBtn.setOnClickListener(this);
+        hospitalText.setOnClickListener(this);
+        ClinicText.setOnClickListener(this);
+        PharmacyText.setOnClickListener(this);
 
 
         HashMap<String, Integer> url_maps = new HashMap<String, Integer>();
@@ -121,6 +132,19 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.next_name3:
+                intent = new Intent(this, PharmacyActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.text_name1:
+                intent = new Intent(this, SpecializationActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text_name2:
+                intent = new Intent(this, ClinicsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.text_name3:
                 intent = new Intent(this, PharmacyActivity.class);
                 startActivity(intent);
                 break;
