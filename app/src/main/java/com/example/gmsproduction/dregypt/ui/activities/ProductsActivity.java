@@ -168,10 +168,7 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
             public void onSearchViewClosed() {
 
             }
-        }
-
-        );
-
+        });
 
     }
 
@@ -184,7 +181,6 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
     public void onResponse(String response) {
         Responsey(response);
     }
-
 
 
     //menu option
