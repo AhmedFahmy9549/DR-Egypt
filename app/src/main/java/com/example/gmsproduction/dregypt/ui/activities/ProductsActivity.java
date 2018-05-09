@@ -1,9 +1,14 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.annotation.DimenRes;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,8 +32,11 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.P
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
+import com.example.gmsproduction.dregypt.ui.fragments.LoginFragments.BasePage;
+import com.example.gmsproduction.dregypt.ui.fragments.ProductBannerFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.ProductsModel;
+import com.example.gmsproduction.dregypt.utils.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
@@ -39,43 +47,85 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductsActivity extends AppCompatActivity implements  Response.Listener<String>, Response.ErrorListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class ProductsActivity extends AppCompatActivity implements  Response.Listener<String>, Response.ErrorListener {
 //Response.Listener<String>, Response.ErrorListener,
     private RecyclerView mRecyclerView;
     private ProductAdsAdapter mAdapter;
     private ArrayList<ProductsModel> modelArrayList;
-    String id, title, description, price, image, status, address, created_at, phone_1, phone_2;
+    String id, title, description, price, image, status, address, created_at, phone_1, phone_2,category;
     SliderLayout mDemoSlider;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String url = "https://dregy01.frb.io/api/product-ads/search";
+    private  FragmentManager fragmentManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_products);
+        fragmentManager = getSupportFragmentManager();
 
+        //add the banner
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.RelativeBunner, new ProductBannerFragment(),
+                        Utils.banner).commit();
 
         //Filters
-        body.put("status", "2");
+        //body.put("status", "2");
 
         //Request for main products
         final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(this,url,this,this);
         searchProductAdRequest.setBody((HashMap) body);
         searchProductAdRequest.start();
 
-        //slider
-        mDemoSlider = (SliderLayout) findViewById(R.id.ProductsSilder);
-
         //recycler View horizon orientation
         mRecyclerView = findViewById(R.id.Recycler_Product);
-        final LinearLayoutManager LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 3);
+        final LinearLayoutManager LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
+
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int position = parent.getChildAdapterPosition(view); // item position
+                int spanCount = 2;
+                int spacing = 2;//spacing between views in grid
+
+                if (position >= 0) {
+                    int column = position % spanCount; // item column
+
+                    outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                    outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+
+                    if (position < spanCount) { // top edge
+                            outRect.top = spacing;
+                    }
+                    outRect.bottom = spacing; // item bottom
+                } else {
+                    outRect.left = 0;
+                    outRect.right = 0;
+                    outRect.top = 0;
+                    outRect.bottom = 0;
+                }
+            }
+        });
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.addOnScrollListener(new CustomScrollListener());
 
         //Custom Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarxx);
         setSupportActionBar(toolbar);
+
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //Search Related
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
@@ -135,64 +185,7 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
         Responsey(response);
     }
 
-    //MAIN slider related
-    public void loadIMG(ArrayList<ProductsModel> arryListy) {
-        for (int i = 0; i < arryListy.size(); i++) {
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .image(arryListy.get(i).getImage())
-                    .setScaleType(BaseSliderView.ScaleType.Fit.CenterCrop)
-                    .setOnSliderClickListener(ProductsActivity.this);
 
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putInt("currentImg", i);
-
-            mDemoSlider.addSlider(textSliderView);
-        }
-        // you can change animasi, time page and anythink.. read more on github
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
-        mDemoSlider.setCustomIndicator((PagerIndicator) findViewById(R.id.custom_indicator_duck));
-        mDemoSlider.setDuration(4000);
-        mDemoSlider.addOnPageChangeListener(ProductsActivity.this);
-    }
-
-    //MAIN slider related
-    @Override
-    public void onStop() {
-        // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
-        mDemoSlider.stopAutoCycle();
-        super.onStop();
-    }
-
-    //MAIN slider related
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-
-
-    }
-
-    //MAIN slider related
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    //MAIN slider related
-    @Override
-    public void onPageSelected(int position) {
-
-
-        Log.d("Slider Demo", "Page Changed: " + position);
-    }
-
-    //MAIN slider related
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
 
     //menu option
     @Override
@@ -252,7 +245,10 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
                 JSONArray phoneArray = dataObject.getJSONArray("phone");
                 phone_1 = (String) phoneArray.get(0);
                 phone_2 = (String) phoneArray.get(1);
-                modelArrayList.add(new ProductsModel(id, title, description, price, status, image, address, created_at, phone_1, phone_2));
+                JSONObject categoryObject = dataObject.getJSONObject("category");
+                category = categoryObject.getString("en_name");
+
+                modelArrayList.add(new ProductsModel(id, title,category, description, price, status, image, address, created_at, phone_1, phone_2));
             }
             mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
             mRecyclerView.setAdapter(mAdapter);
@@ -261,6 +257,7 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
 
         }
     }
+
 }
 //custom class to detect when the recycleview reach it's end
  class CustomScrollListener extends RecyclerView.OnScrollListener {

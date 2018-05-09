@@ -2,8 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.gmsproduction.dregypt.ui.fragments.ProductBannerFragment">
 
 
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/ProductsSilder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
+        >
+
+        <com.daimajia.slider.library.Indicators.PagerIndicator
+            android:id="@+id/custom_indicator_duck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center|bottom"
+            android:padding="5dp"
+            custom:selected_color="#0095BF"
+            custom:selected_height="6dp"
+            custom:selected_padding_left="2dp"
+            custom:selected_padding_right="2dp"
+            custom:selected_width="6dp"
+            custom:shape="rect"
+            custom:unselected_color="#55333333"
+            custom:unselected_height="6dp"
+            custom:unselected_padding_left="2dp"
+            custom:unselected_padding_right="2dp"
+            custom:unselected_width="6dp" />
+
+    </com.daimajia.slider.library.SliderLayout>
 
 </FrameLayout>

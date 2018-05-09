@@ -84,8 +84,10 @@
         <!-- Ibrahim -->
 
         <activity android:name=".ui.activities.ProductsActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ui.activities.DetailsProducts"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".ui.activities.DetailsProducts"
+            android:parentActivityName=".ui.activities.ProductsActivity"/>
 
 
 

@@ -6,11 +6,12 @@ package com.example.gmsproduction.dregypt.utils;
 
 public class ProductsModel {
 
-    String idz, titlez, description,price, status, image ,address,created_at,phone_1,phone_2;
+    String idz, titlez,category, description,price, status, image ,address,created_at,phone_1,phone_2;
 
-    public ProductsModel(String idz, String titlez, String description, String price, String status, String image, String address, String created_at, String phone_1, String phone_2) {
+    public ProductsModel(String idz, String titlez, String category, String description, String price, String status, String image, String address, String created_at, String phone_1, String phone_2) {
         this.idz = idz;
         this.titlez = titlez;
+        this.category = category;
         this.description = description;
         this.price = price;
         this.status = status;
@@ -19,6 +20,10 @@ public class ProductsModel {
         this.created_at = created_at;
         this.phone_1 = phone_1;
         this.phone_2 = phone_2;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public String getDescription() {

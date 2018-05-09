@@ -24,12 +24,21 @@ import java.util.ArrayList;
 public class ProductBannerFragment extends Fragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener  {
     View view;
     SliderLayout mDemoSlider;
+    ArrayList<Integer>mArraylist;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.product_banner, container, false);
+        mDemoSlider = view.findViewById(R.id.ProductsSilder);
+
+        //add photo
+        mArraylist = new ArrayList<>();
+        mArraylist.add(R.drawable.photo1);
+        mArraylist.add(R.drawable.photo2);
+        mArraylist.add(R.drawable.photo3);
+        loadIMG(mArraylist);
 
 
 
@@ -38,12 +47,12 @@ public class ProductBannerFragment extends Fragment implements BaseSliderView.On
 
 
     //MAIN slider related
-    public void loadIMG(ArrayList<ProductsModel> arryListy) {
+    public void loadIMG(ArrayList<Integer> arryListy) {
         for (int i = 0; i < arryListy.size(); i++) {
             TextSliderView textSliderView = new TextSliderView(getActivity());
             // initialize a SliderLayout
             textSliderView
-                    .image(arryListy.get(i).getImage())
+                    .image(arryListy.get(i))
                     .setScaleType(BaseSliderView.ScaleType.Fit.CenterCrop)
                     .setOnSliderClickListener(this);
 
