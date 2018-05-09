@@ -79,7 +79,8 @@
             android:name=".ui.activities.ProductsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activities.DetailsProducts" />
-        <activity android:name=".ui.fragments.Clinincs.ClinicsActivity"></activity>
+        <activity android:name=".ui.fragments.Clinincs.ClinicsActivity" />
+        <activity android:name=".ui.fragments.Pharmacy.PharmacyActivity"></activity>
     </application>
 
 </manifest>

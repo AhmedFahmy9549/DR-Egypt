@@ -21,12 +21,13 @@ import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationsFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.Pharmacy.PharmacyActivity;
 
 import java.util.HashMap;
 
 public class MedicalGuideActivity extends AppCompatActivity implements View.OnClickListener , BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private SliderLayout mDemoSlider;
-    ImageView hospitalBtn,ClinicBtn;
+    ImageView hospitalBtn,ClinicBtn,PharmacyBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +37,25 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         hospitalBtn=(ImageView) findViewById(R.id.next_name1);
         ClinicBtn=(ImageView) findViewById(R.id.next_name2);
+        PharmacyBtn=(ImageView) findViewById(R.id.next_name3);
 
 
         hospitalBtn.setOnClickListener(this);
         ClinicBtn.setOnClickListener(this);
+        PharmacyBtn.setOnClickListener(this);
 
 
         HashMap<String, Integer> url_maps = new HashMap<String, Integer>();
-        url_maps.put("Hannibal", R.drawable.clinic_medical);
-        url_maps.put("Big Bang Theory",  R.drawable.hospital_medical);
-        url_maps.put("House of Cards",  R.drawable.pharmacy_medical);
-        url_maps.put("Game of Thrones", R.drawable.hospital_medical);
+        url_maps.put("Big Bang Theory",  R.drawable.photo1);
+        url_maps.put("House of Cards",  R.drawable.photo2);
+        url_maps.put("Game of Thrones", R.drawable.photo3);
 
         for (String name : url_maps.keySet()) {
             TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout
             textSliderView
                     .image(url_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setScaleType(BaseSliderView.ScaleType.Fit.CenterCrop)
                     .setOnSliderClickListener(this);
 
             //add your extra information
@@ -115,6 +117,11 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.next_name2:
                 intent = new Intent(this, ClinicsActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.next_name3:
+                intent = new Intent(this, PharmacyActivity.class);
                 startActivity(intent);
                 break;
         }
