@@ -39,6 +39,7 @@ public class DetailsJobs extends AppCompatActivity {
         education_level = extra.getStringExtra("JDeducation_level");
         employment_type = extra.getStringExtra("JDemployment_type");
 
+
     }
 
     public void Deploy() {
