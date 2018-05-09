@@ -4,7 +4,7 @@
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="10dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/parent"
@@ -26,7 +26,6 @@
             android:id="@+id/ratingBar"
             style="?android:ratingBarStyleIndicator"
             android:layout_width="wrap_content"
-            android:stepSize="1"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:isIndicator="false"
@@ -34,7 +33,7 @@
             android:rating="2"
             android:theme="@style/RatingBar1"
             app:layout_constraintStart_toStartOf="@id/image_hospital"
-            app:layout_constraintTop_toBottomOf="@id/text_name" />
+            app:layout_constraintTop_toBottomOf="@id/image_hospital" />
 
         <TextView
             android:id="@+id/text_fav"
@@ -42,9 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="13"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="@id/parent"
-            app:layout_constraintStart_toEndOf="@id/text_name"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@id/myToggleButton"
             app:layout_constraintTop_toBottomOf="@+id/image_hospital" />
 
 
@@ -55,20 +53,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor="#000"
             android:text="Name"
-            android:textSize="30dp"
+            android:textSize="25sp"
             app:layout_constraintStart_toStartOf="@id/ratingBar"
-            app:layout_constraintTop_toBottomOf="@id/image_hospital" />
+            app:layout_constraintTop_toBottomOf="@id/ratingBar" />
 
         <TextView
             android:id="@+id/text_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor="#000"
             android:text="Address"
-            android:textSize="20dp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/text_name"
-            app:layout_constraintTop_toBottomOf="@id/ratingBar" />
+            app:layout_constraintTop_toBottomOf="@id/text_name" />
 
 
         <TextView
@@ -76,8 +76,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor="#000"
             android:text="Email"
-            android:textSize="20dp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/text_address"
             app:layout_constraintTop_toBottomOf="@id/text_address" />
 
@@ -85,24 +86,31 @@
             android:id="@+id/text_website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
+            android:textColor="#000"
             android:text="Web Sit"
-            android:textSize="20dp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/text_address"
-            app:layout_constraintTop_toBottomOf="@id/text_email" />
+            app:layout_constraintTop_toBottomOf="@id/text_email"
+            app:layout_constraintBottom_toBottomOf="@id/parent"
+            />
 
 
 
         <ToggleButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="12dp"
             android:id="@+id/myToggleButton"
             android:textOff=""
             android:textOn=""
 
-            app:layout_constraintStart_toEndOf="@id/text_fav"
-            app:layout_constraintTop_toBottomOf="@id/image_hospital"            />
+            app:layout_constraintStart_toEndOf="@id/ratingBar"
+            app:layout_constraintEnd_toEndOf="@id/parent"
+            app:layout_constraintTop_toBottomOf="@id/image_hospital"
+
+            />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

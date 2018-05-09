@@ -48,22 +48,35 @@ public class AdapterSpecializationRecylcer extends RecyclerView.Adapter<AdapterS
     public void onBindViewHolder(final Myholder holder, final int position) {
 
         final LocationModel model = arrayList.get(position);
-        holder.textView.setText(model.getLocName());
-        holder.imgaeView.setImageDrawable(context.getResources().getDrawable(R.drawable.tooth));
 
-        holder.textView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                holder.textView.setBackgroundColor(context.getResources().getColor(R.color.bluoo));
+        if(position==0){
+            holder.textView.setText("Select All");
+            holder.textView.setTextSize(25);
 
-                return false;
-            }
-        });
+        }
+        else{
+            holder.textView.setText(model.getLocName());
+            holder.imgaeView.setImageDrawable(context.getResources().getDrawable(R.drawable.tooth));
+
+
+        }
+
+
+
+
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor = context.getSharedPreferences("Location", context.MODE_PRIVATE).edit();
-                editor.putInt("specialId", model.getLocId());
+
+                if(position==0){
+                    editor.putInt("specialId", 0);
+
+                }
+                else {
+                    editor.putInt("specialId", model.getLocId());
+
+                }
                 editor.apply();
 
                 Intent intent = new Intent(context, RegionActivity.class);

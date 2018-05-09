@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
@@ -20,6 +25,8 @@ import com.example.gmsproduction.dregypt.ui.activities.HospitalsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Created by Ahmed Fahmy on 12/5/2017.
@@ -32,7 +39,6 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
     Intent intent;
 
     public AdapterHospitalRecylcer(Context context, ArrayList<HospitalModel> arrayList) {
-
         this.context = context;
         this.arrayList = arrayList;
     }
@@ -50,13 +56,28 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
 
         HospitalModel model=arrayList.get(position);
 
-        holder.textName.setText(model.getName());
-        holder.textAddreess.setText(model.getAddress());
-        holder.textEmail.setText(model.getEmail());
-        holder.textWebsite.setText(model.getWebsite());
-        holder.textFav.setText(model.getFavorites());
 
-        Picasso.with(context).load(model.getImg()).into(holder.imageView);
+            holder.textName.setText(model.getName());
+            holder.textAddreess.setText(model.getAddress());
+            holder.textEmail.setText(model.getEmail());
+            holder.textWebsite.setText(model.getWebsite());
+            Log.e(TAG,"Favorite= "+model.getFavorites());
+             holder.textFav.setText(""+model.getFavorites());
+            Picasso.with(context).load(model.getImg()).into(holder.imageView);
+
+        holder.toggleFav.setChecked(false);
+        holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        holder.toggleFav.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp_fill));
+                else
+                    holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            }
+        });
+
+        holder.ratingBar.setRating(model.getRating());
 
 
 
@@ -73,6 +94,7 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
         ImageView imageView;
         TextView textName,textFav,textAddreess,textEmail,textWebsite;
         ToggleButton toggleFav;
+        RatingBar ratingBar;
 
 
         public Myholder(View itemView) {
@@ -84,6 +106,7 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
             textWebsite=itemView.findViewById(R.id.text_website);
             textFav=itemView.findViewById(R.id.text_fav);
             toggleFav=itemView.findViewById(R.id.myToggleButton);
+            ratingBar =  itemView.findViewById(R.id.ratingBar);
 
 
         }

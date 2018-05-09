@@ -4,6 +4,7 @@
     android:id="@+id/special_linear"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,25 +18,25 @@
             android:id="@+id/special_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tooth" />
+         />
 
         <TextView
             android:id="@+id/special_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="Special"
             android:textColor="@color/colorPrimary"
-            android:textSize="25dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
 
     <TextView
-
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#7000"
+        android:background="#80e3e3e3"
         app:layout_constraintTop_toBottomOf="@id/special_text" />
 
 </LinearLayout>

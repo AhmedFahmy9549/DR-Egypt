@@ -6,9 +6,10 @@ package com.example.gmsproduction.dregypt.Models;
 
 public class HospitalModel {
     private String name, address, note, website, email, img, phone1, phone2, createdAt;
-    private int id, count, rating,favorites;
+    private int id, count,favorites;
+    private float rating;
 
-    public HospitalModel( int id,String name, String address, String note, String website, String email, String img, String phone1, String phone2, int count, int rating, int favorites, String createdAt) {
+    public HospitalModel( int id,String name, String address, String note, String website, String email, String img, String phone1, String phone2, int count, float rating, int favorites, String createdAt) {
         this.name = name;
         this.address = address;
         this.note = note;
@@ -75,7 +76,7 @@ public class HospitalModel {
         return count;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 

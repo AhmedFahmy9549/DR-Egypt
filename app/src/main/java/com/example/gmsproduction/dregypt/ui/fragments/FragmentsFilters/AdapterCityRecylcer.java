@@ -75,8 +75,7 @@ public class AdapterCityRecylcer extends RecyclerView.Adapter<AdapterCityRecylce
         });
 
     }
-
-    @Override
+        @Override
     public int getItemCount() {
         return arrayList.size();
 

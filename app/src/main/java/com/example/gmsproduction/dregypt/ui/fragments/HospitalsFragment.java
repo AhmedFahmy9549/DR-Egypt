@@ -20,6 +20,7 @@ import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterCityRecylcer;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
+import com.example.gmsproduction.dregypt.utils.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +39,7 @@ public class HospitalsFragment extends Fragment implements Response.Listener<Str
     View view;
     String TAG = "HospitalsFragment";
     HashMap<String, String> parms = new HashMap<>();
-    ArrayList<HospitalModel>arrayList=new ArrayList<>();
+    ArrayList<HospitalModel> arrayList = new ArrayList<>();
     private AdapterHospitalRecylcer adapterx;
 
     public HospitalsFragment() {
@@ -94,28 +95,30 @@ public class HospitalsFragment extends Fragment implements Response.Listener<Str
                 String note_hos = object.getString("en_note");
                 String website_hos = object.getString("website");
                 String email_hos = object.getString("email");
-                String img_hos = object.getString("img");
-
-
+                String img_hos = Constants.ImgUrl+object.getString("img");
                 String createdAt_hos = object.getString("created_at");
 
 
                 JSONObject fav_object = object.getJSONObject("favorites");
-                int fav_hos = object.getInt("count");
+                int fav_hos = fav_object.getInt("count");
 
                 JSONObject rate = object.getJSONObject("rate");
-                int count_hos = object.getInt("count");
-                int rating_hos = object.getInt("rating");
+                int count_hos = rate.getInt("count");
+                float rating_hos = (float) rate.getDouble("rating");
 
                 JSONArray phone = object.getJSONArray("phone");
-                String phone_hos = phone.getString(1);
-                String phone2_hos = phone.getString(2);
+                String phone_hos = phone.getString(0);
+                String phone2_hos = phone.getString(1);
 
-                HospitalModel model=new HospitalModel(id_hos,name_hos,address_hos,note_hos,website_hos,email_hos,img_hos,phone_hos,phone2_hos,count_hos,rating_hos,fav_hos,createdAt_hos);
+                Log.e(TAG + "Response=", "" + rating_hos);
+
+
+
+                HospitalModel model = new HospitalModel(id_hos, name_hos, address_hos, note_hos, website_hos, email_hos, img_hos, phone_hos, phone2_hos, count_hos, rating_hos, fav_hos, createdAt_hos);
+
 
                 arrayList.add(model);
             }
-
 
 
         } catch (JSONException e) {
