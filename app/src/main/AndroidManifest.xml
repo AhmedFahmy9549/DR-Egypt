@@ -60,7 +60,9 @@
             android:label="Medical Guide"
             android:parentActivityName=".ui.activities.MainActivity" />
 
-        <activity android:name=".ui.activities.JobsActivity"/>
+        <activity android:name=".ui.activities.JobsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
         <activity android:name=".ui.activities.CosmeticsActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -88,6 +90,9 @@
             />
         <activity android:name=".ui.activities.DetailsProducts"
             android:parentActivityName=".ui.activities.ProductsActivity"/>
+
+        <activity android:name=".ui.activities.DetailsJobs"
+            android:parentActivityName=".ui.activities.JobsActivity"/>
 
 
 

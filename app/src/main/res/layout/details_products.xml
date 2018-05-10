@@ -106,13 +106,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+
             >
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                >
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -132,9 +129,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:layout_marginBottom="10dp"
                         android:text="Qui tenetur rem officia. Qui iusto saepe consequatur consequatur." />
                 </LinearLayout>
-            </ScrollView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -185,6 +182,23 @@
         />
 
 
+    <TextView
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contact Us"
+        android:gravity="center"
+        android:visibility="visible"
+        />
+
+    <LinearLayout
+        android:id="@+id/Product_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -239,6 +253,8 @@
                 android:text="3453 Darrion Row Apt. 087"
                 />
         </LinearLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>

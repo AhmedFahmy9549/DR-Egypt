@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CosmeticsActivity extends AppCompatActivity implements Response.Listener<String>, Response.ErrorListener {
+public class CosmeticsActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private CosmeticClinicsAdapter mAdapter;
@@ -46,16 +46,14 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String url = "https://dregy01.frb.io/api/cosmetic-clinics/search";
-
+    String test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetics);
 
-        //Request for main products
-        final SearchCosmeticClinicsRequest searchCosmeticClinicsRequest = new SearchCosmeticClinicsRequest(this, this, this);
-        searchCosmeticClinicsRequest.setBody((HashMap) body);
-        searchCosmeticClinicsRequest.start();
+        //Request for all Main products
+        getCosmetics("");
 
         //recycler View
         mRecyclerView = findViewById(R.id.Recycler_Cosmetic);
@@ -76,7 +74,12 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            finish();
+                if (test != null && !test.isEmpty()){
+                    test = "";
+                    getCosmetics(test);
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -87,27 +90,14 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                test = query;
+                getCosmetics(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                body.put("keyword", newText);
-                final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(CosmeticsActivity.this, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        CosmeticResponse(response);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-                searchProductAdRequest.setBody((HashMap) body);
-                searchProductAdRequest.start();
-
+                getCosmetics(newText);
                 return false;
             }
         });
@@ -119,21 +109,13 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
 
                                                @Override
                                                public void onSearchViewClosed() {
-
+                                                   getCosmetics(test);
                                                }
                                            });
 
     }
 
-    @Override
-    public void onResponse(String response) {
-        CosmeticResponse(response);
-    }
 
-    @Override
-    public void onErrorResponse(VolleyError error) {
-
-    }
     //menu option
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -205,5 +187,22 @@ public class CosmeticsActivity extends AppCompatActivity implements Response.Lis
             e.printStackTrace();
 
         }
+    }
+    //filters will be added here
+    public void getCosmetics(String keyword){
+        body.put("keyword", keyword);
+        final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(CosmeticsActivity.this, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                CosmeticResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        searchProductAdRequest.setBody((HashMap) body);
+        searchProductAdRequest.start();
     }
 }

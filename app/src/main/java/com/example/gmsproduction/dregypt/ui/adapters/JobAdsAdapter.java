@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -67,21 +68,39 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
 
         //togglebutton
         holder.toggleButton.setChecked(false);
-        holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_rate_white_18dp));
+        holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_toggle_star_color));
         holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_star_rate_black_18dp));
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_toggle_star_color2));
                 else
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_star_rate_white_18dp));
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_toggle_star_color));
             }
         });
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.TXTMoreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(mContext, DetailsJobs.class);
+                intent.putExtra("JDTitle",currentItem.getTitle());
+                intent.putExtra("JDdescription",currentItem.getDescription());
+                intent.putExtra("JDsalary",currentItem.getSalary());
+                intent.putExtra("JDimage",currentItem.getImage());
+                intent.putExtra("JDaddress",currentItem.getAddress());
+                intent.putExtra("JDcreated_at",currentItem.getCreated_at());
+                intent.putExtra("JDphone_1",currentItem.getPhone_1());
+                intent.putExtra("JDphone_2",currentItem.getPhone_2());
+                intent.putExtra("JDexperience",currentItem.getExperience());
+                intent.putExtra("JDeducation_level",currentItem.getEducation_level());
+                intent.putExtra("JDemployment_type",currentItem.getEmployment_type());
+                mContext.startActivity(intent);
 
+            }
+        });
+        holder.JobsClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailsJobs.class);
                 intent.putExtra("JDTitle",currentItem.getTitle());
                 intent.putExtra("JDdescription",currentItem.getDescription());
@@ -112,11 +131,9 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
 
     class MyViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener */ {
 
-        TextView TxTTitle;
-        TextView TxTAdress;
-        TextView TxTPhone;
-        TextView TxTDate;
+        TextView TxTTitle,TxTAdress,TxTPhone,TxTDate,TXTMoreDetails;
         CardView cardView;
+        LinearLayout JobsClick;
         ToggleButton toggleButton;
 
 
@@ -130,7 +147,8 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
             TxTDate = itemView.findViewById(R.id.Jobs_Date);
             cardView = itemView.findViewById(R.id.Jobs_Card);
             toggleButton = itemView.findViewById(R.id.Jobs_ToggleButton);
-
+            TXTMoreDetails = itemView.findViewById(R.id.Jobs_MoreDetails);
+            JobsClick = itemView.findViewById(R.id.JobsClick);
         }
 
        /* @Override

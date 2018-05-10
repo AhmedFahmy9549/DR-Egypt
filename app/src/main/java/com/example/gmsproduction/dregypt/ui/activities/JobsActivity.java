@@ -6,9 +6,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.arlib.floatingsearchview.FloatingSearchView;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.SearchJobAdRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
@@ -28,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JobsActivity extends AppCompatActivity implements  Response.Listener<String>, Response.ErrorListener{
+public class JobsActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private JobAdsAdapter mAdapter;
@@ -37,34 +41,86 @@ public class JobsActivity extends AppCompatActivity implements  Response.Listene
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String url = "https://dregy01.frb.io/api/job-ads/search";
+    private FloatingSearchView mSearchView;
+    Boolean zft = true;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobs);
 
         //Request for main Jobs
-        final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(this,this,this);
+        /*final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(this,url,this,this);
         searchJobAdRequest.setBody((HashMap) body);
-        searchJobAdRequest.start();
+        searchJobAdRequest.start();*/
+
+        getJobs("");
 
         //Recycle
         mRecyclerView = findViewById(R.id.Recycler_Jobs);
         final LinearLayoutManager LayoutManagaer = new LinearLayoutManager(JobsActivity.this);
         mRecyclerView.setLayoutManager(LayoutManagaer);
 
+        /////////
+        mSearchView = findViewById(R.id.floating_search_view);
+        mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
+            @Override
+            public void onActionMenuItemSelected(MenuItem item) {
+
+
+            }});
+
+        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+            @Override
+            public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                //get suggestions based on newQuery
+
+                //pass them on to the search view
+                //mSearchView.swapSuggestions(newSuggestions);
+                getJobs(newQuery);
+
+            }
+        });
+
+        mSearchView.setOnHomeActionClickListener(
+                new FloatingSearchView.OnHomeActionClickListener() {
+                    @Override
+                    public void onHomeClicked() {
+                        if (mSearchView.getQuery() != null && !(mSearchView.getQuery()).isEmpty()){
+                            mSearchView.clearQuery();
+                            getJobs("");
+                        }
+                        else{
+                            finish();
+                        }
+                    }
+                });
+
+
+
+
     }
 
 
 
-    @Override
-    public void onErrorResponse(VolleyError error) {
 
-    }
 
-    @Override
-    public void onResponse(String response) {
-        JobsResponse(response);
+    public void getJobs(String keyword){
+        body.put("keyword", keyword);
+        final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(JobsActivity.this,url,new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JobsResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
+            }
+        });
+        searchJobAdRequest.setBody((HashMap) body);
+        searchJobAdRequest.start();
     }
 
     public void JobsResponse(String response){

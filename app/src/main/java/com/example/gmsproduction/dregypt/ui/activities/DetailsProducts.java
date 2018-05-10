@@ -4,8 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -19,10 +26,11 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DetailsProducts extends AppCompatActivity {
     ImageView imageView;
-    TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1;
+    TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1,texttestr;
     String idz, titlez, description, price, status, image, address, created_at, phone_1, phone_2;
     ToggleButton toggleButton;
 
+    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +41,17 @@ public class DetailsProducts extends AppCompatActivity {
         Deploy();
         setTitle(titlez);
 
+        linearLayout = findViewById(R.id.Product_test);
+        texttestr = findViewById(R.id.spinner1);
+        texttestr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation in = AnimationUtils.loadAnimation(DetailsProducts.this, android.R.anim.fade_in);
+                linearLayout.startAnimation(in);
 
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
@@ -76,7 +94,7 @@ public class DetailsProducts extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp_fill));
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
                 else
                     toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
             }

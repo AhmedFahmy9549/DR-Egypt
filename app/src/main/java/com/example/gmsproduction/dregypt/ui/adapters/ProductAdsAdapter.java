@@ -2,6 +2,7 @@ package com.example.gmsproduction.dregypt.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.DetailsProducts;
@@ -19,6 +22,8 @@ import com.example.gmsproduction.dregypt.utils.ProductsModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.MyViewHolder> {
     final String basicImgUrl = "http://gms-sms.com:89";
@@ -48,7 +53,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         ProductsModel currentItem = mArrayList.get(position);
         final String id = currentItem.getIdz();
         final String title= currentItem.getTitlez();
@@ -91,7 +96,21 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         holder.ProductPrice.setText(price+"L.E");
         holder.ProductStatus.setText(status);
         Picasso.with(mContext).load(image).fit().centerInside().into(holder.imageView);
+
+        holder.toggleButton.setChecked(false);
+        holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp_fill));
+                else
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            }
+        });
+
         //setAnimation(holder.cardView,position);
+
     }
 
 
@@ -107,6 +126,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         TextView ProductTitle, ProductCategory, ProductPrice, ProductStatus, ProductsMoreDetails;
         ImageView imageView;
         LinearLayout cardView;
+        ToggleButton toggleButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -114,9 +134,10 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
             ProductPrice = itemView.findViewById(R.id.Products_Price);
             ProductStatus = itemView.findViewById(R.id.Products_Status);
             imageView = itemView.findViewById(R.id.Products_Img);
-            ProductsMoreDetails = itemView.findViewById(R.id.Products_More_Details);
             cardView = itemView.findViewById(R.id.Products_cardView);
             ProductCategory = itemView.findViewById(R.id.Products_Category);
+            toggleButton = itemView.findViewById(R.id.Products_ToggleButton);
+
             itemView.setOnClickListener(this);
         }
 

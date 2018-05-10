@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/testyy"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.gmsproduction.dregypt.ui.activities.JobsActivity"
-    android:layout_marginTop="2.5dp"
-    android:layout_marginBottom="2.5dp"
-    >
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/Recycler_Jobs"
+    <include
+        layout="@layout/jobs_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        >
+        android:layout_marginTop="?attr/actionBarSize" />
 
-    </android.support.v7.widget.RecyclerView>
+    <FrameLayout
+        android:id="@+id/toolbar_container_cosmetic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarxx_cosmetic"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:title=""
+            app:titleTextColor="@color/white" />
+
+        <com.arlib.floatingsearchview.FloatingSearchView
+            android:id="@+id/floating_search_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:floatingSearch_searchHint="Search..."
+            app:floatingSearch_suggestionsListAnimDuration="250"
+            app:floatingSearch_showSearchKey="false"
+            app:floatingSearch_leftActionMode="showHome"
+            app:floatingSearch_menu="@menu/menu_main"
+            app:floatingSearch_close_search_on_keyboard_dismiss="true"/>
+    </FrameLayout>
+</FrameLayout>
