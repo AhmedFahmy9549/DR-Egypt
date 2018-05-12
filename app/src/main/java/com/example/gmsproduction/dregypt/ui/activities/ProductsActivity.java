@@ -56,7 +56,7 @@ public class ProductsActivity extends AppCompatActivity {
     SliderLayout mDemoSlider;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
-    String url = Constants.basicUrl+"/api/product-ads/search";
+    String url = Constants.basicUrl+"/product-ads/search";
     private  FragmentManager fragmentManager;
     String test;
 

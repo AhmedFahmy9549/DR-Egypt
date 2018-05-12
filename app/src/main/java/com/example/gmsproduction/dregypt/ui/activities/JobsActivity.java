@@ -40,7 +40,7 @@ public class JobsActivity extends AppCompatActivity {
     String id,userId, title, description,salary, image, status, address, created_at, phone_1, phone_2,category,experience,education_level,employment_type;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
-    String url = Constants.basicUrl+"/api/job-ads/search";
+    String url = Constants.basicUrl+"/job-ads/search";
     private FloatingSearchView mSearchView;
     Boolean zft = true;
 
