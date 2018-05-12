@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductsActivity extends AppCompatActivity implements  Response.Listener<String>, Response.ErrorListener {
+public class ProductsActivity extends AppCompatActivity {
 //Response.Listener<String>, Response.ErrorListener,
     private RecyclerView mRecyclerView;
     private ProductAdsAdapter mAdapter;
@@ -58,7 +58,7 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
     Map<String, String> body = new HashMap<>();
     String url = Constants.basicUrl+"/api/product-ads/search";
     private  FragmentManager fragmentManager;
-
+    String test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +76,8 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
         //body.put("status", "2");
 
         //Request for main products
-        final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(this,url,this,this);
-        searchProductAdRequest.setBody((HashMap) body);
-        searchProductAdRequest.start();
+        getProducts("");
+
 
         //recycler View horizon orientation
         mRecyclerView = findViewById(R.id.Recycler_Product);
@@ -123,8 +122,12 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-            }
+                if (test != null && !test.isEmpty()){
+                    test = "";
+                    getProducts(test);
+                }else {
+                    finish();
+                }            }
         });
 
         //Search Related
@@ -134,7 +137,8 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                test = query;
+                getProducts(query);
                 return false;
             }
 
@@ -153,20 +157,10 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
 
             @Override
             public void onSearchViewClosed() {
-
+                getProducts(test);
             }
         });
 
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Log.e("tagyy", error.toString());
-    }
-
-    @Override
-    public void onResponse(String response) {
-        Responsey(response);
     }
 
 
