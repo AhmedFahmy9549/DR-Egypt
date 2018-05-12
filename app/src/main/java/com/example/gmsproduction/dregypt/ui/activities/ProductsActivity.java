@@ -56,7 +56,7 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
     SliderLayout mDemoSlider;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
-    String url = "https://dregy01.frb.io/api/product-ads/search";
+    String url = Constants.basicUrl+"/api/product-ads/search";
     private  FragmentManager fragmentManager;
 
 
@@ -140,20 +140,7 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                body.put("keyword", newText);
-                final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this,url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Responsey(response);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                });
-                searchProductAdRequest.setBody((HashMap) body);
-                searchProductAdRequest.start();
+                getProducts(newText);
 
                 return false;
             }
@@ -252,6 +239,22 @@ public class ProductsActivity extends AppCompatActivity implements  Response.Lis
             e.printStackTrace();
 
         }
+    }
+    public void getProducts(String keyword){
+        body.put("keyword", keyword);
+        final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this,url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Responsey(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        searchProductAdRequest.setBody((HashMap) body);
+        searchProductAdRequest.start();
     }
 
 }

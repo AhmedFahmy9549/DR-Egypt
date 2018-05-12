@@ -45,7 +45,7 @@ public class CosmeticsActivity extends AppCompatActivity {
     int rating_counts;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
-    String url = "https://dregy01.frb.io/api/cosmetic-clinics/search";
+    String url = Constants.basicUrl+"/api/cosmetic-clinics/search";
     String test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
