@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+
+
     <application
         android:name=".DrEgyptApp"
         android:allowBackup="true"
@@ -76,6 +81,11 @@
             android:label="Select Specialization" />
 
 
+        <activity android:name=".ui.fragments.Clinincs.ClinicsActivity"
+            android:label="Select Specialization" />
+
+        <activity android:name=".ui.fragments.Pharmacy.PharmacyActivity"
+            android:label="Select Specialization" />
 
 
 

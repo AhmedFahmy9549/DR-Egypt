@@ -1,6 +1,8 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -176,8 +178,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.fab:
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                Intent i = new Intent(MainActivity.this, LogInActivity.class);
-                startActivity(i);
+
                 break;
 
             case R.id.card_medical:
@@ -204,6 +205,13 @@ public class MainActivity extends AppCompatActivity
                 break;
 
 
+
+
         }
     }
+
+
+
+
+
 }
