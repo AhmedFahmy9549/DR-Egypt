@@ -16,16 +16,16 @@ import java.util.HashMap;
 public class SearchJobAdRequest {
 
     VolleyLIbUtils volleyLIbUtils;
-    //String url;
+    String url;
     int methodId;
 
-    public SearchJobAdRequest(Context context,String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public SearchJobAdRequest(Context context,Response.Listener<String> listener, Response.ErrorListener errorListener) {
         setValues();
         volleyLIbUtils = new VolleyLIbUtils(context, methodId, url, listener, errorListener);
     }
 
     private void setValues() {
-        //url = Constants.basicUrl + "/job-ads/search";
+        url = Constants.basicUrl + "/job-ads/search";
         methodId = Request.Method.POST;
     }
 

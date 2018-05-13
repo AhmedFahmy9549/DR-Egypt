@@ -58,6 +58,7 @@ public class ProductsActivity extends AppCompatActivity {
     Map<String, String> body = new HashMap<>();
     String url = Constants.basicUrl+"/product-ads/search";
     private  FragmentManager fragmentManager;
+    DetailsProducts detailsProducts;
     String test;
 
     @Override
@@ -236,7 +237,7 @@ public class ProductsActivity extends AppCompatActivity {
     }
     public void getProducts(String keyword){
         body.put("keyword", keyword);
-        final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this,url, new Response.Listener<String>() {
+        final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Responsey(response);

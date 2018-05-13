@@ -37,7 +37,7 @@ dependencies {
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
 
     compile 'com.github.arimorty:floatingsearchview:2.1.1'
-
+    compile 'com.github.aakira:expandable-layout:1.6.0@aar'
 
 
     compile 'com.nineoldandroids:library:2.4.0'

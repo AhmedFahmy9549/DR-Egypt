@@ -1,6 +1,7 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +20,10 @@ import android.widget.ToggleButton;
 
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.ProductsModel;
+import com.github.aakira.expandablelayout.ExpandableLayoutListener;
+import com.github.aakira.expandablelayout.ExpandableLinearLayout;
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.github.aakira.expandablelayout.ExpandableWeightLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,8 +35,10 @@ public class DetailsProducts extends AppCompatActivity {
     TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1,texttestr;
     String idz, titlez, description, price, status, image, address, created_at, phone_1, phone_2;
     ToggleButton toggleButton;
+    Button btn;
+    LinearLayout Dial;
+    ExpandableRelativeLayout expandableLayout1;
 
-    LinearLayout linearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +49,11 @@ public class DetailsProducts extends AppCompatActivity {
         Deploy();
         setTitle(titlez);
 
-        linearLayout = findViewById(R.id.Product_test);
-        texttestr = findViewById(R.id.spinner1);
-        texttestr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Animation in = AnimationUtils.loadAnimation(DetailsProducts.this, android.R.anim.fade_in);
-                linearLayout.startAnimation(in);
-
-                linearLayout.setVisibility(View.VISIBLE);
-            }
-        });
-
     }
+    /*public void expandableButton1(View view) {
+        expandableLayout1 = (ExpandableRelativeLayout) findViewById(R.id.expandableLayout);
+        expandableLayout1.toggle(); // toggle expand and collapse
+    }*/
 
     private void Initialize() {
         imageView = findViewById(R.id.IMG_ProductDetails);
@@ -63,6 +63,7 @@ public class DetailsProducts extends AppCompatActivity {
         TXTcreated_at = findViewById(R.id.Date_ProductDetails);
         TXTphone_1 = findViewById(R.id.Phone_ProductDetails);
         toggleButton = (ToggleButton) findViewById(R.id.Details_ToggleButton);
+        Dial= findViewById(R.id.DetailsProduct_Dial);
 
     }
 
@@ -99,5 +100,30 @@ public class DetailsProducts extends AppCompatActivity {
                     toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
             }
         });
+
+        Dial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                phoneCall(phone_1);
+            }
+        });
     }
+
+    public void phoneCall(String data) {
+        Intent intent1 = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", data, null));
+        startActivity(intent1);
+    }
+
+
+    /*linearLayout = findViewById(R.id.Product_test);
+        texttestr = findViewById(R.id.spinner1);
+        texttestr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation in = AnimationUtils.loadAnimation(DetailsProducts.this, android.R.anim.fade_in);
+                linearLayout.startAnimation(in);
+
+                linearLayout.setVisibility(View.VISIBLE);
+            }
+        });*/
 }

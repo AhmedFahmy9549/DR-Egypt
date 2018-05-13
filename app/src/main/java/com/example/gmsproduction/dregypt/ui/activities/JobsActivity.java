@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -41,8 +44,7 @@ public class JobsActivity extends AppCompatActivity {
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String url = Constants.basicUrl+"/job-ads/search";
-    private FloatingSearchView mSearchView;
-    Boolean zft = true;
+    String test;
 
 
     @Override
@@ -62,44 +64,80 @@ public class JobsActivity extends AppCompatActivity {
         final LinearLayoutManager LayoutManagaer = new LinearLayoutManager(JobsActivity.this);
         mRecyclerView.setLayoutManager(LayoutManagaer);
 
-        /////////
-        mSearchView = findViewById(R.id.floating_search_view);
-        mSearchView.setOnMenuItemClickListener(new FloatingSearchView.OnMenuItemClickListener() {
+        //Custom Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_Jobs);
+        setSupportActionBar(toolbar);
+
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onActionMenuItemSelected(MenuItem item) {
-
-
-            }});
-
-        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
-            @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
-                //get suggestions based on newQuery
-
-                //pass them on to the search view
-                //mSearchView.swapSuggestions(newSuggestions);
-                getJobs(newQuery);
-
+            public void onClick(View v) {
+                if (test != null && !test.isEmpty()){
+                    test = "";
+                    getJobs(test);
+                }else {
+                    finish();
+                }
             }
         });
 
-        mSearchView.setOnHomeActionClickListener(
-                new FloatingSearchView.OnHomeActionClickListener() {
-                    @Override
-                    public void onHomeClicked() {
-                        if (mSearchView.getQuery() != null && !(mSearchView.getQuery()).isEmpty()){
-                            mSearchView.clearQuery();
-                            getJobs("");
-                        }
-                        else{
-                            finish();
-                        }
-                    }
-                });
+        //Search Related
+        searchView = (MaterialSearchView) findViewById(R.id.search_view_Jobs);
+        searchView.setVoiceSearch(false);
+        searchView.setEllipsize(true);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                test = query;
+                getJobs(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                getJobs(newText);
+                return false;
+            }
+        });
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                getJobs(test);
+            }
+        });
 
 
 
 
+    }
+
+    //menu option
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
+
+    //on back press
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 
 
@@ -108,7 +146,7 @@ public class JobsActivity extends AppCompatActivity {
 
     public void getJobs(String keyword){
         body.put("keyword", keyword);
-        final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(JobsActivity.this,url,new Response.Listener<String>() {
+        final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(JobsActivity.this,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JobsResponse(response);

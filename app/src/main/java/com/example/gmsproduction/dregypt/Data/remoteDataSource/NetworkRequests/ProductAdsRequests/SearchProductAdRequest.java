@@ -16,17 +16,17 @@ import java.util.HashMap;
 public class SearchProductAdRequest {
 
     VolleyLIbUtils volleyLIbUtils;
-    //String url;
+    String url;
     int methodId;
 
 
 
-    public SearchProductAdRequest(Context context,String url, Response.Listener<String> listener, Response.ErrorListener errorListener){
+    public SearchProductAdRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener){
         setValues();
         volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
     }
     private void setValues(){
-        //url= Constants.basicUrl+"/product-ads/search";
+        url= Constants.basicUrl+"/product-ads/search";
 
         methodId= Request.Method.POST;
     }

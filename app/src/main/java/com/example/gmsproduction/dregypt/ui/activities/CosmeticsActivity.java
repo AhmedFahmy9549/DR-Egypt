@@ -191,7 +191,7 @@ public class CosmeticsActivity extends AppCompatActivity {
     //filters will be added here
     public void getCosmetics(String keyword){
         body.put("keyword", keyword);
-        final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(CosmeticsActivity.this, url, new Response.Listener<String>() {
+        final SearchCosmeticClinicsRequest searchProductAdRequest = new SearchCosmeticClinicsRequest(CosmeticsActivity.this,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 CosmeticResponse(response);

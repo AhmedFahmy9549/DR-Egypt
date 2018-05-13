@@ -73,7 +73,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
 
-        <activity android:name=".ui.activities.HospitalsActivity"/>
+        <activity android:name=".ui.activities.HospitalsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
         <activity android:name=".ui.fragments.FragmentsFilters.RegionActivity"
             android:label="Select Region" />
 

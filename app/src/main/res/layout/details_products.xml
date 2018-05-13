@@ -1,114 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
 
-
-
-
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <ImageView
-                android:id="@+id/IMG_ProductDetails"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                />
+            android:layout_height="wrap_content">
+
+
 
             <LinearLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10"
-                >
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/Price_ProductDetails"
-                    android:layout_width="0dp"
-                    android:layout_weight="1.5"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/bluoo"
-                    android:text="52$"
-                    android:layout_marginLeft="20dp" />
+                <ImageView
+                    android:id="@+id/IMG_ProductDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="6.5"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+
                     >
 
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/Price_ProductDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:gravity="center"
+                        android:text="52$"
+                        android:textColor="@color/bluoo" />
+
+                    <TextView
+                        android:id="@+id/Status_ProductDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
 
 
+                        android:layout_marginStart="15dp"
+                        android:layout_toEndOf="@id/Price_ProductDetails"
+                        android:layout_toRightOf="@id/Price_ProductDetails"
+                        android:background="@color/bluoo"
+                        android:paddingBottom="1dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="1dp"
+                        android:text="New"
+                        android:textColor="@color/white" />
 
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top"
-                    android:layout_weight="2"
-                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:visibility="invisible"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="top"
 
-                    <ToggleButton
-                        android:id="@+id/Details_ToggleButton"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:textOff=""
-                        android:textOn=""
-                        />
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:orientation="horizontal">
+
+                        <ToggleButton
+                            android:id="@+id/Details_ToggleButton2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:textOff=""
+                            android:textOn="" />
 
 
+                    </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <android.support.v7.widget.CardView
+                android:id="@+id/fab"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="175dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                app:cardCornerRadius="19dp"
+                app:cardElevation="6dp">
+
+                <ToggleButton
+                    android:id="@+id/Details_ToggleButton"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+
+                    android:textOff=""
+                    android:textOn="" />
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
 
 
-
-
-
-    </RelativeLayout>
-
-
-
-
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        >
-
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_margin="10dp">
 
-            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
 
+                >
 
 
                 <LinearLayout
@@ -128,134 +150,135 @@
                         android:id="@+id/Desc_ProductDetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="5dp"
                         android:layout_marginBottom="10dp"
+                        android:padding="5dp"
                         android:text="Qui tenetur rem officia. Qui iusto saepe consequatur consequatur." />
                 </LinearLayout>
 
-            <RelativeLayout
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ProductsDetails_Createdby"
+                        android:layout_marginStart="15dp"
+                        android:text="Created by : "
+                        android:layout_marginLeft="15dp"
+                        android:textColor="@android:color/holo_red_dark"
+                        />
+
+                    <TextView
+                        android:id="@+id/Date_ProductDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:text="20/5/1994" />
+
+                </RelativeLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="35dp"
+            android:background="@android:color/darker_gray" />
+        <LinearLayout
+            android:id="@+id/Product_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/DetailsProduct_Dial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/telephone_2"
+                    android:tint="@color/black" />
+
+                <TextView
+                    android:id="@+id/Phone_ProductDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|start"
+                    android:padding="10dp"
+                    android:text="3453 Darrion Row Apt. 087" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                >
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/Status_ProductDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/shape_rounded_corner"
-                    android:paddingBottom="1dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="1dp"
-                    android:text="New"
-                    android:textColor="@color/white"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginLeft="15dp" />
-                <TextView
-                    android:id="@+id/Date_ProductDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_centerVertical="true"
-                    android:text="20/5/1994"
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/placeholder"
+                    android:tint="@color/black"
+
                     />
 
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/Address_ProductDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|start"
+                    android:padding="10dp"
+                    android:text="3453 Darrion Row Apt. 087" />
+            </LinearLayout>
+
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="35dp"
-        android:layout_marginBottom="20dp"
-        />
-
-
-    <TextView
-        android:id="@+id/spinner1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Contact Us"
-        android:gravity="center"
-        android:visibility="visible"
-        />
-
-    <LinearLayout
-        android:id="@+id/Product_test"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/colorPrimary"
-        android:visibility="gone"
-        >
-        <LinearLayout
+        <!--
+        <Button
+            android:id="@+id/expandableButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:layout_marginStart="5dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="5dp"
-                android:src="@drawable/telephone_2"
-                android:tint="@color/black"
-                android:padding="5dp"
-                />
-            <TextView
-                android:id="@+id/Phone_ProductDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|start"
-                android:padding="10dp"
-                android:text="3453 Darrion Row Apt. 087"
-                />
-        </LinearLayout>
+            android:background="@color/white"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:drawableTint="@color/black"
+            android:onClick="expandableButton1"
+            android:paddingRight="10dp"
+            android:text="Expandable Layout Example"
+            android:textColor="#90ba1f04" />
 
-        <LinearLayout
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expandableLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:orientation="horizontal"
-            >
-            <ImageView
-                android:layout_marginStart="5dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="5dp"
-                android:padding="5dp"
-                android:src="@drawable/placeholder"
-                android:tint="@color/black"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/expandableButton1"
+            android:background="@color/white"
+            android:padding="16dp"
+            app:ael_duration="400"
+            app:ael_expanded="false"
+            app:ael_interpolator="bounce"
+            app:ael_orientation="vertical">
 
-                />
-            <TextView
-                android:id="@+id/Address_ProductDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center|start"
-                android:padding="10dp"
-                android:text="3453 Darrion Row Apt. 087"
-                />
-        </LinearLayout>
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+        -->
 
     </LinearLayout>
-
-
-</LinearLayout>
-    </ScrollView>
+</ScrollView>

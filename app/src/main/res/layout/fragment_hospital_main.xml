@@ -8,7 +8,7 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/jobs_layout"
+        layout="@layout/fragment_hospitals"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize" />
@@ -23,11 +23,11 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            app:title="Jobs"
+            app:title="hospitals"
             app:titleTextColor="@color/white" />
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView
-            android:id="@+id/search_view_Jobs"
+            android:id="@+id/search_view_hospital"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
