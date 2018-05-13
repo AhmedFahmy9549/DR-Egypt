@@ -85,6 +85,7 @@ public class HospitalsFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+
             }
         });
         searchHospitalsRequest.setBody(parms);
