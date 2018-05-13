@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,6 +43,7 @@ public class HospitalsFragment extends Fragment {
     HashMap<String, String> parms = new HashMap<>();
     ArrayList<HospitalModel> arrayList = new ArrayList<>();
     private AdapterHospitalRecylcer adapterx;
+    private Button btnFilter;
 
     public HospitalsFragment() {
         // Required empty public constructor
@@ -54,8 +56,21 @@ public class HospitalsFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_hospital_main, container, false);
         recyclerView = view.findViewById(R.id.hospital_recycler);
+        //btnFilter=view.findViewById(R.id.btn_filter);
 
 
+        /*btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity(). getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container_hos,new HospitalsFragment(),"HospitalsFragment")
+                        .commit();
+
+
+            }
+        });
+*/
         SharedPreferences prefs = getActivity().getSharedPreferences("Location", MODE_PRIVATE);
         int city_id = prefs.getInt("city_id", 0); //0 is the default value.
         int region_id = prefs.getInt("region_id", 0);
@@ -137,6 +152,7 @@ public class HospitalsFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
     }
+
 }
 
 

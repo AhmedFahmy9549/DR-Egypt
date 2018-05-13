@@ -47,24 +47,48 @@ public class AdapterLocationRecylcer extends RecyclerView.Adapter<AdapterLocatio
 
         final LocationModel model = arrayList.get(position);
 
-        holder.textView.setText(model.getLocName());
+
+        if (position == 0) {
+            holder.textView.setText("Select All");
+            holder.textView.setTextSize(25);
+        } else {
+            holder.textView.setText(model.getLocName());
+
+        }
+
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor = context.getSharedPreferences("Location", context.MODE_PRIVATE).edit();
 
                 if (id == 1) {
-                    editor.putString("region_name", model.getLocName());
-                    editor.putInt("region_id", model.getLocId());
+                    if (position == 0) {
+                        editor.putInt("region_id", 0);
+                        editor.putInt("city_id", 0);
+                        intent = new Intent(context, HospitalsActivity.class);
+                        context.startActivity(intent);
+                    } else {
+                        editor.putInt("region_id", model.getLocId());
+                        editor.putString("region_name", model.getLocName());
+                        ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.container10, new CityFragment(), "CityFragment")
+                                .commit();
+                    }
                     editor.apply();
 
-                    ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container10,new CityFragment(),"CityFragment")
-                            .commit();;
-                }
-                else {
-                    editor.putString("city_name", model.getLocName());
-                    editor.putInt("city_id", model.getLocId());
+
+                    ;
+                } else {
+
+
+                    if (position == 0) {
+                        editor.putInt("city_id", 0);
+
+                    } else {
+                        editor.putInt("city_id", model.getLocId());
+                        editor.putString("city_name", model.getLocName());
+
+                    }
                     editor.apply();
                     intent = new Intent(context, HospitalsActivity.class);
                     context.startActivity(intent);
@@ -75,7 +99,8 @@ public class AdapterLocationRecylcer extends RecyclerView.Adapter<AdapterLocatio
         });
 
     }
-        @Override
+
+    @Override
     public int getItemCount() {
         return arrayList.size();
 
