@@ -121,7 +121,7 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
 
         switch (id) {
             case R.id.next_name1:
-                intent = new Intent(this, SpecializationActivity.class);
+                intent = new Intent(this, HospitalsActivity.class);
                 startActivity(intent);
                 break;
 
@@ -137,7 +137,7 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.text_name1:
-                intent = new Intent(this, SpecializationActivity.class);
+                intent = new Intent(this, HospitalsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.text_name2:

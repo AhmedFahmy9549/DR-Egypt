@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +21,7 @@ import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
 import com.example.gmsproduction.dregypt.utils.Constants;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,17 +29,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class HospitalsActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     View view;
     String TAG = "HospitalsActivity";
-    HashMap<String, String> parms = new HashMap<>();
-    ArrayList<HospitalModel> arrayList = new ArrayList<>();
+    Map<String, String> body = new HashMap<>();
+    ArrayList<HospitalModel> arrayList ;
     private AdapterHospitalRecylcer adapterx;
     private Button btnFilter;
+    MaterialSearchView searchView;
 
+    String test;
 
 
     @Override
@@ -47,25 +52,109 @@ public class HospitalsActivity extends AppCompatActivity {
         setTitle("Hospitals");
         recyclerView = findViewById(R.id.hospital_recycler);
 
+        //get all hos
+        getHospital("");
+
+        //Custom Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_hospital);
+        setSupportActionBar(toolbar);
+
+        //back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (test != null && !test.isEmpty()){
+                    test = "";
+                    getHospital(test);
+                }else {
+                    finish();
+                }
+            }
+        });
 
 
-        SharedPreferences prefs = getSharedPreferences("Location", MODE_PRIVATE);
+        //Search Related
+        searchView = (MaterialSearchView) findViewById(R.id.search_view_hospital);
+        searchView.setVoiceSearch(false);
+        searchView.setEllipsize(true);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                test = query;
+                getHospital(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                getHospital(newText);
+                return false;
+            }
+        });
+        searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
+            @Override
+            public void onSearchViewShown() {
+
+            }
+
+            @Override
+            public void onSearchViewClosed() {
+                getHospital(test);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*SharedPreferences prefs = getSharedPreferences("Location", MODE_PRIVATE);
         int city_id = prefs.getInt("city_id", 0); //0 is the default value.
         int region_id = prefs.getInt("region_id", 0);
-        int special_id = prefs.getInt("specialId", 0);
+        int special_id = prefs.getInt("specialId", 0); */
 
 
 
-        Log.e(TAG, "Region=" + region_id + "  City=" + city_id + "    SpecialName=" + special_id);
-        getHospital(city_id,region_id,special_id);
+
 
     }
 
+    //menu option
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search, menu);
 
-    public void getHospital(int city_id,int region_id,int special_id ) {
-        parms.put("region", String.valueOf(region_id));
-        parms.put("city", String.valueOf(city_id));
-        parms.put("speciality", String.valueOf(special_id));
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
+
+    //on back press
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+
+    public void getHospital(String keyword) {
+        body.put("keyword", keyword);
+
         final SearchHospitalsRequest searchHospitalsRequest = new SearchHospitalsRequest(this, new Response.Listener<String>() {
 
             @Override
@@ -79,11 +168,12 @@ public class HospitalsActivity extends AppCompatActivity {
 
             }
         });
-        searchHospitalsRequest.setBody(parms);
+        searchHospitalsRequest.setBody((HashMap) body);
         searchHospitalsRequest.start();
     }
 
     public void HospitalResponse(String response) {
+        arrayList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("data");
