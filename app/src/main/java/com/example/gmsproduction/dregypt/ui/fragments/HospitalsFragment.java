@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -153,6 +156,29 @@ public class HospitalsFragment extends Fragment {
         recyclerView.setAdapter(adapterx);
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.search, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        //searchView.setMenuItem(item);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+      /*  if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }*/
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 }
 
 
