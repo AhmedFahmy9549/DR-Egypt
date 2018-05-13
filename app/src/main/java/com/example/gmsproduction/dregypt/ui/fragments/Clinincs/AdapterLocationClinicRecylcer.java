@@ -59,18 +59,18 @@ public class AdapterLocationClinicRecylcer extends RecyclerView.Adapter<AdapterL
                     editor.putInt("region_id", model.getLocId());
                     editor.apply();
 
-                    ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+                    /*((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_cli,new CityClinicFragment(),"CityClinicFragment")
-                            .commit();;
+                            .commit();;*/
                 }
                 else {
                     editor.putString("city_name", model.getLocName());
                     editor.putInt("city_id", model.getLocId());
                     editor.apply();
-                    ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+                  /*  ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_cli,new ClinicsFragment(),"ClinicsFragment")
                             .commit();;
-
+*/
                 }
 
             }

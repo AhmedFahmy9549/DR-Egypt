@@ -80,9 +80,9 @@ public class AdapterSpecialClinicsRecylcer extends RecyclerView.Adapter<AdapterS
                 }
                 editor.apply();
 
-                ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+               /* ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container_cli,new RegionClinicFragment(),"SpecialClinicsFragment")
-                        .commit();;
+                        .commit();;*/
             }
         });
 

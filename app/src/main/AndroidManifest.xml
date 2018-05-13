@@ -84,9 +84,11 @@
 
 
         <activity android:name=".ui.fragments.Clinincs.ClinicsActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="Select Specialization" />
 
         <activity android:name=".ui.fragments.Pharmacy.PharmacyActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="Select Specialization" />
 
 

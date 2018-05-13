@@ -53,7 +53,6 @@ public class ClinicsFragment extends Fragment implements Response.Listener<Strin
 
         getActivity().setTitle("Clinics");
 
-        recyclerView = view.findViewById(R.id.hospital_recycler);
 
 
         SharedPreferences prefs = getActivity().getSharedPreferences("LocationC", MODE_PRIVATE);

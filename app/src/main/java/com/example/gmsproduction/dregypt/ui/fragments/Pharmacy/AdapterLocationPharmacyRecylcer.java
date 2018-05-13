@@ -59,17 +59,17 @@ public class AdapterLocationPharmacyRecylcer extends RecyclerView.Adapter<Adapte
                     editor.putInt("region_id", model.getLocId());
                     editor.apply();
 
-                    ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+                   /* ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_pha,new CityPharmacyFragment(),"CityPharmacyFragment")
-                            .commit();;
+                            .commit();;*/
                 }
                 else {
                     editor.putString("city_name", model.getLocName());
                     editor.putInt("city_id", model.getLocId());
                     editor.apply();
-                    ((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
+                    /*((FragmentActivity) view.getContext()).getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_pha,new PharmacyFragment(),"PharmacyFragment")
-                            .commit();;
+                            .commit();;*/
 
                 }
 
