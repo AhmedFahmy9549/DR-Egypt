@@ -6,12 +6,13 @@
     android:padding="20dp" >
 
     <TextView
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/signUp"
-        android:textColor="@color/bluoo"
+        android:text=""
+        android:textColor="@color/colorPrimaryDark"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -22,6 +23,7 @@
         android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/user"
+        android:drawableTint="@android:color/darker_gray"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="@string/fullName"
@@ -43,6 +45,8 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/email"
+        android:drawableTint="@android:color/darker_gray"
+
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="@string/email"
@@ -112,6 +116,8 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/password"
+        android:drawableTint="@android:color/darker_gray"
+
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="@string/passowrd"
@@ -133,6 +139,8 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/transparent"
         android:drawableLeft="@drawable/confirm_password"
+        android:drawableTint="@android:color/darker_gray"
+
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
         android:hint="@string/confirmPassword"
@@ -157,6 +165,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:background="@drawable/loginbutton_selector"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:padding="3dp"
         android:text="@string/signUp"
         android:textColor="@color/white"

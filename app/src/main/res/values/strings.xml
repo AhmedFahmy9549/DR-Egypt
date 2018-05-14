@@ -16,6 +16,7 @@
     <!-- Start of Hima Strings -->
     <string name="hello_world">Hello world!</string>
     <string name="email">Email</string>
+    <string name="Enter_email">Enter your email address</string>
     <string name="passowrd">Password</string>
     <string name="login">LOGIN</string>
     <string name="show_pwd">Show Password</string>
@@ -37,6 +38,9 @@
     <string name="Sign_Up_here"> <u>Sign Up here.</u> </string>
     <string name="pls_S_In_Up">Please sign up or login</string>
     <string name="Not_Now"><u>Not now</u></string>
+    <string name="terms_of_service"><u>Terms and Conditions.</u></string>
+
+
     <string name="More_Details"><u>More details ></u></string>
     <string name="ratingIconHeartFilled">♥</string>
     <string name="ratingIconHeartOutline">♡</string>

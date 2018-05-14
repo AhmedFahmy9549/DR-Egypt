@@ -11,30 +11,65 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class DetailsProducts extends AppCompatActivity {
     ImageView imageView;
-    TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1,texttestr;
+    TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1, texttestr;
+    int position;
     String idz, titlez, description, price, status, image, address, created_at, phone_1, phone_2;
     ToggleButton toggleButton;
-    Button btn;
+    Button btnNext,btnPrevious;
     LinearLayout Dial;
     ExpandableRelativeLayout expandableLayout1;
+    ArrayList<ProductsModel> models;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details_products);
+
+        extras();
         Initialize();
         getExtra();
         Deploy();
         setTitle(titlez);
+        btnNext = findViewById(R.id.DetailsProduct_Next);
+        btnPrevious = findViewById(R.id.DetailsProduct_previous);
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (position<models.size()-1){
+                    position++;
+                    getExtra();
+                    Deploy();
+                    setTitle(titlez);
+                }
+            }
+        });
+        btnPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (position>0){
+                    position--;
+                    getExtra();
+                    Deploy();
+                    setTitle(titlez);
+                }
+            }
+        });
+
+
 
     }
     /*public void expandableButton1(View view) {
@@ -50,25 +85,29 @@ public class DetailsProducts extends AppCompatActivity {
         TXTcreated_at = findViewById(R.id.Date_ProductDetails);
         TXTphone_1 = findViewById(R.id.Phone_ProductDetails);
         toggleButton = (ToggleButton) findViewById(R.id.Details_ToggleButton);
-        Dial= findViewById(R.id.DetailsProduct_Dial);
+        Dial = findViewById(R.id.DetailsProduct_Dial);
 
     }
 
     private void getExtra() {
-        Intent intent = getIntent();
-        idz = intent.getStringExtra("pro_id");
-        titlez = intent.getStringExtra("pro_title");
-        description = intent.getStringExtra("pro_description");
-        price = intent.getStringExtra("pro_price");
-        status = intent.getStringExtra("pro_status");
-        image = intent.getStringExtra("pro_image");
-        address = intent.getStringExtra("pro_address");
-        created_at = intent.getStringExtra("pro_created_at");
-        phone_1 = intent.getStringExtra("pro_phone_1");
-        phone_2 = intent.getStringExtra("pro_phone_2");
-
+        idz = models.get(position).getIdz();
+        titlez = models.get(position).getTitlez();
+        description = models.get(position).getDescription();
+        price = models.get(position).getPrice();
+        status = models.get(position).getStatus();
+        image = models.get(position).getImage();
+        address = models.get(position).getAddress();
+        created_at = models.get(position).getCreated_at();
+        phone_1 = models.get(position).getPhone_1();
+        phone_2 = models.get(position).getPhone_2();
     }
 
+    private void extras(){
+        Intent intent = getIntent();
+        position = intent.getIntExtra("position", 0);
+        Bundle getextra = getIntent().getExtras();
+        models = (ArrayList<ProductsModel>) getextra.getSerializable("arrz");
+    }
     private void Deploy() {
         TXTdescription.setText(description);
         TXTprice.setText(price + "$");

@@ -2,6 +2,7 @@ package com.example.gmsproduction.dregypt.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,7 +53,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         ProductsModel currentItem = mArrayList.get(position);
         final String id = currentItem.getIdz();
         final String title= currentItem.getTitlez();
@@ -75,16 +76,10 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailsProducts.class);
-                intent.putExtra("pro_id",id);
-                intent.putExtra("pro_title",title);
-                intent.putExtra("pro_description",description);
-                intent.putExtra("pro_price",price);
-                intent.putExtra("pro_status",status);
-                intent.putExtra("pro_image",image);
-                intent.putExtra("pro_address",address);
-                intent.putExtra("pro_created_at",created_at);
-                intent.putExtra("pro_phone_1",phone_1);
-                intent.putExtra("pro_phone_2",phone_2);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("arrz",mArrayList);
+                intent.putExtras(bundle);
+                intent.putExtra("position",position);
 
                 mContext.startActivity(intent);
             }

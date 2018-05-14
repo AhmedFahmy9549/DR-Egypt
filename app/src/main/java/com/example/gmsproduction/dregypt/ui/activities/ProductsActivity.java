@@ -1,7 +1,10 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
@@ -15,8 +18,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
@@ -54,6 +64,13 @@ public class ProductsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_products);
+
+        /*if (!isNetworkAvailable()) {
+            Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "Internet", Toast.LENGTH_SHORT).show();
+        }*/
+
         fragmentManager = getSupportFragmentManager();
 
         //add the banner
@@ -67,6 +84,8 @@ public class ProductsActivity extends AppCompatActivity {
 
         //Request for main products
         getProducts("");
+        Log.e("4444","onCreate");
+
 
 
         //recycler View horizon orientation
@@ -115,6 +134,8 @@ public class ProductsActivity extends AppCompatActivity {
                 if (test != null && !test.isEmpty()){
                     test = "";
                     getProducts(test);
+                    Log.e("4444","toolbar");
+
                 }else {
                     finish();
                 }            }
@@ -129,12 +150,15 @@ public class ProductsActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 test = query;
                 getProducts(query);
+                Log.e("4444","onQueryTextSubmit");
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 getProducts(newText);
+                Log.e("4444","onQueryTextChange");
 
                 return false;
             }
@@ -148,6 +172,8 @@ public class ProductsActivity extends AppCompatActivity {
             @Override
             public void onSearchViewClosed() {
                 getProducts(test);
+                Log.e("4444","onSearchViewClosed");
+
             }
         });
 
@@ -217,6 +243,7 @@ public class ProductsActivity extends AppCompatActivity {
 
                 modelArrayList.add(new ProductsModel(id, title,category, description, price, status, image, address, created_at, phone_1, phone_2));
             }
+
             mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
             mRecyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
@@ -230,15 +257,46 @@ public class ProductsActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Responsey(response);
+                Log.e("4444","getProducts");
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("3333","out");
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Log.e("3333","0");
 
+                } else if (error instanceof AuthFailureError) {
+                    //TODO
+                    Log.e("3333","1");
+
+                } else if (error instanceof ServerError) {
+                    //TODO
+                    Log.e("3333","2");
+                } else if (error instanceof NetworkError) {
+                    //TODO
+                    Log.e("3333","3");
+                    Toast.makeText(ProductsActivity.this, "volly no Internet", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    //TODO
+                    Log.e("3333","4");
+
+                }
             }
         });
         searchProductAdRequest.setBody((HashMap) body);
         searchProductAdRequest.start();
+    }
+
+    // Private class isNetworkAvailable
+    private boolean isNetworkAvailable() {
+        // Using ConnectivityManager to check for Network Connection
+        ConnectivityManager connectivityManager = (ConnectivityManager) this
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager
+                .getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
 
 }
