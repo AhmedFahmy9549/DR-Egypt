@@ -87,9 +87,8 @@
         <activity
             android:name=".ui.activities.FiltersActivity"
             android:label="Filters"
+
             android:parentActivityName=".ui.activities.HospitalsActivity"/>
-
-
 
         <!-- Ibrahim -->
 
