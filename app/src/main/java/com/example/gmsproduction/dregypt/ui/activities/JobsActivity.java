@@ -2,7 +2,6 @@ package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -10,21 +9,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.arlib.floatingsearchview.FloatingSearchView;
-import com.daimajia.slider.library.SliderLayout;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.SearchJobAdRequest;
-import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.Models.JobsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.JobAdsAdapter;
-import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
 import com.example.gmsproduction.dregypt.utils.Constants;
-import com.example.gmsproduction.dregypt.utils.ProductsModel;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;

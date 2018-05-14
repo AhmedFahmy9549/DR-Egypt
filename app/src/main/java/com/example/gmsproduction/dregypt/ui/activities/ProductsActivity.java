@@ -1,13 +1,9 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.support.annotation.DimenRes;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,23 +15,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetProductAdsRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
-import com.example.gmsproduction.dregypt.ui.fragments.LoginFragments.BasePage;
 import com.example.gmsproduction.dregypt.ui.fragments.ProductBannerFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
-import com.example.gmsproduction.dregypt.utils.ProductsModel;
+import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.utils.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 

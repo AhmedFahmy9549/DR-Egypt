@@ -1,4 +1,4 @@
-package com.example.gmsproduction.dregypt.utils;
+package com.example.gmsproduction.dregypt.Models;
 
 /**
  * Created by Hima on 5/7/2018.

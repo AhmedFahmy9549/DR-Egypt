@@ -6,29 +6,16 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.utils.ProductsModel;
-import com.github.aakira.expandablelayout.ExpandableLayoutListener;
-import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
-import com.github.aakira.expandablelayout.ExpandableWeightLayout;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DetailsProducts extends AppCompatActivity {
     ImageView imageView;
