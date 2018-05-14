@@ -66,6 +66,11 @@ public class Filters extends Fragment {
                 Log.e("FFFFFFFFFFFFF", "City=" + city);
                 Log.e("CCCCCCCCCCCCC", "Area=" + area);
 
+                 /* <activity
+                android:name=".ui.activities.FiltersActivity"
+                android:label="Filters"
+                android:parentActivityName=".ui.activities.HospitalsActivity"/>
+*/
 
             }
         });
