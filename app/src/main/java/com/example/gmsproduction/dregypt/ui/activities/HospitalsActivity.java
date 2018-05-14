@@ -1,6 +1,8 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.Switch;
 import android.widget.ToggleButton;
 
 import com.android.volley.Response;
@@ -20,6 +24,8 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.H
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
+import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.Filters;
+import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.RegionFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -37,10 +43,12 @@ public class HospitalsActivity extends AppCompatActivity {
     View view;
     String TAG = "HospitalsActivity";
     Map<String, String> body = new HashMap<>();
-    ArrayList<HospitalModel> arrayList ;
+    ArrayList<HospitalModel> arrayList;
     private AdapterHospitalRecylcer adapterx;
     private Button btnFilter;
     MaterialSearchView searchView;
+    public ConstraintLayout constraintLayout;
+    Filters filters=new Filters();
 
     String test;
 
@@ -51,6 +59,7 @@ public class HospitalsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hospitals);
         setTitle("Hospitals");
         recyclerView = findViewById(R.id.hospital_recycler);
+        constraintLayout=findViewById(R.id.fragment_hospital);
 
         //get all hos
         getHospital("");
@@ -66,10 +75,10 @@ public class HospitalsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (test != null && !test.isEmpty()){
+                if (test != null && !test.isEmpty()) {
                     test = "";
                     getHospital(test);
-                }else {
+                } else {
                     finish();
                 }
             }
@@ -124,9 +133,6 @@ public class HospitalsActivity extends AppCompatActivity {
         int special_id = prefs.getInt("specialId", 0); */
 
 
-
-
-
     }
 
     //menu option
@@ -140,6 +146,21 @@ public class HospitalsActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int items = item.getItemId();
+
+        switch (items) {
+
+
+            case R.id.action_filters:
+                Intent intent =new Intent(HospitalsActivity.this,FiltersActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return true;
+    }
+
     //on back press
     @Override
     public void onBackPressed() {
@@ -149,7 +170,6 @@ public class HospitalsActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
 
 
     public void getHospital(String keyword) {
