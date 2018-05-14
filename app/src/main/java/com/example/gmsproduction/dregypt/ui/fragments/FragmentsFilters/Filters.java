@@ -1,5 +1,6 @@
 package com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -66,11 +67,12 @@ public class Filters extends Fragment {
                 Log.e("FFFFFFFFFFFFF", "City=" + city);
                 Log.e("CCCCCCCCCCCCC", "Area=" + area);
 
-                 /* <activity
-                android:name=".ui.activities.FiltersActivity"
-                android:label="Filters"
-                android:parentActivityName=".ui.activities.HospitalsActivity"/>
+           /*     SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                editor.putString("name", "Elena");
+                editor.putInt("idName", 12);
+                editor.apply();
 */
+
 
             }
         });
