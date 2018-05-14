@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.gmsproduction.dregypt.R;
@@ -23,7 +24,8 @@ public class LogInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_maain_activity);
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         fragmentManager = getSupportFragmentManager();
 
         // If savedinstnacestate is null then replace login fragment
@@ -45,6 +47,16 @@ public class LogInActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        switch (id){
+            case android.R.id.home:
+                backback();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -68,6 +80,11 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        backback();
+
+    }
+
+    public void backback(){
         // Find the tag of signup and forgot password fragment
         Fragment SignUp_Fragment = fragmentManager
                 .findFragmentByTag(Utils.SignUp_Fragment);
@@ -89,7 +106,6 @@ public class LogInActivity extends AppCompatActivity {
             replaceLoginFragment();
         else
             super.onBackPressed();
-
     }
 
 

@@ -87,6 +87,8 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.login_layout, container, false);
+        getActivity().setTitle("Login");
+
         initViews();
         setListeners();
         FacebookSdk.sdkInitialize(getApplicationContext());

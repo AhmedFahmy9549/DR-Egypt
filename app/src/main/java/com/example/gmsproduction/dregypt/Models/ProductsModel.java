@@ -1,10 +1,12 @@
 package com.example.gmsproduction.dregypt.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by Hima on 4/30/2018.
  */
 
-public class ProductsModel {
+public class ProductsModel implements Serializable{
 
     String idz, titlez,category, description,price, status, image ,address,created_at,phone_1,phone_2;
 

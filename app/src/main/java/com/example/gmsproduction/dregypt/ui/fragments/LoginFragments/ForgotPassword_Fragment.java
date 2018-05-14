@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +38,8 @@ public class ForgotPassword_Fragment extends Fragment implements
                              Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.forgotpassword_layout, container,
 				false);
+		getActivity().setTitle("Forgot Password");
+
 		initViews();
 		setListeners();
 		return view;
@@ -48,7 +51,7 @@ public class ForgotPassword_Fragment extends Fragment implements
 		submit = (TextView) view.findViewById(R.id.forgot_button);
 		back = (TextView) view.findViewById(R.id.backToLoginBtn);
 
-		// Setting text selector over textviews
+		/*// Setting text selector over textviews
 		XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
 		try {
 			ColorStateList csl = ColorStateList.createFromXml(getResources(),
@@ -58,7 +61,7 @@ public class ForgotPassword_Fragment extends Fragment implements
 			submit.setTextColor(csl);
 
 		} catch (Exception e) {
-		}
+		}*/
 
 	}
 
