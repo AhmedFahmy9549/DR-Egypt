@@ -31,6 +31,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by Ahmed Fahmy on 5/13/2018.
  */
@@ -45,6 +47,7 @@ public class Filters extends Fragment {
     RadioGroup radioGroup;
     RadioButton radioButton;
     int x, numRate, city, area;
+    String MY_PREFS_NAME="FiltersH";
 
 
     @Nullable
@@ -67,11 +70,10 @@ public class Filters extends Fragment {
                 Log.e("FFFFFFFFFFFFF", "City=" + city);
                 Log.e("CCCCCCCCCCCCC", "Area=" + area);
 
-           /*     SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                 editor.putString("name", "Elena");
                 editor.putInt("idName", 12);
                 editor.apply();
-*/
 
 
             }
