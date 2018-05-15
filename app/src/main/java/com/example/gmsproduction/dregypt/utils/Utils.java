@@ -11,5 +11,8 @@ public class Utils {
 	public static final String ForgotPassword_Fragment = "ForgotPassword_Fragment";
 	public static final String BasePage = "BasePage";
 	public static final String banner = "ProductBannerFragment";
-	
+	public static final String Error = "NoInternt_Fragment";
+
+
+
 }

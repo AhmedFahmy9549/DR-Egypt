@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -37,39 +38,16 @@ public class DetailsProducts extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details_products);
-
+        //intent and bundle
         extras();
+        //find view by id
         Initialize();
+        //put data in Strings
         getExtra();
+        //put strings into Views
         Deploy();
+        //set tool bar title
         setTitle(titlez);
-        btnNext = findViewById(R.id.DetailsProduct_Next);
-        btnPrevious = findViewById(R.id.DetailsProduct_previous);
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (position<models.size()-1){
-                    position++;
-                    getExtra();
-                    Deploy();
-                    setTitle(titlez);
-                }
-            }
-        });
-        btnPrevious.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (position>0){
-                    position--;
-                    getExtra();
-                    Deploy();
-                    setTitle(titlez);
-                }
-            }
-        });
-
-
 
     }
     /*public void expandableButton1(View view) {
@@ -77,6 +55,17 @@ public class DetailsProducts extends AppCompatActivity {
         expandableLayout1.toggle(); // toggle expand and collapse
     }*/
 
+    //back btn
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        switch (id){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void Initialize() {
         imageView = findViewById(R.id.IMG_ProductDetails);
         TXTdescription = findViewById(R.id.Desc_ProductDetails);
@@ -86,6 +75,11 @@ public class DetailsProducts extends AppCompatActivity {
         TXTphone_1 = findViewById(R.id.Phone_ProductDetails);
         toggleButton = (ToggleButton) findViewById(R.id.Details_ToggleButton);
         Dial = findViewById(R.id.DetailsProduct_Dial);
+        btnNext = findViewById(R.id.DetailsProduct_Next);
+        btnPrevious = findViewById(R.id.DetailsProduct_previous);
+        //to display the back btn
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
     }
 
@@ -131,6 +125,29 @@ public class DetailsProducts extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 phoneCall(phone_1);
+            }
+        });
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (position<models.size()-1){
+                    position++;
+                    getExtra();
+                    Deploy();
+                    setTitle(titlez);
+                }
+            }
+        });
+        btnPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (position>0){
+                    position--;
+                    getExtra();
+                    Deploy();
+                    setTitle(titlez);
+                }
             }
         });
     }

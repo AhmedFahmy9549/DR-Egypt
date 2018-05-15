@@ -1,5 +1,4 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,8 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
     android:orientation="vertical"
-    android:weightSum="10"
-    >
+    android:weightSum="10">
 
 
     <RelativeLayout
@@ -20,21 +18,29 @@
     </RelativeLayout>
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7.5"
-        android:background="@android:color/darker_gray"
-        >
+        android:background="@android:color/darker_gray">
+
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/pbHeaderProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminateTint="@color/colorPrimary"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/Recycler_Product"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            >
+            android:layout_gravity="center">
 
         </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

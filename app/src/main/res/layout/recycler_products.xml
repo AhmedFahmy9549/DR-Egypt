@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/testyy"
+    android:id="@+id/product_FrameLayout"
     >
 
     <FrameLayout
@@ -31,6 +31,7 @@
     </FrameLayout>
 
     <include
+        android:id="@+id/dodododo"
         layout="@layout/products_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

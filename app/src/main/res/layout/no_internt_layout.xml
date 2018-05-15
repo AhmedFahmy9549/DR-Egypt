@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_weight="10"
+    >
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/no_connect"
+        android:tint="@color/gray_active_icon"
+        android:layout_marginBottom="30dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Failed to load, Please check your internet connection
+before proceeding"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        />
+
+    <Button
+        android:id="@+id/NoInternt_BTN"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retry Again"
+        android:padding="10dp"
+        android:textAllCaps="false"
+        android:background="@drawable/shape_circle_corner_v02"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="100dp"
+        />
+</LinearLayout>

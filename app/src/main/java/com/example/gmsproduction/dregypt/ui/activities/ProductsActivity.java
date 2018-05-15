@@ -1,13 +1,18 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -32,6 +38,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
+import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.ui.fragments.ProductBannerFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
@@ -47,46 +54,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductsActivity extends AppCompatActivity {
-//Response.Listener<String>, Response.ErrorListener,
+    //Response.Listener<String>, Response.ErrorListener,
     private RecyclerView mRecyclerView;
     private ProductAdsAdapter mAdapter;
     private ArrayList<ProductsModel> modelArrayList;
-    String id, title, description, price, image, status, address, created_at, phone_1, phone_2,category;
+    String id, title, description, price, image, status, address, created_at, phone_1, phone_2, category;
     SliderLayout mDemoSlider;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
-    String url = Constants.basicUrl+"/product-ads/search";
-    private  FragmentManager fragmentManager;
+    String url = Constants.basicUrl + "/product-ads/search";
+    private FragmentManager fragmentManager;
     DetailsProducts detailsProducts;
     String test;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_products);
-
-        /*if (!isNetworkAvailable()) {
-            Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this, "Internet", Toast.LENGTH_SHORT).show();
-        }*/
-
+        progressBar = (ProgressBar)findViewById(R.id.pbHeaderProgress);
+        progressBar.setVisibility(View.VISIBLE);
         fragmentManager = getSupportFragmentManager();
-
         //add the banner
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.RelativeBunner, new ProductBannerFragment(),
                         Utils.banner).commit();
 
-        //HospitalFilters
+
+        //Filters
         //body.put("status", "2");
 
         //Request for main products
-        getProducts("");
-        Log.e("4444","onCreate");
 
-
+        Log.e("4444", "onCreate");
 
         //recycler View horizon orientation
         mRecyclerView = findViewById(R.id.Recycler_Product);
@@ -106,7 +107,7 @@ public class ProductsActivity extends AppCompatActivity {
                     outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
 
                     if (position < spanCount) { // top edge
-                            outRect.top = spacing;
+                        outRect.top = spacing;
                     }
                     outRect.bottom = spacing; // item bottom
                 } else {
@@ -131,14 +132,15 @@ public class ProductsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (test != null && !test.isEmpty()){
+                if (test != null && !test.isEmpty()) {
                     test = "";
                     getProducts(test);
-                    Log.e("4444","toolbar");
+                    Log.e("4444", "toolbar");
 
-                }else {
+                } else {
                     finish();
-                }            }
+                }
+            }
         });
 
         //Search Related
@@ -150,7 +152,7 @@ public class ProductsActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 test = query;
                 getProducts(query);
-                Log.e("4444","onQueryTextSubmit");
+                Log.e("4444", "onQueryTextSubmit");
 
                 return false;
             }
@@ -158,7 +160,7 @@ public class ProductsActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 getProducts(newText);
-                Log.e("4444","onQueryTextChange");
+                Log.e("4444", "onQueryTextChange");
 
                 return false;
             }
@@ -171,12 +173,13 @@ public class ProductsActivity extends AppCompatActivity {
 
             @Override
             public void onSearchViewClosed() {
-                getProducts(test);
-                Log.e("4444","onSearchViewClosed");
+                //getProducts(test);
+
+                Log.e("4444", "onSearchViewClosed");
 
             }
         });
-
+        getProducts("");
     }
 
 
@@ -217,10 +220,11 @@ public class ProductsActivity extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    //Fetching JSON Method
-    public void Responsey(String response){
-        modelArrayList = new ArrayList<>();
 
+    //Fetching JSON Method
+    public void Responsey(String response) {
+        modelArrayList = new ArrayList<>();
+        progressBar.setVisibility(View.GONE);
         Log.e("tagyyy", response);
         try {
             JSONObject object = new JSONObject(response);
@@ -235,58 +239,90 @@ public class ProductsActivity extends AppCompatActivity {
                 address = dataObject.getString("address");
                 created_at = dataObject.getString("created_at");
                 description = dataObject.getString("description");
-                JSONArray phoneArray = dataObject.getJSONArray("phone");
-                phone_1 = (String) phoneArray.get(0);
-                phone_2 = (String) phoneArray.get(1);
+                try {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = (String) phoneArray.get(1);
+                } catch (Exception e) {
+                    phone_1 = "No phone has been added";
+                    phone_2 = "No phone has been added";
+                }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
                 category = categoryObject.getString("en_name");
 
-                modelArrayList.add(new ProductsModel(id, title,category, description, price, status, image, address, created_at, phone_1, phone_2));
+                modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
             }
 
             mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
             mRecyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.e("error", e.toString());
 
         }
     }
-    public void getProducts(String keyword){
+
+    public void getProducts(String keyword) {
         body.put("keyword", keyword);
         final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Responsey(response);
-                Log.e("4444","getProducts");
+                Log.e("4444", response);
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("3333","out");
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Log.e("3333","0");
+                    LoadErrorFragment(R.id.dodododo);
 
                 } else if (error instanceof AuthFailureError) {
                     //TODO
-                    Log.e("3333","1");
+                    Log.e("3333", "1");
 
                 } else if (error instanceof ServerError) {
                     //TODO
-                    Log.e("3333","2");
+                    Log.e("3333", "2");
                 } else if (error instanceof NetworkError) {
                     //TODO
-                    Log.e("3333","3");
+                    Log.e("3333", "3");
                     Toast.makeText(ProductsActivity.this, "volly no Internet", Toast.LENGTH_SHORT).show();
                 } else if (error instanceof ParseError) {
                     //TODO
-                    Log.e("3333","4");
+                    Log.e("3333", "4");
 
                 }
             }
         });
         searchProductAdRequest.setBody((HashMap) body);
         searchProductAdRequest.start();
+    }
+
+    private AlertDialog makeAndShowDialogBox(String msg) {
+        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
+
+                .setCancelable(false)
+                .setTitle("No Internet Connection")
+                .setMessage(msg)
+
+                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //whatever should be done when answering "YES" goes here
+                        getProducts("");
+                    }
+                })//setPositiveButton
+                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //whatever should be done when answering "NO" goes here
+                        finish();
+                    }
+                })//setNegativeButton
+
+                .create();
+
+        return myQuittingDialogBox;
     }
 
     // Private class isNetworkAvailable
@@ -296,12 +332,34 @@ public class ProductsActivity extends AppCompatActivity {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager
                 .getActiveNetworkInfo();
+
+        // use this
+         /*if (!isNetworkAvailable()) {
+            Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(this, "Internet", Toast.LENGTH_SHORT).show();
+        }*/
         return activeNetworkInfo != null;
     }
 
+    private void LoadErrorFragment(int r_id) {
+
+        fragmentManager
+                .beginTransaction()
+                .add(r_id, new NoInternt_Fragment(),
+                        Utils.Error).commit();
+
+
+
+    }
+    public void Progressbar(){
+        progressBar.setVisibility(View.VISIBLE); //to show
+
+    }
 }
+
 //custom class to detect when the recycleview reach it's end
- class CustomScrollListener extends RecyclerView.OnScrollListener {
+class CustomScrollListener extends RecyclerView.OnScrollListener {
     public CustomScrollListener() {
     }
 
@@ -317,7 +375,7 @@ public class ProductsActivity extends AppCompatActivity {
                 break;
             case RecyclerView.SCROLL_STATE_SETTLING:
                 System.out.println("Scroll Settling");
-                Log.e("recycler","end3");
+                Log.e("recycler", "end3");
 
                 break;
 
