@@ -1,5 +1,7 @@
 package com.example.gmsproduction.dregypt.ui.fragments.Clinincs;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +19,8 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.J
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.Models.JobsModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.FiltersActivity;
+import com.example.gmsproduction.dregypt.ui.activities.HospitalsActivity;
 import com.example.gmsproduction.dregypt.ui.activities.JobsActivity;
 import com.example.gmsproduction.dregypt.ui.adapters.JobAdsAdapter;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
@@ -37,11 +41,13 @@ public class ClinicsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     String TAG = "ClinicsActivity";
     HashMap<String, String> parms = new HashMap<>();
-    ArrayList<HospitalModel> arrayList ;
+    ArrayList<HospitalModel> arrayList;
     private AdapterHospitalRecylcer adapterx;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String test;
+    String MY_PREFS_NAME = "FiltersCli";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +67,10 @@ public class ClinicsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (test != null && !test.isEmpty()){
+                if (test != null && !test.isEmpty()) {
                     test = "";
                     getClinics(test);
-                }else {
+                } else {
                     finish();
                 }
             }
@@ -101,7 +107,6 @@ public class ClinicsActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     //menu option
@@ -115,6 +120,22 @@ public class ClinicsActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int items = item.getItemId();
+
+        switch (items) {
+            case R.id.action_filters:
+                Intent intent = new Intent(ClinicsActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 2);
+                startActivity(intent);
+                break;
+        }
+        return true;
+
+    }
+
     //on back press
     @Override
     public void onBackPressed() {
@@ -126,12 +147,25 @@ public class ClinicsActivity extends AppCompatActivity {
     }
 
 
+    public void getClinics(String keyword) {
 
 
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int city = prefs.getInt("city", 0); //0 is the default value.
+        int area = prefs.getInt("area", 0); //0 is the default value.
+        int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+        int speciality = prefs.getInt("speciality", 0); //0 is the default value.
 
-    public void getClinics(String keyword){
-        body.put("keyword", keyword);
-        final SearchClinicsRequest searchClinicsRequest = new SearchClinicsRequest(ClinicsActivity.this,new Response.Listener<String>() {
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Specialty=" + speciality);
+
+
+        body.put("region", String.valueOf(city));
+        body.put("city", String.valueOf(area));
+        body.put("rate", String.valueOf(rate));
+        body.put("speciality", String.valueOf(speciality));
+
+
+        final SearchClinicsRequest searchClinicsRequest = new SearchClinicsRequest(ClinicsActivity.this, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 ClinicsResponse(response);
@@ -146,7 +180,7 @@ public class ClinicsActivity extends AppCompatActivity {
         searchClinicsRequest.start();
     }
 
-    public void ClinicsResponse(String response){
+    public void ClinicsResponse(String response) {
         Log.e(TAG, "Response=" + response);
         arrayList = new ArrayList<>();
         try {
@@ -160,7 +194,7 @@ public class ClinicsActivity extends AppCompatActivity {
                 String note_hos = object.getString("en_note");
                 String website_hos = object.getString("website");
                 String email_hos = object.getString("email");
-                String img_hos = Constants.ImgUrl+object.getString("img");
+                String img_hos = Constants.ImgUrl + object.getString("img");
                 String createdAt_hos = object.getString("created_at");
 
 
@@ -176,7 +210,6 @@ public class ClinicsActivity extends AppCompatActivity {
                 String phone2_hos = phone.getString(1);
 
                 Log.e(TAG + "Response=", "" + rating_hos);
-
 
 
                 HospitalModel model = new HospitalModel(id_hos, name_hos, address_hos, note_hos, website_hos, email_hos, img_hos, phone_hos, phone2_hos, count_hos, rating_hos, fav_hos, createdAt_hos);
@@ -195,4 +228,20 @@ public class ClinicsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapterx);
 
     }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop","onStop");
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putInt("num_rate", 0);
+        editor.putInt("city", 0);
+        editor.putInt("area", 0);
+        editor.putInt("speciality", 0);
+
+        editor.apply();
+
+    }
+
 }

@@ -79,7 +79,7 @@ public class ProductsActivity extends AppCompatActivity {
                 .replace(R.id.RelativeBunner, new ProductBannerFragment(),
                         Utils.banner).commit();
 
-        //Filters
+        //HospitalFilters
         //body.put("status", "2");
 
         //Request for main products

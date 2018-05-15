@@ -10,13 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.Switch;
-import android.widget.ToggleButton;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,8 +19,6 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.H
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
-import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.Filters;
-import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.RegionFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -45,10 +38,11 @@ public class HospitalsActivity extends AppCompatActivity {
     Map<String, String> body = new HashMap<>();
     ArrayList<HospitalModel> arrayList;
     private AdapterHospitalRecylcer adapterx;
-    private Button btnFilter;
     MaterialSearchView searchView;
     public ConstraintLayout constraintLayout;
-    Filters filters=new Filters();
+
+    String MY_PREFS_NAME = "FiltersH";
+
 
     String test;
 
@@ -155,6 +149,7 @@ public class HospitalsActivity extends AppCompatActivity {
 
             case R.id.action_filters:
                 Intent intent =new Intent(HospitalsActivity.this,FiltersActivity.class);
+                intent.putExtra("idFilter",1);
                 startActivity(intent);
                 break;
         }
@@ -173,17 +168,31 @@ public class HospitalsActivity extends AppCompatActivity {
 
 
     public void getHospital(String keyword) {
+
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int city = prefs.getInt("city", 0); //0 is the default value.
+        int area = prefs.getInt("area", 0); //0 is the default value.
+        int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+
+        Log.e("CXAAAA","city"+city+"\n"+"area"+area+"\n"+"rate"+rate);
+
+
+        body.put("region", String.valueOf(city));
+        body.put("city", String.valueOf(area));
+        body.put("rate", String.valueOf(rate));
         body.put("keyword", keyword);
 
         final SearchHospitalsRequest searchHospitalsRequest = new SearchHospitalsRequest(this, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
+                Log.e("Response==",response);
                 HospitalResponse(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("Response==",""+error.getMessage());
 
 
             }
@@ -191,7 +200,6 @@ public class HospitalsActivity extends AppCompatActivity {
         searchHospitalsRequest.setBody((HashMap) body);
         searchHospitalsRequest.start();
     }
-
     public void HospitalResponse(String response) {
         arrayList = new ArrayList<>();
         try {
@@ -239,5 +247,15 @@ public class HospitalsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapterx);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop","onStop");
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putInt("num_rate", 0);
+        editor.putInt("city", 0);
+        editor.putInt("area", 0);
+        editor.apply();
 
+    }
 }
