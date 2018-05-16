@@ -5,6 +5,7 @@ package com.example.gmsproduction.dregypt.utils;
  */
 
 public class Constants {
-    public final static String basicUrl="https://dregypt.frb.io/api";
-    public final static String ImgUrl="https://dregypt.frb.io";
+    public final static String basicUrl=" https://dregy.frb.io/api";
+
+    public final static String ImgUrl=" https://dregy.frb.io";
 }

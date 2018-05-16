@@ -228,7 +228,7 @@ public class HospitalsActivity extends AppCompatActivity {
                 String phone_hos = phone.getString(0);
                 String phone2_hos = phone.getString(1);
 
-                Log.e(TAG + "Response=", "" + rating_hos);
+                Log.e(TAG + "Response=", "" + phone);
 
 
                 HospitalModel model = new HospitalModel(id_hos, name_hos, address_hos, note_hos, website_hos, email_hos, img_hos, phone_hos, phone2_hos, count_hos, rating_hos, fav_hos, createdAt_hos);

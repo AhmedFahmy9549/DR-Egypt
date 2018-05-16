@@ -66,8 +66,9 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
         holder.textWebsite.setText(model.getWebsite());
         Log.e(TAG, "Favorite= " + model.getFavorites());
         holder.textFav.setText("" + model.getFavorites());
-        Picasso.with(context).load(model.getImg()).into(holder.imageView);
 
+        Picasso.with(context).load(model.getImg()).into(holder.imageView);
+        Log.e("Imagggge", model.getImg());
         holder.toggleFav.setChecked(false);
         holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
         holder.toggleFav.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
