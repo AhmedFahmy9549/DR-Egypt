@@ -12,7 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.SearchClinicsRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.SearchJobAdRequest;
@@ -25,7 +31,9 @@ import com.example.gmsproduction.dregypt.ui.activities.JobsActivity;
 import com.example.gmsproduction.dregypt.ui.adapters.JobAdsAdapter;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
 import com.example.gmsproduction.dregypt.ui.fragments.HospitalsFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
+import com.example.gmsproduction.dregypt.utils.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
@@ -174,6 +182,26 @@ public class ClinicsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    NoInternt_Fragment fragment = new NoInternt_Fragment();
+                    Bundle arguments = new Bundle();
+                    arguments.putInt("duck", 202);
+                    fragment.setArguments(arguments);
+                    final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.add(R.id.Clinic_Include, fragment, Utils.Error);
+                    ft.commit();
+
+                } else if (error instanceof AuthFailureError) {
+                    //TODO
+
+                } else if (error instanceof ServerError) {
+                    //TODO
+                } else if (error instanceof NetworkError) {
+                    //TODO
+                } else if (error instanceof ParseError) {
+                    //TODO
+
+                }
 
             }
         });

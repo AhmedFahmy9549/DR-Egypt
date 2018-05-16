@@ -155,8 +155,6 @@ public class JobsActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(JobsActivity.this, "error", Toast.LENGTH_SHORT).show();
-
                     NoInternt_Fragment fragment = new NoInternt_Fragment();
                     Bundle arguments = new Bundle();
                     arguments.putInt("duck", 77);

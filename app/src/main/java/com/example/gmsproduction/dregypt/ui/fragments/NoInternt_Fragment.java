@@ -14,8 +14,11 @@ import android.widget.Toast;
 
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.CosmeticsActivity;
+import com.example.gmsproduction.dregypt.ui.activities.HospitalsActivity;
 import com.example.gmsproduction.dregypt.ui.activities.JobsActivity;
 import com.example.gmsproduction.dregypt.ui.activities.ProductsActivity;
+import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
+import com.example.gmsproduction.dregypt.ui.fragments.Pharmacy.PharmacyActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.gmsproduction.dregypt.ui.activities.ProductsActivity.CheckInternet;
@@ -24,7 +27,7 @@ import static com.example.gmsproduction.dregypt.ui.activities.ProductsActivity.C
 public class NoInternt_Fragment extends Fragment {
     View view;
     Button reloadbtn;
-    int desired_string;
+    int desired_Int;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,11 +36,11 @@ public class NoInternt_Fragment extends Fragment {
         view = inflater.inflate(R.layout.no_internt_layout, container, false);
         reloadbtn = view.findViewById(R.id.NoInternt_BTN);
         Bundle arguments = getArguments();
-        desired_string = arguments.getInt("duck");
+        desired_Int = arguments.getInt("duck");
         reloadbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (desired_string) {
+                switch (desired_Int) {
                     case 55:
                         ReloadProduct();
                         break;
@@ -46,6 +49,15 @@ public class NoInternt_Fragment extends Fragment {
                         break;
                     case 77:
                         ReloadJobs();
+                        break;
+                    case 101:
+                        ReloadHospitals();
+                        break;
+                    case 202:
+                        ReloadClinic();
+                        break;
+                    case 303:
+                        ReloadPharmacy();
                         break;
                 }
             }
@@ -75,6 +87,30 @@ public class NoInternt_Fragment extends Fragment {
         ((JobsActivity) getActivity()).getJobs("");
         //((CosmeticsActivity)getActivity()).Progressbar();
         Toast.makeText(getContext(), "Jobs", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
+
+    }
+    public void ReloadHospitals() {
+
+        ((HospitalsActivity) getActivity()).getHospital("");
+        //((CosmeticsActivity)getActivity()).Progressbar();
+        Toast.makeText(getContext(), "Hospital", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
+
+    }
+    public void ReloadClinic() {
+
+        ((ClinicsActivity) getActivity()).getClinics("");
+        //((CosmeticsActivity)getActivity()).Progressbar();
+        Toast.makeText(getContext(), "Clinic", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
+
+    }
+    public void ReloadPharmacy() {
+
+        ((PharmacyActivity) getActivity()).getPharmacy("");
+        //((CosmeticsActivity)getActivity()).Progressbar();
+        Toast.makeText(getContext(), "Pharmacy", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
