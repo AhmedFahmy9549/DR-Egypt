@@ -163,6 +163,7 @@ public class ClinicsActivity extends AppCompatActivity {
         body.put("city", String.valueOf(area));
         body.put("rate", String.valueOf(rate));
         body.put("speciality", String.valueOf(speciality));
+        body.put("keyword",keyword);
 
 
         final SearchClinicsRequest searchClinicsRequest = new SearchClinicsRequest(ClinicsActivity.this, new Response.Listener<String>() {

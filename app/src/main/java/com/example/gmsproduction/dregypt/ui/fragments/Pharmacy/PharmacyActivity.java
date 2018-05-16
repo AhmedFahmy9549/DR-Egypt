@@ -1,5 +1,7 @@
 package com.example.gmsproduction.dregypt.ui.fragments.Pharmacy;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +18,7 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.C
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.SearchPharmacyRequest;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.FiltersActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.SpecialClinicsFragment;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
@@ -33,13 +36,16 @@ import java.util.Map;
 public class PharmacyActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+
+    String MY_PREFS_NAME = "FiltersPha";
     String TAG = "PharmacyFragment";
     HashMap<String, String> parms = new HashMap<>();
-    ArrayList<HospitalModel> arrayList ;
+    ArrayList<HospitalModel> arrayList;
     private AdapterHospitalRecylcer adapterx;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +65,10 @@ public class PharmacyActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (test != null && !test.isEmpty()){
+                if (test != null && !test.isEmpty()) {
                     test = "";
                     getPharmacy(test);
-                }else {
+                } else {
                     finish();
                 }
             }
@@ -112,6 +118,23 @@ public class PharmacyActivity extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int items = item.getItemId();
+
+        switch (items) {
+            case R.id.action_filters:
+                Intent intent = new Intent(PharmacyActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 3);
+                startActivity(intent);
+                break;
+        }
+        return true;
+
+    }
+
+
     //on back press
     @Override
     public void onBackPressed() {
@@ -123,12 +146,31 @@ public class PharmacyActivity extends AppCompatActivity {
     }
 
 
+    public void getPharmacy(String keyword) {
 
 
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int city = prefs.getInt("city", 0); //0 is the default value.
+        int area = prefs.getInt("area", 0); //0 is the default value.
+        int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+        String fullDay = prefs.getString("fullDay", "");
+        String delivery = prefs.getString("delivery", "");
 
-    public void getPharmacy(String keyword){
+
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "FullDay=" + fullDay + "Delivery=" + delivery);
+
+
+        body.put("region", String.valueOf(city));
+        body.put("city", String.valueOf(area));
+        body.put("rate", String.valueOf(rate));
+        body.put("delivery", delivery);
+        body.put("fullDay", fullDay);
+
+
         body.put("keyword", keyword);
-        final SearchPharmacyRequest searchPharmacyRequest = new SearchPharmacyRequest(PharmacyActivity.this,new Response.Listener<String>() {
+
+
+        final SearchPharmacyRequest searchPharmacyRequest = new SearchPharmacyRequest(PharmacyActivity.this, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 PharmacyResponse(response);
@@ -144,7 +186,7 @@ public class PharmacyActivity extends AppCompatActivity {
         searchPharmacyRequest.start();
     }
 
-    public void PharmacyResponse(String response){
+    public void PharmacyResponse(String response) {
         arrayList = new ArrayList<>();
         Log.e(TAG, "Response=" + response);
 
@@ -159,7 +201,7 @@ public class PharmacyActivity extends AppCompatActivity {
                 String note_hos = object.getString("en_note");
                 String website_hos = object.getString("website");
                 String email_hos = object.getString("email");
-                String img_hos = Constants.ImgUrl+object.getString("img");
+                String img_hos = Constants.ImgUrl + object.getString("img");
                 String createdAt_hos = object.getString("created_at");
 
 
@@ -177,7 +219,6 @@ public class PharmacyActivity extends AppCompatActivity {
                 Log.e(TAG + "Response=", "" + rating_hos);
 
 
-
                 HospitalModel model = new HospitalModel(id_hos, name_hos, address_hos, note_hos, website_hos, email_hos, img_hos, phone_hos, phone2_hos, count_hos, rating_hos, fav_hos, createdAt_hos);
 
 
@@ -192,6 +233,22 @@ public class PharmacyActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop", "onStop");
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putInt("num_rate", 0);
+        editor.putInt("city", 0);
+        editor.putInt("area", 0);
+        editor.putString("fullDay", "");
+        editor.putString("delivery", "");
+
+
+        editor.apply();
 
     }
 }

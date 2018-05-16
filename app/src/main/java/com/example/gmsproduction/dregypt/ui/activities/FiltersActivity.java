@@ -8,6 +8,7 @@ import android.widget.Switch;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.Filters.ClinicsFilters;
 import com.example.gmsproduction.dregypt.ui.fragments.Filters.HospitalFilters;
+import com.example.gmsproduction.dregypt.ui.fragments.Filters.PharmacyFilters;
 
 public class FiltersActivity extends AppCompatActivity {
 
@@ -36,7 +37,7 @@ public class FiltersActivity extends AppCompatActivity {
             case 3:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container_filter,new HospitalFilters(),"HospitalFilters")
+                        .add(R.id.container_filter,new PharmacyFilters(),"PharmacyFilters")
                         .commit();
                 break;
             case 4:
