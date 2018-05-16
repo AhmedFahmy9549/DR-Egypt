@@ -188,7 +188,7 @@ public class ClinicsActivity extends AppCompatActivity {
                     arguments.putInt("duck", 202);
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.add(R.id.Clinic_Include, fragment, Utils.Error);
+                    ft.replace(R.id.Clinic_Include, fragment, Utils.Error);
                     ft.commit();
 
                 } else if (error instanceof AuthFailureError) {

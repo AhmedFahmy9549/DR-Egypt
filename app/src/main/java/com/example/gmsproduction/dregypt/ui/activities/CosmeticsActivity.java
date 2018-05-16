@@ -218,7 +218,7 @@ public class CosmeticsActivity extends AppCompatActivity {
                     arguments.putInt( "duck" , 66);
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.add(R.id.Cosmetic_Include, fragment , Utils.Error);
+                    ft.replace(R.id.Cosmetic_Include, fragment , Utils.Error);
                     ft.commit();
 
                 } else if (error instanceof AuthFailureError) {

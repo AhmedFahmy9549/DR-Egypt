@@ -192,7 +192,7 @@ public class PharmacyActivity extends AppCompatActivity {
                     arguments.putInt("duck", 303);
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.add(R.id.Pharmacy_Include, fragment, Utils.Error);
+                    ft.replace(R.id.Pharmacy_Include, fragment, Utils.Error);
                     ft.commit();
 
                 } else if (error instanceof AuthFailureError) {

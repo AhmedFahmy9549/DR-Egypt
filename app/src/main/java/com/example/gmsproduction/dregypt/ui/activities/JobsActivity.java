@@ -160,7 +160,7 @@ public class JobsActivity extends AppCompatActivity {
                     arguments.putInt("duck", 77);
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.add(R.id.Jobs_Include, fragment, Utils.Error);
+                    ft.replace(R.id.Jobs_Include, fragment, Utils.Error);
                     ft.commit();
 
                 } else if (error instanceof AuthFailureError) {

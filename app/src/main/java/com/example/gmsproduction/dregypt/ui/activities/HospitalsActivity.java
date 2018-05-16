@@ -207,7 +207,7 @@ public class HospitalsActivity extends AppCompatActivity {
                     arguments.putInt("duck", 101);
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.add(R.id.Hospital_Include, fragment, Utils.Error);
+                    ft.replace(R.id.Hospital_Include, fragment, Utils.Error);
                     ft.commit();
 
                 } else if (error instanceof AuthFailureError) {

@@ -158,16 +158,12 @@ public class ProductsActivity extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 test = query;
                 getProducts(query);
-                Log.e("4444", "onQueryTextSubmit");
-
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 getProducts(newText);
-                Log.e("4444", "onQueryTextChange");
-
                 return false;
             }
         });
@@ -179,9 +175,7 @@ public class ProductsActivity extends AppCompatActivity {
 
             @Override
             public void onSearchViewClosed() {
-                //getProducts(test);
-
-                Log.e("4444", "onSearchViewClosed");
+                getProducts(test);
 
             }
         });
@@ -287,7 +281,7 @@ public class ProductsActivity extends AppCompatActivity {
                     arguments.putInt( "duck" , 55);
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.add(R.id.dodododo, fragment , Utils.Error);
+                    ft.replace(R.id.dodododo, fragment , Utils.Error);
                     ft.commit();
                     /*fragmentManager
                             .beginTransaction()
