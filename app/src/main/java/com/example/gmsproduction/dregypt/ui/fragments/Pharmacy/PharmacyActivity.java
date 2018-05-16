@@ -137,6 +137,7 @@ public class PharmacyActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+
             }
         });
         searchPharmacyRequest.setBody((HashMap) body);
