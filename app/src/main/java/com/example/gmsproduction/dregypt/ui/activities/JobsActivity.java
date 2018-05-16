@@ -5,18 +5,28 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.SearchJobAdRequest;
 import com.example.gmsproduction.dregypt.Models.JobsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.JobAdsAdapter;
+import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
+import com.example.gmsproduction.dregypt.utils.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
@@ -32,17 +42,20 @@ public class JobsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private JobAdsAdapter mAdapter;
     private ArrayList<JobsModel> modelArrayList;
-    String id,userId, title, description,salary, image, status, address, created_at, phone_1, phone_2,category,experience,education_level,employment_type;
+    String id, userId, title, description, salary, image, status, address, created_at, phone_1, phone_2, category, experience, education_level, employment_type;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
-    String url = Constants.basicUrl+"/job-ads/search";
+    String url = Constants.basicUrl + "/job-ads/search";
     String test;
+    private FragmentManager fragmentManager;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobs);
+        fragmentManager = getSupportFragmentManager();
 
         //Request for main Jobs
         /*final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(this,url,this,this);
@@ -67,10 +80,10 @@ public class JobsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (test != null && !test.isEmpty()){
+                if (test != null && !test.isEmpty()) {
                     test = "";
                     getJobs(test);
-                }else {
+                } else {
                     finish();
                 }
             }
@@ -107,8 +120,6 @@ public class JobsActivity extends AppCompatActivity {
         });
 
 
-
-
     }
 
     //menu option
@@ -133,12 +144,9 @@ public class JobsActivity extends AppCompatActivity {
     }
 
 
-
-
-
-    public void getJobs(String keyword){
+    public void getJobs(String keyword) {
         body.put("keyword", keyword);
-        final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(JobsActivity.this,new Response.Listener<String>() {
+        final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(JobsActivity.this, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 JobsResponse(response);
@@ -146,6 +154,28 @@ public class JobsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Toast.makeText(JobsActivity.this, "error", Toast.LENGTH_SHORT).show();
+
+                    NoInternt_Fragment fragment = new NoInternt_Fragment();
+                    Bundle arguments = new Bundle();
+                    arguments.putInt("duck", 77);
+                    fragment.setArguments(arguments);
+                    final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.add(R.id.Jobs_Include, fragment, Utils.Error);
+                    ft.commit();
+
+                } else if (error instanceof AuthFailureError) {
+                    //TODO
+
+                } else if (error instanceof ServerError) {
+                    //TODO
+                } else if (error instanceof NetworkError) {
+                    //TODO
+                } else if (error instanceof ParseError) {
+                    //TODO
+
+                }
 
             }
         });
@@ -153,7 +183,7 @@ public class JobsActivity extends AppCompatActivity {
         searchJobAdRequest.start();
     }
 
-    public void JobsResponse(String response){
+    public void JobsResponse(String response) {
         modelArrayList = new ArrayList<>();
 
         Log.e("tagyyy", response);
@@ -183,9 +213,7 @@ public class JobsActivity extends AppCompatActivity {
                 employment_type = employmentObject.getString("en_name");
 
 
-
-
-                modelArrayList.add(new JobsModel(id,userId, title, description,salary, image, status, address, created_at, phone_1, phone_2,category,experience,education_level,employment_type));
+                modelArrayList.add(new JobsModel(id, userId, title, description, salary, image, status, address, created_at, phone_1, phone_2, category, experience, education_level, employment_type));
             }
             mAdapter = new JobAdsAdapter(JobsActivity.this, modelArrayList);
             mRecyclerView.setAdapter(mAdapter);

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -67,11 +68,14 @@ public class ProductsActivity extends AppCompatActivity {
     DetailsProducts detailsProducts;
     String test;
     ProgressBar progressBar;
+    public static final String CheckInternet = "CheckInternet";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_products);
+
+
         progressBar = (ProgressBar)findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
         fragmentManager = getSupportFragmentManager();
@@ -87,7 +91,9 @@ public class ProductsActivity extends AppCompatActivity {
 
         //Request for main products
 
-        Log.e("4444", "onCreate");
+        /*SharedPreferences.Editor editor = getSharedPreferences(CheckInternet, MODE_PRIVATE).edit();
+        editor.putInt("activityName", 505);
+        editor.apply();*/
 
         //recycler View horizon orientation
         mRecyclerView = findViewById(R.id.Recycler_Product);
@@ -276,7 +282,18 @@ public class ProductsActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    LoadErrorFragment(R.id.dodododo);
+                    NoInternt_Fragment fragment = new NoInternt_Fragment();
+                    Bundle arguments = new Bundle();
+                    arguments.putInt( "duck" , 55);
+                    fragment.setArguments(arguments);
+                    final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.add(R.id.dodododo, fragment , Utils.Error);
+                    ft.commit();
+                    /*fragmentManager
+                            .beginTransaction()
+                            .add(R.id.dodododo, new NoInternt_Fragment(),
+                                    Utils.Error).commit();*/
+
 
                 } else if (error instanceof AuthFailureError) {
                     //TODO
@@ -340,17 +357,6 @@ public class ProductsActivity extends AppCompatActivity {
             Toast.makeText(this, "Internet", Toast.LENGTH_SHORT).show();
         }*/
         return activeNetworkInfo != null;
-    }
-
-    private void LoadErrorFragment(int r_id) {
-
-        fragmentManager
-                .beginTransaction()
-                .add(r_id, new NoInternt_Fragment(),
-                        Utils.Error).commit();
-
-
-
     }
     public void Progressbar(){
         progressBar.setVisibility(View.VISIBLE); //to show

@@ -2,6 +2,7 @@ package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
 import android.speech.RecognizerIntent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,14 +13,23 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.SearchCosmeticClinicsRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.CosmeticClinicsAdapter;
+import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.Models.CosmeticModel;
+import com.example.gmsproduction.dregypt.utils.Utils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
@@ -42,15 +52,18 @@ public class CosmeticsActivity extends AppCompatActivity {
     Map<String, String> body = new HashMap<>();
     String url = Constants.basicUrl+"/cosmetic-clinics/search";
     String test;
+    //private FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetics);
+        //fragmentManager = getSupportFragmentManager();
 
         //Request for all Main products
         getCosmetics("");
 
-        //recycler View
+        //recycdler View
         mRecyclerView = findViewById(R.id.Recycler_Cosmetic);
         final LinearLayoutManager LayoutManagaer = new LinearLayoutManager(CosmeticsActivity.this);
         mRecyclerView.setLayoutManager(LayoutManagaer);
@@ -194,6 +207,31 @@ public class CosmeticsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    /*fragmentManager
+                            .beginTransaction()
+                            .add(R.id.Cosmetic_Include, new NoInternt_Fragment(),
+                                    Utils.Error).commit();*/
+                    NoInternt_Fragment fragment = new NoInternt_Fragment();
+                    Bundle arguments = new Bundle();
+                    arguments.putInt( "duck" , 66);
+                    fragment.setArguments(arguments);
+                    final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.add(R.id.Cosmetic_Include, fragment , Utils.Error);
+                    ft.commit();
+
+                } else if (error instanceof AuthFailureError) {
+                    //TODO
+
+                } else if (error instanceof ServerError) {
+                    //TODO
+                } else if (error instanceof NetworkError) {
+                    //TODO
+                } else if (error instanceof ParseError) {
+                    //TODO
+
+                }
 
             }
         });
