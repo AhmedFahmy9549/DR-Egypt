@@ -36,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.Login.FacebookPostRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.LogInActivity;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 import com.example.gmsproduction.dregypt.utils.Utils;
 import com.facebook.CallbackManager;
@@ -232,8 +233,12 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                     "Your Email Id is Invalid.");
             // Else do login and do your stuff
         else
+        {
+            postyNormal(getEmailId,getPassword);
             Toast.makeText(getActivity(), "Do Login.", Toast.LENGTH_SHORT)
                     .show();
+        }
+
 
     }
 
@@ -350,6 +355,48 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("lol2", "" + error.getMessage());
+
+                    //VolleyLog.d("error", "Error: " + error.getMessage());
+
+                }
+            });
+            mRequestQueue = Volley.newRequestQueue(getActivity());
+            mRequestQueue.add(jsonObjReq);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public void postyNormal(String email,String password) {
+
+        JSONObject jsonobject_one = new JSONObject();
+        try {
+            jsonobject_one.put("email", email);
+            jsonobject_one.put("password", password);
+
+            JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                    Request.Method.POST, "https://dregy.frb.io/api/login", jsonobject_one,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            int id;
+                            String name="",email="",avatar="";
+                            try {
+                                 id = response.getInt("id");
+                                if (name!=null){name = response.getString("name");}
+                                if (email!=null){email = response.getString("email");}
+                                if (avatar!=null){avatar = response.getString("avatar");}
+                                ((LogInActivity)getActivity()).SharedPref(id,name,email,avatar);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("Login", "error" + error.getMessage());
 
                     //VolleyLog.d("error", "Error: " + error.getMessage());
 

@@ -115,13 +115,36 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
-        if (id == R.id.nav_log) {
-            intent = new Intent(this, LogInActivity.class);
-            startActivity(intent);
-
+        switch (id){
+            case R.id.nav_log:
+                intent = new Intent(this, LogInActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.Nav_Medical:
+                intent = new Intent(this, MedicalGuideActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_pro:
+                intent = new Intent(this, ProductsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_job:
+                intent = new Intent(this, JobsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_cos:
+                intent = new Intent(this, CosmeticsActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_Favorite:
+                intent = new Intent(this, FavoriteActivity.class);
+                startActivity(intent);
+                break;
+            
         }
+
 /*
-        if (id == R.id.nav_camera) {
+        /*if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 

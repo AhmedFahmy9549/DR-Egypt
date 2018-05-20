@@ -67,8 +67,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.HospitalsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ui.activities.MedicalGuideActivity" />
+            android:parentActivityName=".ui.activities.MedicalGuideActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.fragments.FragmentsFilters.RegionActivity"
             android:label="Select Region" />
@@ -83,27 +83,24 @@
             android:name=".ui.fragments.Pharmacy.PharmacyActivity"
             android:label="Select Specialization"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name=".ui.activities.FiltersActivity"
             android:label="Filters"
-
-            android:parentActivityName=".ui.activities.HospitalsActivity"/>
+            android:parentActivityName=".ui.activities.HospitalsActivity" />
 
         <!-- Ibrahim -->
 
         <activity
             android:name=".ui.activities.ProductsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ui.activities.DetailsProducts"
-            />
+        <activity android:name=".ui.activities.DetailsProducts" />
         <activity
             android:name=".ui.activities.DetailsJobs"
             android:parentActivityName=".ui.activities.JobsActivity" />
-
-
+        <activity
+            android:name=".ui.activities.FavoriteActivity"
+            android:label="@string/title_activity_favorite"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

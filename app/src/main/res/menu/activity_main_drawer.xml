@@ -8,32 +8,25 @@
 
     </group>-->
 
-    <item android:title="Medical Guide">
-        <menu>
-            <item
-                android:id="@+id/nav_hos"
-                android:title="Hospitals" />
-            <item
-                android:id="@+id/nav_cli"
-                android:title="Clinics" />
-            <item
-                android:id="@+id/nav_pha"
-                android:title="Pharmcy" />
-
-        </menu>
-
-    </item>
 
     <item
-        android:id="@+id/pro"
+        android:id="@+id/Nav_Medical"
+        android:title="Medical Guide"
+        />
+    <item
+        android:id="@+id/nav_pro"
         android:title="Products" />
     <item
         android:id="@+id/nav_job"
         android:title="Jobs" />
     <item
         android:id="@+id/nav_cos"
-        android:title="Cosmetics" />
+        android:title="Cosmetics"
+        />
 
+    <item
+        android:id="@+id/nav_Favorite"
+        android:title="Favorite"/>
 
     <item android:title="Communicate">
         <menu>
@@ -43,9 +36,7 @@
             <item
                 android:id="@+id/nav_cont"
                 android:title="Contact Us" />
-
         </menu>
-
     </item>
 
     <item

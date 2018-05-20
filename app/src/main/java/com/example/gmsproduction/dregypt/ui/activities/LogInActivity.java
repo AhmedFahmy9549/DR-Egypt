@@ -1,5 +1,6 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +12,8 @@ import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.LoginFragments.BasePage;
 import com.example.gmsproduction.dregypt.ui.fragments.LoginFragments.Login_Fragment;
 import com.example.gmsproduction.dregypt.utils.Utils;
+
+import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 
 
 /**
@@ -106,6 +109,15 @@ public class LogInActivity extends AppCompatActivity {
             replaceLoginFragment();
         else
             super.onBackPressed();
+    }
+
+    public void SharedPref(int id,String name,String email,String avatar){
+        SharedPreferences.Editor editor = getSharedPreferences(USER_DETAILS, MODE_PRIVATE).edit();
+        editor.putInt("User_id", id);
+        editor.putString("User_name", name);
+        editor.putString("User_email", email);
+        editor.putString("User_avatar", avatar);
+        editor.apply();
     }
 
 

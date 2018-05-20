@@ -1,4 +1,4 @@
-    <resources>
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -17,56 +17,53 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-        <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar" >
+    <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:layout_width">100dp</item>
-            <item name="android:layout_height">100dp</item>
+        <item name="android:layout_height">100dp</item>
 
-            <item name="android:numStars">5</item>
-            <item name="android:rating">2.5</item>
-            <item name="android:stepSize">1</item>
-            <!--<item name="android:paddingBottom">10dp</item>
+        <item name="android:numStars">5</item>
+        <item name="android:rating">2.5</item>
+        <item name="android:stepSize">1</item>
+        <!--<item name="android:paddingBottom">10dp</item>
                     <item name="android:layout_marginLeft">4dp</item>
                     <item name="android:layout_marginTop">4dp</item>-->
-        </style>
+    </style>
 
-            <style name="RatingBar" parent="Theme.AppCompat">
-                <item name="colorControlNormal">@color/black</item>
-                <item name="colorControlActivated">@color/ratingBarActivied</item>
-
-
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlActivated">@color/ratingBarActivied</item>
 
 
-            </style>
+    </style>
 
-        <style name="RatingBar1" parent="@android:style/Widget.RatingBar">
-            <item name="colorControlNormal">@color/cardview_dark_background</item>
-            <item name="colorControlActivated">@color/ratingBarActivied</item>
-            <item name="android:maxHeight">22dip</item>
-            <item name="android:minHeight">22dip</item> </style>
-
-
-
-
-        <style name="FacebookLoginBssutton">
-            <item name="android:minHeight">55dip</item>
-            <item name="android:maxHeight">55dip</item>
-            <item name="android:minWidth">55dip</item>
-            <item name="android:maxWidth">55dip</item>
-        </style>
+    <style name="RatingBar1" parent="@android:style/Widget.RatingBar">
+        <item name="colorControlNormal">@color/cardview_dark_background</item>
+        <item name="colorControlActivated">@color/ratingBarActivied</item>
+        <item name="android:maxHeight">22dip</item>
+        <item name="android:minHeight">22dip</item>
+    </style>
 
 
-        <style name="FacebookLoginButton">
-            <item name="android:textSize">15sp</item>
-            <item name="android:layout_marginTop">10dp</item>
-            <item name="android:layout_marginBottom">10dp</item>
-        </style>
+    <style name="FacebookLoginBssutton">
+        <item name="android:minHeight">55dip</item>
+        <item name="android:maxHeight">55dip</item>
+        <item name="android:minWidth">55dip</item>
+        <item name="android:maxWidth">55dip</item>
+    </style>
 
-        <style name="MyRatingBarTwo" parent="Widget.AppCompat.RatingBar">
-            <item name="android:progressDrawable">@drawable/stars_rating</item>
-            <item name="colorControlNormal">#f57c00</item>
-            <item name="colorControlActivated">#c51162</item>
 
-        </style>
+    <style name="FacebookLoginButton">
+        <item name="android:textSize">15sp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="MyRatingBarTwo" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressDrawable">@drawable/stars_rating</item>
+        <item name="colorControlNormal">#f57c00</item>
+        <item name="colorControlActivated">#c51162</item>
+
+    </style>
 
 
 </resources>

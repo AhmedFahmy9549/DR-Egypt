@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,10 +16,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.LogInActivity;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 import com.example.gmsproduction.dregypt.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,6 +40,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 	private static TextView login;
 	private static Button signUpButton;
 	private static CheckBox terms_conditions;
+	private RequestQueue mRequestQueue;
 
 	public SignUp_Fragment() {
 
@@ -138,9 +149,49 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 					"Please select Terms and Conditions.");
 
 		// Else do signup or do your stuff
-		else
+		else{
+			postyy(getFullName,getEmailId,getPassword,getConfirmPassword);
 			Toast.makeText(getActivity(), "Do SignUp.", Toast.LENGTH_SHORT)
 					.show();
+		}
 
+
+
+
+	}
+
+
+	public void postyy(String name,String email,String password1,String password2) {
+
+		JSONObject jsonobject_one = new JSONObject();
+		try {
+			jsonobject_one.put("name", name);
+			jsonobject_one.put("email", email);
+			jsonobject_one.put("password", password1);
+			jsonobject_one.put("password_confirmation", password2);
+
+			JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+					Request.Method.POST, "https://dregy.frb.io/api/register", jsonobject_one,
+					new Response.Listener<JSONObject>() {
+						@Override
+						public void onResponse(JSONObject response) {
+							Log.e("SignUp", response.toString());
+
+						}
+					}, new Response.ErrorListener() {
+
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					Log.e("Signup", "error" + error.getMessage());
+
+					//VolleyLog.d("error", "Error: " + error.getMessage());
+
+				}
+			});
+			mRequestQueue = Volley.newRequestQueue(getActivity());
+			mRequestQueue.add(jsonObjReq);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 }

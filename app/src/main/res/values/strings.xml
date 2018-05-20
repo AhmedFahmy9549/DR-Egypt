@@ -44,6 +44,11 @@
     <string name="More_Details"><u>More details ></u></string>
     <string name="ratingIconHeartFilled">♥</string>
     <string name="ratingIconHeartOutline">♡</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
 
 
     <!-- End of Hima Strings -->
