@@ -1,6 +1,7 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.R;
+
+import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Response.Listener<String>, Response.ErrorListener, View.OnClickListener {
@@ -57,6 +60,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
 
         //VolleyLIbUtils volleyLIbUtils=new VolleyLIbUtils(this, Request.Method.GET,"http://192.168.9.69/dregy/public/api/hospitals",this,this);
         //volleyLIbUtils.setListener(this);

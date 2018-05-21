@@ -1,6 +1,7 @@
 package com.example.gmsproduction.dregypt.ui.fragments.LoginFragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.XmlResourceParser;
 import android.os.Bundle;
@@ -61,6 +62,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class Login_Fragment extends Fragment implements OnClickListener {
@@ -235,12 +238,14 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         else
         {
             postyNormal(getEmailId,getPassword);
+
             Toast.makeText(getActivity(), "Do Login.", Toast.LENGTH_SHORT)
                     .show();
         }
 
 
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -379,12 +384,17 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                         @Override
                         public void onResponse(JSONObject response) {
                             int id;
-                            String name="",email="",avatar="";
+                            String name,email,avatar;
                             try {
                                  id = response.getInt("id");
-                                if (name!=null){name = response.getString("name");}
-                                if (email!=null){email = response.getString("email");}
-                                if (avatar!=null){avatar = response.getString("avatar");}
+                                name = response.getString("name");
+                                email = response.getString("email");
+                                try {
+                                    avatar = response.getString("avatar");
+                                }catch (Exception e){
+                                    avatar = "";
+                                }
+
                                 ((LogInActivity)getActivity()).SharedPref(id,name,email,avatar);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -409,5 +419,12 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         }
     }
 
-
+    /*public void SharedPref(int id,String name,String email,String avatar){
+        SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences(USER_DETAILS, MODE_PRIVATE).edit();
+        editor.putInt("User_id", id);
+        editor.putString("User_name", name);
+        editor.putString("User_email", email);
+        editor.putString("User_avatar", avatar);
+        editor.apply();
+    }*/
 }
