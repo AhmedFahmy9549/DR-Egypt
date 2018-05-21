@@ -105,7 +105,7 @@ public class HospitalsFragment extends Fragment {
 
 
             }
-        });
+        },1);
         searchHospitalsRequest.setBody(parms);
         searchHospitalsRequest.start();
     }

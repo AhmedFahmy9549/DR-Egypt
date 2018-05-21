@@ -46,12 +46,13 @@ public class HospitalsActivity extends AppCompatActivity {
     View view;
     String TAG = "HospitalsActivity";
     Map<String, String> body = new HashMap<>();
-    ArrayList<HospitalModel> arrayList;
+    ArrayList<HospitalModel> arrayList= new ArrayList<>();
     private AdapterHospitalRecylcer adapterx;
     MaterialSearchView searchView;
     public ConstraintLayout constraintLayout;
-
+    LinearLayoutManager linearLayoutManager;
     String MY_PREFS_NAME = "FiltersH";
+    int page = 1;
 
 
     String test;
@@ -63,7 +64,7 @@ public class HospitalsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hospitals);
         setTitle("Hospitals");
         recyclerView = findViewById(R.id.hospital_recycler);
-        constraintLayout=findViewById(R.id.fragment_hospital);
+        constraintLayout = findViewById(R.id.fragment_hospital);
 
         //get all hos
         getHospital("");
@@ -121,6 +122,10 @@ public class HospitalsActivity extends AppCompatActivity {
 
 
 
+        adapterx = new AdapterHospitalRecylcer(this, arrayList);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapterx);
 
 
 
@@ -158,8 +163,8 @@ public class HospitalsActivity extends AppCompatActivity {
 
 
             case R.id.action_filters:
-                Intent intent =new Intent(HospitalsActivity.this,FiltersActivity.class);
-                intent.putExtra("idFilter",1);
+                Intent intent = new Intent(HospitalsActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 1);
                 startActivity(intent);
                 break;
         }
@@ -179,12 +184,13 @@ public class HospitalsActivity extends AppCompatActivity {
 
     public void getHospital(String keyword) {
 
+
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         int city = prefs.getInt("city", 0); //0 is the default value.
         int area = prefs.getInt("area", 0); //0 is the default value.
         int rate = prefs.getInt("num_rate", 0); //0 is the default value.
 
-        Log.e("CXAAAA","city"+city+"\n"+"area"+area+"\n"+"rate"+rate);
+        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate);
 
 
         body.put("region", String.valueOf(city));
@@ -196,7 +202,7 @@ public class HospitalsActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(String response) {
-                Log.e("Response==",response);
+                Log.e("Response==", response);
                 HospitalResponse(response);
             }
         }, new Response.ErrorListener() {
@@ -224,12 +230,12 @@ public class HospitalsActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        }, page);
         searchHospitalsRequest.setBody((HashMap) body);
         searchHospitalsRequest.start();
     }
+
     public void HospitalResponse(String response) {
-        arrayList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -256,10 +262,7 @@ public class HospitalsActivity extends AppCompatActivity {
                 String phone_hos = phone.getString(0);
                 String phone2_hos = phone.getString(1);
 
-                Log.e(TAG + "Response=", "" + phone);
-
-
-
+                Log.e(TAG + "Response=", "" + id_hos);
 
 
                 HospitalModel model = new HospitalModel(id_hos, name_hos, address_hos, note_hos, website_hos, email_hos, img_hos, phone_hos, phone2_hos, count_hos, rating_hos, fav_hos, createdAt_hos);
@@ -268,34 +271,53 @@ public class HospitalsActivity extends AppCompatActivity {
                 arrayList.add(model);
             }
 
-            JSONObject links = jsonObject.getJSONObject("links");
+    /*        JSONObject links = jsonObject.getJSONObject("links");
             String nextPage=links.getString("next");
 
             Log.e("Nexxxxxxxxxxxxx",nextPage+"");
 
 
+            JSONObject meta = jsonObject.getJSONObject("meta");
+            int currentPage=meta.getInt("current_page");
+
+            page=currentPage;
+
+            Log.e("PageeeCurrent=",page+"");
+
+
+*/
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterHospitalRecylcer(this, arrayList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
+
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int current_page) {
+
+                page++;
+
+                Log.e("PageeeNext=", "" + page);
+                if (page >= 4) {
+
+                } else {
+                    getHospital("");
+
+                }
 
 
             }
         });
 
+        adapterx.notifyItemRangeInserted(adapterx.getItemCount(), arrayList.size() - 1);
 
-        recyclerView.setAdapter(adapterx);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("onStop","onStop");
+        Log.e("onStop", "onStop");
         SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
         editor.putInt("num_rate", 0);
         editor.putInt("city", 0);
