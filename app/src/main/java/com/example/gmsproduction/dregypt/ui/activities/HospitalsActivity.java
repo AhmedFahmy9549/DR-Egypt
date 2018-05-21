@@ -66,6 +66,7 @@ public class HospitalsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.hospital_recycler);
         constraintLayout = findViewById(R.id.fragment_hospital);
 
+
         //get all hos
         getHospital("");
 
