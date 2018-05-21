@@ -7,8 +7,11 @@ import android.widget.Switch;
 
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.Filters.ClinicsFilters;
+import com.example.gmsproduction.dregypt.ui.fragments.Filters.CosmeticsFilters;
 import com.example.gmsproduction.dregypt.ui.fragments.Filters.HospitalFilters;
+import com.example.gmsproduction.dregypt.ui.fragments.Filters.JobsFilters;
 import com.example.gmsproduction.dregypt.ui.fragments.Filters.PharmacyFilters;
+import com.example.gmsproduction.dregypt.ui.fragments.Filters.ProductFilters;
 
 public class FiltersActivity extends AppCompatActivity {
 
@@ -25,37 +28,37 @@ public class FiltersActivity extends AppCompatActivity {
             case 1:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container_filter,new HospitalFilters(),"HospitalFilters")
+                        .replace(R.id.container_filter,new HospitalFilters(),"HospitalFilters")
                         .commit();
                 break;
             case 2:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container_filter,new ClinicsFilters(),"ClinicsFilters")
+                        .replace(R.id.container_filter,new ClinicsFilters(),"ClinicsFilters")
                         .commit();
                 break;
             case 3:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container_filter,new PharmacyFilters(),"PharmacyFilters")
+                        .replace(R.id.container_filter,new PharmacyFilters(),"PharmacyFilters")
                         .commit();
                 break;
             case 4:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container_filter,new HospitalFilters(),"HospitalFilters")
+                        .replace(R.id.container_filter,new ProductFilters(),"ProductFilters")
                         .commit();
                 break;
             case 5:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container_filter,new HospitalFilters(),"HospitalFilters")
+                        .replace(R.id.container_filter,new CosmeticsFilters(),"CosmeticsFilters")
                         .commit();
                 break;
             case 6:
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container_filter,new HospitalFilters(),"HospitalFilters")
+                        .replace(R.id.container_filter,new JobsFilters(),"JobsFilters")
                         .commit();
                 break;
 

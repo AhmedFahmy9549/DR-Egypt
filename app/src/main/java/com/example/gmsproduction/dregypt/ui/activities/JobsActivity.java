@@ -1,5 +1,7 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +40,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class JobsActivity extends AppCompatActivity {
+
+
+    String MY_PREFS_NAME = "FiltersJob";
 
     private RecyclerView mRecyclerView;
     private JobAdsAdapter mAdapter;
@@ -133,6 +138,22 @@ public class JobsActivity extends AppCompatActivity {
         return true;
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int items = item.getItemId();
+
+        switch (items) {
+            case R.id.action_filters:
+                Intent intent = new Intent(JobsActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 6);
+                startActivity(intent);
+                break;
+        }
+        return true;
+
+    }
     //on back press
     @Override
     public void onBackPressed() {
@@ -145,7 +166,36 @@ public class JobsActivity extends AppCompatActivity {
 
 
     public void getJobs(String keyword) {
-        body.put("keyword", keyword);
+
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int city = prefs.getInt("city", 0); //0 is the default value.
+        int area = prefs.getInt("area", 0); //0 is the default value.
+        int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+        int category = prefs.getInt("category", 0); //0 is the default value.
+        int type = prefs.getInt("type", 0); //0 is the default value.
+        int expLevel = prefs.getInt("experienceLevel", 0); //0 is the default value.
+        int eduLevel = prefs.getInt("educationLevel", 0); //0 is the default value.
+
+
+
+
+
+
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category+"Type="+type+"ExperienceLevel="+expLevel+"educationLevel="+eduLevel);
+
+
+       body.put("region", String.valueOf(city));
+        body.put("city", String.valueOf(area));
+        body.put("rate", String.valueOf(rate));
+        body.put("category", String.valueOf(category));
+        body.put("type", String.valueOf(type));
+        body.put("experienceLevel", String.valueOf(expLevel));
+        body.put("educationLevel", String.valueOf(eduLevel));
+
+
+        body.put("keyword",keyword);
+
+
         final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(JobsActivity.this, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -219,5 +269,24 @@ public class JobsActivity extends AppCompatActivity {
             e.printStackTrace();
 
         }
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop","onStop");
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putInt("num_rate", 0);
+        editor.putInt("city", 0);
+        editor.putInt("area", 0);
+        editor.putInt("speciality", 0);
+        editor.putInt("type", 0);
+        editor.putInt("experienceLevel", 0);
+        editor.putInt("educationLevel", 0);
+
+
+        editor.apply();
+
     }
 }

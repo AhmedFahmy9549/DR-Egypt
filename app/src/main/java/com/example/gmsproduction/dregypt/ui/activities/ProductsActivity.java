@@ -39,6 +39,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
+import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.ui.fragments.ProductBannerFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
@@ -55,6 +56,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProductsActivity extends AppCompatActivity {
+
+    String MY_PREFS_NAME = "FiltersPro";
+
     //Response.Listener<String>, Response.ErrorListener,
     private RecyclerView mRecyclerView;
     private ProductAdsAdapter mAdapter;
@@ -181,7 +185,21 @@ public class ProductsActivity extends AppCompatActivity {
         });
         getProducts("");
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        int items = item.getItemId();
+
+        switch (items) {
+            case R.id.action_filters:
+                Intent intent = new Intent(ProductsActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 4);
+                startActivity(intent);
+                break;
+        }
+        return true;
+
+    }
 
     //menu option
     @Override
@@ -263,7 +281,24 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     public void getProducts(String keyword) {
+
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int city = prefs.getInt("city", 0); //0 is the default value.
+        int area = prefs.getInt("area", 0); //0 is the default value.
+        int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+        int category = prefs.getInt("category", 0); //0 is the default value.
+        int status = prefs.getInt("status", 0); //0 is the default value.
+
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category+"Status="+status);
+
+
+        body.put("region", String.valueOf(city));
+        body.put("city", String.valueOf(area));
+        body.put("rate", String.valueOf(rate));
+        body.put("category", String.valueOf(category));
+        body.put("status", String.valueOf(status));
         body.put("keyword", keyword);
+
         final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -356,7 +391,28 @@ public class ProductsActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE); //to show
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop","onStop");
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putInt("num_rate", 0);
+        editor.putInt("city", 0);
+        editor.putInt("area", 0);
+        editor.putInt("category", 0);
+        editor.putInt("status", 0);
+
+
+        editor.apply();
+
+
+    }
 }
+
+
+
+
 
 //custom class to detect when the recycleview reach it's end
 class CustomScrollListener extends RecyclerView.OnScrollListener {

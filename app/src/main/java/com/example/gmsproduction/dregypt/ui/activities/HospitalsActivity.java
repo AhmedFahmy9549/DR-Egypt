@@ -22,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnScrollListener;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.SearchHospitalsRequest;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
@@ -258,11 +259,19 @@ public class HospitalsActivity extends AppCompatActivity {
                 Log.e(TAG + "Response=", "" + phone);
 
 
+
+
+
                 HospitalModel model = new HospitalModel(id_hos, name_hos, address_hos, note_hos, website_hos, email_hos, img_hos, phone_hos, phone2_hos, count_hos, rating_hos, fav_hos, createdAt_hos);
 
 
                 arrayList.add(model);
             }
+
+            JSONObject links = jsonObject.getJSONObject("links");
+            String nextPage=links.getString("next");
+
+            Log.e("Nexxxxxxxxxxxxx",nextPage+"");
 
 
         } catch (JSONException e) {
@@ -271,6 +280,15 @@ public class HospitalsActivity extends AppCompatActivity {
         adapterx = new AdapterHospitalRecylcer(this, arrayList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+
+
+            }
+        });
+
+
         recyclerView.setAdapter(adapterx);
     }
 

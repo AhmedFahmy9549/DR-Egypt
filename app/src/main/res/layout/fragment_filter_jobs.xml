@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Choose City"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinner_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Choose Area"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinner_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_margin="10dp"
+                 android:text="Order by"
+                 android:textSize="20sp"
+                 android:textStyle="bold" />
+
+             <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal"
+                 android:weightSum="2">
+
+                 <RadioButton
+                     android:id="@+id/radio_new"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:onClick="onRadioButtonClicked"
+                     android:text="Newest" />
+
+
+                 <RadioButton
+                     android:id="@+id/radio_old"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_weight="1"
+                     android:onClick="onRadioButtonClicked"
+                     android:text="Oldest"
+
+                     />
+             </RadioGroup>-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Category"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Ad Type"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radio_group_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <RadioButton
+                    android:id="@+id/radio_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="All" />
+
+
+                <RadioButton
+                    android:id="@+id/radio_type2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Employer" />
+
+                <RadioButton
+                    android:id="@+id/radio_type3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Job Seeker" />
+            </RadioGroup>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#000" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Experience Level"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Spinner
+                        android:id="@+id/spinner_Experience_Level"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp" />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#000" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Education Level"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinner_Education_Level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+
+            <Button
+                android:id="@+id/btn_applay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorPrimary"
+                android:text="Apply"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

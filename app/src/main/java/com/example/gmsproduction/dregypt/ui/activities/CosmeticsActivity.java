@@ -1,6 +1,7 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.speech.RecognizerIntent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.SearchCosmeticClinicsRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.CosmeticClinicsAdapter;
+import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.Models.CosmeticModel;
@@ -41,6 +43,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CosmeticsActivity extends AppCompatActivity {
+
+
+    String MY_PREFS_NAME = "FiltersCos";
 
     private RecyclerView mRecyclerView;
     private CosmeticClinicsAdapter mAdapter;
@@ -134,7 +139,21 @@ public class CosmeticsActivity extends AppCompatActivity {
 
         return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
+        int items = item.getItemId();
+
+        switch (items) {
+            case R.id.action_filters:
+                Intent intent = new Intent(CosmeticsActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 5);
+                startActivity(intent);
+                break;
+        }
+        return true;
+
+    }
     //on back press
     @Override
     public void onBackPressed() {
@@ -198,7 +217,22 @@ public class CosmeticsActivity extends AppCompatActivity {
     }
     //filters will be added here
     public void getCosmetics(String keyword){
-        body.put("keyword", keyword);
+
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int city = prefs.getInt("city", 0); //0 is the default value.
+        int area = prefs.getInt("area", 0); //0 is the default value.
+        int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+        int speciality = prefs.getInt("speciality", 0); //0 is the default value.
+
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Specialty=" + speciality);
+
+
+        body.put("region", String.valueOf(city));
+        body.put("city", String.valueOf(area));
+        body.put("rate", String.valueOf(rate));
+        body.put("speciality", String.valueOf(speciality));
+        body.put("keyword",keyword);
+
         final SearchCosmeticClinicsRequest searchProductAdRequest = new SearchCosmeticClinicsRequest(CosmeticsActivity.this,new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -237,5 +271,19 @@ public class CosmeticsActivity extends AppCompatActivity {
         });
         searchProductAdRequest.setBody((HashMap) body);
         searchProductAdRequest.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("onStop","onStop");
+        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        editor.putInt("num_rate", 0);
+        editor.putInt("city", 0);
+        editor.putInt("area", 0);
+        editor.putInt("speciality", 0);
+
+        editor.apply();
+
     }
 }
