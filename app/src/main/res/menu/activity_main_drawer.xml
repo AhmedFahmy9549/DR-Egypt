@@ -27,6 +27,9 @@
     <item
         android:id="@+id/nav_Favorite"
         android:title="Favorite"/>
+    <item
+        android:id="@+id/nav_AddProduct"
+        android:title="Add Product"/>
 
     <item android:title="Communicate">
         <menu>

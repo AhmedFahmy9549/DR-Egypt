@@ -61,7 +61,9 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-
+       /* SharedPreferences prefs = getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
+        String restoredText = prefs.getString("User_name", null);
+        Log.e("Visis",""+restoredText);*/
 
 
 
@@ -145,6 +147,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_Favorite:
                 intent = new Intent(this, FavoriteActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.nav_AddProduct:
+                intent = new Intent(this, AddItemActivity.class);
                 startActivity(intent);
                 break;
             

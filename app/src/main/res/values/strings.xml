@@ -12,13 +12,16 @@
     <!-- Facebook Strings -->
     <string name="facebook_app_id">1256853057779143</string>
     <string name="fb_login_protocol_scheme">fb1256853057779143</string>
-
+    Address
     <!-- Start of Hima Strings -->
     <string name="hello_world">Hello world!</string>
     <string name="email">Email</string>
+    <string name="title">Title</string>
+    <string name="address">Address</string>
     <string name="Enter_email">Enter your email address</string>
     <string name="passowrd">Password</string>
     <string name="login">LOGIN</string>
+    <string name="description">Description</string>
     <string name="show_pwd">Show Password</string>
     <string name="hide_pwd">Hide Password</string>
     <string name="forgot">Forgot password?</string>
