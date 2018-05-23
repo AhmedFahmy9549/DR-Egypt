@@ -128,7 +128,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="30dp"
-        android:src="@drawable/hospital_medical"
+        android:src="@drawable/pharmacy_medical"
         app:layout_constraintStart_toStartOf="@id/parent"
         app:layout_constraintTop_toBottomOf="@+id/image_name2" />
 

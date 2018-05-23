@@ -26,6 +26,7 @@ import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnS
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.SearchHospitalsRequest;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
@@ -50,13 +51,13 @@ public class HospitalsActivity extends AppCompatActivity {
     private AdapterHospitalRecylcer adapterx;
     MaterialSearchView searchView;
     public ConstraintLayout constraintLayout;
-    LinearLayoutManager linearLayoutManager;
     String MY_PREFS_NAME = "FiltersH";
-    int page = 1;
-
 
     String test;
 
+    LinearLayoutManager linearLayoutManager;
+    int page = 1;
+    int last_page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,8 @@ public class HospitalsActivity extends AppCompatActivity {
 
 
         //get all hos
-        getHospital("");
+        getHospitalPagenation("");
+
 
         //Custom Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_hospital);
@@ -83,8 +85,19 @@ public class HospitalsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (test != null && !test.isEmpty()) {
                     test = "";
-                    getHospital(test);
+                    Log.e("YYYYYYYYYYY", "test != null && !test.isEmpty()");
+
+                    arrayList = new ArrayList<>();
+                    page = 1;
+                    adapterx = new AdapterHospitalRecylcer(HospitalsActivity.this, arrayList);
+                    linearLayoutManager = new LinearLayoutManager(HospitalsActivity.this);
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(adapterx);
+                    getHospitalPagenation(test);
+
                 } else {
+                    Log.e("YYYYYYYYYYY", "finish()");
+
                     finish();
                 }
             }
@@ -98,6 +111,7 @@ public class HospitalsActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Log.e("YYYYYYYYYYY", "onQueryTextSubmit");
                 test = query;
                 getHospital(query);
                 return false;
@@ -105,44 +119,31 @@ public class HospitalsActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+
                 getHospital(newText);
+
                 return false;
             }
         });
         searchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
             public void onSearchViewShown() {
+                Log.e("YYYYYYYYYYY", "onSearchViewShown");
+
 
             }
 
             @Override
             public void onSearchViewClosed() {
+                Log.e("YYYYYYYYYYY", "onSearchViewClosed");
                 getHospital(test);
             }
         });
-
-
 
         adapterx = new AdapterHospitalRecylcer(this, arrayList);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
-
-
-
-
-
-
-
-
-
-
-        /*SharedPreferences prefs = getSharedPreferences("Location", MODE_PRIVATE);
-        int city_id = prefs.getInt("city_id", 0); //0 is the default value.
-        int region_id = prefs.getInt("region_id", 0);
-        int special_id = prefs.getInt("specialId", 0); */
-
-
     }
 
     //menu option
@@ -185,6 +186,7 @@ public class HospitalsActivity extends AppCompatActivity {
 
     public void getHospital(String keyword) {
 
+        arrayList = new ArrayList<>();
 
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         int city = prefs.getInt("city", 0); //0 is the default value.
@@ -231,7 +233,7 @@ public class HospitalsActivity extends AppCompatActivity {
                 }
 
             }
-        }, page);
+        }, 0);
         searchHospitalsRequest.setBody((HashMap) body);
         searchHospitalsRequest.start();
     }
@@ -272,21 +274,67 @@ public class HospitalsActivity extends AppCompatActivity {
                 arrayList.add(model);
             }
 
-    /*        JSONObject links = jsonObject.getJSONObject("links");
-            String nextPage=links.getString("next");
 
-            Log.e("Nexxxxxxxxxxxxx",nextPage+"");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        adapterx = new AdapterHospitalRecylcer(this, arrayList);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapterx);
+
+
+
+    }
+
+    public void PagenatonResponse(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                String name_hos = object.getString("en_name");
+                int id_hos = object.getInt("id");
+                String address_hos = object.getString("en_address");
+                String note_hos = object.getString("en_note");
+                String website_hos = object.getString("website");
+                String email_hos = object.getString("email");
+                String img_hos = Constants.ImgUrl + object.getString("img");
+                String createdAt_hos = object.getString("created_at");
+
+
+                JSONObject fav_object = object.getJSONObject("favorites");
+                int fav_hos = fav_object.getInt("count");
+
+                JSONObject rate = object.getJSONObject("rate");
+                int count_hos = rate.getInt("count");
+                float rating_hos = (float) rate.getDouble("rating");
+
+                JSONArray phone = object.getJSONArray("phone");
+                String phone_hos = phone.getString(0);
+                String phone2_hos = phone.getString(1);
+
+                Log.e(TAG + "Response=", "" + id_hos);
+
+
+                HospitalModel model = new HospitalModel(id_hos, name_hos, address_hos, note_hos, website_hos, email_hos, img_hos, phone_hos, phone2_hos, count_hos, rating_hos, fav_hos, createdAt_hos);
+
+
+                arrayList.add(model);
+            }
+
 
 
             JSONObject meta = jsonObject.getJSONObject("meta");
-            int currentPage=meta.getInt("current_page");
+            last_page=meta.getInt("last_page");
 
-            page=currentPage;
 
             Log.e("PageeeCurrent=",page+"");
 
 
-*/
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -299,10 +347,10 @@ public class HospitalsActivity extends AppCompatActivity {
                 page++;
 
                 Log.e("PageeeNext=", "" + page);
-                if (page >= 4) {
+                if (page > last_page) {
 
                 } else {
-                    getHospital("");
+                    getHospitalPagenation("");
 
                 }
 
@@ -313,6 +361,59 @@ public class HospitalsActivity extends AppCompatActivity {
         adapterx.notifyItemRangeInserted(adapterx.getItemCount(), arrayList.size() - 1);
 
 
+    }
+
+    public void getHospitalPagenation(String keyword) {
+
+
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int city = prefs.getInt("city", 0); //0 is the default value.
+        int area = prefs.getInt("area", 0); //0 is the default value.
+        int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+
+        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate);
+
+
+        body.put("region", String.valueOf(city));
+        body.put("city", String.valueOf(area));
+        body.put("rate", String.valueOf(rate));
+        body.put("keyword", keyword);
+
+        final SearchHospitalsRequest searchHospitalsRequest = new SearchHospitalsRequest(this, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.e("Response==", response);
+                PagenatonResponse(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    NoInternt_Fragment fragment = new NoInternt_Fragment();
+                    Bundle arguments = new Bundle();
+                    arguments.putInt("duck", 101);
+                    fragment.setArguments(arguments);
+                    final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.Hospital_Include, fragment, Utils.Error);
+                    ft.commit();
+
+                } else if (error instanceof AuthFailureError) {
+                    //TODO
+
+                } else if (error instanceof ServerError) {
+                    //TODO
+                } else if (error instanceof NetworkError) {
+                    //TODO
+                } else if (error instanceof ParseError) {
+                    //TODO
+
+                }
+
+            }
+        }, page);
+        searchHospitalsRequest.setBody((HashMap) body);
+        searchHospitalsRequest.start();
     }
 
     @Override

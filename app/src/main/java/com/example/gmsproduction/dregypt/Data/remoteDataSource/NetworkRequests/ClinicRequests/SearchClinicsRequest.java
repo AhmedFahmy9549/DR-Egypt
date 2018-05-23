@@ -19,12 +19,12 @@ public class SearchClinicsRequest {
     String url;
     int methodId;
 
-    public SearchClinicsRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener){
-        setValues();
+    public SearchClinicsRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener,int page){
+        setValues(page);
         volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
     }
-    private void setValues(){
-        url= Constants.basicUrl+"/clinics/search";
+    private void setValues(int npage){
+        url= Constants.basicUrl+"/clinics/search?page="+npage;
         methodId= Request.Method.POST;
     }
     public void setBody(HashMap body){

@@ -19,12 +19,12 @@ public class SearchCosmeticClinicsRequest {
     String url;
     int methodId;
 
-    public SearchCosmeticClinicsRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener){
-        setValues();
+    public SearchCosmeticClinicsRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener,int page){
+        setValues(page);
         volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
     }
-    private void setValues(){
-        url= Constants.basicUrl+"/cosmetic-clinics/search";
+    private void setValues(int page){
+        url= Constants.basicUrl+"/cosmetic-clinics/search?page="+page;
         methodId= Request.Method.POST;
     }
 

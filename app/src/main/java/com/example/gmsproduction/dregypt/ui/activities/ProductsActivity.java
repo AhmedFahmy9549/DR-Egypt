@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -36,10 +37,12 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.daimajia.slider.library.SliderLayout;
+import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnScrollListener;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
 import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
+import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.ui.fragments.ProductBannerFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
@@ -62,7 +65,7 @@ public class ProductsActivity extends AppCompatActivity {
     //Response.Listener<String>, Response.ErrorListener,
     private RecyclerView mRecyclerView;
     private ProductAdsAdapter mAdapter;
-    private ArrayList<ProductsModel> modelArrayList;
+    private ArrayList<ProductsModel> modelArrayList=new ArrayList<>();
     String id, title, description, price, image, status, address, created_at, phone_1, phone_2, category;
     SliderLayout mDemoSlider;
     MaterialSearchView searchView;
@@ -73,6 +76,10 @@ public class ProductsActivity extends AppCompatActivity {
     String test;
     ProgressBar progressBar;
     public static final String CheckInternet = "CheckInternet";
+
+    LinearLayoutManager LayoutManagaer;
+    int page = 1;
+    int last_page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,18 +97,12 @@ public class ProductsActivity extends AppCompatActivity {
                         Utils.banner).commit();
 
 
-        //Filters
-        //body.put("status", "2");
-
-        //Request for main products
-
-        /*SharedPreferences.Editor editor = getSharedPreferences(CheckInternet, MODE_PRIVATE).edit();
-        editor.putInt("activityName", 505);
-        editor.apply();*/
 
         //recycler View horizon orientation
         mRecyclerView = findViewById(R.id.Recycler_Product);
-        final LinearLayoutManager LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
+
+
+        getProductsPagenation("");
 
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -128,8 +129,6 @@ public class ProductsActivity extends AppCompatActivity {
                 }
             }
         });
-        mRecyclerView.setLayoutManager(LayoutManagaer);
-        mRecyclerView.addOnScrollListener(new CustomScrollListener());
 
         //Custom Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarxx);
@@ -144,8 +143,13 @@ public class ProductsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (test != null && !test.isEmpty()) {
                     test = "";
-                    getProducts(test);
-                    Log.e("4444", "toolbar");
+                    modelArrayList = new ArrayList<>();
+                    page = 1;
+                    mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+                    LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
+                    mRecyclerView.setLayoutManager(LayoutManagaer);
+                    mRecyclerView.setAdapter(mAdapter);
+                    getProductsPagenation(test);
 
                 } else {
                     finish();
@@ -183,7 +187,10 @@ public class ProductsActivity extends AppCompatActivity {
 
             }
         });
-        getProducts("");
+        LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
+        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+        mRecyclerView.setLayoutManager(LayoutManagaer);
+        mRecyclerView.setAdapter(mAdapter);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -239,8 +246,9 @@ public class ProductsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    //Fetching JSON Method
-    public void Responsey(String response) {
+
+
+    public void ProductResponse(String response) {
         modelArrayList = new ArrayList<>();
         progressBar.setVisibility(View.GONE);
         Log.e("tagyyy", response);
@@ -271,15 +279,19 @@ public class ProductsActivity extends AppCompatActivity {
                 modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
             }
 
-            mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
-            mRecyclerView.setAdapter(mAdapter);
+
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e("error", e.toString());
 
         }
-    }
+        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+        LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
+        mRecyclerView.setLayoutManager(LayoutManagaer);
+        mRecyclerView.setAdapter(mAdapter);
 
+
+    }
     public void getProducts(String keyword) {
 
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -302,7 +314,7 @@ public class ProductsActivity extends AppCompatActivity {
         final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Responsey(response);
+                ProductResponse(response);
                 Log.e("4444", response);
 
             }
@@ -341,10 +353,140 @@ public class ProductsActivity extends AppCompatActivity {
 
                 }
             }
-        });
+        },0);
         searchProductAdRequest.setBody((HashMap) body);
         searchProductAdRequest.start();
     }
+    public void getProductsPagenation(String keyword) {
+
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        int city = prefs.getInt("city", 0); //0 is the default value.
+        int area = prefs.getInt("area", 0); //0 is the default value.
+        int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+        int category = prefs.getInt("category", 0); //0 is the default value.
+        int status = prefs.getInt("status", 0); //0 is the default value.
+
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category+"Status="+status);
+
+
+        body.put("region", String.valueOf(city));
+        body.put("city", String.valueOf(area));
+        body.put("rate", String.valueOf(rate));
+        body.put("category", String.valueOf(category));
+        body.put("status", String.valueOf(status));
+        body.put("keyword", keyword);
+
+        final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                PagenationResponse(response);
+                Log.e("4444", response);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    NoInternt_Fragment fragment = new NoInternt_Fragment();
+                    Bundle arguments = new Bundle();
+                    arguments.putInt( "duck" , 55);
+                    fragment.setArguments(arguments);
+                    final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.dodododo, fragment , Utils.Error);
+                    ft.commit();
+                    /*fragmentManager
+                            .beginTransaction()
+                            .add(R.id.dodododo, new NoInternt_Fragment(),
+                                    Utils.Error).commit();*/
+
+
+                } else if (error instanceof AuthFailureError) {
+                    //TODO
+                    Log.e("3333", "1");
+
+                } else if (error instanceof ServerError) {
+                    //TODO
+                    Log.e("3333", "2");
+                } else if (error instanceof NetworkError) {
+                    //TODO
+                    Log.e("3333", "3");
+                    Toast.makeText(ProductsActivity.this, "volly no Internet", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    //TODO
+                    Log.e("3333", "4");
+
+                }
+            }
+        },page);
+        searchProductAdRequest.setBody((HashMap) body);
+        searchProductAdRequest.start();
+    }
+    public void PagenationResponse(String response) {
+        progressBar.setVisibility(View.GONE);
+        Log.e("tagyyy", response);
+        try {
+            JSONObject object = new JSONObject(response);
+            JSONArray dataArray = object.getJSONArray("data");
+            for (int a = 0; a < dataArray.length(); a++) {
+                JSONObject dataObject = dataArray.getJSONObject(a);
+                id = dataObject.getString("id");
+                title = dataObject.getString("title");
+                price = dataObject.getString("price");
+                image = Constants.ImgUrl + dataObject.getString("img");
+                status = dataObject.getString("status");
+                address = dataObject.getString("address");
+                created_at = dataObject.getString("created_at");
+                description = dataObject.getString("description");
+                try {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = (String) phoneArray.get(1);
+                } catch (Exception e) {
+                    phone_1 = "No phone has been added";
+                    phone_2 = "No phone has been added";
+                }
+                JSONObject categoryObject = dataObject.getJSONObject("category");
+                category = categoryObject.getString("en_name");
+                modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
+            }
+
+            JSONObject meta = object.getJSONObject("meta");
+            last_page = meta.getInt("last_page");
+
+
+            Log.e("PageeeCurrent=", page + "");
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("error", e.toString());
+
+        }
+
+
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(LayoutManagaer) {
+            @Override
+            public void onLoadMore(int current_page) {
+
+                page++;
+
+                Log.e("PageeeNext=", "" + page);
+                if (page > last_page) {
+
+                } else {
+                    getProductsPagenation("");
+
+                }
+
+
+            }
+        });
+
+        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), modelArrayList.size() - 1);
+
+    }
+
 
     private AlertDialog makeAndShowDialogBox(String msg) {
         AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)

@@ -19,16 +19,16 @@ public class SearchPharmacyRequest {
     String url;
     int methodId;
 
-    public SearchPharmacyRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener){
-        setValues();
+    public SearchPharmacyRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener,int page){
+        setValues(page);
         volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
     }
     public void setBody(HashMap body){
         volleyLIbUtils.setParams(body);
     }
 
-    private void setValues(){
-        url= Constants.basicUrl+"/pharmacies/search";
+    private void setValues(int page){
+        url= Constants.basicUrl+"/pharmacies/search?page="+page;
         methodId= Request.Method.POST;
     }
 

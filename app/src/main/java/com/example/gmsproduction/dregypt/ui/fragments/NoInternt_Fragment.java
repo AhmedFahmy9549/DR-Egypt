@@ -100,7 +100,7 @@ public class NoInternt_Fragment extends Fragment {
     }
     public void ReloadClinic() {
 
-        ((ClinicsActivity) getActivity()).getClinics("");
+        ((ClinicsActivity) getActivity()).getClinicsPagenation("");
         //((CosmeticsActivity)getActivity()).Progressbar();
         Toast.makeText(getContext(), "Clinic", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();

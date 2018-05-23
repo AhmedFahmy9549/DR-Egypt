@@ -66,7 +66,7 @@ public class PharmacyFragment extends Fragment implements Response.Listener<Stri
         Log.e(TAG, "Region=" + region_id + "  City=" + city_id );
 
 
-        SearchPharmacyRequest searchPharmacyRequest = new SearchPharmacyRequest(getActivity(), this, this);
+        SearchPharmacyRequest searchPharmacyRequest = new SearchPharmacyRequest(getActivity(), this, this,0);
         searchPharmacyRequest.setBody(parms);
         searchPharmacyRequest.start();
         return view;

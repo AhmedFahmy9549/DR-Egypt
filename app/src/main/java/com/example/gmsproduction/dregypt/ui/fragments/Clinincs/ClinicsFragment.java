@@ -67,7 +67,7 @@ public class ClinicsFragment extends Fragment implements Response.Listener<Strin
         Log.e(TAG, "Region=" + region_id + "  City=" + city_id + "    SpecialName=" + special_id);
 
 
-        SearchClinicsRequest searchClinicsRequest = new SearchClinicsRequest(getActivity(), this, this);
+        SearchClinicsRequest searchClinicsRequest = new SearchClinicsRequest(getActivity(), this, this,0);
         searchClinicsRequest.setBody(parms);
         searchClinicsRequest.start();
         return view;

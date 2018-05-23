@@ -20,23 +20,23 @@ public class SearchProductAdRequest {
     int methodId;
 
 
-
-    public SearchProductAdRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener){
-        setValues();
-        volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
+    public SearchProductAdRequest(Context context, Response.Listener<String> listener, Response.ErrorListener errorListener, int page) {
+        setValues(page);
+        volleyLIbUtils = new VolleyLIbUtils(context, methodId, url, listener, errorListener);
     }
-    private void setValues(){
-        url= Constants.basicUrl+"/product-ads/search";
 
-        methodId= Request.Method.POST;
+    private void setValues(int page) {
+        url = Constants.basicUrl + "/product-ads/search?+page=" + page;
+
+        methodId = Request.Method.POST;
     }
-    public void setBody(HashMap body){
+
+    public void setBody(HashMap body) {
         volleyLIbUtils.setParams(body);
     }
 
 
-
-    public void start(){
+    public void start() {
         volleyLIbUtils.start();
     }
 }

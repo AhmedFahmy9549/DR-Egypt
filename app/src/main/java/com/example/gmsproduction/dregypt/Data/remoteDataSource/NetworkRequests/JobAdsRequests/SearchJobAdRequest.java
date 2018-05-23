@@ -19,13 +19,13 @@ public class SearchJobAdRequest {
     String url;
     int methodId;
 
-    public SearchJobAdRequest(Context context,Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        setValues();
+    public SearchJobAdRequest(Context context,Response.Listener<String> listener, Response.ErrorListener errorListener,int page) {
+        setValues(page);
         volleyLIbUtils = new VolleyLIbUtils(context, methodId, url, listener, errorListener);
     }
 
-    private void setValues() {
-        url = Constants.basicUrl + "/job-ads/search";
+    private void setValues(int page) {
+        url = Constants.basicUrl + "/job-ads/search?page="+page;
         methodId = Request.Method.POST;
     }
 
