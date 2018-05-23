@@ -11,7 +11,7 @@
 
 
         <EditText
-            android:id="@+id/Add_product_Title"
+            android:id="@+id/Add_Job_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -32,7 +32,7 @@
             android:background="@android:color/darker_gray" />
 
         <EditText
-            android:id="@+id/Add_product_Price"
+            android:id="@+id/Add_Job_Salary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -40,7 +40,7 @@
             android:drawablePadding="8dp"
             android:drawableTint="@android:color/darker_gray"
             android:gravity="center_vertical"
-            android:hint="Price"
+            android:hint="Salary"
             android:inputType="number"
             android:padding="10dp"
             android:singleLine="true"
@@ -52,8 +52,45 @@
             android:layout_height="1px"
             android:background="@android:color/darker_gray" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+
+            <RadioGroup
+                android:id="@+id/Add_Job_radio_group_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2"
+
+                >
+
+                <RadioButton
+                    android:id="@+id/Add_Job_radio_status1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Employer"
+
+                    />
+
+                <RadioButton
+                    android:id="@+id/Add_Job_radio_status2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Job Seeker" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
         <EditText
-            android:id="@+id/Add_product_Desc"
+            android:id="@+id/Add_Job_Desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -95,14 +132,14 @@
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/Add_product_spinner_city"
+                    android:id="@+id/Add_Job_spinner_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/Add_product_linear_area"
+                android:id="@+id/Add_Job_linear_area"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -118,7 +155,7 @@
                     android:textStyle="bold" />
 
                 <Spinner
-                    android:id="@+id/Add_product_spinner_area"
+                    android:id="@+id/Add_Job_spinner_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp" />
@@ -128,8 +165,7 @@
         </LinearLayout>
 
         <EditText
-            android:visibility="gone"
-            android:id="@+id/Add_product_Adress"
+            android:id="@+id/Add_Job_Adress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -142,7 +178,8 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
@@ -158,7 +195,7 @@
             android:textStyle="bold" />
 
         <Spinner
-            android:id="@+id/Add_product_spinner_category"
+            android:id="@+id/Add_Job_spinner_category"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
 
@@ -167,93 +204,138 @@
             android:layout_height="1px"
             android:background="@android:color/darker_gray" />
 
-        <EditText
-            android:id="@+id/Add_product_Phone"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/email"
-            android:drawablePadding="8dp"
-            android:drawableTint="@android:color/darker_gray"
-            android:gravity="center_vertical"
-            android:hint="@string/mobileNumber"
-            android:inputType="number"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@android:color/darker_gray" />
-
-        <Button
-            android:id="@+id/Add_product_Image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Image"
-            />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_margin="10dp"
+            android:text="Experience Level "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/Add_Job_spinner_EXPLVL"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Education Level "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/Add_Job_spinner_EduLVL"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Employment Type "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/Add_Job_spinner_EmpType"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="40dp"
-                android:layout_marginRight="40dp"
-                android:text="Status"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <RadioGroup
-                android:id="@+id/Add_product_radio_group_status"
+            <EditText
+                android:id="@+id/Add_Job_Phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/email"
+                android:drawablePadding="8dp"
+                android:drawableTint="@android:color/darker_gray"
+                android:gravity="center_vertical"
+                android:hint="@string/mobileNumber"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_toStartOf="@+id/Add_Job_Add2ndPhone"
+                android:layout_toLeftOf="@+id/Add_Job_Add2ndPhone" />
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/Add_Job_Phone2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Add_Job_Phone"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/email"
+                android:drawablePadding="8dp"
+                android:drawableTint="@android:color/darker_gray"
+                android:gravity="center_vertical"
+                android:hint="@string/mobileNumber"
+                android:inputType="number"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_toStartOf="@+id/Add_Job_Add2ndPhone"
+                android:layout_toLeftOf="@+id/Add_Job_Add2ndPhone" />
+            <Button
+                android:id="@+id/Add_Job_Add2ndPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+add phone"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" />
 
-                >
+        </RelativeLayout>
 
-                <RadioButton
-                    android:id="@+id/Add_product_radio_status1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="New"
 
-                    />
-
-                <RadioButton
-                    android:id="@+id/Add_product_radio_status2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Used" />
-            </RadioGroup>
-
-        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@android:color/darker_gray" />
 
         <Button
-            android:id="@+id/Add_product_FinishBtn"
+            android:id="@+id/Add_Job_Image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Product"
-            />
+            android:text="Add Image" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/Add_Job_FinishBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Product" />
 
     </LinearLayout>
 </ScrollView>

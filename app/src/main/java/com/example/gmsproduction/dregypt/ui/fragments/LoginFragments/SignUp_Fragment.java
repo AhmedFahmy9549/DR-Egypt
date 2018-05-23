@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.LogInActivity;
+import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 import com.example.gmsproduction.dregypt.utils.Utils;
 
@@ -171,7 +172,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 			jsonobject_one.put("password_confirmation", password2);
 
 			JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-					Request.Method.POST, "https://dregy.frb.io/api/register", jsonobject_one,
+					Request.Method.POST, Constants.basicUrl+"/register", jsonobject_one,
 					new Response.Listener<JSONObject>() {
 						@Override
 						public void onResponse(JSONObject response) {

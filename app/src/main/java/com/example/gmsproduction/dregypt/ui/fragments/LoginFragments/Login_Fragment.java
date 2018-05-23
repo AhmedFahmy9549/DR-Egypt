@@ -38,6 +38,7 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.L
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.LogInActivity;
+import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 import com.example.gmsproduction.dregypt.utils.Utils;
 import com.facebook.CallbackManager;
@@ -348,7 +349,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             jsonobject_one.put("avatar", avatar);
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, "https://dregy01.frb.io/api/auth/facebook/callback", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl+"/auth/facebook/callback", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -372,17 +373,18 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         }
     }
     public void postyNormal(String email,String password) {
-
+        String url = "https://dregy01.frb.io/api/login";
         JSONObject jsonobject_one = new JSONObject();
         try {
             jsonobject_one.put("email", email);
             jsonobject_one.put("password", password);
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, "https://dregy.frb.io/api/login", jsonobject_one,
+                    Request.Method.POST,"https://dregy01.frb.io/api/login" , jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            Log.e("Login", response.toString());
                             int id;
                             String name,email,avatar;
                             try {

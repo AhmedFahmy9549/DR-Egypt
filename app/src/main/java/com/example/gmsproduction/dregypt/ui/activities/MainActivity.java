@@ -151,6 +151,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_AddProduct:
                 intent = new Intent(this, AddItemActivity.class);
+                intent.putExtra("Add",1001);
+                startActivity(intent);
+                break;
+            case R.id.nav_AddJob:
+                intent = new Intent(this, AddItemActivity.class);
+                intent.putExtra("Add",2002);
                 startActivity(intent);
                 break;
             

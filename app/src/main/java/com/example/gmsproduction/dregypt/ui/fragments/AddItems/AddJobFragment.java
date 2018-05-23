@@ -9,9 +9,9 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,8 +38,6 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.F
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetRegionsRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.activities.LogInActivity;
-import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 
 import org.json.JSONArray;
@@ -57,10 +55,10 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 
-public class AddProductFragment extends Fragment {
+public class AddJobFragment extends Fragment {
 
     private View view;
-    private EditText EdTitle, EdPrice, EdDesc, EdAddress, EdPhone;
+    private EditText EdTitle, EdSalary, EdDesc, EdAddress, EdPhone;
     private String getTitle, getPrice, getDesc, getAddress, getPhone, getEncodedImage,userID;
     private Spinner spinner, spinner1, spinnerCategory;
     ArrayList<String> name_array, name_array2, CategoryNameArray;
@@ -75,8 +73,8 @@ public class AddProductFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.add_product, container, false);
-         SharedPreferences prefs = getActivity().getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
+        view = inflater.inflate(R.layout.add_job, container, false);
+        /* SharedPreferences prefs = getActivity().getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
         userID = prefs.getString("id", null);
 
         initViews();
@@ -94,7 +92,7 @@ public class AddProductFragment extends Fragment {
             public void onClick(View view) {
                 getImage();
             }
-        });
+        });*/
 
         return view;
     }
@@ -102,18 +100,18 @@ public class AddProductFragment extends Fragment {
 
     private void initViews() {
 
-        EdTitle = view.findViewById(R.id.Add_product_Title);
-        EdPrice = view.findViewById(R.id.Add_product_Price);
-        EdPhone = view.findViewById(R.id.Add_product_Phone);
-        EdDesc = view.findViewById(R.id.Add_product_Desc);
-        EdAddress = view.findViewById(R.id.Add_product_Adress);
-        spinner = view.findViewById(R.id.Add_product_spinner_city);
-        spinner1 = view.findViewById(R.id.Add_product_spinner_area);
+        EdTitle = view.findViewById(R.id.Add_Job_Title);
+        EdSalary = view.findViewById(R.id.Add_Job_Salary);
+        EdPhone = view.findViewById(R.id.Add_Job_Phone);
+        EdDesc = view.findViewById(R.id.Add_Job_Desc);
+        EdAddress = view.findViewById(R.id.Add_Job_Adress);
+        spinner = view.findViewById(R.id.Add_Job_spinner_city);
+        spinner1 = view.findViewById(R.id.Add_Job_spinner_area);
         spinnerCategory = view.findViewById(R.id.Add_product_spinner_category);
-        radioGroupStatus = view.findViewById(R.id.Add_product_radio_group_status);
-        linearLayout = view.findViewById(R.id.Add_product_linear_area);
-        AddBTN = view.findViewById(R.id.Add_product_FinishBtn);
-        imagetestbtn = view.findViewById(R.id.Add_product_Image);
+        radioGroupStatus = view.findViewById(R.id.Add_Job_radio_group_status);
+        linearLayout = view.findViewById(R.id.Add_Job_linear_area);
+        AddBTN = view.findViewById(R.id.Add_Job_FinishBtn);
+        imagetestbtn = view.findViewById(R.id.Add_Job_Image);
 
     }
 
@@ -339,7 +337,7 @@ public class AddProductFragment extends Fragment {
 
     private void Validation() {
         getTitle = EdTitle.getText().toString();
-        getPrice = EdPrice.getText().toString();
+        getPrice = EdSalary.getText().toString();
         getDesc = EdDesc.getText().toString();
         getAddress = EdAddress.getText().toString();
         getPhone = EdPhone.getText().toString();
@@ -442,9 +440,7 @@ public class AddProductFragment extends Fragment {
                 public Map<String, String> getHeaders() throws AuthFailureError {
 
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("content-type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW");
-                    params.put("Content-Type", "multipart/form-data");
-                    params.put("Accept", "application/json");
+                    params.put("Content-Type", " multipart/form-data");
                     return params;
                 }
             };
