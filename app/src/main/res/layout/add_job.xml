@@ -57,10 +57,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="horizontal">
-
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center"
+                android:text="Ad Type"
+                android:textSize="20sp"
+                android:textStyle="bold" />
             <RadioGroup
-                android:id="@+id/Add_Job_radio_group_status"
+                android:id="@+id/Add_Job_radio_group_AdType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -335,7 +342,7 @@
             android:id="@+id/Add_Job_FinishBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Product" />
+            android:text="Add Job" />
 
     </LinearLayout>
 </ScrollView>

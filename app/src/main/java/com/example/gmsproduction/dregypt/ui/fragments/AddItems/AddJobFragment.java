@@ -34,6 +34,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetCitiesRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetJobAdCategoriesRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetJobEducationLevelsRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetJobEmploymentTypesRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetJobExperienceLevelsRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetProductAdCategoriesRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetRegionsRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
@@ -58,29 +62,34 @@ import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 public class AddJobFragment extends Fragment {
 
     private View view;
-    private EditText EdTitle, EdSalary, EdDesc, EdAddress, EdPhone;
-    private String getTitle, getPrice, getDesc, getAddress, getPhone, getEncodedImage,userID;
-    private Spinner spinner, spinner1, spinnerCategory;
-    ArrayList<String> name_array, name_array2, CategoryNameArray;
-    int x, numRate, numStatus= 55, city, area, category , radiogroubValidation = 55;
-    ArrayList<LocationModel> arrayModel, array2;
+    private EditText EdTitle, EdSalary, EdDesc, EdAddress,EdPhone,Edphone2;
+    private String getTitle, getSalary, getDesc, getAddress, getPhone,getPhone2, getEncodedImage, userID;
+    Spinner spinner, spinner1, spinnerCategory, spinnerExpLevel, spinnerEducLevel,spinnerEmpType;
+    ArrayList<String> name_array, name_array2, CategoryNameArray, ExpLebelNameArray, EduLevelNameArray,EmpTypeNameArray;
+    int x, numRate, numType, city, area, category, expLevel, eduLevel,EmpType;
+    ArrayList<LocationModel> arrayModel, array2, getArrayExiLevelModel, arrayEduLevelModel,EmpTypeModel;
     LinearLayout linearLayout;
-    Button AddBTN, imagetestbtn;
+    Button AddBTN, imagetestbtn,addphone2;
     public static final int RESULT_IMG = 1;
-    private RadioGroup radioGroupStatus;
+    RadioGroup radioGroup, radioGroupType;
     private RequestQueue mRequestQueue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.add_job, container, false);
-        /* SharedPreferences prefs = getActivity().getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
+        getActivity().setTitle("Add Job");
+
+         SharedPreferences prefs = getActivity().getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
         userID = prefs.getString("id", null);
 
         initViews();
         getLocation();
+        getExperienceLevel();
+        getEducationLevel();
+        setAdType();
         getCategory();
-        setStatus();
+        getEmpType();
         AddBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +101,7 @@ public class AddJobFragment extends Fragment {
             public void onClick(View view) {
                 getImage();
             }
-        });*/
+        });
 
         return view;
     }
@@ -103,15 +112,31 @@ public class AddJobFragment extends Fragment {
         EdTitle = view.findViewById(R.id.Add_Job_Title);
         EdSalary = view.findViewById(R.id.Add_Job_Salary);
         EdPhone = view.findViewById(R.id.Add_Job_Phone);
+        Edphone2 = view.findViewById(R.id.Add_Job_Phone2);
         EdDesc = view.findViewById(R.id.Add_Job_Desc);
         EdAddress = view.findViewById(R.id.Add_Job_Adress);
+
         spinner = view.findViewById(R.id.Add_Job_spinner_city);
         spinner1 = view.findViewById(R.id.Add_Job_spinner_area);
-        spinnerCategory = view.findViewById(R.id.Add_product_spinner_category);
-        radioGroupStatus = view.findViewById(R.id.Add_Job_radio_group_status);
+        spinnerCategory = view.findViewById(R.id.Add_Job_spinner_category);
+        spinnerExpLevel = view.findViewById(R.id.Add_Job_spinner_EXPLVL);
+        spinnerEducLevel = view.findViewById(R.id.Add_Job_spinner_EduLVL);
+        spinnerEmpType = view.findViewById(R.id.Add_Job_spinner_EmpType);
+
+        radioGroupType = view.findViewById(R.id.Add_Job_radio_group_AdType);
+
+
         linearLayout = view.findViewById(R.id.Add_Job_linear_area);
         AddBTN = view.findViewById(R.id.Add_Job_FinishBtn);
         imagetestbtn = view.findViewById(R.id.Add_Job_Image);
+        addphone2 = view.findViewById(R.id.Add_Job_Add2ndPhone);
+
+        addphone2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Edphone2.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
@@ -136,18 +161,19 @@ public class AddJobFragment extends Fragment {
                         name_array.add(specName);
                         arrayModel.add(model);
                     }
+                    // Creating adapter for spinner
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
+                    // Drop down layout style - list view with radio button
+
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    // attaching data adapter to spinner
+                    spinner.setAdapter(dataAdapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // Creating adapter for spinner
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
-                // Drop down layout style - list view with radio button
 
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                // attaching data adapter to spinner
-                spinner.setAdapter(dataAdapter);
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -206,13 +232,13 @@ public class AddJobFragment extends Fragment {
                         name_array2.add(specName);
 
                     }
-
+                    ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
+                    dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner1.setAdapter(dataAdapter1);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
-                dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner1.setAdapter(dataAdapter1);
+
                 spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -222,8 +248,6 @@ public class AddJobFragment extends Fragment {
                         area = locationModel.getLocId();
                         //to shazly area
                         EdAddress.setVisibility(View.VISIBLE);
-
-
                     }
 
                     @Override
@@ -249,8 +273,7 @@ public class AddJobFragment extends Fragment {
         CategoryNameArray = new ArrayList<>();
         arrayModel = new ArrayList<>();
 
-
-        GetProductAdCategoriesRequest getProductAdCategoriesRequest = new GetProductAdCategoriesRequest(getActivity(), new Response.Listener<String>() {
+        GetJobAdCategoriesRequest getJobAdCategoriesRequest = new GetJobAdCategoriesRequest(getActivity(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -264,28 +287,85 @@ public class AddJobFragment extends Fragment {
                         CategoryNameArray.add(categName);
                         arrayModel.add(model);
                     }
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
+                    // Drop down layout style - list view with radio button
+
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    // attaching data adapter to spinner
+                    spinnerCategory.setAdapter(dataAdapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
-                // Drop down layout style - list view with radio button
 
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                // attaching data adapter to spinner
-                spinnerCategory.setAdapter(dataAdapter);
 
                 spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String item = adapterView.getItemAtPosition(i).toString();
 
+                            LocationModel locationModel = arrayModel.get(i);
+                            category = locationModel.getLocId();
 
-                        LocationModel locationModel = arrayModel.get(i);
-                        category = locationModel.getLocId();
-                        //toshazly
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getJobAdCategoriesRequest.start();
+
+
+    }
+
+    private void getExperienceLevel() {
+        ExpLebelNameArray = new ArrayList<>();
+        getArrayExiLevelModel = new ArrayList<>();
+
+        GetJobExperienceLevelsRequest getJobExperienceLevelsRequest = new GetJobExperienceLevelsRequest(getActivity(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String categName = object.getString("en_name");
+                        int categId = object.getInt("id");
+                        LocationModel model = new LocationModel(categName, categId);
+                        ExpLebelNameArray.add(categName);
+                        getArrayExiLevelModel.add(model);
+                    }
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ExpLebelNameArray);
+                    // Drop down layout style - list view with radio button
+
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    // attaching data adapter to spinner
+                    spinnerExpLevel.setAdapter(dataAdapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+                spinnerExpLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        String item = adapterView.getItemAtPosition(i).toString();
+
+                            LocationModel locationModel = getArrayExiLevelModel.get(i);
+                            expLevel = locationModel.getLocId();
 
 
                     }
@@ -302,31 +382,145 @@ public class AddJobFragment extends Fragment {
 
             }
         });
-        getProductAdCategoriesRequest.start();
+        getJobExperienceLevelsRequest.start();
 
 
     }
 
-    private void setStatus() {
+    private void getEducationLevel() {
+        EduLevelNameArray = new ArrayList<>();
+        arrayEduLevelModel = new ArrayList<>();
+
+        GetJobEducationLevelsRequest getJobEducationLevelsRequest = new GetJobEducationLevelsRequest(getActivity(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String categName = object.getString("en_name");
+                        int categId = object.getInt("id");
+                        LocationModel model = new LocationModel(categName, categId);
+                        EduLevelNameArray.add(categName);
+                        arrayEduLevelModel.add(model);
+                    }
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EduLevelNameArray);
+                    // Drop down layout style - list view with radio button
+
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    // attaching data adapter to spinner
+                    spinnerEducLevel.setAdapter(dataAdapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                spinnerEducLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        String item = adapterView.getItemAtPosition(i).toString();
+
+                            LocationModel locationModel = arrayEduLevelModel.get(i);
+                            eduLevel = locationModel.getLocId();
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getJobEducationLevelsRequest.start();
+
+
+    }
+
+    private void getEmpType() {
+        EmpTypeNameArray = new ArrayList<>();
+        EmpTypeModel = new ArrayList<>();
+
+        GetJobEmploymentTypesRequest getJobEducationLevelsRequest = new GetJobEmploymentTypesRequest(getActivity(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String categName = object.getString("en_name");
+                        int categId = object.getInt("id");
+                        LocationModel model = new LocationModel(categName, categId);
+                        EmpTypeNameArray.add(categName);
+                        EmpTypeModel.add(model);
+                    }
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EmpTypeNameArray);
+                    // Drop down layout style - list view with radio button
+
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                    // attaching data adapter to spinner
+                    spinnerEmpType.setAdapter(dataAdapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+                spinnerEmpType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        String item = adapterView.getItemAtPosition(i).toString();
+
+                        LocationModel locationModel = EmpTypeModel.get(i);
+                        EmpType = locationModel.getLocId();
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getJobEducationLevelsRequest.start();
+
+
+    }
+
+    private void setAdType() {
         // get selected radio button from radioGroup
-        radioGroupStatus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
+        radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 // checkedId is the RadioButton selected
                 switch (checkedId) {
 
-                    case R.id.Add_product_radio_status1:
-                        numStatus = 1;
-                        radiogroubValidation = 1;
+                    case R.id.Add_Job_radio_status1:
+                        numType = 1;
                         break;
-                    case R.id.Add_product_radio_status2:
-                        numStatus = 2;
-                        radiogroubValidation = 2;
+                    case R.id.Add_Job_radio_status2:
+                        numType = 2;
                         break;
                     default:
-                        numRate = 55;
-                        radiogroubValidation = 55;
+                        numType = 55;
                         break;
                 }
             }
@@ -337,31 +531,33 @@ public class AddJobFragment extends Fragment {
 
     private void Validation() {
         getTitle = EdTitle.getText().toString();
-        getPrice = EdSalary.getText().toString();
+        getSalary = EdSalary.getText().toString();
         getDesc = EdDesc.getText().toString();
         getAddress = EdAddress.getText().toString();
         getPhone = EdPhone.getText().toString();
-        String getCity=String.valueOf(city);
-        String getArea=String.valueOf(area);
-        String getCategory=String.valueOf(category);
-        String getNumStatus=String.valueOf(numStatus);
+        getPhone2 = Edphone2.getText().toString();
+
+        String getCity = String.valueOf(city);
+        String getArea = String.valueOf(area);
+        String getCategory = String.valueOf(category);
+        //String getNumStatus = String.valueOf(numStatus);
         String getID = String.valueOf(userID);
 
         //getTitle,getPrice,getDesc,getAddress,getPhone,city,area,category,numStatus,getEncodedImage
         if (getTitle.equals("") || getTitle.length() == 0
-                || getPrice.equals("") || getPrice.length() == 0
+                || getSalary.equals("") || getSalary.length() == 0
                 || getDesc.equals("") || getDesc.length() == 0
                 || getAddress.equals("") || getAddress.length() == 0
                 || getPhone.equals("") || getPhone.length() == 0) {
             new CustomToast().Show_Toast(getActivity(), view, "All fields are required.");
         } else if (category == -1) {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Category.");
-        } else if (numStatus == 55) {
+        } /*else if (numStatus == 55) {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Status.");
-        } else {
+        }*/ else {
             Toast.makeText(getActivity(), "Do Do.", Toast.LENGTH_SHORT)
                     .show();
-            postProduct(getID,getTitle,getPrice,getDesc,getAddress,getPhone,getCity,getArea,getCategory,getNumStatus,getEncodedImage);
+            //postProduct(getID, getTitle, getPrice, getDesc, getAddress, getPhone, getCity, getArea, getCategory, getNumStatus, getEncodedImage);
         }
 
 
@@ -404,8 +600,8 @@ public class AddJobFragment extends Fragment {
     }
 
     //getTitle,getPrice,getDesc,getAddress,getPhone,city,area,category,numStatus,getEncodedImage
-    public void postProduct(String id,String title,String price,String Desc,String addres,String phone,String city,String area,String category,String Status,String img) {
-        String[]phonearray= {phone};
+    public void postProduct(String id, String title, String price, String Desc, String addres, String phone, String city, String area, String category, String Status, String img) {
+        String[] phonearray = {phone};
         JSONObject jsonobject_one = new JSONObject();
         try {
             jsonobject_one.put("userId", id);
@@ -422,7 +618,7 @@ public class AddJobFragment extends Fragment {
 
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST,"https://dregy01.frb.io/api/product-ads", jsonobject_one,
+                    Request.Method.POST, "https://dregy01.frb.io/api/product-ads", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -435,7 +631,7 @@ public class AddJobFragment extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     Log.e("add pro", "err" + error);
                 }
-            }){
+            }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
 
