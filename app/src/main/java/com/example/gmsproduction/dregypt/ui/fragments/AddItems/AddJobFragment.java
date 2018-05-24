@@ -66,7 +66,7 @@ public class AddJobFragment extends Fragment {
     private String getTitle, getSalary, getDesc, getAddress, getPhone,getPhone2, getEncodedImage, userID;
     Spinner spinner, spinner1, spinnerCategory, spinnerExpLevel, spinnerEducLevel,spinnerEmpType;
     ArrayList<String> name_array, name_array2, CategoryNameArray, ExpLebelNameArray, EduLevelNameArray,EmpTypeNameArray;
-    int x, numRate, numType, city, area, category, expLevel, eduLevel,EmpType;
+    int x, numRate, numType=55, city, area, category, expLevel, eduLevel,EmpType;
     ArrayList<LocationModel> arrayModel, array2, getArrayExiLevelModel, arrayEduLevelModel,EmpTypeModel;
     LinearLayout linearLayout;
     Button AddBTN, imagetestbtn,addphone2;
@@ -446,6 +446,7 @@ public class AddJobFragment extends Fragment {
 
     }
 
+    //ful - part time
     private void getEmpType() {
         EmpTypeNameArray = new ArrayList<>();
         EmpTypeModel = new ArrayList<>();
@@ -505,6 +506,7 @@ public class AddJobFragment extends Fragment {
 
     }
 
+    // job seeker
     private void setAdType() {
         // get selected radio button from radioGroup
         radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -530,6 +532,7 @@ public class AddJobFragment extends Fragment {
     }
 
     private void Validation() {
+
         getTitle = EdTitle.getText().toString();
         getSalary = EdSalary.getText().toString();
         getDesc = EdDesc.getText().toString();
@@ -540,8 +543,13 @@ public class AddJobFragment extends Fragment {
         String getCity = String.valueOf(city);
         String getArea = String.valueOf(area);
         String getCategory = String.valueOf(category);
-        //String getNumStatus = String.valueOf(numStatus);
-        String getID = String.valueOf(userID);
+        String getJobTybe = String.valueOf(numType);
+        String getExpLvl = String.valueOf(expLevel);
+        String getEduLvl = String.valueOf(eduLevel);
+        String getEmpType = String.valueOf(EmpType);
+
+        String getID = String.valueOf(103);
+        //userID
 
         //getTitle,getPrice,getDesc,getAddress,getPhone,city,area,category,numStatus,getEncodedImage
         if (getTitle.equals("") || getTitle.length() == 0
@@ -552,12 +560,12 @@ public class AddJobFragment extends Fragment {
             new CustomToast().Show_Toast(getActivity(), view, "All fields are required.");
         } else if (category == -1) {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Category.");
-        } /*else if (numStatus == 55) {
+        } /*else if (numType == 55) {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Status.");
         }*/ else {
             Toast.makeText(getActivity(), "Do Do.", Toast.LENGTH_SHORT)
                     .show();
-            //postProduct(getID, getTitle, getPrice, getDesc, getAddress, getPhone, getCity, getArea, getCategory, getNumStatus, getEncodedImage);
+            postJob(getID,getTitle,getSalary,getDesc,getAddress,getPhone,getPhone2,getCity,getArea,getCategory,getJobTybe,getExpLvl,getEduLvl,getEmpType,getEncodedImage);
         }
 
 
@@ -600,46 +608,58 @@ public class AddJobFragment extends Fragment {
     }
 
     //getTitle,getPrice,getDesc,getAddress,getPhone,city,area,category,numStatus,getEncodedImage
-    public void postProduct(String id, String title, String price, String Desc, String addres, String phone, String city, String area, String category, String Status, String img) {
-        String[] phonearray = {phone};
+    public void postJob(String id, String title, String salary, String Desc, String addres, String phone,
+                            String phone2, String city, String area, String category,
+                        String jobType,String experienceLeve,String educationLevel,String employmentType, String img) {
+
         JSONObject jsonobject_one = new JSONObject();
+        JSONObject jsonobject_Two = new JSONObject();
+        JSONArray PhoneArray = new JSONArray();
         try {
+            PhoneArray.put(phone);
+            if (phone2!=null && !phone2.isEmpty()){
+                PhoneArray.put(phone2);
+            }
             jsonobject_one.put("userId", id);
             jsonobject_one.put("title", title);
             jsonobject_one.put("description", Desc);
-            jsonobject_one.put("price", price);
-            jsonobject_one.put("regionId", area);
-            jsonobject_one.put("cityId", city);
+            jsonobject_one.put("salary", salary);
+            jsonobject_one.put("regionId",city);
+            jsonobject_one.put("cityId",area);
             jsonobject_one.put("address", addres);
-            jsonobject_one.put("img", img);
-            jsonobject_one.put("status", Status);
+            jsonobject_one.put("jobTypeId", jobType);
             jsonobject_one.put("categoryId", category);
-            jsonobject_one.put("phone", phonearray);
+            jsonobject_one.put("experienceLevelId", experienceLeve);
+            jsonobject_one.put("educationLevelId", educationLevel);
+            jsonobject_one.put("employmentTypeId", employmentType);
 
 
+            //phone array
+            jsonobject_one.put("phone",PhoneArray);
+            //file object
+            jsonobject_Two.put("file", "data:image/jpeg;base64,"+img);
+            jsonobject_one.put("img",jsonobject_Two);
+
+
+
+
+
+            Log.e("gaga",""+jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, "https://dregy01.frb.io/api/product-ads", jsonobject_one,
+                    Request.Method.POST, "https://dregy01.frb.io/api/job-ads", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            Log.e("add pro", "res" + response);
+                            Log.e("addJob", "res" + response);
                         }
                     }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("add pro", "err" + error);
+                    Log.e("addJob", "err" + error);
                 }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("Content-Type", " multipart/form-data");
-                    return params;
-                }
-            };
+            });
             mRequestQueue = Volley.newRequestQueue(getActivity());
             mRequestQueue.add(jsonObjReq);
         } catch (JSONException e) {

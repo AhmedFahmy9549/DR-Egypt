@@ -63,7 +63,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_gravity="center"
-                android:text="Ad Type"
+                android:text="Job Type"
                 android:textSize="20sp"
                 android:textStyle="bold" />
             <RadioGroup
