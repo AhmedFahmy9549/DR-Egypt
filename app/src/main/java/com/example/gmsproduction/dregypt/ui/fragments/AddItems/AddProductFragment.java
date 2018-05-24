@@ -442,6 +442,7 @@ public class AddProductFragment extends Fragment {
             jsonobject_one.put("address", addres);
             jsonobject_one.put("status", Status);
             jsonobject_one.put("categoryId", category);
+
             //phone array
             jsonobject_one.put("phone",PhoneArray);
             //file object
