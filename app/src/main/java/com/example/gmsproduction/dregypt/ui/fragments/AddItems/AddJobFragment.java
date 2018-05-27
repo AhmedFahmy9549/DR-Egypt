@@ -42,6 +42,7 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.F
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetRegionsRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 
 import org.json.JSONArray;
@@ -58,6 +59,7 @@ import java.util.Map;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
+import static com.example.gmsproduction.dregypt.utils.Constants.basicUrl;
 
 public class AddJobFragment extends Fragment {
 
@@ -646,7 +648,7 @@ public class AddJobFragment extends Fragment {
 
             Log.e("gaga",""+jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, "https://dregy01.frb.io/api/job-ads", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl+"/job-ads", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

@@ -339,6 +339,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 
     }
     //this method will post the data of user to the server
+    //facebookLogin
     public void postyy(String id,String name,String email,String avatar) {
 
         JSONObject jsonobject_one = new JSONObject();
@@ -372,6 +373,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             e.printStackTrace();
         }
     }
+    //Normal Login
     public void postyNormal(String email,String password) {
         String url = "https://dregy01.frb.io/api/login";
         JSONObject jsonobject_one = new JSONObject();
@@ -380,7 +382,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             jsonobject_one.put("password", password);
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST,"https://dregy01.frb.io/api/login" , jsonobject_one,
+                    Request.Method.POST,Constants.basicUrl+"/login" , jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
