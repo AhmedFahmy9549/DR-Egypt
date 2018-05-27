@@ -11,22 +11,22 @@
 
     <item
         android:id="@+id/Nav_Medical"
-        android:title="Medical Guide"
+        android:title="@string/toolbar_medical_Guide"
         />
     <item
         android:id="@+id/nav_pro"
-        android:title="Products" />
+        android:title="@string/toolbar_products" />
     <item
         android:id="@+id/nav_job"
-        android:title="Jobs" />
+        android:title="@string/toolbar_jobs" />
     <item
         android:id="@+id/nav_cos"
-        android:title="Cosmetics"
+        android:title="@string/toolbar_cosmetics"
         />
 
     <item
         android:id="@+id/nav_Favorite"
-        android:title="Favorite"/>
+        android:title="@string/toolbar_Favorite"/>
     <item
         android:id="@+id/nav_AddProduct"
         android:title="Add Product"/>

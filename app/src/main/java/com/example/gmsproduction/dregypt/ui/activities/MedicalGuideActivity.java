@@ -4,12 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
@@ -18,12 +14,6 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
-import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationActivity;
-import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.SpecializationsFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.Pharmacy.PharmacyActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 

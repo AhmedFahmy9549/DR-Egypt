@@ -1,15 +1,11 @@
 package com.example.gmsproduction.dregypt.ui.fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.gmsproduction.dregypt.R;
@@ -17,11 +13,8 @@ import com.example.gmsproduction.dregypt.ui.activities.CosmeticsActivity;
 import com.example.gmsproduction.dregypt.ui.activities.HospitalsActivity;
 import com.example.gmsproduction.dregypt.ui.activities.JobsActivity;
 import com.example.gmsproduction.dregypt.ui.activities.ProductsActivity;
-import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
-import com.example.gmsproduction.dregypt.ui.fragments.Pharmacy.PharmacyActivity;
-
-import static android.content.Context.MODE_PRIVATE;
-import static com.example.gmsproduction.dregypt.ui.activities.ProductsActivity.CheckInternet;
+import com.example.gmsproduction.dregypt.ui.activities.ClinicsActivity;
+import com.example.gmsproduction.dregypt.ui.activities.PharmacyActivity;
 
 
 public class NoInternt_Fragment extends Fragment {

@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -26,7 +25,6 @@ import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnS
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.SearchHospitalsRequest;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
@@ -89,8 +87,8 @@ public class HospitalsActivity extends AppCompatActivity {
 
                     arrayList = new ArrayList<>();
                     page = 1;
-                    adapterx = new AdapterHospitalRecylcer(HospitalsActivity.this, arrayList);
                     linearLayoutManager = new LinearLayoutManager(HospitalsActivity.this);
+                    adapterx = new AdapterHospitalRecylcer(HospitalsActivity.this, arrayList);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapterx);
                     getHospitalPagenation(test);
@@ -108,6 +106,7 @@ public class HospitalsActivity extends AppCompatActivity {
         searchView = (MaterialSearchView) findViewById(R.id.search_view_hospital);
         searchView.setVoiceSearch(false);
         searchView.setEllipsize(true);
+
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -238,7 +237,8 @@ public class HospitalsActivity extends AppCompatActivity {
         searchHospitalsRequest.start();
     }
 
-    public void HospitalResponse(String response) {
+    public void HospitalResponse(String response)
+    {
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("data");

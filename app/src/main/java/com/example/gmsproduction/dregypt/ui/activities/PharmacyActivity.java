@@ -1,4 +1,4 @@
-package com.example.gmsproduction.dregypt.ui.fragments.Pharmacy;
+package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,13 +21,9 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnScrollListener;
-import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.SearchClinicsRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.SearchPharmacyRequest;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.activities.FiltersActivity;
-import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsActivity;
-import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.SpecialClinicsFragment;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;

@@ -43,7 +43,7 @@
         <!-- Activities -->
         <activity
             android:name=".ui.activities.MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="@string/nameActivity_Main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.activities.LogInActivity" />
         <activity android:name=".ui.activities.DetailsActivity" />
@@ -58,7 +58,7 @@
         </activity>
         <activity
             android:name=".ui.activities.MedicalGuideActivity"
-            android:label="Medical Guide"
+            android:label="@string/nameActivity_Medical"
             android:parentActivityName=".ui.activities.MainActivity" />
         <activity
             android:name=".ui.activities.JobsActivity"
@@ -72,21 +72,21 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.fragments.FragmentsFilters.RegionActivity"
-            android:label="Select Region" />
+            android:label="@string/nameActivity_Region" />
         <activity
             android:name=".ui.fragments.FragmentsFilters.SpecializationActivity"
-            android:label="Select Specialization" />
+            android:label="@string/nameActivity_Specialization" />
         <activity
-            android:name=".ui.fragments.Clinincs.ClinicsActivity"
-            android:label="Select Specialization"
+            android:name=".ui.activities.ClinicsActivity"
+            android:label="@string/nameActivity_Specialization"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.fragments.Pharmacy.PharmacyActivity"
+            android:name=".ui.activities.PharmacyActivity"
             android:label="Select Specialization"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.FiltersActivity"
-            android:label="Filters"
+            android:label="@string/nameActivity_Filters"
             android:parentActivityName=".ui.activities.HospitalsActivity" />
 
         <!-- Ibrahim -->

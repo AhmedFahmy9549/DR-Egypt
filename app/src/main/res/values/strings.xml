@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">DR-EGYPT</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_main">DR-EGYPT</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,6 +12,57 @@
     <string name="facebook_app_id">1256853057779143</string>
     <string name="fb_login_protocol_scheme">fb1256853057779143</string>
     Address
+
+    <!-- Start of Fahmy Strings -->
+    <string name="toolbar_medical_Guide">Medical Guide</string>
+    <string name="toolbar_hospital">Hospital</string>
+    <string name="toolbar_clinics">Clinics</string>
+    <string name="toolbar_pharmacy">Pharmacy</string>
+    <string name="toolbar_cosmetics">Cosmetics</string>
+    <string name="toolbar_jobs">Jobs</string>
+    <string name="toolbar_products">Products</string>
+    <string name="toolbar_Favorite">Favorite</string>
+    <string name="toolbar_AddProduct">Add Product</string>
+
+    <string name="text1_main">Medical Guide</string>
+    <string name="text2_main">Products</string>
+    <string name="text3_main">Jobs</string>
+    <string name="text4_main">Cosmetics</string>
+
+    <string name="text1_medical">Hospital</string>
+    <string name="text2_medical">Clinics</string>
+    <string name="text3_medical">Pharmacy</string>
+
+    <string name="textName_hospital">Name</string>
+    <string name="textAddress_hospital">Address</string>
+    <string name="textEmail_hospital">Email</string>
+    <string name="textWebSite_hospital">Web Site</string>
+
+    <string name="nameActivity_Main">DR-EGYPT</string>
+    <string name="nameActivity_Medical">Medical Guide</string>
+    <string name="nameActivity_Region"> Region</string>
+    <string name="nameActivity_Specialization">Specialization</string>
+    <string name="nameActivity_Filters">Filters</string>
+
+
+
+    <string name="text_ExperienceLevel_detailsJobs">Experience Level : </string>
+    <string name="text_EducationLevel_detailsJobs">Education Level : </string>
+    <string name="text_EmploymentType_detailsJobs">Employment Type :  </string>
+    <string name="text_Salary_detailsJobs">Salary : </string>
+    <string name="text_Created_detailsJobs">Created : </string>
+    <string name="text_Phone_detailsJobs">Phone : </string>
+    <string name="text_Address_detailsJobs">Address : </string>
+
+
+
+
+
+
+
+
+    <!-- Start of Fahmy Strings -->
+
     <!-- Start of Hima Strings -->
     <string name="hello_world">Hello world!</string>
     <string name="email">Email</string>
@@ -54,7 +104,7 @@
     <string name="tab_text_3">Tab 3</string>
 
 
-    <!-- End of Hima Strings -->
+    <!-- Start of Hima Strings -->
 
 
 </resources>
