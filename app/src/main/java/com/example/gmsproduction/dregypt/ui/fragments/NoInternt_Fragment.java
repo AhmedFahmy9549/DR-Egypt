@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.activities.CosmeticsActivity;
 import com.example.gmsproduction.dregypt.ui.activities.HospitalsActivity;
 import com.example.gmsproduction.dregypt.ui.activities.JobsActivity;
@@ -51,6 +52,9 @@ public class NoInternt_Fragment extends Fragment {
                         break;
                     case 303:
                         ReloadPharmacy();
+                        break;
+                    case 5599:
+                        ReloadAddProducts();
                         break;
                 }
             }
@@ -104,6 +108,14 @@ public class NoInternt_Fragment extends Fragment {
         ((PharmacyActivity) getActivity()).getPharmacy("");
         //((CosmeticsActivity)getActivity()).Progressbar();
         Toast.makeText(getContext(), "Pharmacy", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
+
+    }
+    public void ReloadAddProducts() {
+
+        ((AddItemActivity) getActivity()).ProductFragment();
+        //((CosmeticsActivity)getActivity()).Progressbar();
+        Toast.makeText(getContext(), "Add Product", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }

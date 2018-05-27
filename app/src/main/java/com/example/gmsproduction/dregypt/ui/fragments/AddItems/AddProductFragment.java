@@ -27,9 +27,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -40,8 +45,11 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.F
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.LogInActivity;
+import com.example.gmsproduction.dregypt.ui.activities.ProductsActivity;
+import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
+import com.example.gmsproduction.dregypt.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,6 +62,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.srodrigo.androidhintspinner.HintAdapter;
+import me.srodrigo.androidhintspinner.HintSpinner;
+
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
@@ -62,10 +73,10 @@ public class AddProductFragment extends Fragment {
 
     private View view;
     private EditText EdTitle, EdPrice, EdDesc, EdAddress, EdPhone, EdPhone2;
-    private String getTitle = "", getPrice = "", getDesc = "", getAddress = "", getPhone = "", getPhone2 = "", getEncodedImage = "", userID = "";
+    private String getTitle = "", getPrice = "", getDesc = "", getAddress = "", getPhone = "", getPhone2 = "", getEncodedImage = "";
     private Spinner spinner, spinner1, spinnerCategory;
     ArrayList<String> name_array, name_array2, CategoryNameArray;
-    int x, numRate, numStatus = 55, city, area, category, radiogroubValidation = 55;
+    int x, numRate, numStatus = 55, city, area, category, radiogroubValidation = 55, userID;
     ArrayList<LocationModel> arrayModel, array2;
     LinearLayout linearLayout;
     Button AddBTN, imagetestbtn, addphone2;
@@ -78,8 +89,9 @@ public class AddProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.add_product, container, false);
         getActivity().setTitle("Add Product");
-        SharedPreferences prefs = getActivity().getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
-        userID = prefs.getString("id", null);
+        SharedPreferences prefs = getActivity().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        userID = prefs.getInt("User_id", 0);
+        Log.e("idAdd", "Pro" + userID);
 
         initViews();
         getLocation();
@@ -150,35 +162,29 @@ public class AddProductFragment extends Fragment {
                         name_array.add(specName);
                         arrayModel.add(model);
                     }
-                    // Creating adapter for spinner
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
-                    // Drop down layout style - list view with radio button
+                    if (getActivity() != null) {
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinner,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "City", name_array),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+                                        LocationModel locationModel = arrayModel.get(position);
+                                        city = locationModel.getLocId();
 
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                        Log.e("Ibrahim ateerfffffff al", "x" + x);
+                                        linearLayout.setVisibility(View.VISIBLE);
+                                        getArea(city);
+                                        //to shazly area
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
 
-                    // attaching data adapter to spinner
-                    spinner.setAdapter(dataAdapter);
-                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            String item = adapterView.getItemAtPosition(i).toString();
-                            LocationModel locationModel = arrayModel.get(i);
-                            city = locationModel.getLocId();
-
-
-                            Log.e("Ibrahim ateerfffffff al", "x" + x);
-                            linearLayout.setVisibility(View.VISIBLE);
-                            getArea(city);
-                            //to shazly area
-
-
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                        }
-                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -189,7 +195,38 @@ public class AddProductFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    if (getActivity() != null) {
+                        NoInternt_Fragment fragment = new NoInternt_Fragment();
+                        Bundle arguments = new Bundle();
+                        arguments.putInt("duck", 5599);
+                        fragment.setArguments(arguments);
+                        final android.support.v4.app.FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.additem_Include, fragment, Utils.Error);
+                        ft.commit();
+                    }
+                    /*fragmentManager
+                            .beginTransaction()
+                            .add(R.id.dodododo, new NoInternt_Fragment(),
+                                    Utils.Error).commit();*/
 
+
+                } else if (error instanceof AuthFailureError) {
+                    //TODO
+                    Log.e("3333", "1");
+
+                } else if (error instanceof ServerError) {
+                    //TODO
+                    Log.e("3333", "2");
+                } else if (error instanceof NetworkError) {
+                    //TODO
+                    Log.e("3333", "3");
+                    // Toast.makeText(ProductsActivity.this, "volly no Internet", Toast.LENGTH_SHORT).show();
+                } else if (error instanceof ParseError) {
+                    //TODO
+                    Log.e("3333", "4");
+
+                }
             }
         });
         getRegionsRequest.start();
@@ -221,7 +258,30 @@ public class AddProductFragment extends Fragment {
                         name_array2.add(specName);
 
                     }
-                    ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
+                    if (getActivity() != null) {
+
+
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinner1,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "Area", name_array2),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+
+                                        LocationModel locationModel = array2.get(position);
+                                        area = locationModel.getLocId();
+                                        //to shazly area
+                                        EdAddress.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
+
+                   /* ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
                     dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner1.setAdapter(dataAdapter1);
                     spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -241,11 +301,10 @@ public class AddProductFragment extends Fragment {
                         public void onNothingSelected(AdapterView<?> adapterView) {
 
                         }
-                    });
+                    });*/
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
 
             }
@@ -279,7 +338,27 @@ public class AddProductFragment extends Fragment {
                         CategoryNameArray.add(categName);
                         arrayModel.add(model);
                     }
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
+                    if (getActivity() != null) {
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinnerCategory,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "Choose Category", CategoryNameArray),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+
+                                        LocationModel locationModel = arrayModel.get(position);
+                                        category = locationModel.getLocId();
+                                        //toshazly
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
+
+                    /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
                     // Drop down layout style - list view with radio button
 
                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -303,12 +382,11 @@ public class AddProductFragment extends Fragment {
                         public void onNothingSelected(AdapterView<?> adapterView) {
 
                         }
-                    });
+                    });*/
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
 
 
             }
@@ -362,8 +440,8 @@ public class AddProductFragment extends Fragment {
         String getArea = String.valueOf(area);
         String getCategory = String.valueOf(category);
         String getNumStatus = String.valueOf(numStatus);
-        String getID = String.valueOf(103);
-//userID
+        String getID = String.valueOf(userID);
+//
         //getTitle,getPrice,getDesc,getAddress,getPhone,city,area,category,numStatus,getEncodedImage
         if (getTitle.equals("") || getTitle.length() == 0
                 || getPrice.equals("") || getPrice.length() == 0
@@ -430,32 +508,29 @@ public class AddProductFragment extends Fragment {
         JSONArray PhoneArray = new JSONArray();
         try {
             PhoneArray.put(phone);
-            if (phone2!=null && !phone2.isEmpty()){
+            if (phone2 != null && !phone2.isEmpty()) {
                 PhoneArray.put(phone2);
             }
             jsonobject_one.put("userId", id);
             jsonobject_one.put("title", title);
             jsonobject_one.put("description", Desc);
             jsonobject_one.put("price", price);
-            jsonobject_one.put("regionId",city);
-            jsonobject_one.put("cityId",area);
+            jsonobject_one.put("regionId", city);
+            jsonobject_one.put("cityId", area);
             jsonobject_one.put("address", addres);
             jsonobject_one.put("status", Status);
             jsonobject_one.put("categoryId", category);
 
             //phone array
-            jsonobject_one.put("phone",PhoneArray);
+            jsonobject_one.put("phone", PhoneArray);
             //file object
-            jsonobject_Two.put("file", "data:image/jpeg;base64,"+img);
-            jsonobject_one.put("img",jsonobject_Two);
+            jsonobject_Two.put("file", "data:image/jpeg;base64," + img);
+            jsonobject_one.put("img", jsonobject_Two);
 
 
-
-
-
-            Log.e("gaga",""+jsonobject_one);
+            Log.e("gaga", "" + jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, "https://dregy01.frb.io/api/product-ads", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl + "/product-ads", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -468,7 +543,16 @@ public class AddProductFragment extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     Log.e("addpro", "err" + error);
                 }
-            });
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Accept", "application/json");
+                    params.put("Content-Type", "application/json");
+                    return params;
+                }
+            };
             mRequestQueue = Volley.newRequestQueue(getActivity());
             mRequestQueue.add(jsonObjReq);
         } catch (JSONException e) {

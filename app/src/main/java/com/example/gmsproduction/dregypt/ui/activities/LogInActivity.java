@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.LoginFragments.BasePage;
 import com.example.gmsproduction.dregypt.ui.fragments.LoginFragments.Login_Fragment;
+import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.Utils;
 
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
@@ -112,7 +113,7 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     public void SharedPref(int id,String name,String email,String avatar){
-        SharedPreferences.Editor editor = getSharedPreferences(USER_DETAILS, MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE).edit();
         editor.putInt("User_id", id);
         editor.putString("User_name", name);
         editor.putString("User_email", email);

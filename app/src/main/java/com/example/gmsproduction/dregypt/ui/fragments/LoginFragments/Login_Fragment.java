@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -83,7 +84,6 @@ public class Login_Fragment extends Fragment implements OnClickListener {
     String id, name, email, gender, birthday, profile_pic;
     HashMap<String, String> jsonObjectStore = new HashMap<String, String>();
     private RequestQueue mRequestQueue;
-
 
     public Login_Fragment() {
     }
@@ -236,9 +236,8 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             new CustomToast().Show_Toast(getActivity(), view,
                     "Your Email Id is Invalid.");
             // Else do login and do your stuff
-        else
-        {
-            postyNormal(getEmailId,getPassword);
+        else {
+            postyNormal(getEmailId, getPassword);
 
             Toast.makeText(getActivity(), "Do Login.", Toast.LENGTH_SHORT)
                     .show();
@@ -308,7 +307,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                                             gender = object.getString("gender");
                                             birthday = object.getString("birthday");
                                             profile_pic = "http://graph.facebook.com/" + id + "/picture?type=large";
-                                            postyy(id,name,email,profile_pic);
+                                            postyy(id, name, email, profile_pic);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -338,9 +337,10 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         );
 
     }
+
     //this method will post the data of user to the server
     //facebookLogin
-    public void postyy(String id,String name,String email,String avatar) {
+    public void postyy(String id, String name, String email, String avatar) {
 
         JSONObject jsonobject_one = new JSONObject();
         try {
@@ -350,7 +350,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             jsonobject_one.put("avatar", avatar);
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl+"/auth/facebook/callback", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl + "/auth/facebook/callback", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -373,8 +373,9 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             e.printStackTrace();
         }
     }
+
     //Normal Login
-    public void postyNormal(String email,String password) {
+    public void postyNormal(String email, String password) {
         String url = "https://dregy01.frb.io/api/login";
         JSONObject jsonobject_one = new JSONObject();
         try {
@@ -382,24 +383,25 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             jsonobject_one.put("password", password);
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST,Constants.basicUrl+"/login" , jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl + "/login", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.e("Login", response.toString());
                             int id;
-                            String name,email,avatar;
+                            String name, email, avatar;
                             try {
-                                 id = response.getInt("id");
+                                id = response.getInt("id");
                                 name = response.getString("name");
                                 email = response.getString("email");
                                 try {
                                     avatar = response.getString("avatar");
-                                }catch (Exception e){
+                                } catch (Exception e) {
                                     avatar = "";
                                 }
 
-                                ((LogInActivity)getActivity()).SharedPref(id,name,email,avatar);
+                                ((LogInActivity) getActivity()).SharedPref(id, name, email, avatar);
+                                //SharedPref(id, name, email, avatar);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -415,7 +417,16 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                     //VolleyLog.d("error", "Error: " + error.getMessage());
 
                 }
-            });
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Accept", "application/json");
+                    params.put("Content-Type", "application/json");
+                    return params;
+                }
+            };
             mRequestQueue = Volley.newRequestQueue(getActivity());
             mRequestQueue.add(jsonObjReq);
         } catch (JSONException e) {
@@ -423,8 +434,8 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         }
     }
 
-    /*public void SharedPref(int id,String name,String email,String avatar){
-        SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences(USER_DETAILS, MODE_PRIVATE).edit();
+   /* public void SharedPref(int id,String name,String email,String avatar){
+        SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE).edit();
         editor.putInt("User_id", id);
         editor.putString("User_name", name);
         editor.putString("User_email", email);

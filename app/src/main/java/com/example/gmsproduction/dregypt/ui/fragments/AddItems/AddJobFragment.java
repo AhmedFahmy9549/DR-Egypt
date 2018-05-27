@@ -56,6 +56,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.srodrigo.androidhintspinner.HintAdapter;
+import me.srodrigo.androidhintspinner.HintSpinner;
+
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
@@ -64,14 +67,14 @@ import static com.example.gmsproduction.dregypt.utils.Constants.basicUrl;
 public class AddJobFragment extends Fragment {
 
     private View view;
-    private EditText EdTitle, EdSalary, EdDesc, EdAddress,EdPhone,Edphone2;
-    private String getTitle, getSalary, getDesc, getAddress, getPhone,getPhone2, getEncodedImage, userID;
-    Spinner spinner, spinner1, spinnerCategory, spinnerExpLevel, spinnerEducLevel,spinnerEmpType;
-    ArrayList<String> name_array, name_array2, CategoryNameArray, ExpLebelNameArray, EduLevelNameArray,EmpTypeNameArray;
-    int x, numRate, numType=55, city, area, category, expLevel, eduLevel,EmpType;
-    ArrayList<LocationModel> arrayModel, array2, getArrayExiLevelModel, arrayEduLevelModel,EmpTypeModel;
+    private EditText EdTitle, EdSalary, EdDesc, EdAddress, EdPhone, Edphone2;
+    private String getTitle, getSalary, getDesc, getAddress, getPhone, getPhone2, getEncodedImage;
+    Spinner spinner, spinner1, spinnerCategory, spinnerExpLevel, spinnerEducLevel, spinnerEmpType;
+    ArrayList<String> name_array, name_array2, CategoryNameArray, ExpLebelNameArray, EduLevelNameArray, EmpTypeNameArray;
+    int x, numRate, numType = 55, city, area, category, expLevel, eduLevel, EmpType, userID;
+    ArrayList<LocationModel> arrayModel, array2, getArrayExiLevelModel, arrayEduLevelModel, EmpTypeModel;
     LinearLayout linearLayout;
-    Button AddBTN, imagetestbtn,addphone2;
+    Button AddBTN, imagetestbtn, addphone2;
     public static final int RESULT_IMG = 1;
     RadioGroup radioGroup, radioGroupType;
     private RequestQueue mRequestQueue;
@@ -82,8 +85,9 @@ public class AddJobFragment extends Fragment {
         view = inflater.inflate(R.layout.add_job, container, false);
         getActivity().setTitle("Add Job");
 
-         SharedPreferences prefs = getActivity().getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
-        userID = prefs.getString("id", null);
+        SharedPreferences prefs = getActivity().getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
+        userID = prefs.getInt("User_id", 0);
+        Log.e("idAdd", "job" + userID);
 
         initViews();
         getLocation();
@@ -163,41 +167,32 @@ public class AddJobFragment extends Fragment {
                         name_array.add(specName);
                         arrayModel.add(model);
                     }
-                    // Creating adapter for spinner
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
+
                     // Drop down layout style - list view with radio button
-
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    // attaching data adapter to spinner
-                    spinner.setAdapter(dataAdapter);
-
+                    if (getActivity() != null) {
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinner,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "City", name_array),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+                                        LocationModel locationModel = arrayModel.get(position);
+                                        city = locationModel.getLocId();
+                                        Log.e("Ibrahim ateerfffffff al", "x" + x);
+                                        linearLayout.setVisibility(View.VISIBLE);
+                                        getArea(city);
+                                        //to shazly area
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String item = adapterView.getItemAtPosition(i).toString();
-                        LocationModel locationModel = arrayModel.get(i);
-                        city = locationModel.getLocId();
-
-
-                        Log.e("Ibrahim ateerfffffff al", "x" + x);
-                        linearLayout.setVisibility(View.VISIBLE);
-                        getArea(city);
-                        //to shazly area
-
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
             }
         }, new Response.ErrorListener() {
             @Override
@@ -207,7 +202,7 @@ public class AddJobFragment extends Fragment {
         });
         getRegionsRequest.start();
 
-    }
+    } //d
 
     private void getArea(int name) {
         name_array2 = new ArrayList<>();
@@ -234,13 +229,33 @@ public class AddJobFragment extends Fragment {
                         name_array2.add(specName);
 
                     }
-                    ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
-                    dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner1.setAdapter(dataAdapter1);
+                    if (getActivity() != null) {
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinner1,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "Area", name_array2),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+                                        LocationModel locationModel = array2.get(position);
+                                        area = locationModel.getLocId();
+                                        //to shazly area
+                                        EdAddress.setVisibility(View.VISIBLE);
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
+                /*ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
+                dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner1.setAdapter(dataAdapter1);
                 spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -256,7 +271,7 @@ public class AddJobFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                });
+                });*/
 
 
             }
@@ -269,7 +284,7 @@ public class AddJobFragment extends Fragment {
         getCitiesRequest.start();
 
 
-    }
+    } // d
 
     private void getCategory() {
         CategoryNameArray = new ArrayList<>();
@@ -289,27 +304,42 @@ public class AddJobFragment extends Fragment {
                         CategoryNameArray.add(categName);
                         arrayModel.add(model);
                     }
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
-                    // Drop down layout style - list view with radio button
-
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    // attaching data adapter to spinner
-                    spinnerCategory.setAdapter(dataAdapter);
+                    if (getActivity() != null) {
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinnerCategory,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "Choose Category", CategoryNameArray),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+                                        LocationModel locationModel = arrayModel.get(position);
+                                        category = locationModel.getLocId();
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
+                /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
+                // Drop down layout style - list view with radio button
 
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+                // attaching data adapter to spinner
+                spinnerCategory.setAdapter(dataAdapter);
                 spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String item = adapterView.getItemAtPosition(i).toString();
 
-                            LocationModel locationModel = arrayModel.get(i);
-                            category = locationModel.getLocId();
+                        LocationModel locationModel = arrayModel.get(i);
+                        category = locationModel.getLocId();
 
                     }
 
@@ -317,7 +347,7 @@ public class AddJobFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                });
+                });*/
             }
         }, new Response.ErrorListener() {
             @Override
@@ -348,26 +378,43 @@ public class AddJobFragment extends Fragment {
                         ExpLebelNameArray.add(categName);
                         getArrayExiLevelModel.add(model);
                     }
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ExpLebelNameArray);
-                    // Drop down layout style - list view with radio button
-
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    // attaching data adapter to spinner
-                    spinnerExpLevel.setAdapter(dataAdapter);
+                    if (getActivity() != null) {
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinnerExpLevel,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "Experience Level", ExpLebelNameArray),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+                                        LocationModel locationModel = getArrayExiLevelModel.get(position);
+                                        expLevel = locationModel.getLocId();
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
+                /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ExpLebelNameArray);
+                // Drop down layout style - list view with radio button
+
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // attaching data adapter to spinner
+                spinnerExpLevel.setAdapter(dataAdapter);
 
                 spinnerExpLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String item = adapterView.getItemAtPosition(i).toString();
 
-                            LocationModel locationModel = getArrayExiLevelModel.get(i);
-                            expLevel = locationModel.getLocId();
+                        LocationModel locationModel = getArrayExiLevelModel.get(i);
+                        expLevel = locationModel.getLocId();
 
 
                     }
@@ -376,7 +423,7 @@ public class AddJobFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                });
+                });*/
             }
         }, new Response.ErrorListener() {
             @Override
@@ -407,27 +454,44 @@ public class AddJobFragment extends Fragment {
                         EduLevelNameArray.add(categName);
                         arrayEduLevelModel.add(model);
                     }
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EduLevelNameArray);
-                    // Drop down layout style - list view with radio button
+                    if (getActivity() != null) {
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinnerEducLevel,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "Education Level", EduLevelNameArray),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+                                        LocationModel locationModel = arrayEduLevelModel.get(position);
+                                        eduLevel = locationModel.getLocId();
 
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    // attaching data adapter to spinner
-                    spinnerEducLevel.setAdapter(dataAdapter);
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
 
+                /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EduLevelNameArray);
+                // Drop down layout style - list view with radio button
 
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // attaching data adapter to spinner
+                spinnerEducLevel.setAdapter(dataAdapter);
                 spinnerEducLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                         String item = adapterView.getItemAtPosition(i).toString();
 
-                            LocationModel locationModel = arrayEduLevelModel.get(i);
-                            eduLevel = locationModel.getLocId();
+                        LocationModel locationModel = arrayEduLevelModel.get(i);
+                        eduLevel = locationModel.getLocId();
 
                     }
 
@@ -435,7 +499,7 @@ public class AddJobFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                });
+                });*/
             }
         }, new Response.ErrorListener() {
             @Override
@@ -467,20 +531,36 @@ public class AddJobFragment extends Fragment {
                         EmpTypeNameArray.add(categName);
                         EmpTypeModel.add(model);
                     }
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EmpTypeNameArray);
-                    // Drop down layout style - list view with radio button
+                    if (getActivity() != null) {
+                        HintSpinner<String> hintSpinner = new HintSpinner<>(
+                                spinnerEmpType,
+                                // Default layout - You don't need to pass in any layout id, just your hint text and
+                                // your list data
+                                new HintAdapter<String>(getActivity(), "Employment Type", EmpTypeNameArray),
+                                new HintSpinner.Callback<String>() {
+                                    @Override
+                                    public void onItemSelected(int position, String itemAtPosition) {
+                                        // Here you handle the on item selected event (this skips the hint selected event)
+                                        //String item = adapterView.getItemAtPosition(i).toString();
+                                        LocationModel locationModel = EmpTypeModel.get(position);
+                                        EmpType = locationModel.getLocId();
 
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    // attaching data adapter to spinner
-                    spinnerEmpType.setAdapter(dataAdapter);
+                                    }
+                                });
+                        hintSpinner.init();
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
+                /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EmpTypeNameArray);
+                // Drop down layout style - list view with radio button
 
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+                // attaching data adapter to spinner
+                spinnerEmpType.setAdapter(dataAdapter);
                 spinnerEmpType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -495,7 +575,8 @@ public class AddJobFragment extends Fragment {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                });
+                });*/
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -550,8 +631,7 @@ public class AddJobFragment extends Fragment {
         String getEduLvl = String.valueOf(eduLevel);
         String getEmpType = String.valueOf(EmpType);
 
-        String getID = String.valueOf(103);
-        //userID
+        String getID = String.valueOf(userID);
 
         //getTitle,getPrice,getDesc,getAddress,getPhone,city,area,category,numStatus,getEncodedImage
         if (getTitle.equals("") || getTitle.length() == 0
@@ -567,7 +647,7 @@ public class AddJobFragment extends Fragment {
         }*/ else {
             Toast.makeText(getActivity(), "Do Do.", Toast.LENGTH_SHORT)
                     .show();
-            postJob(getID,getTitle,getSalary,getDesc,getAddress,getPhone,getPhone2,getCity,getArea,getCategory,getJobTybe,getExpLvl,getEduLvl,getEmpType,getEncodedImage);
+            postJob(getID, getTitle, getSalary, getDesc, getAddress, getPhone, getPhone2, getCity, getArea, getCategory, getJobTybe, getExpLvl, getEduLvl, getEmpType, getEncodedImage);
         }
 
 
@@ -611,23 +691,23 @@ public class AddJobFragment extends Fragment {
 
     //getTitle,getPrice,getDesc,getAddress,getPhone,city,area,category,numStatus,getEncodedImage
     public void postJob(String id, String title, String salary, String Desc, String addres, String phone,
-                            String phone2, String city, String area, String category,
-                        String jobType,String experienceLeve,String educationLevel,String employmentType, String img) {
+                        String phone2, String city, String area, String category,
+                        String jobType, String experienceLeve, String educationLevel, String employmentType, String img) {
 
         JSONObject jsonobject_one = new JSONObject();
         JSONObject jsonobject_Two = new JSONObject();
         JSONArray PhoneArray = new JSONArray();
         try {
             PhoneArray.put(phone);
-            if (phone2!=null && !phone2.isEmpty()){
+            if (phone2 != null && !phone2.isEmpty()) {
                 PhoneArray.put(phone2);
             }
             jsonobject_one.put("userId", id);
             jsonobject_one.put("title", title);
             jsonobject_one.put("description", Desc);
             jsonobject_one.put("salary", salary);
-            jsonobject_one.put("regionId",city);
-            jsonobject_one.put("cityId",area);
+            jsonobject_one.put("regionId", city);
+            jsonobject_one.put("cityId", area);
             jsonobject_one.put("address", addres);
             jsonobject_one.put("jobTypeId", jobType);
             jsonobject_one.put("categoryId", category);
@@ -637,18 +717,15 @@ public class AddJobFragment extends Fragment {
 
 
             //phone array
-            jsonobject_one.put("phone",PhoneArray);
+            jsonobject_one.put("phone", PhoneArray);
             //file object
-            jsonobject_Two.put("file", "data:image/jpeg;base64,"+img);
-            jsonobject_one.put("img",jsonobject_Two);
+            jsonobject_Two.put("file", "data:image/jpeg;base64," + img);
+            jsonobject_one.put("img", jsonobject_Two);
 
 
-
-
-
-            Log.e("gaga",""+jsonobject_one);
+            Log.e("gaga", "" + jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl+"/job-ads", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl + "/job-ads", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -661,7 +738,16 @@ public class AddJobFragment extends Fragment {
                 public void onErrorResponse(VolleyError error) {
                     Log.e("addJob", "err" + error);
                 }
-            });
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Accept", "application/json");
+                    params.put("Content-Type", "application/json");
+                    return params;
+                }
+            };
             mRequestQueue = Volley.newRequestQueue(getActivity());
             mRequestQueue.add(jsonObjReq);
         } catch (JSONException e) {

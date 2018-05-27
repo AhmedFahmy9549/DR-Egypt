@@ -18,13 +18,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.utils.Constants;
+import com.squareup.picasso.Picasso;
 
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 
@@ -35,6 +39,11 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
+    ImageView Menu_pic;
+    TextView Menu_title;
+    int id;
+    String userName="Dr.Egypt",userAvatar="";
+    View header;
 
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
 
@@ -42,9 +51,19 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         init();
+
+
+
+        SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        id = prefs.getInt("User_id",0);
+        userName= prefs.getString("User_name","Dr.Egypt");
+        userAvatar=prefs.getString("User_avatar","");
+
+
+
+
+
         setSupportActionBar(toolbar);
 
         fab.setOnClickListener(this);
@@ -82,6 +101,9 @@ public class MainActivity extends AppCompatActivity
        /* GetHospitalsRequest getHospitalsRequest=new GetHospitalsRequest(this,this,this);
         getHospitalsRequest.start();
 */
+
+        Picasso.with(this).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
+        Menu_title.setText(userName);
     }
 
     @Override
@@ -200,11 +222,15 @@ public class MainActivity extends AppCompatActivity
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
 
+        header = navigationView.getHeaderView(0);
+
         medicalCard = findViewById(R.id.card_medical);
         productsCard = findViewById(R.id.card_products);
         jobsCard = findViewById(R.id.card_jobs);
         cosmeticsCard = findViewById(R.id.card_cosmetics);
 
+        Menu_pic =  header.findViewById(R.id.Menu_imageView);
+        Menu_title = header.findViewById(R.id.Menu_Title);
 
     }
 

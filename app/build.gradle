@@ -35,6 +35,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:26.1.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    compile 'me.srodrigo:androidhintspinner:1.0.0'
 
     compile 'com.github.arimorty:floatingsearchview:2.1.1'
     compile 'com.github.aakira:expandable-layout:1.6.0@aar'
