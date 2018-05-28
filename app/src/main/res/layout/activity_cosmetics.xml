@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            app:title="@string/toolbar_cos"
+            app:title="@string/toolbar_cosmetics"
             app:titleTextColor="@color/white" />
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView

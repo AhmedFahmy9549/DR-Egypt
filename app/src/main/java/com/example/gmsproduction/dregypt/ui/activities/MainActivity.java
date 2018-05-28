@@ -102,8 +102,8 @@ public class MainActivity extends AppCompatActivity
         getHospitalsRequest.start();
 */
 
-        Picasso.with(this).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
-        Menu_title.setText(userName);
+        /*Picasso.with(this).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
+        Menu_title.setText(userName);*/
     }
 
     @Override

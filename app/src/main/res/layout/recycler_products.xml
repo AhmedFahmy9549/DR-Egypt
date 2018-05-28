@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:titleTextColor="@color/white"
-            app:title="@string/toolbar_pro"
+            app:title="@string/toolbar_products"
             />
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView
