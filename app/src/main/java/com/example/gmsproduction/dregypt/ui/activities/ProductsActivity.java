@@ -34,6 +34,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.daimajia.slider.library.SliderLayout;
 import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnScrollListener;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetFavoriteProducts;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
@@ -59,13 +60,15 @@ public class ProductsActivity extends AppCompatActivity {
     //Response.Listener<String>, Response.ErrorListener,
     private RecyclerView mRecyclerView;
     private ProductAdsAdapter mAdapter;
-    private ArrayList<ProductsModel> modelArrayList=new ArrayList<>();
+    private ArrayList<ProductsModel> modelArrayList = new ArrayList<>();
     String id, title, description, price, image, status, address, created_at, phone_1, phone_2, category;
+    int userid;
     SliderLayout mDemoSlider;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String url = Constants.basicUrl + "/product-ads/search";
     private FragmentManager fragmentManager;
+    ArrayList<Integer> fav_List = new ArrayList<>();
     DetailsProducts detailsProducts;
     String test;
     ProgressBar progressBar;
@@ -79,9 +82,10 @@ public class ProductsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_products);
+        SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        userid = prefs.getInt("User_id", 0);
 
-
-        progressBar = (ProgressBar)findViewById(R.id.pbHeaderProgress);
+        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
         fragmentManager = getSupportFragmentManager();
         //add the banner
@@ -89,7 +93,6 @@ public class ProductsActivity extends AppCompatActivity {
                 .beginTransaction()
                 .replace(R.id.RelativeBunner, new ProductBannerFragment(),
                         Utils.banner).commit();
-
 
 
         //recycler View horizon orientation
@@ -151,7 +154,6 @@ public class ProductsActivity extends AppCompatActivity {
             }
         });
 
-        //Search Related
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setVoiceSearch(false);
         searchView.setEllipsize(true);
@@ -186,6 +188,7 @@ public class ProductsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.setAdapter(mAdapter);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -241,8 +244,8 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
 
-
     public void ProductResponse(String response) {
+        getFavID();
         modelArrayList = new ArrayList<>();
         progressBar.setVisibility(View.GONE);
         Log.e("tagyyy", response);
@@ -286,6 +289,7 @@ public class ProductsActivity extends AppCompatActivity {
 
 
     }
+
     public void getProducts(String keyword) {
 
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
@@ -295,7 +299,7 @@ public class ProductsActivity extends AppCompatActivity {
         int category = prefs.getInt("category", 0); //0 is the default value.
         int status = prefs.getInt("status", 0); //0 is the default value.
 
-        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category+"Status="+status);
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category + "Status=" + status);
 
 
         body.put("region", String.valueOf(city));
@@ -319,10 +323,10 @@ public class ProductsActivity extends AppCompatActivity {
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     NoInternt_Fragment fragment = new NoInternt_Fragment();
                     Bundle arguments = new Bundle();
-                    arguments.putInt( "duck" , 55);
+                    arguments.putInt("duck", 55);
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.dodododo, fragment , Utils.Error);
+                    ft.replace(R.id.dodododo, fragment, Utils.Error);
                     ft.commit();
                     /*fragmentManager
                             .beginTransaction()
@@ -347,12 +351,12 @@ public class ProductsActivity extends AppCompatActivity {
 
                 }
             }
-        },0);
+        }, 0);
         searchProductAdRequest.setBody((HashMap) body);
         searchProductAdRequest.start();
     }
-    public void getProductsPagenation(String keyword) {
 
+    public void getProductsPagenation(String keyword) {
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         int city = prefs.getInt("city", 0); //0 is the default value.
         int area = prefs.getInt("area", 0); //0 is the default value.
@@ -360,7 +364,7 @@ public class ProductsActivity extends AppCompatActivity {
         int category = prefs.getInt("category", 0); //0 is the default value.
         int status = prefs.getInt("status", 0); //0 is the default value.
 
-        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category+"Status="+status);
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category + "Status=" + status);
 
 
         body.put("region", String.valueOf(city));
@@ -384,10 +388,10 @@ public class ProductsActivity extends AppCompatActivity {
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     NoInternt_Fragment fragment = new NoInternt_Fragment();
                     Bundle arguments = new Bundle();
-                    arguments.putInt( "duck" , 55);
+                    arguments.putInt("duck", 55);
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.dodododo, fragment , Utils.Error);
+                    ft.replace(R.id.dodododo, fragment, Utils.Error);
                     ft.commit();
                     /*fragmentManager
                             .beginTransaction()
@@ -412,11 +416,13 @@ public class ProductsActivity extends AppCompatActivity {
 
                 }
             }
-        },page);
+        }, page);
         searchProductAdRequest.setBody((HashMap) body);
         searchProductAdRequest.start();
     }
+
     public void PagenationResponse(String response) {
+        getFavID();
         progressBar.setVisibility(View.GONE);
         Log.e("tagyyy", response);
         try {
@@ -523,7 +529,8 @@ public class ProductsActivity extends AppCompatActivity {
         }*/
         return activeNetworkInfo != null;
     }
-    public void Progressbar(){
+
+    public void Progressbar() {
         progressBar.setVisibility(View.VISIBLE); //to show
 
     }
@@ -531,7 +538,7 @@ public class ProductsActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("onStop","onStop");
+        Log.e("onStop", "onStop");
         SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
         editor.putInt("num_rate", 0);
         editor.putInt("city", 0);
@@ -544,10 +551,36 @@ public class ProductsActivity extends AppCompatActivity {
 
 
     }
+
+    private void getFavID() {
+        body.put("category", "product");
+        GetFavoriteProducts getFavId = new GetFavoriteProducts(ProductsActivity.this, userid, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("FavPage", "pro" + response);
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int a = 0; a < array.length(); a++) {
+                        JSONObject object = array.getJSONObject(a);
+                        int favourable_id = object.getInt("favourable_id");
+                        fav_List.add(favourable_id);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getFavId.setBody((HashMap) body);
+        getFavId.start();
+    }
+
 }
-
-
-
 
 
 //custom class to detect when the recycleview reach it's end

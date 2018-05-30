@@ -2,9 +2,11 @@ package com.example.gmsproduction.dregypt.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,23 +18,36 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetFavoriteProducts;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.DetailsProducts;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
+import com.example.gmsproduction.dregypt.ui.activities.ProductsActivity;
+import com.example.gmsproduction.dregypt.utils.Constants;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.MyViewHolder> {
     final String basicImgUrl = "http://gms-sms.com:89";
     private Context mContext;
     private ArrayList<ProductsModel> mArrayList;
-    int LastPosition = -1;
+    int LastPosition = -1,userid;
     RecyclerViewClickListener ClickListener;
     String CheckStatus;
     String status;
+
 
     public ProductAdsAdapter() {
     }
@@ -49,6 +64,8 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_products, parent, false);
+        SharedPreferences prefs = mContext.getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        userid = prefs.getInt("User_id", 0);
         return new MyViewHolder(view);
     }
 
