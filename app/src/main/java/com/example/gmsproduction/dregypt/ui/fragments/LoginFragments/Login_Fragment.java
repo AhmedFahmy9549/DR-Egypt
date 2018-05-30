@@ -39,6 +39,7 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.L
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.SearchProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.LogInActivity;
+import com.example.gmsproduction.dregypt.ui.activities.MainActivity;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 import com.example.gmsproduction.dregypt.utils.Utils;
@@ -401,6 +402,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                                 }
 
                                 ((LogInActivity) getActivity()).SharedPref(id, name, email, avatar);
+
                                 //SharedPref(id, name, email, avatar);
                             } catch (JSONException e) {
                                 e.printStackTrace();

@@ -79,7 +79,7 @@ public class ClinicsActivity extends AppCompatActivity {
 
                     arrayList = new ArrayList<>();
                     page = 1;
-                    adapterx = new AdapterHospitalRecylcer(ClinicsActivity.this, arrayList);
+                    adapterx = new AdapterHospitalRecylcer(ClinicsActivity.this, arrayList,99404);
                     linearLayoutManager = new LinearLayoutManager(ClinicsActivity.this);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapterx);
@@ -129,7 +129,7 @@ public class ClinicsActivity extends AppCompatActivity {
             }
         });
 
-        adapterx = new AdapterHospitalRecylcer(this, arrayList);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList,99404);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
@@ -278,7 +278,7 @@ public class ClinicsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        adapterx = new AdapterHospitalRecylcer(this, arrayList);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList,99404);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);

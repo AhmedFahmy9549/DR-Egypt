@@ -124,7 +124,7 @@ public class ClinicsFragment extends Fragment implements Response.Listener<Strin
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterHospitalRecylcer(getActivity(), arrayList);
+        adapterx = new AdapterHospitalRecylcer(getActivity(), arrayList,99404);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);

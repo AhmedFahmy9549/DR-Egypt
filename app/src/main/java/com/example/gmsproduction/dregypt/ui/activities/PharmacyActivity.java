@@ -80,7 +80,7 @@ public class PharmacyActivity extends AppCompatActivity {
 
                     arrayList = new ArrayList<>();
                     page = 1;
-                    adapterx = new AdapterHospitalRecylcer(PharmacyActivity.this, arrayList);
+                    adapterx = new AdapterHospitalRecylcer(PharmacyActivity.this, arrayList,99303);
                     linearLayoutManager = new LinearLayoutManager(PharmacyActivity.this);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapterx);
@@ -120,7 +120,7 @@ public class PharmacyActivity extends AppCompatActivity {
                 getPharmacy(test);
             }
         });
-        adapterx = new AdapterHospitalRecylcer(this, arrayList);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList,99303);
          linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
@@ -269,7 +269,7 @@ public class PharmacyActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterHospitalRecylcer(this, arrayList);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList,99303);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);

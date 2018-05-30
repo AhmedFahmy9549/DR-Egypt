@@ -123,7 +123,7 @@ public class PharmacyFragment extends Fragment implements Response.Listener<Stri
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterHospitalRecylcer(getActivity(), arrayList);
+        adapterx = new AdapterHospitalRecylcer(getActivity(), arrayList,99303);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);

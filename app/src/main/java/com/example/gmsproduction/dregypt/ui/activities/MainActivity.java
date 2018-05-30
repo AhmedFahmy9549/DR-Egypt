@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SlidingDrawer;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity
     ImageView Menu_pic;
     TextView Menu_title;
     int id;
-    String userName="Dr.Egypt",userAvatar="";
+    String userName = "Dr.Egypt", userAvatar = "";
     View header;
 
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
@@ -54,14 +55,10 @@ public class MainActivity extends AppCompatActivity
         init();
 
 
-
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
-        id = prefs.getInt("User_id",0);
-        userName= prefs.getString("User_name","Dr.Egypt");
-        userAvatar=prefs.getString("User_avatar","");
-
-
-
+        id = prefs.getInt("User_id", 0);
+        userName = prefs.getString("User_name", "Dr.Egypt");
+        userAvatar = prefs.getString("User_avatar", null);
 
 
         setSupportActionBar(toolbar);
@@ -74,16 +71,41 @@ public class MainActivity extends AppCompatActivity
 
 
         toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                SetUser();
+                Log.e("drawer","bebe");
+                // Do whatever you want here
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                SetUser();
+                Log.e("drawer","dodo");
+
+                // Do whatever you want here
+            }
+        };
+
+
+
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
 
+        /*navigationView = new ActionBarDrawerToggle(this, drawer,
+                R.drawable.ic_action_menu, R.string.drawer_open, R.string.drawer_close) {
+
+
+    }*/
+
        /* SharedPreferences prefs = getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
         String restoredText = prefs.getString("User_name", null);
         Log.e("Visis",""+restoredText);*/
-
 
 
         //VolleyLIbUtils volleyLIbUtils=new VolleyLIbUtils(this, Request.Method.GET,"http://192.168.9.69/dregy/public/api/hospitals",this,this);
@@ -102,8 +124,14 @@ public class MainActivity extends AppCompatActivity
         getHospitalsRequest.start();
 */
 
-        /*Picasso.with(this).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
-        Menu_title.setText(userName);*/
+        SetUser();
+
+
+    }
+
+    public void SetUser() {
+        Picasso.with(MainActivity.this).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
+        Menu_title.setText(userName);
     }
 
     @Override
@@ -146,7 +174,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
 
-        switch (id){
+        switch (id) {
             case R.id.nav_log:
                 intent = new Intent(this, LogInActivity.class);
                 startActivity(intent);
@@ -173,15 +201,15 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_AddProduct:
                 intent = new Intent(this, AddItemActivity.class);
-                intent.putExtra("Add",1001);
+                intent.putExtra("Add", 1001);
                 startActivity(intent);
                 break;
             case R.id.nav_AddJob:
                 intent = new Intent(this, AddItemActivity.class);
-                intent.putExtra("Add",2002);
+                intent.putExtra("Add", 2002);
                 startActivity(intent);
                 break;
-            
+
         }
 
 /*
@@ -229,7 +257,7 @@ public class MainActivity extends AppCompatActivity
         jobsCard = findViewById(R.id.card_jobs);
         cosmeticsCard = findViewById(R.id.card_cosmetics);
 
-        Menu_pic =  header.findViewById(R.id.Menu_imageView);
+        Menu_pic = header.findViewById(R.id.Menu_imageView);
         Menu_title = header.findViewById(R.id.Menu_Title);
 
     }
@@ -273,13 +301,8 @@ public class MainActivity extends AppCompatActivity
                 break;
 
 
-
-
         }
     }
-
-
-
 
 
 }

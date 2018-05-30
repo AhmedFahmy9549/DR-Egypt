@@ -38,12 +38,14 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospitalRecylcer.Myholder> {
     private Context context;
     private ArrayList<HospitalModel> arrayList;
+    int x;
     String TAG = "HospitalsFragment";
     Intent intent;
 
-    public AdapterHospitalRecylcer(Context context, ArrayList<HospitalModel> arrayList) {
+    public AdapterHospitalRecylcer(Context context, ArrayList<HospitalModel> arrayList, int x) {
         this.context = context;
         this.arrayList = arrayList;
+        this.x = x;
     }
 
     @Override
@@ -95,6 +97,8 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
                 intent.putExtra("phone2", model.getPhone2());
                 intent.putExtra("image", model.getImg());
                 intent.putExtra("note", model.getNote());
+                intent.putExtra("type", x);
+                intent.putExtra("id", model.getId());
                 context.startActivity(intent);
             }
         });
