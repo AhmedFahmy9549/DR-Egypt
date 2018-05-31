@@ -1,4 +1,4 @@
-package com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests;
+package com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests;
 
 import android.content.Context;
 
@@ -7,26 +7,24 @@ import com.android.volley.Response;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.VolleyLIbUtils;
 import com.example.gmsproduction.dregypt.utils.Constants;
 
-import java.util.HashMap;
-
 /**
- * Created by Hima on 5/30/2018.
+ * Created by Hima on 5/31/2018.
  */
 
-public class DisplayProFavoriteByID {
+public class DisplayClinFavoriteByID {
 
     VolleyLIbUtils volleyLIbUtils;
     String url;
     int methodId;
 
 
-    public DisplayProFavoriteByID(Context context, int userID, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public DisplayClinFavoriteByID(Context context, int userID, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         setValues(userID);
         volleyLIbUtils = new VolleyLIbUtils(context, methodId, url, listener, errorListener);
     }
 
     private void setValues(int userID) {
-        url = Constants.basicUrl+"/account/"+userID+"/favorite-products";
+        url = Constants.basicUrl+"/account/"+userID+"/favorite-clinics";
 
         methodId = Request.Method.GET;
     }
