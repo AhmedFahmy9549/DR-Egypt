@@ -40,7 +40,7 @@
                     android:id="@+id/DetailsHospital_toggle"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="18dp"
                     android:textOff=""
                     android:textOn=""
                     app:layout_constraintEnd_toEndOf="@id/parent"

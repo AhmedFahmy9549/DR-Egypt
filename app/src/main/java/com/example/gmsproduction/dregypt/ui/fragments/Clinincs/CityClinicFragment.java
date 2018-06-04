@@ -17,7 +17,7 @@ import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetCitiesRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterLocationRecylcer;
+import com.example.gmsproduction.dregypt.ui.adapters.AdapterLocationClinicRecylcer;
 
 import org.json.JSONArray;
 import org.json.JSONException;

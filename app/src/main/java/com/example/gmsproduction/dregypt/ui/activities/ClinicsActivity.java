@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -54,12 +55,16 @@ public class ClinicsActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     int page = 1;
     int last_page;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clinics);
         recyclerView = findViewById(R.id.hospital_recycler);
+        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+        progressBar.setVisibility(View.VISIBLE);
+
         getClinicsPagenation("");
 
         //Custom Toolbar
@@ -206,6 +211,8 @@ public class ClinicsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     NoInternt_Fragment fragment = new NoInternt_Fragment();
                     Bundle arguments = new Bundle();
@@ -235,6 +242,8 @@ public class ClinicsActivity extends AppCompatActivity {
 
 
     public void ClinicsResponse(String response) {
+        progressBar.setVisibility(View.GONE);
+
         arrayList = new ArrayList<>();
         Log.e(TAG, "Response=" + response);
         try {
@@ -312,6 +321,8 @@ public class ClinicsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     NoInternt_Fragment fragment = new NoInternt_Fragment();
                     Bundle arguments = new Bundle();
@@ -340,6 +351,8 @@ public class ClinicsActivity extends AppCompatActivity {
     }
 
     public void PagenationResponse(String response) {
+        progressBar.setVisibility(View.GONE);
+
         Log.e(TAG, "Response=" + response);
         try {
             JSONObject jsonObject = new JSONObject(response);
