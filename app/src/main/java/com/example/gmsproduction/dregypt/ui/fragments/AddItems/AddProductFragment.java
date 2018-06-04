@@ -527,7 +527,6 @@ public class AddProductFragment extends Fragment {
             jsonobject_Two.put("file", "data:image/jpeg;base64," + img);
             jsonobject_one.put("img", jsonobject_Two);
 
-
             Log.e("gaga", "" + jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                     Request.Method.POST, Constants.basicUrl+"/product-ads", jsonobject_one,
