@@ -91,7 +91,7 @@ public class BasePage extends Fragment {
         loginhere = view.findViewById(R.id.BPLoginNow);
         notNow = view.findViewById(R.id.BpNotNow);
 
-        XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
+        /*XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
         try {
             ColorStateList csl = ColorStateList.createFromXml(getResources(),
                     xrp);
@@ -99,7 +99,7 @@ public class BasePage extends Fragment {
             loginhere.setTextColor(csl);
             notNow.setTextColor(csl);
         } catch (Exception e) {
-        }
+        }*/
     }
 
     private void Click() {
@@ -161,7 +161,7 @@ public class BasePage extends Fragment {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        Log.e("LOgiiin",""+loginResult);
+                        Log.e("LOgiiin", "" + loginResult);
 
 
                         // Handle success

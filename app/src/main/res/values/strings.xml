@@ -45,7 +45,6 @@
     <string name="nameActivity_Filters">Filters</string>
 
 
-
     <string name="text_ExperienceLevel_detailsJobs">Experience Level : </string>
     <string name="text_EducationLevel_detailsJobs">Education Level : </string>
     <string name="text_EmploymentType_detailsJobs">Employment Type :  </string>
@@ -55,15 +54,10 @@
     <string name="text_Address_detailsJobs">Address : </string>
 
 
-
-
-
-
-
-
     <!-- Start of Fahmy Strings -->
 
     <!-- Start of Hima Strings -->
+    <string name="Favorite">Favorites</string>
     <string name="hello_world">Hello world!</string>
     <string name="email">Email</string>
     <string name="title">Title</string>
@@ -71,7 +65,7 @@
     <string name="Enter_email">Enter your email address</string>
     <string name="passowrd">Password</string>
     <string name="login">LOGIN</string>
-    <string name="description">Description</string>
+    <string name="description">Description :</string>
     <string name="show_pwd">Show Password</string>
     <string name="hide_pwd">Hide Password</string>
     <string name="forgot">Forgot password?</string>

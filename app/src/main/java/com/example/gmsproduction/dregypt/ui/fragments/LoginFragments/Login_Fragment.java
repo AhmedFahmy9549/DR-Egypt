@@ -130,7 +130,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                 R.anim.shake);
 
         // Setting text selector over textviews
-        XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
+        /*XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
         try {
             ColorStateList csl = ColorStateList.createFromXml(getResources(),
                     xrp);
@@ -139,7 +139,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             show_hide_password.setTextColor(csl);
             signUp.setTextColor(csl);
         } catch (Exception e) {
-        }
+        }*/
     }
 
     // Set Listeners
@@ -351,7 +351,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             jsonobject_one.put("avatar", avatar);
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl + "/auth/facebook/callback", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl+"/auth/facebook/callback", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -384,7 +384,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
             jsonobject_one.put("password", password);
 
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl + "/login", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl+"/login", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

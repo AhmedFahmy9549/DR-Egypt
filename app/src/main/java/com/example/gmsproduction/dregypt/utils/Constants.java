@@ -5,9 +5,9 @@ package com.example.gmsproduction.dregypt.utils;
  */
 
 public class Constants {
-    public final static String basicUrl="https://dregypt.frb.io/api";
+    public final static String basicUrl="https://newapp.frb.io/api";
 
-    public final static String ImgUrl="https://dregypt.frb.io";
+    public final static String ImgUrl="https://newapp.frb.io";
 
     public static final String USER_DETAILS = "Login";
 }

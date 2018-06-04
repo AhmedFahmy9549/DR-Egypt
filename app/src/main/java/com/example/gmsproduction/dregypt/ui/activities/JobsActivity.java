@@ -397,7 +397,7 @@ public class JobsActivity extends AppCompatActivity {
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.Jobs_Include, fragment, Utils.Error);
-                    ft.commit();
+                    ft.commitAllowingStateLoss();
 
                 } else if (error instanceof AuthFailureError) {
                     //TODO

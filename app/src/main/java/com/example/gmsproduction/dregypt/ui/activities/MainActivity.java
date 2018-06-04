@@ -1,5 +1,6 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                SetUser();
+                SetUser(MainActivity.this);
                 Log.e("drawer","bebe");
                 // Do whatever you want here
             }
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                SetUser();
+                SetUser(MainActivity.this);
                 Log.e("drawer","dodo");
 
                 // Do whatever you want here
@@ -124,13 +125,13 @@ public class MainActivity extends AppCompatActivity
         getHospitalsRequest.start();
 */
 
-        SetUser();
+        SetUser(MainActivity.this);
 
 
     }
 
-    public void SetUser() {
-        Picasso.with(MainActivity.this).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
+    public void SetUser(Context context) {
+        Picasso.with(context).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
         Menu_title.setText(userName);
     }
 
@@ -209,6 +210,12 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("Add", 2002);
                 startActivity(intent);
                 break;
+            case R.id.nav_myProduct:
+                intent = new Intent(this, AddItemActivity.class);
+                intent.putExtra("Add", 1012);
+                startActivity(intent);
+                break;
+
 
         }
 

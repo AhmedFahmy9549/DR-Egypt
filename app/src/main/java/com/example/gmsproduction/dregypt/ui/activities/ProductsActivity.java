@@ -392,7 +392,7 @@ public class ProductsActivity extends AppCompatActivity {
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.dodododo, fragment, Utils.Error);
-                    ft.commit();
+                    ft.commitAllowingStateLoss();
                     /*fragmentManager
                             .beginTransaction()
                             .add(R.id.dodododo, new NoInternt_Fragment(),

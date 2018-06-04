@@ -126,7 +126,7 @@
             android:layout_marginStart="11dp"
             android:layout_toEndOf="@+id/BPcreateAccount"
             android:layout_toRightOf="@+id/BPcreateAccount"
-
+            android:textColor="@color/bluoo"
             android:text="@string/Login"
             android:textSize="15sp" />
 
@@ -154,6 +154,7 @@
             android:layout_toEndOf="@+id/BpOr"
             android:layout_toRightOf="@+id/BpOr"
             android:text="@string/Not_Now"
+            android:textColor="@color/bluoo"
             android:textSize="15sp" />
 
         <TextView

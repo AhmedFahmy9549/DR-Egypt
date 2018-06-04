@@ -13,6 +13,9 @@ public class Utils {
 	public static final String banner = "ProductBannerFragment";
 	public static final String Error = "NoInternt_Fragment";
 	public static final String addproduct = "AddProductFragment";
+	public static final String addJobs = "AddJobFragment";
+	public static final String UserProducts = "UserProductsListFragment";
+
 
 
 

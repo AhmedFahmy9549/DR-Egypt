@@ -530,7 +530,7 @@ public class AddProductFragment extends Fragment {
 
             Log.e("gaga", "" + jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl + "/product-ads", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl+"/product-ads", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

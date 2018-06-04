@@ -67,7 +67,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         fullName = (EditText) view.findViewById(R.id.fullName);
         emailId = (EditText) view.findViewById(R.id.userEmailId);
         /*mobileNumber = (EditText) view.findViewById(R.id.mobileNumber);*/
-		/*location = (EditText) view.findViewById(R.id.location);*/
+        /*location = (EditText) view.findViewById(R.id.location);*/
         password = (EditText) view.findViewById(R.id.password);
         confirmPassword = (EditText) view.findViewById(R.id.confirmPassword);
         signUpButton = (Button) view.findViewById(R.id.signUpBtn);
@@ -75,7 +75,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         terms_conditions = (CheckBox) view.findViewById(R.id.terms_conditions);
 
         // Setting text selector over textviews
-        XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
+       /* XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
         try {
             ColorStateList csl = ColorStateList.createFromXml(getResources(),
                     xrp);
@@ -83,7 +83,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             login.setTextColor(csl);
             terms_conditions.setTextColor(csl);
         } catch (Exception e) {
-        }
+        }*/
     }
 
     // Set Listeners
@@ -116,7 +116,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         // Get all edittext texts
         String getFullName = fullName.getText().toString();
         String getEmailId = emailId.getText().toString();
-		/*String getMobileNumber = mobileNumber.getText().toString();
+        /*String getMobileNumber = mobileNumber.getText().toString();
 		String getLocation = location.getText().toString();*/
         String getPassword = password.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();

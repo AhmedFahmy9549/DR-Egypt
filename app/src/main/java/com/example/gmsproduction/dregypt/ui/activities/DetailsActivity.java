@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -16,10 +17,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.AddClinicsToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.DeleteClinicFromFavouriteRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.RatingClinicRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.AddCosmeticClinicsToFavouriteRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.DeleteCosmeticClinicsFromFavouriteRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.RatingCosmeticClinicsRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.AddHospitalToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.DeleteHospitalFromFavouriteRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.RatingHospitalRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.AddPharmacyToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.DeletePharmacyFromFavouriteRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.RatingPharmacyRequest;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.Constants;
@@ -33,11 +40,12 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DetailsActivity extends AppCompatActivity {
     private String name, address, note, website, email, img, phone1, phone2, createdAt;
-    private int type,userid,MDID;
+    private int type, userid, MDID;
     TextView TXTname, TXTaddress, TXTwebsite, TXTemail, TXTphone1, TXTphone2;
     ImageView TXTimg;
     ToggleButton toggleButton;
     Map<String, String> body = new HashMap<>();
+    RatingBar ratingBar;
 
     private int id, count, favorites;
     private float rating;
@@ -80,7 +88,7 @@ public class DetailsActivity extends AppCompatActivity {
         phone1 = extra.getStringExtra("phone1");
         phone2 = extra.getStringExtra("phone2");
         type = extra.getIntExtra("type", 0);
-        MDID = extra.getIntExtra("id",0);
+        MDID = extra.getIntExtra("id", 0);
     }
 
     public void Deploy() {
@@ -96,12 +104,18 @@ public class DetailsActivity extends AppCompatActivity {
 
         toggleButton.setChecked(false);
         toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-        if (type==99505){
+        if (type == 99505) {
             hospitalFav();
-        }else if (type==99404){
+            hospitalRating();
+        } else if (type == 99404) {
             ClinicsFav();
-        }else if (type==99303){
+            ClinicRating();
+        } else if (type == 99303) {
             PharmacyFav();
+            PharmacyRating();
+        } else if (type == 99101) {
+            CosmeticFav();
+            CosmeticsRating();
         }
         ///////
 
@@ -116,6 +130,7 @@ public class DetailsActivity extends AppCompatActivity {
         TXTphone1 = findViewById(R.id.DetailsHospital_Phone);
         TXTimg = findViewById(R.id.DetailsHospital_Image);
         toggleButton = findViewById(R.id.DetailsHospital_toggle);
+        ratingBar = findViewById(R.id.rating);
     }
 
     private void hospitalFav() {
@@ -162,6 +177,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
     }
+
     private void ClinicsFav() {
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -206,6 +222,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
     }
+
     private void PharmacyFav() {
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -249,6 +266,159 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void CosmeticFav() {
+        toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
+                    body.put("", "");
+                    AddCosmeticClinicsToFavouriteRequest addFav = new AddCosmeticClinicsToFavouriteRequest(DetailsActivity.this, userid, MDID, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.e("fav", response);
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+                    addFav.setBody((HashMap) body);
+                    addFav.start();
+
+                } else {
+                    toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+                    body.put("", "");
+                    DeleteCosmeticClinicsFromFavouriteRequest addFav = new DeleteCosmeticClinicsFromFavouriteRequest(DetailsActivity.this, userid, MDID, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.e("favDe", response);
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+                    addFav.setBody((HashMap) body);
+                    addFav.start();
+
+                }
+            }
+        });
+    }
+
+    private void hospitalRating() {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+                body.put("rate", String.valueOf(ratingBar.getRating()));
+                RatingHospitalRequest addRating = new RatingHospitalRequest(DetailsActivity.this, userid, MDID, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Rate", response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+                addRating.setBody((HashMap) body);
+                addRating.start();
+
+            }
+        });
+
+    }
+
+    private void ClinicRating() {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+                body.put("rate", String.valueOf(ratingBar.getRating()));
+                RatingClinicRequest addRating = new RatingClinicRequest(DetailsActivity.this, userid, MDID, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Rate", response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+                addRating.setBody((HashMap) body);
+                addRating.start();
+
+            }
+        });
+
+    }
+
+    private void PharmacyRating() {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+                body.put("rate", String.valueOf(ratingBar.getRating()));
+                RatingPharmacyRequest addRating = new RatingPharmacyRequest(DetailsActivity.this, userid, MDID, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Rate", response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+                addRating.setBody((HashMap) body);
+                addRating.start();
+
+            }
+        });
+
+    }
+
+    private void CosmeticsRating() {
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating,
+                                        boolean fromUser) {
+
+                body.put("rate", String.valueOf(ratingBar.getRating()));
+                RatingCosmeticClinicsRequest addRating = new RatingCosmeticClinicsRequest(DetailsActivity.this, userid, MDID, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Rate", response);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+                addRating.setBody((HashMap) body);
+                addRating.start();
+
+            }
+        });
+
     }
 
 
