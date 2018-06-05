@@ -40,6 +40,7 @@ public class FavCosmetic extends Fragment {
     private CosmeticClinicsAdapter mAdapter;
     private ArrayList<CosmeticModel> modelArrayList;
     LinearLayoutManager linearLayoutManager;
+    String phone_1, phone_2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,9 +72,15 @@ public class FavCosmetic extends Fragment {
                         String description = dataObject.getString("en_note");
                         String email = dataObject.getString("email");
                         String website = dataObject.getString("website");
-                        JSONArray phoneArray = dataObject.getJSONArray("phone");
-                        String phone_1 = (String) phoneArray.get(0);
-                        String phone_2 = (String) phoneArray.get(1);
+                        try {
+                            JSONArray phoneArray = dataObject.getJSONArray("phone");
+                            phone_1 = (String) phoneArray.get(0);
+                            phone_2 = (String) phoneArray.get(1);
+                        } catch (Exception e) {
+                            JSONArray phoneArray = dataObject.getJSONArray("phone");
+                            phone_1 = (String) phoneArray.get(0);
+                            phone_2 = "No phone has been added";
+                        }
                         JSONObject rateObject = dataObject.getJSONObject("rate");
                         Double rating_read = rateObject.getDouble("rating");
                         int rating_counts = rateObject.getInt("count");

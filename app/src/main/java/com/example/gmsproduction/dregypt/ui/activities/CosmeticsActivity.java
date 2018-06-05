@@ -210,9 +210,15 @@ public class CosmeticsActivity extends AppCompatActivity {
                 description = dataObject.getString("en_note");
                 email = dataObject.getString("email");
                 website = dataObject.getString("website");
-                JSONArray phoneArray = dataObject.getJSONArray("phone");
-                phone_1 = (String) phoneArray.get(0);
-                phone_2 = (String) phoneArray.get(1);
+                try {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = (String) phoneArray.get(1);
+                } catch (Exception e) {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = "No phone has been added";
+                }
                 JSONObject rateObject = dataObject.getJSONObject("rate");
                 rating_read = rateObject.getDouble("rating");
                 rating_counts = rateObject.getInt("count");
@@ -362,9 +368,15 @@ public class CosmeticsActivity extends AppCompatActivity {
                 description = dataObject.getString("en_note");
                 email = dataObject.getString("email");
                 website = dataObject.getString("website");
-                JSONArray phoneArray = dataObject.getJSONArray("phone");
-                phone_1 = (String) phoneArray.get(0);
-                phone_2 = (String) phoneArray.get(1);
+                try {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = (String) phoneArray.get(1);
+                } catch (Exception e) {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = "No phone has been added";
+                }
                 JSONObject rateObject = dataObject.getJSONObject("rate");
                 rating_read = rateObject.getDouble("rating");
                 rating_counts = rateObject.getInt("count");
