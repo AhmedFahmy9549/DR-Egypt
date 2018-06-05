@@ -20,6 +20,7 @@ import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddJobFragment;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddProductFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserJobsListFragment;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserProductsListFragment;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Utils;
@@ -51,8 +52,10 @@ public class AddItemActivity extends AppCompatActivity {
             ProductFragment();
         } else if (vald == 2002) {
             JobFragment();
-        }else if (vald==1012){
+        } else if (vald == 1012) {
             MyProductFragment();
+        } else if (vald == 2012) {
+            MyJobsFragment();
         }
 
 
@@ -88,6 +91,7 @@ public class AddItemActivity extends AppCompatActivity {
         ft.replace(R.id.additem_Include, fragment, Utils.addJobs);
         ft.commit();
     }
+
     public void MyProductFragment() {
         UserProductsListFragment fragment = new UserProductsListFragment();
         Bundle arguments = new Bundle();
@@ -95,6 +99,16 @@ public class AddItemActivity extends AppCompatActivity {
         fragment.setArguments(arguments);
         final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.additem_Include, fragment, Utils.UserProducts);
+        ft.commit();
+    }
+
+    public void MyJobsFragment() {
+        UserJobsListFragment fragment = new UserJobsListFragment();
+        Bundle arguments = new Bundle();
+        arguments.putInt("duck", 55);
+        fragment.setArguments(arguments);
+        final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.additem_Include, fragment, Utils.UserJobs);
         ft.commit();
     }
 

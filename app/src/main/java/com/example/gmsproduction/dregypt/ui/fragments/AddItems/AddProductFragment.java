@@ -453,6 +453,8 @@ public class AddProductFragment extends Fragment {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Category.");
         } else if (numStatus == 55) {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Status.");
+        }else if (getDesc.length()<21){
+            new CustomToast().Show_Toast(getActivity(), view, "description must be higher than 20 letter");
         } else {
             Toast.makeText(getActivity(), "Do Do.", Toast.LENGTH_SHORT)
                     .show();
@@ -529,7 +531,7 @@ public class AddProductFragment extends Fragment {
 
             Log.e("gaga", "" + jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl+"/product-ads", jsonobject_one,
+                    Request.Method.POST, Constants.basicUrl + "/product-ads", jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

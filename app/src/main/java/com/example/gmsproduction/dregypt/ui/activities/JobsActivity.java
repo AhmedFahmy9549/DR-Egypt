@@ -260,9 +260,15 @@ public class JobsActivity extends AppCompatActivity {
                 image = Constants.ImgUrl + dataObject.getString("img");
                 address = dataObject.getString("address");
                 created_at = dataObject.getString("created_at");
-                JSONArray phoneArray = dataObject.getJSONArray("phone");
-                phone_1 = (String) phoneArray.get(0);
-                phone_2 = (String) phoneArray.get(1);
+                try {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = (String) phoneArray.get(1);
+                } catch (Exception e) {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = "No phone has been added";
+                }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
                 category = categoryObject.getString("en_name");
                 JSONObject experienceObject = dataObject.getJSONObject("experience_level");
@@ -303,9 +309,15 @@ public class JobsActivity extends AppCompatActivity {
                 image = Constants.ImgUrl + dataObject.getString("img");
                 address = dataObject.getString("address");
                 created_at = dataObject.getString("created_at");
-                JSONArray phoneArray = dataObject.getJSONArray("phone");
-                phone_1 = (String) phoneArray.get(0);
-                phone_2 = (String) phoneArray.get(1);
+                try {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = (String) phoneArray.get(1);
+                } catch (Exception e) {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = "No phone has been added";
+                }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
                 category = categoryObject.getString("en_name");
                 JSONObject experienceObject = dataObject.getJSONObject("experience_level");

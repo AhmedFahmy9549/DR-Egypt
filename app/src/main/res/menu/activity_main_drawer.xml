@@ -34,6 +34,9 @@
     <item
         android:id="@+id/nav_AddJob"
         android:title="Add Job" />
+    <item
+        android:id="@+id/nav_myJobs"
+        android:title="My Jobs" />
 
 
     <item android:title="Communicate">

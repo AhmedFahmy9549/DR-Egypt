@@ -40,6 +40,7 @@ public class FavJobs extends Fragment {
     private ArrayList<JobsModel> modelArrayList;
     LinearLayoutManager LayoutManagaer;
     int userid;
+    String phone_1, phone_2;
 
 
     @Override
@@ -73,9 +74,15 @@ public class FavJobs extends Fragment {
                         String image = Constants.ImgUrl + dataObject.getString("img");
                         String address = dataObject.getString("address");
                         String created_at = dataObject.getString("created_at");
-                        JSONArray phoneArray = dataObject.getJSONArray("phone");
-                        String phone_1 = (String) phoneArray.get(0);
-                        String phone_2 = (String) phoneArray.get(1);
+                        try {
+                            JSONArray phoneArray = dataObject.getJSONArray("phone");
+                            phone_1 = (String) phoneArray.get(0);
+                            phone_2 = (String) phoneArray.get(1);
+                        } catch (Exception e) {
+                            JSONArray phoneArray = dataObject.getJSONArray("phone");
+                            phone_1 = (String) phoneArray.get(0);
+                            phone_2 = "No phone has been added";
+                        }
                         JSONObject categoryObject = dataObject.getJSONObject("category");
                         String category = categoryObject.getString("en_name");
                         JSONObject experienceObject = dataObject.getJSONObject("experience_level");

@@ -267,7 +267,8 @@ public class ProductsActivity extends AppCompatActivity {
                     phone_1 = (String) phoneArray.get(0);
                     phone_2 = (String) phoneArray.get(1);
                 } catch (Exception e) {
-                    phone_1 = "No phone has been added";
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
                     phone_2 = "No phone has been added";
                 }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
@@ -443,7 +444,8 @@ public class ProductsActivity extends AppCompatActivity {
                     phone_1 = (String) phoneArray.get(0);
                     phone_2 = (String) phoneArray.get(1);
                 } catch (Exception e) {
-                    phone_1 = "No phone has been added";
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
                     phone_2 = "No phone has been added";
                 }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
