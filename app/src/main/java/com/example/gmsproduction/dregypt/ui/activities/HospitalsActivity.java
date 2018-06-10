@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -48,7 +50,7 @@ public class HospitalsActivity extends AppCompatActivity {
     ArrayList<HospitalModel> arrayList= new ArrayList<>();
     private AdapterHospitalRecylcer adapterx;
     MaterialSearchView searchView;
-    public ConstraintLayout constraintLayout;
+    public RelativeLayout constraintLayout;
     String MY_PREFS_NAME = "FiltersH";
 
     String test;
@@ -56,6 +58,7 @@ public class HospitalsActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     int page = 1;
     int last_page;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +67,8 @@ public class HospitalsActivity extends AppCompatActivity {
         setTitle("Hospitals");
         recyclerView = findViewById(R.id.hospital_recycler);
         constraintLayout = findViewById(R.id.fragment_hospital);
+        progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
+        progressBar.setVisibility(View.VISIBLE);
 
 
         //get all hos
@@ -210,6 +215,7 @@ public class HospitalsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     NoInternt_Fragment fragment = new NoInternt_Fragment();
                     Bundle arguments = new Bundle();
@@ -237,8 +243,9 @@ public class HospitalsActivity extends AppCompatActivity {
         searchHospitalsRequest.start();
     }
 
-    public void HospitalResponse(String response)
-    {
+    public void HospitalResponse(String response) {
+        progressBar.setVisibility(View.GONE);
+
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -290,6 +297,8 @@ public class HospitalsActivity extends AppCompatActivity {
     }
 
     public void PagenatonResponse(String response) {
+        progressBar.setVisibility(View.GONE);
+
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -389,6 +398,7 @@ public class HospitalsActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                     NoInternt_Fragment fragment = new NoInternt_Fragment();
                     Bundle arguments = new Bundle();

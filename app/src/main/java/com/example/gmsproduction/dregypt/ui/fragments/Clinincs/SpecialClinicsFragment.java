@@ -14,10 +14,9 @@ import android.view.ViewGroup;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetClinicSpecialitiesRequest;
-import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetHospitalSpecialitiesRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterSpecializationRecylcer;
+import com.example.gmsproduction.dregypt.ui.adapters.AdapterSpecialClinicsRecylcer;
 
 import org.json.JSONArray;
 import org.json.JSONException;

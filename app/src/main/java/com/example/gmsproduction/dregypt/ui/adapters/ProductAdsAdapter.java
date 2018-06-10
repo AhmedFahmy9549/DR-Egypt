@@ -43,18 +43,18 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     final String basicImgUrl = "http://gms-sms.com:89";
     private Context mContext;
     private ArrayList<ProductsModel> mArrayList;
-    int LastPosition = -1,userid;
+    int LastPosition = -1, userid;
     RecyclerViewClickListener ClickListener;
     String CheckStatus;
     String status;
+    ArrayList<Integer> favArray;
 
 
-    public ProductAdsAdapter() {
-    }
-
-    public ProductAdsAdapter(Context mContext, ArrayList<ProductsModel> mArrayList) {
+    public ProductAdsAdapter(Context mContext, ArrayList<ProductsModel> mArrayList, ArrayList<Integer> favArray) {
         this.mContext = mContext;
         this.mArrayList = mArrayList;
+        this.favArray = favArray;
+        Log.e("HiFrom", "" + favArray);
     }
 
     public void setClickListener(RecyclerViewClickListener clickListener) {
@@ -73,20 +73,20 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         ProductsModel currentItem = mArrayList.get(position);
         final String id = currentItem.getIdz();
-        final String title= currentItem.getTitlez();
-        final String description= currentItem.getDescription();
-        final String price= currentItem.getPrice();
+        final String title = currentItem.getTitlez();
+        final String description = currentItem.getDescription();
+        final String price = currentItem.getPrice();
         CheckStatus = currentItem.getStatus();
-        if (CheckStatus=="1"){
-            status= "New";
-        }else {
-            status= "Used";
+        if (CheckStatus == "1") {
+            status = "New";
+        } else {
+            status = "Used";
         }
-        final String image= currentItem.getImage();
-        final String address= currentItem.getAddress();
-        final String created_at= currentItem.getCreated_at();
-        final String phone_1= currentItem.getPhone_1();
-        final String phone_2= currentItem.getPhone_2();
+        final String image = currentItem.getImage();
+        final String address = currentItem.getAddress();
+        final String created_at = currentItem.getCreated_at();
+        final String phone_1 = currentItem.getPhone_1();
+        final String phone_2 = currentItem.getPhone_2();
         final String Category = currentItem.getCategory();
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -94,9 +94,9 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailsProducts.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("arrz",mArrayList);
+                bundle.putSerializable("arrz", mArrayList);
                 intent.putExtras(bundle);
-                intent.putExtra("position",position);
+                intent.putExtra("position", position);
 
                 mContext.startActivity(intent);
             }
@@ -104,7 +104,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
 
         holder.ProductCategory.setText(Category);
         holder.ProductTitle.setText(title);
-        holder.ProductPrice.setText(price+"L.E");
+        holder.ProductPrice.setText(price + "L.E");
         holder.ProductStatus.setText(status);
         Picasso.with(mContext).load(image).fit().centerInside().into(holder.imageView);
 
@@ -114,7 +114,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp_fill));
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
                 else
                     holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
             }

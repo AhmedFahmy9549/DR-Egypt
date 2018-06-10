@@ -1,9 +1,8 @@
-package com.example.gmsproduction.dregypt.ui.fragments.Clinincs;
+package com.example.gmsproduction.dregypt.ui.adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +11,6 @@ import android.widget.TextView;
 
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.activities.HospitalsActivity;
-import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.CityFragment;
 
 import java.util.ArrayList;
 

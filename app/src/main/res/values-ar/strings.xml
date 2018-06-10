@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">دكتور ايجيبت</string>
+    <string name="action_settings">الاعدادات</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Facebook Strings -->
+    <string name="facebook_app_id">1256853057779143</string>
+    <string name="fb_login_protocol_scheme">fb1256853057779143</string>
+    Address
+
+    <!-- Start of Fahmy Strings -->
+    <string name="toolbar_medical_Guide">الدليل الطبي</string>
+    <string name="toolbar_hospital">المستشفيات</string>
+    <string name="toolbar_clinics">العيادات</string>
+    <string name="toolbar_pharmacy">الصيدليات</string>
+    <string name="toolbar_cosmetics">عيادات التجميل</string>
+    <string name="toolbar_jobs">الوظائف</string>
+    <string name="toolbar_products">المنتجات</string>
+    <string name="toolbar_Favorite">المفضلة</string>
+    <string name="toolbar_AddProduct">اضافة منتج</string>
+
+    <string name="text1_main">الدليل الطبي</string>
+    <string name="text2_main">المنتجات</string>
+    <string name="text3_main">الوظائف</string>
+    <string name="text4_main">عيادات التجميل</string>
+
+    <string name="text1_medical">المستشفيات</string>
+    <string name="text2_medical">العيادات</string>
+    <string name="text3_medical">الصيدليات</string>
+
+    <string name="textName_hospital">الاسم</string>
+    <string name="textAddress_hospital">العنوان</string>
+    <string name="textEmail_hospital">الايميل</string>
+    <string name="textWebSite_hospital">الموقع</string>
+
+    <string name="nameActivity_Main">دكتور ايجيبت</string>
+    <string name="nameActivity_Medical">الدليل الطبي</string>
+    <string name="nameActivity_Region">المنطقة</string>
+    <string name="nameActivity_Specialization">التخصصات</string>
+    <string name="nameActivity_Filters">التصنيفات</string>
+
+
+
+    <string name="text_ExperienceLevel_detailsJobs">مستوي الخبرة :</string>
+    <string name="text_EducationLevel_detailsJobs">مستوي التعليم :</string>
+    <string name="text_EmploymentType_detailsJobs">نوع الوظيفة :</string>
+    <string name="text_Salary_detailsJobs">السعر :</string>
+    <string name="text_Created_detailsJobs">انشاء :</string>
+    <string name="text_Phone_detailsJobs">الهاتف :</string>
+    <string name="text_Address_detailsJobs">العنوان :</string>
+
+
+
+
+
+
+
+
+    <!-- Start of Fahmy Strings -->
+
+    <!-- Start of Hima Strings -->
+    <string name="hello_world">Hello world!</string>
+    <string name="email">الايميل</string>
+    <string name="title">الاسم</string>
+    <string name="address">العنوان</string>
+    <string name="Enter_email">ادخل بريدك الالكتروني</string>
+    <string name="passowrd">كلمة السر</string>
+    <string name="login">دخول</string>
+    <string name="description">تفاصيل</string>
+    <string name="show_pwd">اظهر كلمة السر</string>
+    <string name="hide_pwd">اخفاء كلمة السر</string>
+    <string name="forgot">نسيت كلمة السر؟ </string>
+    <string name="closebutton">Close Button for Activity</string>
+    <string name="newUser">ليس لديك ايميل؟</string>
+    <string name="fullName">الاسم كامل</string>
+    <string name="mobileNumber">رقم الهاتف</string>
+    <string name="location">الموقع</string>
+    <string name="confirmPassword">تأكيد كلمة السر</string>
+    <string name="terms_conditions">بالظغط علي التسجيل تكون موافق علي جميع الشروط والاحكام</string>
+    <string name="signUp">تسجيل الخروج</string>
+    <string name="already_user">لديك ايميل ؟</string>
+    <string name="registered_emailid">من فضلك ادخل الاميل المسجل !</string>
+    <string name="submit">تسجيل</string>
+    <string name="back">رجوع</string>
+    <string name="Login"> <u>الدخول</u> </string>
+    <string name="Sign_Up_here"> <u>سجل هنا .</u> </string>
+    <string name="pls_S_In_Up">من فضلك ادخل الايميل او قم بالتسجيل</string>
+    <string name="Not_Now"><u>ليس الان</u></string>
+    <string name="terms_of_service"><u>الشروط والاحكام.</u></string>
+
+
+    <string name="More_Details"><u>المزيد من التفاصيل></u></string>
+    <string name="ratingIconHeartFilled">♥</string>
+    <string name="ratingIconHeartOutline">♡</string>
+    <string name="title_activity_favorite">المفضلة</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+
+
+    <!-- Start of Hima Strings -->
+
+
+</resources>

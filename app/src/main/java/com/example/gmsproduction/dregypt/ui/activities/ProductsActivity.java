@@ -61,6 +61,8 @@ public class ProductsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ProductAdsAdapter mAdapter;
     private ArrayList<ProductsModel> modelArrayList = new ArrayList<>();
+    private ArrayList<Integer> favArray = new ArrayList<>();
+
     String id, title, description, price, image, status, address, created_at, phone_1, phone_2, category;
     int userid;
     SliderLayout mDemoSlider;
@@ -141,8 +143,10 @@ public class ProductsActivity extends AppCompatActivity {
                 if (test != null && !test.isEmpty()) {
                     test = "";
                     modelArrayList = new ArrayList<>();
+                    favArray = new ArrayList<>();
+
                     page = 1;
-                    mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+                    mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
                     LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
                     mRecyclerView.setLayoutManager(LayoutManagaer);
                     mRecyclerView.setAdapter(mAdapter);
@@ -184,7 +188,7 @@ public class ProductsActivity extends AppCompatActivity {
             }
         });
         LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
-        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -245,7 +249,6 @@ public class ProductsActivity extends AppCompatActivity {
 
 
     public void ProductResponse(String response) {
-        getFavID();
         modelArrayList = new ArrayList<>();
         progressBar.setVisibility(View.GONE);
         Log.e("tagyyy", response);
@@ -283,7 +286,8 @@ public class ProductsActivity extends AppCompatActivity {
             Log.e("error", e.toString());
 
         }
-        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+        getFavID();
+        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
         LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.setAdapter(mAdapter);
@@ -565,11 +569,15 @@ public class ProductsActivity extends AppCompatActivity {
                     for (int a = 0; a < array.length(); a++) {
                         JSONObject object = array.getJSONObject(a);
                         int favourable_id = object.getInt("favourable_id");
-                        fav_List.add(favourable_id);
+                        favArray.add(favourable_id);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.e("HiFrom", "" + favArray);
+
+
 
             }
         }, new Response.ErrorListener() {
@@ -585,46 +593,3 @@ public class ProductsActivity extends AppCompatActivity {
 }
 
 
-//custom class to detect when the recycleview reach it's end
-class CustomScrollListener extends RecyclerView.OnScrollListener {
-    public CustomScrollListener() {
-    }
-
-    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-        switch (newState) {
-            case RecyclerView.SCROLL_STATE_IDLE:
-                System.out.println("The RecyclerView is not scrolling");
-
-                break;
-            case RecyclerView.SCROLL_STATE_DRAGGING:
-                System.out.println("Scrolling now");
-
-                break;
-            case RecyclerView.SCROLL_STATE_SETTLING:
-                System.out.println("Scroll Settling");
-                Log.e("recycler", "end3");
-
-                break;
-
-        }
-
-    }
-
-    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-        if (dx > 0) {
-            System.out.println("Scrolled Right");
-        } else if (dx < 0) {
-            System.out.println("Scrolled Left");
-        } else {
-            System.out.println("No Horizontal Scrolled");
-        }
-
-        if (dy > 0) {
-            System.out.println("Scrolled Downwards");
-        } else if (dy < 0) {
-            System.out.println("Scrolled Upwards");
-        } else {
-            System.out.println("No Vertical Scrolled");
-        }
-    }
-}
