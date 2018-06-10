@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -44,6 +45,7 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.F
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetRegionsRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.activities.LogInActivity;
 import com.example.gmsproduction.dregypt.ui.activities.ProductsActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
@@ -58,6 +60,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,7 +76,8 @@ public class AddProductFragment extends Fragment {
 
     private View view;
     private EditText EdTitle, EdPrice, EdDesc, EdAddress, EdPhone, EdPhone2;
-    private String getTitle = "", getPrice = "", getDesc = "", getAddress = "", getPhone = "", getPhone2 = "", getEncodedImage = "";
+    private String getTitle = "", getPrice = "", getDesc = "", getAddress = "", getPhone = "", getPhone2 = "",
+            getEncodedImage = "", editTitle = "", editPrice = "", editDesc = "", editPhone1 = "", editPhone2 = "", editAddres = "";
     private Spinner spinner, spinner1, spinnerCategory;
     ArrayList<String> name_array, name_array2, CategoryNameArray;
     int x, numRate, numStatus = 55, city, area, category, radiogroubValidation = 55, userID;
@@ -83,17 +87,40 @@ public class AddProductFragment extends Fragment {
     public static final int RESULT_IMG = 1;
     private RadioGroup radioGroupStatus;
     private RequestQueue mRequestQueue;
+    int MethodID = Request.Method.POST;
+    String url = Constants.basicUrl + "/product-ads";
+    int desired_Int, ProductID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.add_product, container, false);
-        getActivity().setTitle("Add Product");
+        //to get user data
         SharedPreferences prefs = getActivity().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userID = prefs.getInt("User_id", 0);
+
+        ((AddItemActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AddItemActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //get bundle to check if this is add or edit fragment
+        getEditData();
+        initViews();
+        //set title of Activity
+        if (desired_Int == 55) {
+            getActivity().setTitle("Edit Product");
+            //to set data into the EditText for EditFragment
+            setEditData();
+            MethodID = Request.Method.PUT;
+            url = Constants.basicUrl+"/product-ads/"+ProductID;
+
+        } else {
+            getActivity().setTitle("Add Product");
+        }
+
+
         Log.e("idAdd", "Pro" + userID);
 
-        initViews();
+
         getLocation();
         getCategory();
         setStatus();
@@ -113,6 +140,28 @@ public class AddProductFragment extends Fragment {
         return view;
     }
 
+
+    private void getEditData() {
+        Bundle arguments = getArguments();
+        desired_Int = arguments.getInt("Edit", 0);
+        editTitle = arguments.getString("title");
+        editPrice = arguments.getString("price");
+        editDesc = arguments.getString("Desc");
+        editPhone1 = arguments.getString("phone1");
+        //editPhone2 = arguments.getString("phone2");
+        editAddres = arguments.getString("Addres");
+        getEncodedImage = arguments.getString("Img");
+        ProductID = arguments.getInt("ProductID", 0);
+    }
+
+    private void setEditData() {
+        EdTitle.setText(editTitle);
+        EdPrice.setText(editPrice);
+        EdDesc.setText(editDesc);
+        EdPhone.setText(editPhone1);
+        EdPhone2.setText(editPhone2);
+        EdAddress.setText(editAddres);
+    }
 
     private void initViews() {
 
@@ -441,7 +490,7 @@ public class AddProductFragment extends Fragment {
         String getCategory = String.valueOf(category);
         String getNumStatus = String.valueOf(numStatus);
         String getID = String.valueOf(userID);
-//
+
         //getTitle,getPrice,getDesc,getAddress,getPhone,city,area,category,numStatus,getEncodedImage
         if (getTitle.equals("") || getTitle.length() == 0
                 || getPrice.equals("") || getPrice.length() == 0
@@ -453,8 +502,10 @@ public class AddProductFragment extends Fragment {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Category.");
         } else if (numStatus == 55) {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Status.");
-        }else if (getDesc.length()<21){
+        } else if (getDesc.length() < 21) {
             new CustomToast().Show_Toast(getActivity(), view, "description must be higher than 20 letter");
+        }else if (getEncodedImage.equals("") || getEncodedImage.length() == 0){
+            new CustomToast().Show_Toast(getActivity(), view, "Please add Image");
         } else {
             Toast.makeText(getActivity(), "Do Do.", Toast.LENGTH_SHORT)
                     .show();
@@ -482,7 +533,7 @@ public class AddProductFragment extends Fragment {
                 String name;
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 // this is the image Sting
-                getEncodedImage = encodeImage(selectedImage);
+                getEncodedImage = "data:image/jpeg;base64," + encodeImage(selectedImage);
                 Log.e("ENCimage", getEncodedImage);
 
 
@@ -526,12 +577,12 @@ public class AddProductFragment extends Fragment {
             //phone array
             jsonobject_one.put("phone", PhoneArray);
             //file object
-            jsonobject_Two.put("file", "data:image/jpeg;base64," + img);
+            jsonobject_Two.put("file", img);
             jsonobject_one.put("img", jsonobject_Two);
 
             Log.e("gaga", "" + jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl + "/product-ads", jsonobject_one,
+                    MethodID, url, jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -543,6 +594,22 @@ public class AddProductFragment extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("addpro", "err" + error);
+                    if (error == null || error.networkResponse == null) {
+                        return;
+                    }
+
+                    String body;
+                    //get status code here
+                    final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                    Log.e("addpro", "statusCode  " + statusCode);
+
+                    //get response body and parse with appropriate encoding
+                    try {
+                        body = new String(error.networkResponse.data,"UTF-8");
+                        Log.e("addpro", "body " + body);
+                    } catch (UnsupportedEncodingException e) {
+                        // exception
+                    }
                 }
             }) {
                 @Override
@@ -560,6 +627,8 @@ public class AddProductFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
+
    /* public void Post2_0(String id, String title, String price, String Desc, String addres, String phone, String phone2, String city, String area, String category, String Status, String img){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://dregy01.frb.io/api/product-ads",
                 new Response.Listener<String>() {

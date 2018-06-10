@@ -7,65 +7,48 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.DeleteUserJobRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.DeleteUserProductRequest;
-import com.example.gmsproduction.dregypt.Models.PhoneModel;
+import com.example.gmsproduction.dregypt.Models.JobsModel;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
-import com.example.gmsproduction.dregypt.ui.activities.DetailsProducts;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddProductFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserProductsListFragment;
+import com.example.gmsproduction.dregypt.ui.activities.DetailsJobs;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddJobFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserJobsListFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.MyViewHolder> {
-    final String basicImgUrl = "http://gms-sms.com:89";
+public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHolder> {
     private Context mContext;
-    private ArrayList<ProductsModel> mArrayList;
-    private ArrayList<String> mArrayList1;
-    private ArrayList<String> mArrayList2;
-    private ArrayList<PhoneModel>phoneArrayList;
-    int LastPosition = -1, userid;
-    RecyclerViewClickListener ClickListener;
-    String CheckStatus;
-    String status;
+    private ArrayList<JobsModel> mArrayList;
+    private ArrayList<String>mArrayList1,mArrayList2;
+    private int userid;
 
-
-    public UserProductAdapter() {
-    }
-
-    public UserProductAdapter(Context mContext, ArrayList<ProductsModel> mArrayList, ArrayList<String> mArrayList1, ArrayList<String> mArrayList2, ArrayList<PhoneModel> phoneArrayList) {
+    public UserJobAdapter(Context mContext, ArrayList<JobsModel> mArrayList, ArrayList<String> mArrayList1, ArrayList<String> mArrayList2) {
         this.mContext = mContext;
         this.mArrayList = mArrayList;
         this.mArrayList1 = mArrayList1;
         this.mArrayList2 = mArrayList2;
-        this.phoneArrayList = phoneArrayList;
-    }
-
-    public void setClickListener(RecyclerViewClickListener clickListener) {
-        this.ClickListener = clickListener;
     }
 
     @Override
@@ -77,43 +60,52 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        ProductsModel currentItem = mArrayList.get(position);
-        PhoneModel currentPhone = phoneArrayList.get(position);
-        final String title = currentItem.getTitlez();
-        final int ProductID = Integer.valueOf(currentItem.getIdz());
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+        final JobsModel currentItem = mArrayList.get(position);
+        final int id = Integer.valueOf(currentItem.getId());
+        final String title = currentItem.getTitle();
+        final String description = currentItem.getDescription();
+        final String Salary = currentItem.getSalary();
+        final String address = currentItem.getAddress();
+        final String phone_1 = currentItem.getPhone_1();
+        final String phone_2 = currentItem.getPhone_2();
+
         String favcounts = mArrayList1.get(position);
         String viewcounts = mArrayList2.get(position);
 
-        final String price = currentItem.getPrice();
-        final String Desc = currentItem.getDescription();
-        final String phone1 = currentItem.getPhone_1();
-        final String phone2 = currentItem .getPhone_2();
-        final String Addres = currentItem.getAddress();
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailsProducts.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("arrz", mArrayList);
-                intent.putExtras(bundle);
-                intent.putExtra("position", position);
-
-                mContext.startActivity(intent);
-            }
-        });
 
         holder.ProductTitle.setText(title);
         holder.ProductFav.setText(favcounts);
         holder.ProductNum.setText(String.valueOf(position + 1));
         holder.ProductViews.setText(viewcounts);
 
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, DetailsJobs.class);
+                intent.putExtra("JDTitle",currentItem.getTitle());
+                intent.putExtra("JDdescription",currentItem.getDescription());
+                intent.putExtra("JDsalary",currentItem.getSalary());
+                intent.putExtra("JDimage",currentItem.getImage());
+                intent.putExtra("JDaddress",currentItem.getAddress());
+                intent.putExtra("JDcreated_at",currentItem.getCreated_at());
+                intent.putExtra("JDphone_1",currentItem.getPhone_1());
+                intent.putExtra("JDphone_2",currentItem.getPhone_2());
+                intent.putExtra("JDexperience",currentItem.getExperience());
+                intent.putExtra("JDeducation_level",currentItem.getEducation_level());
+                intent.putExtra("JDemployment_type",currentItem.getEmployment_type());
+                mContext.startActivity(intent);
+
+            }
+        });
+
+
         //edit
         holder.ProductEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProductFragment(title,price,Desc,phone1,phone2,Addres,ProductID);
+                JobFragment(title,Salary,description,phone_1,phone_2,address);
 
             }
         });
@@ -129,11 +121,11 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                DeleteUserProductRequest delete = new DeleteUserProductRequest(mContext, userid, ProductID, new Response.Listener<String>() {
+                                DeleteUserJobRequest delete = new DeleteUserJobRequest(mContext, userid, id, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
                                         Log.e("deletePro",response);
-                                        MyProductFragment();
+                                        MyJobsFragment();
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override
@@ -158,14 +150,17 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
         return mArrayList.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MyViewHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener */ {
 
         TextView ProductTitle, ProductNum, ProductViews, ProductFav;
         ImageView ProductEdit, ProductDelete;
         LinearLayout cardView,RowLiner;
 
+
         public MyViewHolder(View itemView) {
             super(itemView);
+            // itemView.setOnClickListener(this);
+
             ProductTitle = itemView.findViewById(R.id.List_title);
             ProductNum = itemView.findViewById(R.id.List_Num);
             ProductViews = itemView.findViewById(R.id.List_views);
@@ -174,67 +169,33 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
             ProductEdit = itemView.findViewById(R.id.List_edit);
             ProductDelete = itemView.findViewById(R.id.List_delete);
             RowLiner = itemView.findViewById(R.id.List_linear);
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View view) {
-            if (ClickListener != null)
-                ClickListener.ItemClicked(view, getAdapterPosition());
-        }
-
-        public void clearAnimation() {
-            cardView.clearAnimation();
-        }
     }
 
-    public interface RecyclerViewClickListener {
-
-        public void ItemClicked(View v, int position);
-    }
-
-    private void setAnimation(View viewToAnimate, int position) {
-
-        if (position > LastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(mContext, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            LastPosition = position;
-        }
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(MyViewHolder holder) {
-        super.onViewDetachedFromWindow(holder);
-        holder.clearAnimation();
-    }
-
-    public void MyProductFragment() {
-        UserProductsListFragment fragment = new UserProductsListFragment();
-        Bundle arguments = new Bundle();
-        arguments.putInt("duck", 55);
-        fragment.setArguments(arguments);
-        final android.support.v4.app.FragmentTransaction ft = ((AddItemActivity)mContext).getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.additem_Include, fragment, Utils.UserProducts);
-        ft.commit();
-    }
-    public void ProductFragment(String title,String price,String Desc,String phone1,String phone2 , String Addres ,int ProductID) {
-        AddProductFragment fragment = new AddProductFragment();
+    public void JobFragment(String title,String Salary,String Desc,String phone1,String phone2 , String Addres) {
+        AddJobFragment fragment = new AddJobFragment();
         Bundle arguments = new Bundle();
         arguments.putInt("Edit", 55);
-        arguments.putInt("ProductID", ProductID);
         arguments.putString("title",title);
-        arguments.putString("price",price);
+        arguments.putString("salary",Salary);
         arguments.putString("Desc",Desc);
         arguments.putString("phone1",phone1);
         arguments.putString("phone2",phone2);
         arguments.putString("Addres",Addres);
         arguments.putString("Img","null");
-
-
         fragment.setArguments(arguments);
         final android.support.v4.app.FragmentTransaction ft = ((AddItemActivity)mContext).getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.additem_Include, fragment, Utils.addproduct);
-        ft.addToBackStack(null);
+        ft.replace(R.id.additem_Include, fragment, Utils.addJobs);
+        ft.commit();
+    }
+    public void MyJobsFragment() {
+        UserJobsListFragment fragment = new UserJobsListFragment();
+        Bundle arguments = new Bundle();
+        arguments.putInt("duck", 55);
+        fragment.setArguments(arguments);
+        final android.support.v4.app.FragmentTransaction ft = ((AddItemActivity)mContext).getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.additem_Include, fragment, Utils.UserJobs);
         ft.commit();
     }
 }

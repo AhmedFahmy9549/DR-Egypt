@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetUserProducts;
+import com.example.gmsproduction.dregypt.Models.PhoneModel;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
@@ -40,9 +41,11 @@ public class UserProductsListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private UserProductAdapter mAdapter;
     private ArrayList<ProductsModel> modelArrayList;
-    private ArrayList<String> mArraylist,mArraylist2;
-    String phone_1, phone_2;
+    private ArrayList<PhoneModel> phoneArrayList;
+    private ArrayList<String> mArraylist, mArraylist2;
+    String phone_1, phone_2, favcount, viewCount;
     LinearLayoutManager LayoutManagaer;
+    String [][]c;
 
 
     @Override
@@ -68,10 +71,14 @@ public class UserProductsListFragment extends Fragment {
                 modelArrayList = new ArrayList<>();
                 mArraylist = new ArrayList<>();
                 mArraylist2 = new ArrayList<>();
+                phoneArrayList = new ArrayList<>();
 
                 try {
                     //JSONObject object = new JSONObject(response);
                     JSONArray array = new JSONArray(response);
+/*
+                    c = new String[array.length()][2];
+*/
                     for (int a = 0; a < array.length(); a++) {
                         JSONObject dataObject = array.getJSONObject(a);
                         String id = dataObject.getString("id");
@@ -82,23 +89,35 @@ public class UserProductsListFragment extends Fragment {
                         String address = dataObject.getString("address");
                         String created_at = dataObject.getString("created_at");
                         String description = dataObject.getString("description");
-                        try {
-                            JSONArray phoneArray = dataObject.getJSONArray("phone");
-                            phone_1 = (String) phoneArray.get(0);
-                            phone_2 = (String) phoneArray.get(1);
-                        } catch (Exception e) {
-                            JSONArray phoneArray = dataObject.getJSONArray("phone");
-                            phone_1 = (String) phoneArray.get(0);
-                            phone_2 = "No phone has been added";
+
+                        JSONArray phoneArray = dataObject.getJSONArray("phone_numbers");
+                        for (int x = 0; x < phoneArray.length(); x++) {
+                            JSONObject object = phoneArray.getJSONObject(x);
+                            String phone = object.getString("number");
+                            String Phone_id = object.getString("id");
+                        /*    String[] b = {phone,Phone_id};
+
+
+                            c[a][x] = b ;
+*/
+                            phoneArrayList.add(new PhoneModel(Phone_id, phone));
                         }
+
                         JSONObject categoryObject = dataObject.getJSONObject("category");
                         String category = categoryObject.getString("en_name");
 
-                        JSONObject favObject = dataObject.getJSONObject("favorites");
-                        String favcount = favObject.getString("count");
-
-                        JSONObject ViewsObject = dataObject.getJSONObject("views");
-                        String viewCount = ViewsObject.getString("count");
+                        try {
+                            JSONObject favObject = dataObject.getJSONObject("favorites");
+                            favcount = favObject.getString("count");
+                        } catch (Exception e) {
+                            favcount = "0";
+                        }
+                        try {
+                            JSONObject ViewsObject = dataObject.getJSONObject("views");
+                            viewCount = ViewsObject.getString("count");
+                        } catch (Exception e) {
+                            viewCount = "0";
+                        }
 
                         mArraylist.add(favcount);
                         mArraylist2.add(viewCount);
@@ -109,7 +128,7 @@ public class UserProductsListFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                mAdapter = new UserProductAdapter(getContext(), modelArrayList,mArraylist,mArraylist2);
+                mAdapter = new UserProductAdapter(getContext(), modelArrayList, mArraylist, mArraylist2,phoneArrayList);
                 LayoutManagaer = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(LayoutManagaer);
                 mRecyclerView.setAdapter(mAdapter);

@@ -3,51 +3,57 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:id="@+id/List_linear"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_weight="10"
-        android:orientation="horizontal"
-        android:id="@+id/List_Click"
-        >
+        android:orientation="horizontal">
 
-
-        <TextView
-            android:id="@+id/List_Num"
+        <LinearLayout
+            android:id="@+id/List_Click"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="1" />
+            android:layout_weight="8"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/List_title"
+            <TextView
+                android:id="@+id/List_Num"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="1" />
 
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="title" />
+            <TextView
+                android:id="@+id/List_title"
 
-        <TextView
-            android:id="@+id/List_views"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:text="title" />
 
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="1" />
+            <TextView
+                android:id="@+id/List_views"
 
-        <TextView
-            android:id="@+id/List_Fav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="1" />
 
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="1" />
+            <TextView
+                android:id="@+id/List_Fav"
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="1" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -58,7 +64,6 @@
 
             <ImageView
                 android:id="@+id/List_edit"
-
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -68,7 +73,6 @@
 
             <ImageView
                 android:id="@+id/List_delete"
-
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -78,6 +82,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"

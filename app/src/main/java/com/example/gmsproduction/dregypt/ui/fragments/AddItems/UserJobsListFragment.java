@@ -21,6 +21,7 @@ import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.JobAdsAdapter;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
+import com.example.gmsproduction.dregypt.ui.adapters.UserJobAdapter;
 import com.example.gmsproduction.dregypt.utils.Constants;
 
 import org.json.JSONArray;
@@ -38,10 +39,11 @@ public class UserJobsListFragment extends Fragment {
     int id;
     String userName = "Dr.Egypt", userAvatar = "";
     private RecyclerView mRecyclerView;
-    private JobAdsAdapter mAdapter;
+    private UserJobAdapter mAdapter;
     private ArrayList<JobsModel> modelArrayList;
-    String phone_1, phone_2;
+    String phone_1, phone_2,favcount, viewCount;
     LinearLayoutManager LayoutManagaer;
+    private ArrayList<String> mArraylist, mArraylist2;
 
 
     @Override
@@ -65,6 +67,8 @@ public class UserJobsListFragment extends Fragment {
             public void onResponse(String response) {
                 Log.e("kkkkccc",response);
                 modelArrayList = new ArrayList<>();
+                mArraylist = new ArrayList<>();
+                mArraylist2 = new ArrayList<>();
                 try {
 
                     JSONArray dataArray = new JSONArray(response);
@@ -97,6 +101,22 @@ public class UserJobsListFragment extends Fragment {
                         JSONObject employmentObject = dataObject.getJSONObject("employment_type");
                         String employment_type = employmentObject.getString("en_name");
 
+                        try {
+                            JSONObject favObject = dataObject.getJSONObject("favorites");
+                            favcount = favObject.getString("count");
+                        } catch (Exception e) {
+                            favcount = "0";
+                        }
+                        try {
+                            JSONObject ViewsObject = dataObject.getJSONObject("views");
+                            viewCount = ViewsObject.getString("count");
+                        } catch (Exception e) {
+                            viewCount = "0";
+                        }
+
+                        mArraylist.add(favcount);
+                        mArraylist2.add(viewCount);
+
 
                         modelArrayList.add(new JobsModel(id, userId, title, description, salary, image, "", address, created_at, phone_1, phone_2, category, experience, education_level, employment_type));
                     }
@@ -105,7 +125,7 @@ public class UserJobsListFragment extends Fragment {
                     e.printStackTrace();
 
                 }
-                mAdapter = new JobAdsAdapter(getContext(), modelArrayList);
+                mAdapter = new UserJobAdapter(getContext(), modelArrayList,mArraylist, mArraylist2);
                 LayoutManagaer = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(LayoutManagaer);
                 mRecyclerView.setAdapter(mAdapter);
