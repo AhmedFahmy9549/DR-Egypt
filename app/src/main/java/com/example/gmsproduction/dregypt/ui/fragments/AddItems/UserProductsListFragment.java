@@ -97,7 +97,6 @@ public class UserProductsListFragment extends Fragment {
                             String Phone_id = object.getString("id");
                         /*    String[] b = {phone,Phone_id};
 
-
                             c[a][x] = b ;
 */
                             phoneArrayList.add(new PhoneModel(Phone_id, phone));
