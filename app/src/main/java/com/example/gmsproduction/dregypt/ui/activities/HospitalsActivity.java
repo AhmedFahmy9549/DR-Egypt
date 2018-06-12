@@ -196,13 +196,15 @@ public class HospitalsActivity extends AppCompatActivity {
         int city = prefs.getInt("city", 0); //0 is the default value.
         int area = prefs.getInt("area", 0); //0 is the default value.
         int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+        int speciality = prefs.getInt("speciality", 0); //0 is the default value.
 
-        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate);
+        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate+ "Specialty=" + speciality);
 
 
         body.put("region", String.valueOf(city));
         body.put("city", String.valueOf(area));
         body.put("rate", String.valueOf(rate));
+        body.put("speciality", String.valueOf(speciality));
         body.put("keyword", keyword);
 
         final SearchHospitalsRequest searchHospitalsRequest = new SearchHospitalsRequest(this, new Response.Listener<String>() {
@@ -379,13 +381,14 @@ public class HospitalsActivity extends AppCompatActivity {
         int city = prefs.getInt("city", 0); //0 is the default value.
         int area = prefs.getInt("area", 0); //0 is the default value.
         int rate = prefs.getInt("num_rate", 0); //0 is the default value.
+        int speciality = prefs.getInt("speciality", 0); //0 is the default value.
 
-        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate);
-
+        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate+"Specialtion"+speciality);
 
         body.put("region", String.valueOf(city));
         body.put("city", String.valueOf(area));
         body.put("rate", String.valueOf(rate));
+        body.put("speciality", String.valueOf(speciality));
         body.put("keyword", keyword);
 
         final SearchHospitalsRequest searchHospitalsRequest = new SearchHospitalsRequest(this, new Response.Listener<String>() {
@@ -434,6 +437,7 @@ public class HospitalsActivity extends AppCompatActivity {
         editor.putInt("num_rate", 0);
         editor.putInt("city", 0);
         editor.putInt("area", 0);
+        editor.putInt("speciality", 0);
         editor.apply();
 
     }

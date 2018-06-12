@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetCitiesRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetClinicSpecialitiesRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetHospitalSpecialitiesRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetRegionsRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
@@ -42,14 +44,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HospitalFilters extends Fragment {
     View view;
-    Spinner spinner, spinner1;
+    Spinner spinner, spinner1,spinner2;
     ArrayList<LocationModel> array, array2;
-    ArrayList<String> name_array, name_array2;
+    ArrayList<String> name_array, name_array2,SpecialNameArray;
     LinearLayout linearLayout;
     Button applay;
     RadioGroup radioGroup;
     RadioButton radioButton;
-    int x, numRate, city, area;
+    int x, numRate, city, area,speciality;
     String MY_PREFS_NAME = "FiltersH";
 
 
@@ -61,6 +63,7 @@ public class HospitalFilters extends Fragment {
         spinner1 = view.findViewById(R.id.spinner_area);
         linearLayout = view.findViewById(R.id.linear_area);
         applay = view.findViewById(R.id.btn_applay);
+        spinner2= view.findViewById(R.id.spinner_speciality);
 
         radioGroup = view.findViewById(R.id.radio_group);
 
@@ -72,11 +75,14 @@ public class HospitalFilters extends Fragment {
                 Log.e("TTTTTTTTTTTTT", "Num =Rate" + numRate);
                 Log.e("FFFFFFFFFFFFF", "City=" + city);
                 Log.e("CCCCCCCCCCCCC", "Area=" + area);
+                Log.e("YYYYYYYYYYYYY", "Special=" + speciality);
 
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
                 editor.putInt("num_rate", numRate);
                 editor.putInt("city", city);
                 editor.putInt("area", area);
+                editor.putInt("speciality", speciality);
+
                 editor.apply();
                 Intent intent = new Intent(getActivity(), HospitalsActivity.class);
                 startActivity(intent);
@@ -85,6 +91,7 @@ public class HospitalFilters extends Fragment {
             }
         });
         getLocation();
+        getSpeciality();
         return view;
     }
 
@@ -277,6 +284,77 @@ public class HospitalFilters extends Fragment {
 
     }
 
+    private void  getSpeciality(){
+        SpecialNameArray=new ArrayList<>();
+        array=new ArrayList<>();
+
+        array.add(new LocationModel("",-1));
+        SpecialNameArray.add("All");
+
+        GetHospitalSpecialitiesRequest getClinicSpecialitiesRequest = new GetHospitalSpecialitiesRequest(getActivity(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        String specName = object.getString("en_name");
+                        int specId = object.getInt("id");
+                        LocationModel model = new LocationModel(specName, specId);
+                        SpecialNameArray.add(specName);
+                        array.add(model);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, SpecialNameArray);
+                // Drop down layout style - list view with radio button
+
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // attaching data adapter to spinner
+                spinner2.setAdapter(dataAdapter);
+
+                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        String item = adapterView.getItemAtPosition(i).toString();
+
+                        if (i == 0) {
+                            speciality = 0;
+
+
+                        } else {
+                            LocationModel locationModel = array.get(i);
+                            speciality = locationModel.getLocId();
+
+
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getClinicSpecialitiesRequest.start();
+
+
+    }
 
 }
 
