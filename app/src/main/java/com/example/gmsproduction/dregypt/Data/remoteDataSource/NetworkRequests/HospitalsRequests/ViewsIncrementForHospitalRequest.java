@@ -19,12 +19,12 @@ public class ViewsIncrementForHospitalRequest {
     String url;
     int methodId;
 
-    public ViewsIncrementForHospitalRequest(Context context, int user_id, int id, Response.Listener<String> listener, Response.ErrorListener errorListener){
-        setValues(user_id , id);
+    public ViewsIncrementForHospitalRequest(Context context, int id, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        setValues(id);
         volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
     }
-    private void setValues(int user_id,int id){
-        url= Constants.basicUrl+"/hospitals/"+id+"/users/"+user_id+"/view";
+    private void setValues(int id){
+        url= Constants.basicUrl+"/hospitals/"+id+"/view";
         methodId= Request.Method.POST;
     }
 

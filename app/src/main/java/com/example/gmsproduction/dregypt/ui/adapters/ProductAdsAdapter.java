@@ -50,7 +50,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     ArrayList<Integer> favArray;
 
 
-    public ProductAdsAdapter(Context mContext, ArrayList<ProductsModel> mArrayList, ArrayList<Integer> favArray) {
+    public ProductAdsAdapter(Context mContext, ArrayList<ProductsModel> mArrayList) {
         this.mContext = mContext;
         this.mArrayList = mArrayList;
         this.favArray = favArray;

@@ -24,16 +24,22 @@
 
     <item
         android:id="@+id/nav_Favorite"
-        android:title="@string/toolbar_Favorite" />
+        android:title="@string/toolbar_Favorite"
+        android:visible="false"
+        />
     <item
         android:id="@+id/nav_AddProduct"
-        android:title="Add Product" />
+        android:title="Add Product"
+        android:visible="false"
+        />
     <item
         android:id="@+id/nav_myProduct"
         android:title="My Products" />
     <item
         android:id="@+id/nav_AddJob"
-        android:title="Add Job" />
+        android:title="Add Job"
+        android:visible="false"
+        />
     <item
         android:id="@+id/nav_myJobs"
         android:title="My Jobs" />
@@ -53,6 +59,12 @@
     <item
         android:id="@+id/nav_log"
         android:title="Login" />
+    <item
+        android:id="@+id/nav_logOut"
+        android:title="Log Out"
+        android:visible="false"
+        />
+
 </menu>
 
 

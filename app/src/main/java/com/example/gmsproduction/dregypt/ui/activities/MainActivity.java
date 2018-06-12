@@ -1,6 +1,8 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.DeleteUserProductRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.squareup.picasso.Picasso;
@@ -72,12 +75,12 @@ public class MainActivity extends AppCompatActivity
 
 
         toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 SetUser(MainActivity.this);
-                Log.e("drawer","bebe");
+                Log.e("drawer", "bebe");
                 // Do whatever you want here
             }
 
@@ -85,18 +88,24 @@ public class MainActivity extends AppCompatActivity
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 SetUser(MainActivity.this);
-                Log.e("drawer","dodo");
+                Log.e("drawer", "dodo");
 
                 // Do whatever you want here
             }
         };
 
 
-
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        //menu items
+        if (id == 0) {
+            LogIn();
+        } else {
+            LogOut();
+        }
 
         /*navigationView = new ActionBarDrawerToggle(this, drawer,
                 R.drawable.ic_action_menu, R.string.drawer_open, R.string.drawer_close) {
@@ -130,6 +139,27 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+
+    private void LogOut() {
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_log).setVisible(false);
+        nav_Menu.findItem(R.id.nav_logOut).setVisible(true);
+        nav_Menu.findItem(R.id.nav_myJobs).setVisible(true);
+        nav_Menu.findItem(R.id.nav_myProduct).setVisible(true);
+        nav_Menu.findItem(R.id.nav_Favorite).setVisible(true);
+    }
+
+    private void LogIn() {
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.nav_log).setVisible(true);
+        nav_Menu.findItem(R.id.nav_logOut).setVisible(false);
+        nav_Menu.findItem(R.id.nav_myJobs).setVisible(false);
+        nav_Menu.findItem(R.id.nav_myProduct).setVisible(false);
+        nav_Menu.findItem(R.id.nav_Favorite).setVisible(false);
+
+    }
+
+
     public void SetUser(Context context) {
         Picasso.with(context).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
         Menu_title.setText(userName);
@@ -141,7 +171,6 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
         }
     }
 
@@ -172,10 +201,10 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         Intent intent;
-        int id = item.getItemId();
+        int idz = item.getItemId();
 
 
-        switch (id) {
+        switch (idz) {
             case R.id.nav_log:
                 intent = new Intent(this, LogInActivity.class);
                 startActivity(intent);
@@ -220,6 +249,26 @@ public class MainActivity extends AppCompatActivity
                 intent.putExtra("Add", 2012);
                 startActivity(intent);
                 break;
+            case R.id.nav_logOut:
+                new AlertDialog.Builder(this)
+                        .setTitle("Log Out!")
+                        .setMessage("Do you really want to Logout?")
+                        .setIcon(android.R.drawable.ic_delete)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                Intent intent;
+                                SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE).edit();
+                                editor.clear().apply();
+                                intent = new Intent(MainActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null).show();
+
+
+                break;
+
 
 
         }
@@ -261,7 +310,6 @@ public class MainActivity extends AppCompatActivity
         fab = (FloatingActionButton) findViewById(R.id.fab);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
-
         header = navigationView.getHeaderView(0);
 
         medicalCard = findViewById(R.id.card_medical);

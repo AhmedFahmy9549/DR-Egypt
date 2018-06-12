@@ -56,7 +56,7 @@ public class JobsActivity extends AppCompatActivity {
 
     LinearLayoutManager LayoutManagaer;
     int page = 1;
-    int last_page;
+    int last_page,mUSERid;
 
 
 
@@ -65,6 +65,9 @@ public class JobsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobs);
         fragmentManager = getSupportFragmentManager();
+
+        SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        mUSERid = prefs.getInt("User_id", 0);
 
         //Request for main Jobs
         /*final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(this,url,this,this);
@@ -145,6 +148,8 @@ public class JobsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.search, menu);
 
         MenuItem item = menu.findItem(R.id.action_search);
+        MenuItem itemAdd = menu.findItem(R.id.action_AddPro);
+        itemAdd.setVisible(true);
         searchView.setMenuItem(item);
 
         return true;
@@ -161,6 +166,16 @@ public class JobsActivity extends AppCompatActivity {
                 Intent intent = new Intent(JobsActivity.this, FiltersActivity.class);
                 intent.putExtra("idFilter", 6);
                 startActivity(intent);
+                break;
+            case R.id.action_AddPro:
+                if (mUSERid==0){
+                    intent = new Intent(this, LogInActivity.class);
+                    startActivity(intent);
+                }else {
+                    intent = new Intent(this, AddItemActivity.class);
+                    intent.putExtra("Add", 2002);
+                    startActivity(intent);
+                }
                 break;
         }
         return true;

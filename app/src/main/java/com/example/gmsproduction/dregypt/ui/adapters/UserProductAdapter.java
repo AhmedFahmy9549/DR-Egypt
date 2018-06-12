@@ -87,8 +87,12 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
 
         final String price = currentItem.getPrice();
         final String Desc = currentItem.getDescription();
-        final String phone1 = currentItem.getPhone_1();
-        final String phone2 = currentItem .getPhone_2();
+
+        final String phone_id1 = currentPhone.getId01();
+        final String phone1 = currentPhone.getNum01();
+        final String phone_id2 = currentPhone.getId02();
+        final String phone2 = currentPhone.getNum02();
+
         final String Addres = currentItem.getAddress();
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +117,7 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
         holder.ProductEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProductFragment(title,price,Desc,phone1,phone2,Addres,ProductID);
+                ProductFragment(title,price,Desc,phone_id1,phone1,phone_id2,phone2,Addres,ProductID);
 
             }
         });
@@ -217,7 +221,7 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
         ft.replace(R.id.additem_Include, fragment, Utils.UserProducts);
         ft.commit();
     }
-    public void ProductFragment(String title,String price,String Desc,String phone1,String phone2 , String Addres ,int ProductID) {
+    public void ProductFragment(String title,String price,String Desc,String phID1,String phone1,String phID2,String phone2 , String Addres ,int ProductID) {
         AddProductFragment fragment = new AddProductFragment();
         Bundle arguments = new Bundle();
         arguments.putInt("Edit", 55);
@@ -227,6 +231,8 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
         arguments.putString("Desc",Desc);
         arguments.putString("phone1",phone1);
         arguments.putString("phone2",phone2);
+        arguments.putString("phoneID1",phID1);
+        arguments.putString("phoneID2",phID2);
         arguments.putString("Addres",Addres);
         arguments.putString("Img","null");
 

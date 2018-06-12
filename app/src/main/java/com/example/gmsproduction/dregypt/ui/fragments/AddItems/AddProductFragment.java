@@ -77,7 +77,7 @@ public class AddProductFragment extends Fragment {
     private View view;
     private EditText EdTitle, EdPrice, EdDesc, EdAddress, EdPhone, EdPhone2;
     private String getTitle = "", getPrice = "", getDesc = "", getAddress = "", getPhone = "", getPhone2 = "",
-            getEncodedImage = "", editTitle = "", editPrice = "", editDesc = "", editPhone1 = "", editPhone2 = "", editAddres = "";
+            getEncodedImage = "", editTitle = "", editPrice = "", editDesc = "", editPhone1 = "", editPhone2 = "", editAddres = "",PhID1,PhID2;
     private Spinner spinner, spinner1, spinnerCategory;
     ArrayList<String> name_array, name_array2, CategoryNameArray;
     int x, numRate, numStatus = 55, city, area, category, radiogroubValidation = 55, userID;
@@ -89,8 +89,8 @@ public class AddProductFragment extends Fragment {
     private RequestQueue mRequestQueue;
     int MethodID = Request.Method.POST;
     String url = Constants.basicUrl + "/product-ads";
-    int desired_Int, ProductID;
-
+    int desired_Int, ProductID ;
+    Map<String, String> map;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -112,6 +112,7 @@ public class AddProductFragment extends Fragment {
             setEditData();
             MethodID = Request.Method.PUT;
             url = Constants.basicUrl+"/product-ads/"+ProductID;
+            AddBTN.setText("Edit Product");
 
         } else {
             getActivity().setTitle("Add Product");
@@ -148,7 +149,11 @@ public class AddProductFragment extends Fragment {
         editPrice = arguments.getString("price");
         editDesc = arguments.getString("Desc");
         editPhone1 = arguments.getString("phone1");
-        //editPhone2 = arguments.getString("phone2");
+        editPhone2 = arguments.getString("phone2");
+
+        PhID1 = arguments.getString("phoneID1");
+        PhID2 = arguments.getString("phoneID2");
+
         editAddres = arguments.getString("Addres");
         getEncodedImage = arguments.getString("Img");
         ProductID = arguments.getInt("ProductID", 0);
@@ -558,12 +563,28 @@ public class AddProductFragment extends Fragment {
 
         JSONObject jsonobject_one = new JSONObject();
         JSONObject jsonobject_Two = new JSONObject();
+        JSONObject phone01 = new JSONObject();
+        JSONObject phone02 = new JSONObject();
+
         JSONArray PhoneArray = new JSONArray();
         try {
-            PhoneArray.put(phone);
-            if (phone2 != null && !phone2.isEmpty()) {
-                PhoneArray.put(phone2);
+            if (desired_Int==55){
+                phone01.put("id",PhID1);
+                phone01.put("number",phone);
+                PhoneArray.put(phone01);
+
+                if (phone2 != null && !phone2.isEmpty()) {
+                    phone02.put("id",PhID2);
+                    phone02.put("number",phone2);
+                    PhoneArray.put(phone02);
+                }
+            }else {
+                PhoneArray.put(phone);
+                if (phone2 != null && !phone2.isEmpty()) {
+                    PhoneArray.put(phone2);
+                }
             }
+
             jsonobject_one.put("userId", id);
             jsonobject_one.put("title", title);
             jsonobject_one.put("description", Desc);
@@ -573,9 +594,10 @@ public class AddProductFragment extends Fragment {
             jsonobject_one.put("address", addres);
             jsonobject_one.put("status", Status);
             jsonobject_one.put("categoryId", category);
+            jsonobject_one.put("phone", PhoneArray);
+
 
             //phone array
-            jsonobject_one.put("phone", PhoneArray);
             //file object
             jsonobject_Two.put("file", img);
             jsonobject_one.put("img", jsonobject_Two);

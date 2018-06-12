@@ -18,15 +18,20 @@ import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.AddClinicsToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.DeleteClinicFromFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.RatingClinicRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.ViewsIncrementForClinicRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.AddCosmeticClinicsToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.DeleteCosmeticClinicsFromFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.RatingCosmeticClinicsRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.ViewsIncrementForCosmeticClinicsRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.AddHospitalToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.DeleteHospitalFromFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.RatingHospitalRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.ViewsIncrementForHospitalRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.ViewsIncrementForJobAdRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.AddPharmacyToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.DeletePharmacyFromFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.RatingPharmacyRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.ViewsIncrementForPharmacyRequest;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.Constants;
@@ -45,6 +50,8 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView TXTimg;
     ToggleButton toggleButton;
     Map<String, String> body = new HashMap<>();
+    Map<String, String> Posty = new HashMap<>();
+
     RatingBar ratingBar;
 
     private int id, count, favorites;
@@ -56,12 +63,21 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.detail_hospitals);
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userid = prefs.getInt("User_id", 0);
+
+        if (userid==0){
+
+        }else {
+            Posty.put("userId", String.valueOf(userid));
+        }
+
         Extras();
         Initializing();
         Deploy();
         //display backbutton of action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
 
 
     }
@@ -101,6 +117,16 @@ public class DetailsActivity extends AppCompatActivity {
 
         Picasso.with(this).load(img).fit().centerCrop().into(TXTimg);
         setTitle(name);
+        //views
+        if (type == 99505) {
+            ViewsHos();
+        } else if (type == 99404) {
+            ViewsClin();
+        } else if (type == 99303) {
+            ViewsPhar();
+        } else if (type == 99101) {
+            ViewsCosm();
+        }
 
         toggleButton.setChecked(false);
         toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
@@ -419,6 +445,68 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void ViewsHos(){
+
+        ViewsIncrementForHospitalRequest increment = new ViewsIncrementForHospitalRequest(this, MDID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        increment.setBody((HashMap)Posty);
+        increment.start();
+    }
+    private void ViewsClin(){
+        ViewsIncrementForClinicRequest increment = new ViewsIncrementForClinicRequest(this, MDID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        increment.setBody((HashMap)Posty);
+        increment.start();
+    }
+    private void ViewsCosm(){
+        ViewsIncrementForCosmeticClinicsRequest increment = new ViewsIncrementForCosmeticClinicsRequest(this, MDID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        increment.setBody((HashMap)Posty);
+        increment.start();
+    }
+    private void ViewsPhar(){
+        ViewsIncrementForPharmacyRequest increment = new ViewsIncrementForPharmacyRequest(this, MDID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        increment.setBody((HashMap)Posty);
+        increment.start();
     }
 
 

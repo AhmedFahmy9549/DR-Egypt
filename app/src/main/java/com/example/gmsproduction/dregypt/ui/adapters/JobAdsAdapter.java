@@ -80,6 +80,7 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailsJobs.class);
                 intent.putExtra("JDTitle",currentItem.getTitle());
+                intent.putExtra("JDID",currentItem.getId());
                 intent.putExtra("JDdescription",currentItem.getDescription());
                 intent.putExtra("JDsalary",currentItem.getSalary());
                 intent.putExtra("JDimage",currentItem.getImage());
@@ -100,6 +101,7 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
                 Intent intent = new Intent(mContext, DetailsJobs.class);
                 intent.putExtra("JDTitle",currentItem.getTitle());
                 intent.putExtra("JDdescription",currentItem.getDescription());
+                intent.putExtra("JDID",currentItem.getId());
                 intent.putExtra("JDsalary",currentItem.getSalary());
                 intent.putExtra("JDimage",currentItem.getImage());
                 intent.putExtra("JDaddress",currentItem.getAddress());

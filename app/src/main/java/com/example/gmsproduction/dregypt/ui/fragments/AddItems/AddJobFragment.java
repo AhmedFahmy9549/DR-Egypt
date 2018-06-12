@@ -68,16 +68,21 @@ public class AddJobFragment extends Fragment {
 
     private View view;
     private EditText EdTitle, EdSalary, EdDesc, EdAddress, EdPhone, Edphone2;
-    private String getTitle, getSalary, getDesc, getAddress, getPhone, getPhone2, getEncodedImage;
+    private String getTitle, getSalary, getDesc, getAddress, getPhone, getPhone2, getEncodedImage ,
+            editTitle = "", editSalary = "", editDesc = "", editPhone1 = "", editPhone2 = "", editAddres = "",PhID1,PhID2;
     Spinner spinner, spinner1, spinnerCategory, spinnerExpLevel, spinnerEducLevel, spinnerEmpType;
     ArrayList<String> name_array, name_array2, CategoryNameArray, ExpLebelNameArray, EduLevelNameArray, EmpTypeNameArray;
-    int x, numRate, numType = 55, city, area, category, expLevel, eduLevel, EmpType, userID;
+    int x, numRate, numType = 55, city, area, category, expLevel, eduLevel, EmpType, userID ;
     ArrayList<LocationModel> arrayModel, array2, getArrayExiLevelModel, arrayEduLevelModel, EmpTypeModel;
     LinearLayout linearLayout;
     Button AddBTN, imagetestbtn, addphone2;
     public static final int RESULT_IMG = 1;
     RadioGroup radioGroup, radioGroupType;
     private RequestQueue mRequestQueue;
+    int desired_Int, JobID , phoneID1,phoneID2;
+    int MethodID = Request.Method.POST;
+    String url = Constants.basicUrl + "/product-ads";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +94,21 @@ public class AddJobFragment extends Fragment {
         userID = prefs.getInt("User_id", 0);
         Log.e("idAdd", "job" + userID);
 
+        //get bundle to check if this is add or edit fragment
+        getEditData();
         initViews();
+        //set title of Activity
+        if (desired_Int == 55) {
+            getActivity().setTitle("Edit Job");
+            //to set data into the EditText for EditFragment
+            setEditData();
+            MethodID = Request.Method.PUT;
+            url = Constants.basicUrl+"/job-ads/"+JobID;
+            AddBTN.setText("Edit Job");
+
+        } else {
+            getActivity().setTitle("Add Product");
+        }
         getLocation();
         getExperienceLevel();
         getEducationLevel();
@@ -112,6 +131,32 @@ public class AddJobFragment extends Fragment {
         return view;
     }
 
+    private void getEditData() {
+        Bundle arguments = getArguments();
+        desired_Int = arguments.getInt("Edit", 0);
+        editTitle = arguments.getString("title");
+        editSalary = arguments.getString("salary");
+        editDesc = arguments.getString("Desc");
+        editPhone1 = arguments.getString("phone1");
+        editPhone2 = arguments.getString("phone2");
+
+        PhID1 = arguments.getString("phoneID1");
+        PhID2 = arguments.getString("phoneID2");
+
+
+        editAddres = arguments.getString("Addres");
+        getEncodedImage = arguments.getString("Img");
+        JobID = arguments.getInt("JobID", 0);
+    }
+
+    private void setEditData() {
+        EdTitle.setText(editTitle);
+        EdSalary.setText(editSalary);
+        EdDesc.setText(editDesc);
+        EdPhone.setText(editPhone1);
+        Edphone2.setText(editPhone2);
+        EdAddress.setText(editAddres);
+    }
 
     private void initViews() {
 
@@ -326,28 +371,6 @@ public class AddJobFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
-                // Drop down layout style - list view with radio button
-
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                // attaching data adapter to spinner
-                spinnerCategory.setAdapter(dataAdapter);
-                spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String item = adapterView.getItemAtPosition(i).toString();
-
-                        LocationModel locationModel = arrayModel.get(i);
-                        category = locationModel.getLocId();
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });*/
             }
         }, new Response.ErrorListener() {
             @Override
@@ -669,7 +692,7 @@ public class AddJobFragment extends Fragment {
                 imageStream = getActivity().getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 // this is the image Sting
-                getEncodedImage = encodeImage(selectedImage);
+                getEncodedImage = "data:image/jpeg;base64," +encodeImage(selectedImage);
                 Log.e("ENCimage", getEncodedImage);
 
 
@@ -696,12 +719,27 @@ public class AddJobFragment extends Fragment {
 
         JSONObject jsonobject_one = new JSONObject();
         JSONObject jsonobject_Two = new JSONObject();
+        JSONObject phone01 = new JSONObject();
+        JSONObject phone02 = new JSONObject();
         JSONArray PhoneArray = new JSONArray();
         try {
-            PhoneArray.put(phone);
-            if (phone2 != null && !phone2.isEmpty()) {
-                PhoneArray.put(phone2);
+            if (desired_Int==55){
+                phone01.put("id",PhID1);
+                phone01.put("number",phone);
+                PhoneArray.put(phone01);
+
+                if (phone2 != null && !phone2.isEmpty()) {
+                    phone02.put("id",PhID2);
+                    phone02.put("number",phone2);
+                    PhoneArray.put(phone02);
+                }
+            }else {
+                PhoneArray.put(phone);
+                if (phone2 != null && !phone2.isEmpty()) {
+                    PhoneArray.put(phone2);
+                }
             }
+
             jsonobject_one.put("userId", id);
             jsonobject_one.put("title", title);
             jsonobject_one.put("description", Desc);
@@ -719,13 +757,13 @@ public class AddJobFragment extends Fragment {
             //phone array
             jsonobject_one.put("phone", PhoneArray);
             //file object
-            jsonobject_Two.put("file", "data:image/jpeg;base64," + img);
+            jsonobject_Two.put("file", img);
             jsonobject_one.put("img", jsonobject_Two);
 
 
             Log.e("gaga", "" + jsonobject_one);
             JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl + "/job-ads", jsonobject_one,
+                    MethodID, url, jsonobject_one,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

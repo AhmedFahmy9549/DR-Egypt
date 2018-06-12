@@ -3,6 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activities.ProductsActivity">
     <item
+        android:id="@+id/action_AddPro"
+        android:icon="@drawable/add_circular_button"
+        android:orderInCategory="99"
+        android:title="AddProduct"
+        app:showAsAction="always"
+        android:visible="false"
+        />
+    <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_action_action_search"
         android:orderInCategory="100"

@@ -45,7 +45,7 @@ public class UserProductsListFragment extends Fragment {
     private ArrayList<String> mArraylist, mArraylist2;
     String phone_1, phone_2, favcount, viewCount;
     LinearLayoutManager LayoutManagaer;
-    String [][]c;
+    String[][][] c;
 
 
     @Override
@@ -90,17 +90,16 @@ public class UserProductsListFragment extends Fragment {
                         String created_at = dataObject.getString("created_at");
                         String description = dataObject.getString("description");
 
+                        //get phone id and num
                         JSONArray phoneArray = dataObject.getJSONArray("phone_numbers");
-                        for (int x = 0; x < phoneArray.length(); x++) {
-                            JSONObject object = phoneArray.getJSONObject(x);
-                            String phone = object.getString("number");
-                            String Phone_id = object.getString("id");
-                        /*    String[] b = {phone,Phone_id};
+                        JSONObject phoneObject01 = phoneArray.getJSONObject(0);
+                        String phone01 = phoneObject01.getString("number");
+                        String Phone_id01 = phoneObject01.getString("id");
+                        JSONObject phoneObject02 = phoneArray.getJSONObject(1);
+                        String phone02 = phoneObject02.getString("number");
+                        String Phone_id02 = phoneObject02.getString("id");
 
-                            c[a][x] = b ;
-*/
-                            phoneArrayList.add(new PhoneModel(Phone_id, phone));
-                        }
+                        phoneArrayList.add(new PhoneModel(Phone_id01, phone01, Phone_id02, phone02));
 
                         JSONObject categoryObject = dataObject.getJSONObject("category");
                         String category = categoryObject.getString("en_name");
@@ -121,13 +120,13 @@ public class UserProductsListFragment extends Fragment {
                         mArraylist.add(favcount);
                         mArraylist2.add(viewCount);
 
-                        modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
+                        modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone01, phone02));
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                mAdapter = new UserProductAdapter(getContext(), modelArrayList, mArraylist, mArraylist2,phoneArrayList);
+                mAdapter = new UserProductAdapter(getContext(), modelArrayList, mArraylist, mArraylist2, phoneArrayList);
                 LayoutManagaer = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(LayoutManagaer);
                 mRecyclerView.setAdapter(mAdapter);

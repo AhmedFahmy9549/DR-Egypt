@@ -146,7 +146,7 @@ public class ProductsActivity extends AppCompatActivity {
                     favArray = new ArrayList<>();
 
                     page = 1;
-                    mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
+                    mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
                     LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
                     mRecyclerView.setLayoutManager(LayoutManagaer);
                     mRecyclerView.setAdapter(mAdapter);
@@ -188,7 +188,7 @@ public class ProductsActivity extends AppCompatActivity {
             }
         });
         LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
-        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
+        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -204,6 +204,16 @@ public class ProductsActivity extends AppCompatActivity {
                 intent.putExtra("idFilter", 4);
                 startActivity(intent);
                 break;
+            case R.id.action_AddPro:
+                if (userid==0){
+                    intent = new Intent(this, LogInActivity.class);
+                    startActivity(intent);
+                }else {
+                    intent = new Intent(this, AddItemActivity.class);
+                    intent.putExtra("Add", 1001);
+                    startActivity(intent);
+                }
+                break;
         }
         return true;
 
@@ -215,6 +225,8 @@ public class ProductsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.search, menu);
 
         MenuItem item = menu.findItem(R.id.action_search);
+        MenuItem itemAdd = menu.findItem(R.id.action_AddPro);
+        itemAdd.setVisible(true);
         searchView.setMenuItem(item);
 
         return true;
@@ -287,7 +299,7 @@ public class ProductsActivity extends AppCompatActivity {
 
         }
         getFavID();
-        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
+        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
         LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.setAdapter(mAdapter);

@@ -19,12 +19,12 @@ public class ViewsIncrementForJobAdRequest {
     String url;
     int methodId;
 
-    public ViewsIncrementForJobAdRequest(Context context, int user_id, int id, Response.Listener<String> listener, Response.ErrorListener errorListener){
-        setValues(user_id , id);
+    public ViewsIncrementForJobAdRequest(Context context, int id, Response.Listener<String> listener, Response.ErrorListener errorListener){
+        setValues(id);
         volleyLIbUtils=new VolleyLIbUtils(context,methodId,url,listener,errorListener);
     }
-    private void setValues(int user_id,int id){
-        url= Constants.basicUrl+"/job-ads/"+id+"/users/"+user_id+"/view";
+    private void setValues(int id){
+        url= Constants.basicUrl+"/job-ads/"+id+"/view";
         methodId= Request.Method.POST;
     }
 

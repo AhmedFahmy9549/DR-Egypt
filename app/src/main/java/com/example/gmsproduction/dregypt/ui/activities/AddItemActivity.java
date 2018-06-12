@@ -1,6 +1,8 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,10 +38,13 @@ import me.srodrigo.androidhintspinner.HintSpinner;
 
 public class AddItemActivity extends AppCompatActivity {
     int vald;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentManager = getSupportFragmentManager();
+
         setContentView(R.layout.add_item);
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,7 +71,7 @@ public class AddItemActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                finish();
+                super.onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);

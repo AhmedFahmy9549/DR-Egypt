@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.GetUserJobs;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetUserProducts;
 import com.example.gmsproduction.dregypt.Models.JobsModel;
+import com.example.gmsproduction.dregypt.Models.PhoneModel;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.JobAdsAdapter;
@@ -44,6 +45,7 @@ public class UserJobsListFragment extends Fragment {
     String phone_1, phone_2,favcount, viewCount;
     LinearLayoutManager LayoutManagaer;
     private ArrayList<String> mArraylist, mArraylist2;
+    private ArrayList<PhoneModel> phoneArrayList;
 
 
     @Override
@@ -69,6 +71,8 @@ public class UserJobsListFragment extends Fragment {
                 modelArrayList = new ArrayList<>();
                 mArraylist = new ArrayList<>();
                 mArraylist2 = new ArrayList<>();
+                phoneArrayList = new ArrayList<>();
+
                 try {
 
                     JSONArray dataArray = new JSONArray(response);
@@ -82,15 +86,18 @@ public class UserJobsListFragment extends Fragment {
                         String image = Constants.ImgUrl + dataObject.getString("img");
                         String address = dataObject.getString("address");
                         String created_at = dataObject.getString("created_at");
-                        try {
-                            JSONArray phoneArray = dataObject.getJSONArray("phone");
-                                phone_1 = (String) phoneArray.get(0);
-                                phone_2 = (String) phoneArray.get(1);
-                        } catch (Exception e) {
-                            JSONArray phoneArray = dataObject.getJSONArray("phone");
-                            phone_1 = (String) phoneArray.get(0);
-                            phone_2 = "No phone has been added";
-                        }
+
+                        //add phone
+                        //get phone id and num
+                        JSONArray phoneArray = dataObject.getJSONArray("phone_numbers");
+                        JSONObject phoneObject01 = phoneArray.getJSONObject(0);
+                        String phone01 = phoneObject01.getString("number");
+                        String Phone_id01 = phoneObject01.getString("id");
+                        JSONObject phoneObject02 = phoneArray.getJSONObject(1);
+                        String phone02 = phoneObject02.getString("number");
+                        String Phone_id02 = phoneObject02.getString("id");
+
+                        phoneArrayList.add(new PhoneModel(Phone_id01, phone01, Phone_id02, phone02));
 
                         JSONObject categoryObject = dataObject.getJSONObject("category");
                         String category = categoryObject.getString("en_name");
@@ -125,7 +132,7 @@ public class UserJobsListFragment extends Fragment {
                     e.printStackTrace();
 
                 }
-                mAdapter = new UserJobAdapter(getContext(), modelArrayList,mArraylist, mArraylist2);
+                mAdapter = new UserJobAdapter(getContext(), modelArrayList,mArraylist, mArraylist2,phoneArrayList);
                 LayoutManagaer = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(LayoutManagaer);
                 mRecyclerView.setAdapter(mAdapter);

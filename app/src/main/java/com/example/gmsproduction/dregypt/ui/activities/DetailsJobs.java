@@ -1,33 +1,68 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.ViewsIncrementForJobAdRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.ViewsIncrementForProductAdRequest;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.utils.Constants;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DetailsJobs extends AppCompatActivity {
 
-    String id, userId, title, description, salary, image, address, created_at, phone_1, phone_2, experience, education_level, employment_type;
+    String id, userId, title, description, salary, image, address, created_at, phone_1, phone_2, experience, education_level, employment_type,cz;
     TextView TXTtitle, TXTdescription, TXTsalary, TXTaddress, TXTcreated_at, TXTphone_1, TXTexperience, TXTeducation_level, TXTemployment_type;
     ImageView TXTimage;
-
+    Map<String, String> Posty = new HashMap<>();
+    int userid,JobID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details_jobs);
+        SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        userid = prefs.getInt("User_id", 0);
+        cz = String.valueOf(userid);
         Extras();
         Initializing();
         Deploy();
-
+        Views();
     }
 
+    private void Views(){
+        if (userid==0){
+
+        }else {
+            Posty.put("userId", cz);
+        }
+        ViewsIncrementForJobAdRequest increment = new ViewsIncrementForJobAdRequest(this, JobID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        increment.setBody((HashMap)Posty);
+        increment.start();
+    }
     public void Extras() {
         Intent extra = getIntent();
         title = extra.getStringExtra("JDTitle");
+        id = extra.getStringExtra("JDID");
+        JobID= Integer.valueOf(id);
         description = extra.getStringExtra("JDdescription");
         salary = extra.getStringExtra("JDsalary");
         image = extra.getStringExtra("JDimage");

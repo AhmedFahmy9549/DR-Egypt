@@ -21,12 +21,14 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.AddProductsAdsToFavouriteRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.DeleteProductAdFromFavouriteRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.ViewsIncrementForProductAdRequest;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.squareup.picasso.Picasso;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +44,8 @@ public class DetailsProducts extends AppCompatActivity {
     ExpandableRelativeLayout expandableLayout1;
     ArrayList<ProductsModel> models;
     Map<String, String> body = new HashMap<>();
+    Map<String, String> Posty = new HashMap<>();
+
 
 
     @Override
@@ -51,6 +55,8 @@ public class DetailsProducts extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userid = prefs.getInt("User_id", 0);
         cz = String.valueOf(userid);
+
+
 
         //intent and bundle
         extras();
@@ -62,6 +68,7 @@ public class DetailsProducts extends AppCompatActivity {
         Deploy();
         //set tool bar title
         setTitle(titlez);
+        Views();
 
     }
     /*public void expandableButton1(View view) {
@@ -79,6 +86,27 @@ public class DetailsProducts extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void Views(){
+        if (userid==0){
+
+        }else {
+            Posty.put("userId", cz);
+        }
+        ViewsIncrementForProductAdRequest increment = new ViewsIncrementForProductAdRequest(this, productID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        increment.setBody((HashMap)Posty);
+        increment.start();
     }
 
     private void Initialize() {

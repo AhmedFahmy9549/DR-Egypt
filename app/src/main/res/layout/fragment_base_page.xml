@@ -114,7 +114,7 @@
             android:padding="5dp"
             android:text="@string/already_user"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+             />
 
         <TextView
             android:id="@+id/BPLoginNow"
@@ -128,7 +128,7 @@
             android:layout_toRightOf="@+id/BPcreateAccount"
             android:textColor="@color/bluoo"
             android:text="@string/Login"
-            android:textSize="15sp" />
+            />
 
         <TextView
             android:id="@+id/BpOr"
@@ -141,7 +141,7 @@
             android:layout_toEndOf="@+id/BPLoginNow"
             android:layout_toRightOf="@+id/BPLoginNow"
             android:text="Or"
-            android:textSize="15sp" />
+            />
 
         <TextView
             android:id="@+id/BpNotNow"
@@ -155,7 +155,7 @@
             android:layout_toRightOf="@+id/BpOr"
             android:text="@string/Not_Now"
             android:textColor="@color/bluoo"
-            android:textSize="15sp" />
+             />
 
         <TextView
             android:id="@+id/agreeeee"

@@ -28,9 +28,14 @@ import android.widget.Toast;
 
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -402,6 +407,8 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                                 }
 
                                 ((LogInActivity) getActivity()).SharedPref(id, name, email, avatar);
+                                Intent intent = new Intent(getActivity(),MainActivity.class);
+                                startActivity(intent);
 
                                 //SharedPref(id, name, email, avatar);
                             } catch (JSONException e) {
@@ -416,7 +423,18 @@ public class Login_Fragment extends Fragment implements OnClickListener {
                 public void onErrorResponse(VolleyError error) {
                     Log.e("Login", "error" + error.getMessage());
 
-                    //VolleyLog.d("error", "Error: " + error.getMessage());
+                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+
+                    } else if (error instanceof AuthFailureError) {
+                        //TODO
+                    } else if (error instanceof ServerError) {
+                        new CustomToast().Show_Toast(getActivity(), view,
+                                "the username or password is incorrect");
+                    } else if (error instanceof NetworkError) {
+                        //TODO
+                    } else if (error instanceof ParseError) {
+                        //TODO
+                    }
 
                 }
             }) {

@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.DeleteUserJobRequest;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.DeleteUserProductRequest;
 import com.example.gmsproduction.dregypt.Models.JobsModel;
+import com.example.gmsproduction.dregypt.Models.PhoneModel;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
@@ -42,7 +43,17 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
     private Context mContext;
     private ArrayList<JobsModel> mArrayList;
     private ArrayList<String>mArrayList1,mArrayList2;
+    private ArrayList<PhoneModel>phoneArrayList;
+
     private int userid;
+
+    public UserJobAdapter(Context mContext, ArrayList<JobsModel> mArrayList, ArrayList<String> mArrayList1, ArrayList<String> mArrayList2, ArrayList<PhoneModel> phoneArrayList) {
+        this.mContext = mContext;
+        this.mArrayList = mArrayList;
+        this.mArrayList1 = mArrayList1;
+        this.mArrayList2 = mArrayList2;
+        this.phoneArrayList = phoneArrayList;
+    }
 
     public UserJobAdapter(Context mContext, ArrayList<JobsModel> mArrayList, ArrayList<String> mArrayList1, ArrayList<String> mArrayList2) {
         this.mContext = mContext;
@@ -62,13 +73,19 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final JobsModel currentItem = mArrayList.get(position);
+        PhoneModel currentPhone = phoneArrayList.get(position);
+
         final int id = Integer.valueOf(currentItem.getId());
         final String title = currentItem.getTitle();
         final String description = currentItem.getDescription();
         final String Salary = currentItem.getSalary();
         final String address = currentItem.getAddress();
-        final String phone_1 = currentItem.getPhone_1();
-        final String phone_2 = currentItem.getPhone_2();
+
+        //phone
+        final String phone_id1 = currentPhone.getId01();
+        final String phone1 = currentPhone.getNum01();
+        final String phone_id2 = currentPhone.getId02();
+        final String phone2 = currentPhone.getNum02();
 
         String favcounts = mArrayList1.get(position);
         String viewcounts = mArrayList2.get(position);
@@ -85,13 +102,14 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DetailsJobs.class);
                 intent.putExtra("JDTitle",currentItem.getTitle());
+                intent.putExtra("JDID",currentItem.getId());
                 intent.putExtra("JDdescription",currentItem.getDescription());
                 intent.putExtra("JDsalary",currentItem.getSalary());
                 intent.putExtra("JDimage",currentItem.getImage());
                 intent.putExtra("JDaddress",currentItem.getAddress());
                 intent.putExtra("JDcreated_at",currentItem.getCreated_at());
-                intent.putExtra("JDphone_1",currentItem.getPhone_1());
-                intent.putExtra("JDphone_2",currentItem.getPhone_2());
+                intent.putExtra("JDphone_1",phone1);
+                intent.putExtra("JDphone_2",phone2);
                 intent.putExtra("JDexperience",currentItem.getExperience());
                 intent.putExtra("JDeducation_level",currentItem.getEducation_level());
                 intent.putExtra("JDemployment_type",currentItem.getEmployment_type());
@@ -105,7 +123,7 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
         holder.ProductEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JobFragment(title,Salary,description,phone_1,phone_2,address);
+                JobFragment(title,Salary,description,phone_id1,phone1,phone_id2,phone2,address,id);
 
             }
         });
@@ -173,15 +191,18 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
 
     }
 
-    public void JobFragment(String title,String Salary,String Desc,String phone1,String phone2 , String Addres) {
+    public void JobFragment(String title,String Salary,String Desc,String phID1,String phone1,String phID2,String phone2 , String Addres,int id) {
         AddJobFragment fragment = new AddJobFragment();
         Bundle arguments = new Bundle();
         arguments.putInt("Edit", 55);
+        arguments.putInt("JobID", id);
         arguments.putString("title",title);
         arguments.putString("salary",Salary);
         arguments.putString("Desc",Desc);
         arguments.putString("phone1",phone1);
         arguments.putString("phone2",phone2);
+        arguments.putString("phoneID1",phID1);
+        arguments.putString("phoneID2",phID2);
         arguments.putString("Addres",Addres);
         arguments.putString("Img","null");
         fragment.setArguments(arguments);
@@ -196,6 +217,7 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
         fragment.setArguments(arguments);
         final android.support.v4.app.FragmentTransaction ft = ((AddItemActivity)mContext).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.additem_Include, fragment, Utils.UserJobs);
+        ft.addToBackStack(null);
         ft.commit();
     }
 }
