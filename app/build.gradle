@@ -43,6 +43,7 @@ dependencies {
 
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
+    compile 'io.paperdb:paperdb:2.5'
 
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
 
