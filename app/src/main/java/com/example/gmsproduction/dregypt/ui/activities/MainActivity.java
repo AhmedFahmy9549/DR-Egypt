@@ -28,9 +28,12 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.gmsproduction.dregypt.Helper.LocaleHelper;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.squareup.picasso.Picasso;
+
+import io.paperdb.Paper;
 
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 
@@ -49,11 +52,16 @@ public class MainActivity extends AppCompatActivity
 
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+
+
+
+
 
 
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
@@ -316,5 +324,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+ 
 
 }
