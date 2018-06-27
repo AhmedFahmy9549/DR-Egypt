@@ -30,6 +30,7 @@ import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.activities.DetailsJobs;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddJobFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.EditJobTry;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserJobsListFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.Utils;
@@ -192,7 +193,7 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
     }
 
     public void JobFragment(String title,String Salary,String Desc,String phID1,String phone1,String phID2,String phone2 , String Addres,int id) {
-        AddJobFragment fragment = new AddJobFragment();
+        EditJobTry fragment = new EditJobTry();
         Bundle arguments = new Bundle();
         arguments.putInt("Edit", 55);
         arguments.putInt("JobID", id);
@@ -208,6 +209,7 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
         fragment.setArguments(arguments);
         final android.support.v4.app.FragmentTransaction ft = ((AddItemActivity)mContext).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.additem_Include, fragment, Utils.addJobs);
+        ft.addToBackStack(null);
         ft.commit();
     }
     public void MyJobsFragment() {
@@ -217,7 +219,6 @@ public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHo
         fragment.setArguments(arguments);
         final android.support.v4.app.FragmentTransaction ft = ((AddItemActivity)mContext).getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.additem_Include, fragment, Utils.UserJobs);
-        ft.addToBackStack(null);
         ft.commit();
     }
 }

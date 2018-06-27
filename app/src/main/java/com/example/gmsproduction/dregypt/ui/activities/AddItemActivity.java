@@ -21,7 +21,9 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.F
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddJobFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddJobTry;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddProductFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddProductTry;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserJobsListFragment;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserProductsListFragment;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
@@ -78,7 +80,7 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     public void ProductFragment() {
-        AddProductFragment fragment = new AddProductFragment();
+        AddProductTry fragment = new AddProductTry();
         Bundle arguments = new Bundle();
         arguments.putInt("duck", 55);
         fragment.setArguments(arguments);
@@ -88,7 +90,7 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     public void JobFragment() {
-        AddJobFragment fragment = new AddJobFragment();
+        AddJobTry fragment = new AddJobTry();
         Bundle arguments = new Bundle();
         arguments.putInt("duck", 55);
         fragment.setArguments(arguments);

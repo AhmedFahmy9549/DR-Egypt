@@ -90,14 +90,19 @@ public class UserProductsListFragment extends Fragment {
                         String created_at = dataObject.getString("created_at");
                         String description = dataObject.getString("description");
 
+
                         //get phone id and num
                         JSONArray phoneArray = dataObject.getJSONArray("phone_numbers");
                         JSONObject phoneObject01 = phoneArray.getJSONObject(0);
                         String phone01 = phoneObject01.getString("number");
                         String Phone_id01 = phoneObject01.getString("id");
+                        String phone02 = null,Phone_id02 = null;
+                        try {
                         JSONObject phoneObject02 = phoneArray.getJSONObject(1);
-                        String phone02 = phoneObject02.getString("number");
-                        String Phone_id02 = phoneObject02.getString("id");
+                         phone02 = phoneObject02.getString("number");
+                         Phone_id02 = phoneObject02.getString("id");
+                        } catch (Exception e) {
+                        }
 
                         phoneArrayList.add(new PhoneModel(Phone_id01, phone01, Phone_id02, phone02));
 

@@ -335,27 +335,6 @@ public class AddProductFragment extends Fragment {
                         hintSpinner.init();
                     }
 
-                   /* ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
-                    dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner1.setAdapter(dataAdapter1);
-                    spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            String item = adapterView.getItemAtPosition(i).toString();
-
-                            LocationModel locationModel = array2.get(i);
-                            area = locationModel.getLocId();
-                            //to shazly area
-                            EdAddress.setVisibility(View.VISIBLE);
-
-
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                        }
-                    });*/
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -412,31 +391,6 @@ public class AddProductFragment extends Fragment {
                         hintSpinner.init();
                     }
 
-                    /*ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
-                    // Drop down layout style - list view with radio button
-
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                    // attaching data adapter to spinner
-                    spinnerCategory.setAdapter(dataAdapter);
-                    spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            String item = adapterView.getItemAtPosition(i).toString();
-
-
-                            LocationModel locationModel = arrayModel.get(i);
-                            category = locationModel.getLocId();
-                            //toshazly
-
-
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> adapterView) {
-
-                        }
-                    });*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -650,41 +604,4 @@ public class AddProductFragment extends Fragment {
         }
     }
 
-
-   /* public void Post2_0(String id, String title, String price, String Desc, String addres, String phone, String phone2, String city, String area, String category, String Status, String img){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://dregy01.frb.io/api/product-ads",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        //Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        //Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
-
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("id",id);
-                params.put("title",title);
-                params.put("description", Desc);
-                params.put("price", price);
-                params.put("regionId", city);
-                params.put("cityId", area);
-                params.put("address", addres);
-                params.put("status", Status);
-                params.put("categoryId", category);
-                params.put("description", Desc);
-
-                return params;
-            }
-
-        };
-
-        getRequestOtpPage().addToRequestQueue(stringRequest);
-    }*/
 }

@@ -286,7 +286,7 @@
             android:id="@+id/Add_product_FinishBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Product" />
+            android:text="Submit" />
 
     </LinearLayout>
 </ScrollView>

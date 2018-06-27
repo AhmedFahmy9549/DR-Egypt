@@ -30,6 +30,7 @@ import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.activities.DetailsProducts;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddProductFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.EditProductTry;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserProductsListFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.Utils;
@@ -222,7 +223,7 @@ public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.
         ft.commit();
     }
     public void ProductFragment(String title,String price,String Desc,String phID1,String phone1,String phID2,String phone2 , String Addres ,int ProductID) {
-        AddProductFragment fragment = new AddProductFragment();
+        EditProductTry fragment = new EditProductTry();
         Bundle arguments = new Bundle();
         arguments.putInt("Edit", 55);
         arguments.putInt("ProductID", ProductID);
