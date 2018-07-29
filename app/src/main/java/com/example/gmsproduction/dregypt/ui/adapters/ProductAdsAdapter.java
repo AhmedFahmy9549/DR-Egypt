@@ -43,7 +43,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     final String basicImgUrl = "http://gms-sms.com:89";
     private Context mContext;
     private ArrayList<ProductsModel> mArrayList;
-    int LastPosition = -1, userid;
+    int LastPosition = -1, userid,idLANG;
     RecyclerViewClickListener ClickListener;
     String CheckStatus;
     String status;
@@ -66,6 +66,9 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_products, parent, false);
         SharedPreferences prefs = mContext.getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userid = prefs.getInt("User_id", 0);
+        SharedPreferences prefs2 = mContext.getSharedPreferences("LangKey", MODE_PRIVATE);
+
+        idLANG = prefs2.getInt("languageNum", 1);
         return new MyViewHolder(view);
     }
 
@@ -78,9 +81,17 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         final String price = currentItem.getPrice();
         CheckStatus = currentItem.getStatus();
         if (CheckStatus == "1") {
-            status = "New";
+            if (idLANG == 1) {
+                status = "New";
+            }else if (idLANG==2){
+                status = "جديد";
+            }
         } else {
-            status = "Used";
+            if (idLANG == 1) {
+                status = "Used";
+            }else if (idLANG==2){
+                status = "مستعمل";
+            }
         }
         final String image = currentItem.getImage();
         final String address = currentItem.getAddress();
@@ -104,7 +115,14 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
 
         holder.ProductCategory.setText(Category);
         holder.ProductTitle.setText(title);
-        holder.ProductPrice.setText(price + "L.E");
+        if (idLANG==1){
+            holder.ProductPrice.setText(price + " L.E ");
+
+        }else if (idLANG==2){
+            holder.ProductPrice.setText(price+" ج.م ");
+
+        }
+
         holder.ProductStatus.setText(status);
         Picasso.with(mContext).load(image).fit().centerInside().into(holder.imageView);
 

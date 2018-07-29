@@ -21,13 +21,16 @@ import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
  * Created by Hima on 4/29/2018.
  */
 
-public class LogInActivity extends AppCompatActivity {
+public class LogInActivity extends BaseActivity {
     private static FragmentManager fragmentManager;
+    public int language;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_maain_activity);
-
+        language=getIdLANG();
+        localization(language);
+        language=getIdLANG();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         fragmentManager = getSupportFragmentManager();

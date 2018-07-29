@@ -53,7 +53,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProductsActivity extends AppCompatActivity {
+public class ProductsActivity extends BaseActivity {
 
     String MY_PREFS_NAME = "FiltersPro";
 
@@ -64,7 +64,7 @@ public class ProductsActivity extends AppCompatActivity {
     private ArrayList<Integer> favArray = new ArrayList<>();
 
     String id, title, description, price, image, status, address, created_at, phone_1, phone_2, category;
-    int userid;
+    int userid,language;
     SliderLayout mDemoSlider;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
@@ -86,6 +86,9 @@ public class ProductsActivity extends AppCompatActivity {
         setContentView(R.layout.recycler_products);
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userid = prefs.getInt("User_id", 0);
+        language = getIdLANG();
+        localization(language);
+
 
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
@@ -136,7 +139,7 @@ public class ProductsActivity extends AppCompatActivity {
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        toolbar.setNavigationIcon(getResources().getDrawable(getBackArrow(language)));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,6 +194,11 @@ public class ProductsActivity extends AppCompatActivity {
         mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.setAdapter(mAdapter);
+
+        //tool bar title changer
+        setActivityTitle("المنتجات","Products");
+
+
     }
 
     @Override

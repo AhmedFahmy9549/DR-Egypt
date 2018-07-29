@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PharmacyActivity extends AppCompatActivity {
+public class PharmacyActivity extends BaseActivity {
 
     RecyclerView recyclerView;
 
@@ -55,13 +55,15 @@ public class PharmacyActivity extends AppCompatActivity {
 
     LinearLayoutManager linearLayoutManager;
     int page = 1;
-    int last_page;
+    int last_page,language;
     private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pharmacy);
+        language=getIdLANG();
+        localization(language);
         recyclerView = findViewById(R.id.hospital_recycler);
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
@@ -75,7 +77,7 @@ public class PharmacyActivity extends AppCompatActivity {
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        toolbar.setNavigationIcon(getResources().getDrawable(getBackArrow(language)));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +132,7 @@ public class PharmacyActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
 
-
+        setActivityTitle("الصيدليات","Pharmacies");
     }
 
     //menu option

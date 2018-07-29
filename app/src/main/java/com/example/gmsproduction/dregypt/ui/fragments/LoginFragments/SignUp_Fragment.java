@@ -55,6 +55,8 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.signup_layout, container, false);
         getActivity().setTitle("Sign Up");
+        ((LogInActivity) getActivity()).setActivityTitle("إنشاء حساب","Sign Up");
+
 
 
         initViews();

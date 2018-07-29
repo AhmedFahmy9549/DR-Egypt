@@ -38,15 +38,16 @@ import java.util.ArrayList;
 import me.srodrigo.androidhintspinner.HintAdapter;
 import me.srodrigo.androidhintspinner.HintSpinner;
 
-public class AddItemActivity extends AppCompatActivity {
-    int vald;
+public class AddItemActivity extends BaseActivity {
+    int vald,language;
     private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fragmentManager = getSupportFragmentManager();
-
+        language = getIdLANG();
+        localization(language);
         setContentView(R.layout.add_item);
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

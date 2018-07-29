@@ -29,7 +29,7 @@ public class AddProductTry extends BaseProductFragment {
     @Override
     public void onCreateCustom() {
         //fragment name
-        setmFragmentName("Add Product");
+        setmFragmentName("Add Product","أضف منتج");
     }
 
     private JSONObject mJson(){

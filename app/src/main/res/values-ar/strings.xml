@@ -49,6 +49,8 @@
     <string name="text_Salary_detailsJobs">السعر :</string>
     <string name="text_Created_detailsJobs">انشاء :</string>
     <string name="text_Phone_detailsJobs">الهاتف :</string>
+    <string name="text_Phone">الهاتف</string>
+
     <string name="text_Address_detailsJobs">العنوان :</string>
 
 
@@ -63,23 +65,20 @@
     <!-- Start of Hima Strings -->
     <string name="hello_world">Hello world!</string>
     <string name="email">الايميل</string>
-    <string name="title">الاسم</string>
-    <string name="address">العنوان</string>
+    <string name="Favorite">المفضلة</string>
     <string name="Enter_email">ادخل بريدك الالكتروني</string>
     <string name="passowrd">كلمة السر</string>
     <string name="login">دخول</string>
-    <string name="description">تفاصيل</string>
     <string name="show_pwd">اظهر كلمة السر</string>
     <string name="hide_pwd">اخفاء كلمة السر</string>
     <string name="forgot">نسيت كلمة السر؟ </string>
     <string name="closebutton">Close Button for Activity</string>
     <string name="newUser">ليس لديك ايميل؟</string>
     <string name="fullName">الاسم كامل</string>
-    <string name="mobileNumber">رقم الهاتف</string>
     <string name="location">الموقع</string>
     <string name="confirmPassword">تأكيد كلمة السر</string>
-    <string name="terms_conditions">بالظغط علي التسجيل تكون موافق علي جميع الشروط والاحكام</string>
-    <string name="signUp">تسجيل الخروج</string>
+    <string name="terms_conditions">بالضغط علي التسجيل تكون موافق علي جميع الشروط والاحكام</string>
+    <string name="signUp">تسجيل</string>
     <string name="already_user">لديك ايميل ؟</string>
     <string name="registered_emailid">من فضلك ادخل الاميل المسجل !</string>
     <string name="submit">تسجيل</string>
@@ -89,6 +88,11 @@
     <string name="pls_S_In_Up">من فضلك ادخل الايميل او قم بالتسجيل</string>
     <string name="Not_Now"><u>ليس الان</u></string>
     <string name="terms_of_service"><u>الشروط والاحكام.</u></string>
+    <string name="terms">عن طريق إنشاء حساب فإنك توافق على</string>
+    <string name="oror">أو</string>
+    <string name="facebooks">فيسبوك</string>
+    <string name="signUpwithEmail">إنشاء حساب جديد</string>
+    <string name="Submitz">إرسال</string>
 
 
     <string name="More_Details"><u>المزيد من التفاصيل></u></string>
@@ -103,5 +107,42 @@
 
     <!-- Start of Hima Strings -->
 
+    <string name="medical_guide">الدليل الطبي</string>
+    <string name="products">المنتجات</string>
+    <string name="jobs">الوظائف</string>
+    <string name="cosmetics">عيادات التجميل</string>
+    <string name="hospitals">المستشفيات</string>
+    <string name="clinics">العيادات</string>
+    <string name="pharmacy">الصيدليات</string>
+
+    <!-- Start of AddProduct/Jobs Strings -->
+    <string name="title">الاسم</string>
+    <string name="description">تفاصيل</string>
+    <string name="description0">تفاصيل :</string>
+
+    <string name="price">السعر</string>
+    <string name="choose_city">اختر مدينة</string>
+    <string name="choose_area">اختر منطقة</string>
+    <string name="address">العنوان</string>
+    <string name="category">الفئة</string>
+    <string name="mobileNumber">رقم الهاتف</string>
+    <string name="add_phone">أضف رقم اخر</string>
+    <string name="add_image">أضف صورة</string>
+    <string name="status">الحالة</string>
+    <string name="newnew">جديد</string>
+    <string name="used">مستعمل</string>
+    <string name="submit_product">تم</string>
+    <string name="salary">الراتب</string>
+    <string name="salary0">الراتب :</string>
+
+    <string name="job_type">نوع العمل</string>
+    <string name="employer">صاحب العمل</string>
+    <string name="job_seeker">طالب عمل</string>
+    <string name="experience_level">مستوى الخبرة</string>
+    <string name="education_level">مستوى التعليم</string>
+    <string name="employment_type">نوع الوظيفة</string>
+    <string name="submit_job">تم</string>
+    <string name="views">مشاهدة</string>
+    <string name="actions">تعديل</string>
 
 </resources>

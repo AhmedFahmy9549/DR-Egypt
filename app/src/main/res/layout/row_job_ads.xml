@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="15dp"
+        android:gravity="start"
         >
         <LinearLayout
             android:id="@+id/JobsClick"
@@ -26,59 +27,69 @@
             android:layout_height="wrap_content"
             android:layout_weight="8"
             android:orientation="vertical"
+            android:gravity="start"
             >
             <TextView
                 android:id="@+id/Jobs_Title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="hhihihihihihihihihihihhihihihi"
+                android:text="sadasdasdasd"
                 android:layout_margin="10dp"
+                android:gravity="start"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="17sp"
                 />
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="10"
                 >
 
                 <TextView
                     android:id="@+id/Jobs_adress"
-                    android:layout_width="264dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="8dp"
                     android:layout_weight="8"
-                    android:text="byebyebyebyebyebye" />
+                    android:text="byebyebyebyebyebye"
+                    />
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 >
+
                 <ImageView
+                    android:id="@+id/imageView"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
                     android:src="@drawable/phone"
                     android:tint="@color/bluoo"
-
                     />
+
                 <TextView
                     android:id="@+id/Jobs_phone"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="phonephonephone"
+                    android:layout_toEndOf="@id/imageView"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:paddingLeft="5dp"
                     android:paddingStart="5dp"
-
-                    android:paddingLeft="5dp" />
-            </LinearLayout>
+                    android:text="phonephonephone"
+                     />
+            </RelativeLayout>
 
 
         </LinearLayout>
@@ -99,32 +110,49 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
         <TextView
             android:id="@+id/Jobs_Date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:textColor="@android:color/holo_red_light"
-            android:text="new"
-            android:textSize="10sp"
+            android:layout_gravity="start"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:paddingBottom="5dp"
+            android:paddingEnd="10dp"
             android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:text="new"
+            android:textColor="@android:color/holo_red_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            android:paddingLeft="10dp" />
         <TextView
             android:id="@+id/Jobs_MoreDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            android:text="@string/More_Details"
+            android:layout_gravity="end"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:padding="5dp"
-            android:layout_marginEnd="10dp"
+            android:text="@string/More_Details"
             android:textColor="@color/colorPrimary"
-            android:layout_marginRight="10dp" />
-    </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/Jobs_Date"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

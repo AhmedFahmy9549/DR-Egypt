@@ -12,6 +12,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/welcomeToLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -28,7 +29,7 @@
             android:layout_marginBottom="58dp"
             android:background="@drawable/loginbutton_selector"
             android:backgroundTint="#416BC1"
-            android:text="Facebook"
+            android:text="@string/facebooks"
             android:textAllCaps="false"
             android:textColor="#ffffff"
             android:textSize="25sp"
@@ -55,12 +56,13 @@
             android:background="@color/black" />
 
         <TextView
+            android:id="@+id/login_orTXT"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="Or"
+            android:text="@string/oror"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -91,11 +93,12 @@
             android:layout_marginTop="53dp"
             android:background="@drawable/loginbutton_selector"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:drawableLeft="@drawable/email"
-            android:drawablePadding="18dp"
-            android:gravity="left|center"
-            android:paddingLeft="45dp"
-            android:text="Sign Up with Email"
+            android:drawableStart="@drawable/email"
+            android:drawablePadding="10dp"
+            android:paddingStart="45dp"
+            android:paddingEnd="45dp"
+
+            android:text="@string/signUpwithEmail"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -140,7 +143,7 @@
             android:layout_marginStart="11dp"
             android:layout_toEndOf="@+id/BPLoginNow"
             android:layout_toRightOf="@+id/BPLoginNow"
-            android:text="Or"
+            android:text="@string/oror"
             />
 
         <TextView
@@ -162,7 +165,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:text="By creating an account you agree to the   "
+            android:text="@string/terms"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
             android:textSize="11sp" />
 
         <TextView

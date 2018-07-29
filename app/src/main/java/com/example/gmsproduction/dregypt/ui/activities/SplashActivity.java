@@ -1,6 +1,7 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -18,6 +19,9 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try {
                     sleep(5000);
+                    SharedPreferences.Editor editor = getSharedPreferences("LangKey", MODE_PRIVATE).edit();
+                    editor.putInt("languageNum", 1);
+                    editor.apply();
                     Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

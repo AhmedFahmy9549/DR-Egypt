@@ -15,6 +15,7 @@
         android:layout_marginBottom="30dp"
         />
     <TextView
+        android:id="@+id/NoInternt_TXT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Failed to load, Please check your internet connection

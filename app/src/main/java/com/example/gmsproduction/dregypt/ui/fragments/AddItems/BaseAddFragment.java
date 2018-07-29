@@ -72,10 +72,10 @@ public abstract class BaseAddFragment extends Fragment {
     private ArrayList<String> name_array, name_array2;
     public int x, city, area, userID;
     public String getEncodedImage = "";
-    private String mFragmentName;
+    private String mFragmentName,mFragmentNameAr;
     private ArrayList<LocationModel> arrayModel, array2;
     private LinearLayout linearLayout;
-    private Button AddBTN, imagetestbtn, addphone2;
+    public Button AddBTN, imagetestbtn, addphone2;
     public static final int RESULT_IMG = 1;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public abstract class BaseAddFragment extends Fragment {
         userID = prefs.getInt("User_id", 0);
 
         //set Fragment Name
-        mFragmentType(mFragmentName);
+        mFragmentType(mFragmentName,mFragmentNameAr);
 
         getCity();
 
@@ -142,13 +142,15 @@ public abstract class BaseAddFragment extends Fragment {
     }
 
     //get and set FragmentName
-    public void setmFragmentName(String mFragmentName) {
-        this.mFragmentName = mFragmentName;
+    public void setmFragmentName(String mFragmentNameEn,String mFragmentNameAr) {
+        this.mFragmentName = mFragmentNameEn;
+        this.mFragmentNameAr = mFragmentNameAr;
     }
-    public void mFragmentType(String name){
+    public void mFragmentType(String en,String ar){
         ((AddItemActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AddItemActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getActivity().setTitle(name);
+        ((AddItemActivity)getActivity()).setActivityTitle(ar,en);
+
     }
 
     //Location methods

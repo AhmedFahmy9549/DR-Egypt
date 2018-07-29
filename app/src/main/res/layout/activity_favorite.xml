@@ -36,34 +36,34 @@
                     android:id="@+id/tabItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hospitals" />
+                    android:text="@string/hospitals" />
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Clinics" />
+                    android:text="@string/clinics" />
 
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pharmacy" />
+                    android:text="@string/pharmacy" />
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Products" />
+                    android:text="@string/products" />
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cosmetic" />
+                    android:text="@string/cosmetics" />
                 <android.support.design.widget.TabItem
                     android:id="@+id/tabItem6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Jobs" />
+                    android:text="@string/jobs" />
 
 
         </android.support.design.widget.TabLayout>

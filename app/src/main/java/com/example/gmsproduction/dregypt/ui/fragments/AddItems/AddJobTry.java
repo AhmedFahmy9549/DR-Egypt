@@ -3,6 +3,7 @@ package com.example.gmsproduction.dregypt.ui.fragments.AddItems;
 import android.util.Log;
 
 import com.android.volley.Request;
+import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.utils.Constants;
 
 import org.json.JSONArray;
@@ -67,6 +68,6 @@ public class AddJobTry extends BaseJobFragment {
     @Override
     public void onCreateCustom() {
         //fragment name
-        setmFragmentName("Add Job");
+        setmFragmentName("Add Job","أضف وظيفة");
     }
 }

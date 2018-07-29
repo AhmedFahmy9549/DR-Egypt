@@ -58,8 +58,6 @@ public class BasePage extends Fragment {
         view = inflater.inflate(R.layout.fragment_base_page, container, false);
         initViews();
         Click();
-        getActivity().setTitle("Sign in");
-
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(getActivity());
@@ -73,7 +71,7 @@ public class BasePage extends Fragment {
             }
         });
 
-
+        ((LogInActivity) getActivity()).setActivityTitle("تسجيل الدخول","Sign in");
         // Inflate the layout for this fragment
         return view;
     }

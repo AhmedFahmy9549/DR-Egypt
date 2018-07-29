@@ -17,17 +17,17 @@ import com.example.gmsproduction.dregypt.R;
 
 import java.util.HashMap;
 
-public class MedicalGuideActivity extends AppCompatActivity implements View.OnClickListener , BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class MedicalGuideActivity extends BaseActivity implements View.OnClickListener , BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private SliderLayout mDemoSlider;
     ImageView hospitalBtn,ClinicBtn,PharmacyBtn;
     TextView hospitalText,ClinicText,PharmacyText;
-
+    int language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_guide);
-
+        language = getIdLANG();
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
         hospitalBtn=(ImageView) findViewById(R.id.next_name1);
         ClinicBtn=(ImageView) findViewById(R.id.next_name2);
@@ -37,6 +37,7 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
         ClinicText=(TextView) findViewById(R.id.text_name2);
         PharmacyText=(TextView) findViewById(R.id.text_name3);
 
+        lang();
 
         hospitalBtn.setOnClickListener(this);
         ClinicBtn.setOnClickListener(this);
@@ -81,7 +82,7 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
             }
         });
 */
-
+        setActivityTitle("الدليل الطبي","Medical Guide");
     }
 
     @Override
@@ -140,6 +141,23 @@ public class MedicalGuideActivity extends AppCompatActivity implements View.OnCl
                 break;
         }
 
+        }
+
+        private void lang(){
+        if (language==1){
+            hospitalText.setText("Hospitals");
+            ClinicText.setText("Clinics");
+            PharmacyText.setText("Pharmacies");
+            localization(language);
+
+
+        }else if (language==2){
+            hospitalText.setText("المستشفيات");
+            ClinicText.setText("العيادات");
+            PharmacyText.setText("الصيدليات");
+            localization(language);
+
+        }
         }
 }
 

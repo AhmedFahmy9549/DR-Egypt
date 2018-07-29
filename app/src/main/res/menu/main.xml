@@ -5,5 +5,9 @@
         android:id="@+id/action_en"
         android:title="English"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_ar"
+        android:title="Arabic"
+        app:showAsAction="never" />
 
 </menu>

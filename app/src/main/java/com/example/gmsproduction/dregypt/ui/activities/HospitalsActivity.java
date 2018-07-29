@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HospitalsActivity extends AppCompatActivity {
+public class HospitalsActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     View view;
@@ -57,14 +57,17 @@ public class HospitalsActivity extends AppCompatActivity {
 
     LinearLayoutManager linearLayoutManager;
     int page = 1;
-    int last_page;
+    int last_page,language;
     ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospitals);
-        setTitle("Hospitals");
+        language = getIdLANG();
+        localization(language);
+        //setTitle("Hospitals");
         recyclerView = findViewById(R.id.hospital_recycler);
         constraintLayout = findViewById(R.id.fragment_hospital);
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
@@ -82,7 +85,7 @@ public class HospitalsActivity extends AppCompatActivity {
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        toolbar.setNavigationIcon(getResources().getDrawable(getBackArrow(language)));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +151,7 @@ public class HospitalsActivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
+        setActivityTitle("المستشفيات","Hospitals");
     }
 
     //menu option

@@ -44,13 +44,14 @@
                 android:src="@drawable/medical_home" />
 
             <TextView
+                android:id="@+id/main_medicalGuide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="20dp"
-                android:text="Medical Guide" />
+                android:text="@string/text1_main" />
 
         </LinearLayout>
 
@@ -79,10 +80,11 @@
                 />
 
             <TextView
+                android:id="@+id/main_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Products"
+                android:text="@string/toolbar_products"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="20dp"
@@ -113,10 +115,11 @@
                 android:src="@drawable/jobs_home" />
 
             <TextView
+                android:id="@+id/main_jobs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Jobs"
+                android:text="@string/toolbar_jobs"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="20dp"
@@ -146,10 +149,11 @@
                 android:src="@drawable/cosmetics_home" />
 
             <TextView
+                android:id="@+id/main_cosmetics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Cosmetics"
+                android:text="@string/toolbar_cosmetics"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="20dp"

@@ -38,7 +38,7 @@ public class ForgotPassword_Fragment extends Fragment implements
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.forgotpassword_layout, container,
                 false);
-        getActivity().setTitle("Forgot Password");
+        ((LogInActivity) getActivity()).setActivityTitle("نسيت كلمة السر","Forgot Password");
 
         initViews();
         setListeners();

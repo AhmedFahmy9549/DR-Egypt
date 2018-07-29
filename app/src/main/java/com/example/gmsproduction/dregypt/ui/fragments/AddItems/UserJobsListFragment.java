@@ -20,6 +20,7 @@ import com.example.gmsproduction.dregypt.Models.JobsModel;
 import com.example.gmsproduction.dregypt.Models.PhoneModel;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.adapters.JobAdsAdapter;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
 import com.example.gmsproduction.dregypt.ui.adapters.UserJobAdapter;
@@ -52,7 +53,7 @@ public class UserJobsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_user_jobs_list, container, false);
-        getActivity().setTitle("My Jobs");
+        ((AddItemActivity)getActivity()).setActivityTitle("وظائفي","My Jobs");
         SharedPreferences prefs = getActivity().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         id = prefs.getInt("User_id", 0);
         userName = prefs.getString("User_name", "Dr.Egypt");

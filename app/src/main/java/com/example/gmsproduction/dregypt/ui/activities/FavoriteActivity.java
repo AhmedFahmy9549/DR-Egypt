@@ -30,7 +30,7 @@ import com.example.gmsproduction.dregypt.ui.fragments.Favorite.FavJobs;
 import com.example.gmsproduction.dregypt.ui.fragments.Favorite.FavPharmacy;
 import com.example.gmsproduction.dregypt.ui.fragments.Favorite.FavProduct;
 
-public class FavoriteActivity extends AppCompatActivity {
+public class FavoriteActivity extends BaseActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -46,12 +46,13 @@ public class FavoriteActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
+    int mLanguage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-
+        mLanguage = getIdLANG();
+        localization(mLanguage);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbart);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -81,13 +82,14 @@ public class FavoriteActivity extends AppCompatActivity {
         //back btn
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        //toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        setActivityTitle("المفضلة","Favorite");
 
     }
 
@@ -139,19 +141,20 @@ public class FavoriteActivity extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+
             switch (position) {
                 case 0:
-                    return "Hospitals";
+                    return getResources().getString(R.string.hospitals);
                 case 1:
-                    return "Clinics";
+                    return getResources().getString(R.string.clinics);
                 case 2:
-                    return "Pharmacy";
+                    return getResources().getString(R.string.pharmacy);
                 case 3:
-                    return "Products";
+                    return getResources().getString(R.string.products);
                 case 4:
-                    return "Cosmetic";
+                    return getResources().getString(R.string.cosmetics);
                 case 5:
-                    return "Jobs";
+                    return getResources().getString(R.string.jobs);
             }
             return null;
         }

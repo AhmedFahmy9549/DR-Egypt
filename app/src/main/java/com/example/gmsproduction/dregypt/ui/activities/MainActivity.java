@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,17 +28,20 @@ import android.widget.SlidingDrawer;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.pusher.pushnotifications.PushNotifications;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.DeleteUserProductRequest;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.squareup.picasso.Picasso;
+import com.txusballesteros.bubbles.BubbleLayout;
+import com.txusballesteros.bubbles.BubblesManager;
+import com.txusballesteros.bubbles.OnInitializedCallback;
 
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, Response.Listener<String>, Response.ErrorListener, View.OnClickListener {
     Toolbar toolbar;
     FloatingActionButton fab;
@@ -45,24 +49,38 @@ public class MainActivity extends AppCompatActivity
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     ImageView Menu_pic;
-    TextView Menu_title;
-    int id;
+    TextView Menu_title, medical_guideTXT, productTXT, jobsTXT, cosmeticsTXT;
+    int id, language;
     String userName = "Dr.Egypt", userAvatar = "";
     View header;
 
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
+    //delete this
+    private BubblesManager bubblesManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init();
 
+
+        //initializeBubblesManager();
+
+
+        init();
+        language = getIdLANG();
+        setTitle("Dr.Egypt");
 
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         id = prefs.getInt("User_id", 0);
         userName = prefs.getString("User_name", "Dr.Egypt");
         userAvatar = prefs.getString("User_avatar", null);
+
+           /* PushNotifications.start(getApplicationContext(), "f436d206-bd0a-4438-ad06-c3b10d485420");
+            PushNotifications.subscribe(String.valueOf(id));
+            PushNotifications.subscribe(String.valueOf("all"));*/
+
 
 
         setSupportActionBar(toolbar);
@@ -136,8 +154,46 @@ public class MainActivity extends AppCompatActivity
 
         SetUser(MainActivity.this);
 
-
+        lang(language);
     }
+
+    //liberary
+    /*private void initializeBubblesManager() {
+        bubblesManager = new BubblesManager.Builder(this)
+                .setTrashLayout(R.layout.bubble_trash_layout)
+                .setInitializationCallback(new OnInitializedCallback() {
+                    @Override
+                    public void onInitialized() {
+                        addNewBubble();
+                    }
+                })
+                .build();
+        bubblesManager.initialize();
+    }
+
+    private void addNewBubble() {
+        BubbleLayout bubbleView = (BubbleLayout)LayoutInflater.from(MainActivity.this).inflate(R.layout.bubble_layout, null);
+        bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
+            @Override
+            public void onBubbleRemoved(BubbleLayout bubble) { }
+        });
+        bubbleView.setOnBubbleClickListener(new BubbleLayout.OnBubbleClickListener() {
+
+            @Override
+            public void onBubbleClick(BubbleLayout bubble) {
+                Toast.makeText(getApplicationContext(), "Clicked !",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        bubbleView.setShouldStickToWall(true);
+        bubblesManager.addBubble(bubbleView, 60, 20);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bubblesManager.recycle();
+    }*/
 
 
     private void LogOut() {
@@ -189,8 +245,21 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_ar) {
+
+            SharedPreferences.Editor editor = getSharedPreferences("LangKey", MODE_PRIVATE).edit();
+            editor.putInt("languageNum", 2);
+            editor.apply();
+            lang(2);
+
+        } else if (id == R.id.action_en) {
+
+            SharedPreferences.Editor editor = getSharedPreferences("LangKey", MODE_PRIVATE).edit();
+            editor.putInt("languageNum", 1);
+            editor.apply();
+            lang(1);
+
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -268,7 +337,10 @@ public class MainActivity extends AppCompatActivity
 
 
                 break;
-
+            case R.id.nav_cont:
+                intent = new Intent(this, ContactUsActivity.class);
+                startActivity(intent);
+                break;
 
 
         }
@@ -320,6 +392,11 @@ public class MainActivity extends AppCompatActivity
         Menu_pic = header.findViewById(R.id.Menu_imageView);
         Menu_title = header.findViewById(R.id.Menu_Title);
 
+        medical_guideTXT = findViewById(R.id.main_medicalGuide);
+        productTXT = findViewById(R.id.main_product);
+        jobsTXT = findViewById(R.id.main_jobs);
+        cosmeticsTXT = findViewById(R.id.main_cosmetics);
+
     }
 
 
@@ -364,5 +441,23 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    private void lang(int lang) {
+        if (lang == 1) {
+            medical_guideTXT.setText("Medical Guide");
+            productTXT.setText("Products");
+            jobsTXT.setText("Jobs");
+            cosmeticsTXT.setText("Cosmetics");
+            setTitle("Dr.Egypt");
+
+        } else if (lang == 2) {
+            medical_guideTXT.setText("الدليل الطبي");
+            productTXT.setText("المنتجات");
+            jobsTXT.setText("الوظائف");
+            cosmeticsTXT.setText("عيادات التجميل");
+            setTitle("دكتور ايجيبت");
+
+        }
+
+    }
 
 }

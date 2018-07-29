@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JobsActivity extends AppCompatActivity {
+public class JobsActivity extends BaseActivity {
 
 
     String MY_PREFS_NAME = "FiltersJob";
@@ -56,7 +56,7 @@ public class JobsActivity extends AppCompatActivity {
 
     LinearLayoutManager LayoutManagaer;
     int page = 1;
-    int last_page,mUSERid;
+    int last_page,mUSERid,language;
 
 
 
@@ -68,6 +68,9 @@ public class JobsActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         mUSERid = prefs.getInt("User_id", 0);
+        language = getIdLANG();
+        localization(language);
+
 
         //Request for main Jobs
         /*final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(this,url,this,this);
@@ -87,7 +90,8 @@ public class JobsActivity extends AppCompatActivity {
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+
+        toolbar.setNavigationIcon(getResources().getDrawable(getBackArrow(language)));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +144,8 @@ public class JobsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mAdapter = new JobAdsAdapter(JobsActivity.this, modelArrayList);
         mRecyclerView.setAdapter(mAdapter);
+
+        setActivityTitle("الوظائف","Jobs");
     }
 
     //menu option

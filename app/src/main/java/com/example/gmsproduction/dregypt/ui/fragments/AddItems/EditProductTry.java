@@ -69,7 +69,7 @@ public class EditProductTry extends BaseProductFragment {
     @Override
     public void onCreateCustom() {
         //fragment name
-        setmFragmentName("Edit Product");
+        setmFragmentName("Edit Product","تعديل منتج");
 
         getEditData();
         setEditData();

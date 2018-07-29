@@ -20,6 +20,7 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.P
 import com.example.gmsproduction.dregypt.Models.PhoneModel;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.adapters.ProductAdsAdapter;
 import com.example.gmsproduction.dregypt.ui.adapters.UserProductAdapter;
 import com.example.gmsproduction.dregypt.utils.Constants;
@@ -52,7 +53,8 @@ public class UserProductsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_user_products_list, container, false);
-        getActivity().setTitle("My Products");
+        ((AddItemActivity)getActivity()).setActivityTitle("منتجاتي","My Products");
+
         SharedPreferences prefs = getActivity().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         id = prefs.getInt("User_id", 0);
         userName = prefs.getString("User_name", "Dr.Egypt");

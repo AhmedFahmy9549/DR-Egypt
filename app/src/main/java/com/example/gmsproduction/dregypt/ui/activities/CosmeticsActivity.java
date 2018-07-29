@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CosmeticsActivity extends AppCompatActivity {
+public class CosmeticsActivity extends BaseActivity {
 
 
     String MY_PREFS_NAME = "FiltersCos";
@@ -59,12 +59,14 @@ public class CosmeticsActivity extends AppCompatActivity {
 
     LinearLayoutManager linearLayoutManager;
     int page = 1;
-    int last_page;
+    int last_page,language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cosmetics);
+        language = getIdLANG();
+        localization(language);
         //fragmentManager = getSupportFragmentManager();
 
         //Request for all Main products
@@ -82,7 +84,7 @@ public class CosmeticsActivity extends AppCompatActivity {
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_back_arrow));
+        toolbar.setNavigationIcon(getResources().getDrawable(getBackArrow(language)));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +137,8 @@ public class CosmeticsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList);
         mRecyclerView.setAdapter(mAdapter);
+
+        setActivityTitle("عيادات التجميل","Cosmetics");
     }
 
 

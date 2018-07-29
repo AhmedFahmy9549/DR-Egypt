@@ -83,7 +83,7 @@ public class EditJobTry extends BaseJobFragment {
     @Override
     public void onCreateCustom() {
         //fragment name
-        setmFragmentName("Edit Job");
+        setmFragmentName("Edit Job","تعديل وظيفة");
         getEditData();
         setEditData();
     }

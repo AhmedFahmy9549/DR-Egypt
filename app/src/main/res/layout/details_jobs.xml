@@ -32,7 +32,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
@@ -64,7 +65,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
@@ -96,7 +98,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
@@ -124,11 +127,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/description"
+                android:text="@string/description0"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
@@ -136,7 +140,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="fasfasasfasafasfasfasfafafafs"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:padding="5dp"
+                />
         </LinearLayout>
 
         <TextView
@@ -156,11 +162,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_Salary_detailsJobs"
+                android:text="@string/salary0"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
@@ -192,7 +199,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
@@ -224,7 +232,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
@@ -256,7 +265,8 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
                 />
 
             <TextView
