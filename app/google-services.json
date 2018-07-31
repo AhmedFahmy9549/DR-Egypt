@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "104146290581",
+    "firebase_url": "https://dr-egypt.firebaseio.com",
+    "project_id": "dr-egypt",
+    "storage_bucket": "dr-egypt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104146290581:android:b699299762b7e9e8",
+        "android_client_info": {
+          "package_name": "com.example.gmsproduction.dregypt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "104146290581-rg8enuct71hum3iegig650uj01oj9cca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gmsproduction.dregypt",
+            "certificate_hash": "6bdc57f225f28aa72c4b6563d35d701be4a7b00d"
+          }
+        },
+        {
+          "client_id": "104146290581-d3eojcop521itdke8chf7itahq1smgnc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLPXHlgYfjQD4dbB2vxmi5YtVolvx7B_g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "104146290581-d3eojcop521itdke8chf7itahq1smgnc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -40,9 +40,9 @@ import me.srodrigo.androidhintspinner.HintSpinner;
 public abstract class BaseJobFragment extends BaseAddFragment {
     public EditText EdSalary;
     ArrayList<String> CategoryNameArray, ExpLebelNameArray, EduLevelNameArray, EmpTypeNameArray;
-    ArrayList<LocationModel> arrayModel,getArrayExiLevelModel, arrayEduLevelModel, EmpTypeModel;
+    ArrayList<LocationModel> arrayModel, getArrayExiLevelModel, arrayEduLevelModel, EmpTypeModel;
     public Spinner spinnerCategory, spinnerExpLevel, spinnerEducLevel, spinnerEmpType;
-    public int category,numType, expLevel, eduLevel, EmpType;
+    public int category, numType, expLevel, eduLevel, EmpType;
     public String getTitle, getSalary, getDesc, getAddress, getPhone, getPhone2;
     public RadioGroup radioGroupType;
     private RequestQueue mRequestQueue;
@@ -153,13 +153,15 @@ public abstract class BaseJobFragment extends BaseAddFragment {
             new CustomToast().Show_Toast(getActivity(), view, "All fields are required.");
         } else if (category == -1) {
             new CustomToast().Show_Toast(getActivity(), view, "Please Select Job Category.");
-        } /*else if (numType == 55) {
-            new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Status.");
-        }*/ else {
+        } else if (getDesc.length() < 21) {
+            new CustomToast().Show_Toast(getActivity(), view, "description must be higher than 20 letter");
+        } else if (getEncodedImage.equals("") || getEncodedImage.length() == 0) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please add Image");
+        } else {
             Toast.makeText(getActivity(), "Do Do.", Toast.LENGTH_SHORT)
                     .show();
             submit();
-            postJob(url,MethodID,object);
+            postJob(url, MethodID, object);
         }
     }
 
@@ -217,6 +219,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
 
 
     }
+
     private void getExperienceLevel() {
         ExpLebelNameArray = new ArrayList<>();
         getArrayExiLevelModel = new ArrayList<>();
@@ -268,6 +271,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
 
 
     }
+
     private void getEducationLevel() {
         EduLevelNameArray = new ArrayList<>();
         arrayEduLevelModel = new ArrayList<>();
