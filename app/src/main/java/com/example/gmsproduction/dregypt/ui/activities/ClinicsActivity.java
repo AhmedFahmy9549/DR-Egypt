@@ -43,6 +43,7 @@ public class ClinicsActivity extends BaseActivity {
 
     RecyclerView recyclerView;
     String TAG = "ClinicsActivity";
+
     HashMap<String, String> parms = new HashMap<>();
     ArrayList<HospitalModel> arrayList = new ArrayList<>();
 
