@@ -1,15 +1,18 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,8 +58,7 @@ public class MainActivity extends BaseActivity
     View header;
 
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
-    //delete this
-    private BubblesManager bubblesManager;
+    private static final int REQUEST_LOCATION = 1;
 
 
     @Override
@@ -64,7 +66,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        premissionLocation();
         //initializeBubblesManager();
 
 
@@ -157,43 +159,15 @@ public class MainActivity extends BaseActivity
         lang(language);
     }
 
-    //liberary
-    /*private void initializeBubblesManager() {
-        bubblesManager = new BubblesManager.Builder(this)
-                .setTrashLayout(R.layout.bubble_trash_layout)
-                .setInitializationCallback(new OnInitializedCallback() {
-                    @Override
-                    public void onInitialized() {
-                        addNewBubble();
-                    }
-                })
-                .build();
-        bubblesManager.initialize();
+
+    private void premissionLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        }
     }
-
-    private void addNewBubble() {
-        BubbleLayout bubbleView = (BubbleLayout)LayoutInflater.from(MainActivity.this).inflate(R.layout.bubble_layout, null);
-        bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
-            @Override
-            public void onBubbleRemoved(BubbleLayout bubble) { }
-        });
-        bubbleView.setOnBubbleClickListener(new BubbleLayout.OnBubbleClickListener() {
-
-            @Override
-            public void onBubbleClick(BubbleLayout bubble) {
-                Toast.makeText(getApplicationContext(), "Clicked !",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-        bubbleView.setShouldStickToWall(true);
-        bubblesManager.addBubble(bubbleView, 60, 20);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        bubblesManager.recycle();
-    }*/
 
 
     private void LogOut() {

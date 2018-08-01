@@ -91,7 +91,6 @@
     <string name="Submitz">Submit</string>
 
 
-
     <string name="More_Details"><u>More details ></u></string>
     <string name="ratingIconHeartFilled">♥</string>
     <string name="ratingIconHeartOutline">♡</string>
@@ -142,20 +141,6 @@
     <string name="submit_job">Submit</string>
     <string name="views">Views</string>
     <string name="actions">Actions</string>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </resources>

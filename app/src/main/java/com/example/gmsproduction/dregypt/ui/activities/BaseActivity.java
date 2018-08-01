@@ -1,9 +1,12 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -22,8 +25,9 @@ import java.util.Locale;
 
 public class BaseActivity extends AppCompatActivity {
 
-    private int idLANG,userId;
-    private String userName,userAvatar;
+    private int idLANG, userId;
+    private String userName, userAvatar;
+    private static final int REQUEST_LOCATION = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class BaseActivity extends AppCompatActivity {
         //the language sharedprefs
         SharedPreferences prefs = getSharedPreferences("LangKey", MODE_PRIVATE);
 
-            idLANG = prefs.getInt("languageNum", 1); //0 is the default value.
+        idLANG = prefs.getInt("languageNum", 1); //0 is the default value.
 
         SharedPreferences prefs2 = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userId = prefs.getInt("User_id", 0);
@@ -46,13 +50,22 @@ public class BaseActivity extends AppCompatActivity {
         PushNotifications.setOnMessageReceivedListenerForVisibleActivity(this, new PushNotificationReceivedListener() {
             @Override
             public void onMessageReceived(RemoteMessage remoteMessage) {
-                Log.e("msssg",""+remoteMessage.getNotification().getTitle());
-                Log.e("msssg",""+remoteMessage.getNotification().getBody());
+                Log.e("msssg", "" + remoteMessage.getNotification().getTitle());
+                Log.e("msssg", "" + remoteMessage.getNotification().getBody());
 
             }
         });
+        premissionLocation();
 
+    }
 
+    private void premissionLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        }
     }
 
     @Override
@@ -73,24 +86,25 @@ public class BaseActivity extends AppCompatActivity {
         return userAvatar;
     }
 
-    public int getBackArrow(int language){
-        if (language==1){
+    public int getBackArrow(int language) {
+        if (language == 1) {
             return R.drawable.ic_back_arrow;
-        }else if (language==2){
+        } else if (language == 2) {
             return R.drawable.ic_back_arrow_ar;
         }
         return R.drawable.ic_back_arrow;
     }
-    public void localization(int lang){
-        if (lang==1){
+
+    public void localization(int lang) {
+        if (lang == 1) {
             localization("en");
-        }else if (lang==2){
+        } else if (lang == 2) {
             localization("ar");
         }
     }
 
-    private void localization(String languageToLoad){
-                                 // your language
+    private void localization(String languageToLoad) {
+        // your language
         Locale locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -104,10 +118,10 @@ public class BaseActivity extends AppCompatActivity {
     }
     //back button for all the activities
 
-    public void setActivityTitle(String arabic,String English){
-        if (idLANG ==1){
+    public void setActivityTitle(String arabic, String English) {
+        if (idLANG == 1) {
             getSupportActionBar().setTitle(English);
-        }else if (idLANG==2){
+        } else if (idLANG == 2) {
             getSupportActionBar().setTitle(arabic);
         }
     }

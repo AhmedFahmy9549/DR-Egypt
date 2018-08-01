@@ -1,8 +1,20 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +24,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -31,6 +46,9 @@ import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHo
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.Utils;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
@@ -39,6 +57,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class HospitalsActivity extends BaseActivity {
@@ -47,7 +67,7 @@ public class HospitalsActivity extends BaseActivity {
     View view;
     String TAG = "HospitalsActivity";
     Map<String, String> body = new HashMap<>();
-    ArrayList<HospitalModel> arrayList= new ArrayList<>();
+    ArrayList<HospitalModel> arrayList = new ArrayList<>();
     private AdapterHospitalRecylcer adapterx;
     MaterialSearchView searchView;
     public RelativeLayout constraintLayout;
@@ -57,9 +77,14 @@ public class HospitalsActivity extends BaseActivity {
 
     LinearLayoutManager linearLayoutManager;
     int page = 1;
-    int last_page,language;
+    int last_page, language;
     ProgressBar progressBar;
 
+    private static final int REQUEST_LOCATION = 1;
+    Button button;
+    TextView textView;
+    LocationManager locationManager;
+    String lattitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +93,15 @@ public class HospitalsActivity extends BaseActivity {
         language = getIdLANG();
         localization(language);
         //setTitle("Hospitals");
+
+
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        getCurrLocation();
+
         recyclerView = findViewById(R.id.hospital_recycler);
         constraintLayout = findViewById(R.id.fragment_hospital);
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
-
 
         //get all hos
         getHospitalPagenation("");
@@ -96,7 +125,7 @@ public class HospitalsActivity extends BaseActivity {
                     arrayList = new ArrayList<>();
                     page = 1;
                     linearLayoutManager = new LinearLayoutManager(HospitalsActivity.this);
-                    adapterx = new AdapterHospitalRecylcer(HospitalsActivity.this, arrayList,99505);
+                    adapterx = new AdapterHospitalRecylcer(HospitalsActivity.this, arrayList, 99505);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapterx);
                     getHospitalPagenation(test);
@@ -147,11 +176,11 @@ public class HospitalsActivity extends BaseActivity {
             }
         });
 
-        adapterx = new AdapterHospitalRecylcer(this, arrayList,99505);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList, 99505);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
-        setActivityTitle("المستشفيات","Hospitals");
+        setActivityTitle("المستشفيات", "Hospitals");
     }
 
     //menu option
@@ -202,7 +231,7 @@ public class HospitalsActivity extends BaseActivity {
         int rate = prefs.getInt("num_rate", 0); //0 is the default value.
         int speciality = prefs.getInt("speciality", 0); //0 is the default value.
 
-        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate+ "Specialty=" + speciality);
+        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate + "Specialty=" + speciality);
 
 
         body.put("region", String.valueOf(city));
@@ -288,16 +317,14 @@ public class HospitalsActivity extends BaseActivity {
             }
 
 
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        adapterx = new AdapterHospitalRecylcer(this, arrayList,99505);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList, 99505);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
-
 
 
     }
@@ -341,14 +368,11 @@ public class HospitalsActivity extends BaseActivity {
             }
 
 
-
             JSONObject meta = jsonObject.getJSONObject("meta");
-            last_page=meta.getInt("last_page");
+            last_page = meta.getInt("last_page");
 
 
-            Log.e("PageeeCurrent=",page+"");
-
-
+            Log.e("PageeeCurrent=", page + "");
 
 
         } catch (JSONException e) {
@@ -387,7 +411,7 @@ public class HospitalsActivity extends BaseActivity {
         int rate = prefs.getInt("num_rate", 0); //0 is the default value.
         int speciality = prefs.getInt("speciality", 0); //0 is the default value.
 
-        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate+"Specialtion"+speciality);
+        Log.e("CXAAAA", "city" + city + "\n" + "area" + area + "\n" + "rate" + rate + "Specialtion" + speciality);
 
         body.put("region", String.valueOf(city));
         body.put("city", String.valueOf(area));
@@ -413,7 +437,7 @@ public class HospitalsActivity extends BaseActivity {
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.Hospital_Include, fragment, Utils.Error);
-                    ft.commit();
+                    ft.commitAllowingStateLoss();
 
                 } else if (error instanceof AuthFailureError) {
                     //TODO
@@ -443,6 +467,102 @@ public class HospitalsActivity extends BaseActivity {
         editor.putInt("area", 0);
         editor.putInt("speciality", 0);
         editor.apply();
+
+    }
+
+    private void getCurrLocation() {
+
+
+        locationManager = (LocationManager)
+
+                getSystemService(Context.LOCATION_SERVICE);
+
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+
+        {        Log.e("GBSLOCATION","buildAlertMessageNoGps");
+
+            buildAlertMessageNoGps();
+
+        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+
+        {
+            Log.e("GBSLOCATION","getLocation");
+            getLocation();
+        }
+    }
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            Location location2 = locationManager.getLastKnownLocation(LocationManager. PASSIVE_PROVIDER);
+
+            if (location != null) {
+                double latti = location.getLatitude();
+                double longi = location.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
+                        + "\n" + "Longitude = " + longitude);
+
+            } else  if (location1 != null) {
+                double latti = location1.getLatitude();
+                double longi = location1.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
+                        + "\n" + "Longitude = " + longitude);
+
+
+            } else  if (location2 != null) {
+                double latti = location2.getLatitude();
+                double longi = location2.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
+                        + "\n" + "Longitude = " + longitude);
+
+            }else{
+
+                Toast.makeText(this,"Unble to Trace your location",Toast.LENGTH_SHORT).show();
+
+
+            }
+        }
+    }
+
+    protected void buildAlertMessageNoGps() {
+        Log.e("GBSLOCATION","Here");
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please Turn ON your GPS Connection")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        Log.e("GBSLOCATION","Here");
+                        getLocation();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+        Log.e("GBSLOCATION","sare");
 
     }
 }

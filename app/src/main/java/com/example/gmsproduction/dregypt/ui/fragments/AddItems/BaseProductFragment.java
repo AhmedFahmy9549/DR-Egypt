@@ -81,6 +81,7 @@ public abstract class  BaseProductFragment extends BaseAddFragment {
     }
 
     public void postProduct(String url, int MethodID, JSONObject object) {
+        Log.e("addpro", "obj" + object);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 MethodID, url, object,
