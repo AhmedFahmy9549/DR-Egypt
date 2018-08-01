@@ -512,7 +512,7 @@ public class HospitalsActivity extends BaseActivity {
                 longitude = String.valueOf(longi);
 
                 Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
-                        + "\n" + "Longitude = " + longitude);
+                        + "\n" + "Longitude = " + longitude+"NETWORK_PROVIDER");
 
             } else  if (location1 != null) {
                 double latti = location1.getLatitude();
@@ -521,7 +521,7 @@ public class HospitalsActivity extends BaseActivity {
                 longitude = String.valueOf(longi);
 
                 Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
-                        + "\n" + "Longitude = " + longitude);
+                        + "\n" + "Longitude = " + longitude+"GPS_PROVIDER");
 
 
             } else  if (location2 != null) {
@@ -531,7 +531,7 @@ public class HospitalsActivity extends BaseActivity {
                 longitude = String.valueOf(longi);
 
                 Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
-                        + "\n" + "Longitude = " + longitude);
+                        + "\n" + "Longitude = " + longitude+"PASSIVE_PROVIDER");
 
             }else{
 
