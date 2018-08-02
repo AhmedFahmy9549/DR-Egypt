@@ -55,6 +55,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -513,6 +514,40 @@ public class HospitalsActivity extends BaseActivity {
 
                 Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude+"NETWORK_PROVIDER");
+
+
+
+
+                Geocoder gcd = new Geocoder(this, Locale.getDefault());
+                List<Address> addresses = null;
+                try {
+                    addresses = gcd.getFromLocation(latti, longi, 1);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (addresses.size() > 0) {
+                    System.out.println(addresses.get(0).getLocality());
+                }
+                else {
+                    // do your stuff
+                }
+
+
+            /*    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocation(latti,longi, 1);
+                    String cityName = addresses.get(0).getAddressLine(0);
+                    String stateName = addresses.get(0).getAddressLine(0);
+                    String countryName = addresses.get(0).getAddressLine(0);
+                    Log.e("CityName",""+cityName);
+                    Log.e("countryName",""+countryName);
+                    Log.e("stateName",""+stateName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+*/
 
             } else  if (location1 != null) {
                 double latti = location1.getLatitude();
