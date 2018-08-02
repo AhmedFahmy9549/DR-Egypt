@@ -70,7 +70,7 @@ public abstract class BaseAddFragment extends Fragment {
     private Spinner spinner, spinner1;
     public View view;
     private ArrayList<String> name_array, name_array2;
-    public int x, city, area, userID;
+    public int x, city=-1, area=-1, userID;
     public String getEncodedImage = "";
     private String mFragmentName,mFragmentNameAr;
     private ArrayList<LocationModel> arrayModel, array2;

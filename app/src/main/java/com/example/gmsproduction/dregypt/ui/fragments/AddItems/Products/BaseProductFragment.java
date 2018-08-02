@@ -45,7 +45,7 @@ public abstract class  BaseProductFragment extends BaseAddFragment {
     ArrayList<String> CategoryNameArray;
     ArrayList<LocationModel> arrayModel;
     public Spinner spinnerCategory;
-    public int category, numStatus, radiogroubValidation = 55, numRate;
+    public int category=-1, numStatus=-1, radiogroubValidation = 55, numRate;
     public String getTitle = "", getPrice = "", getDesc = "", getAddress = "", getPhone = "", getPhone2 = "" ;
     public RadioGroup radioGroupStatus;
     private RequestQueue mRequestQueue;
@@ -81,7 +81,7 @@ public abstract class  BaseProductFragment extends BaseAddFragment {
         this.object = object;
     }
 
-    public void postProduct(String url, int MethodID, JSONObject object) {
+    public void postProduct(String url, final int MethodID, JSONObject object) {
         Log.e("addpro", "obj" + object);
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
@@ -89,14 +89,22 @@ public abstract class  BaseProductFragment extends BaseAddFragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         Log.e("addpro", "res" + response);
+
+                        if (MethodID== Request.Method.POST){
+                            new CustomToast().Show_Toast_Success(getActivity(), view, "Product has been added and waiting for review");
+
+                        }else if (MethodID== Request.Method.PUT){
+                            new CustomToast().Show_Toast_Success(getActivity(), view, "Product has been updated and waiting for review");
+                        }
+                        getActivity().finish();
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e("addpro", "err" + error);
+                AddBTN.setEnabled(true);
                 if (error == null || error.networkResponse == null) {
                     return;
                 }
@@ -145,17 +153,20 @@ public abstract class  BaseProductFragment extends BaseAddFragment {
                 || getAddress.equals("") || getAddress.length() == 0
                 || getPhone.equals("") || getPhone.length() == 0) {
             new CustomToast().Show_Toast(getActivity(), view, "All fields are required.");
-        } else if (category == -1) {
-            new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Category.");
-        } else if (numStatus == 55) {
-            new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Status.");
         } else if (getDesc.length() < 21) {
             new CustomToast().Show_Toast(getActivity(), view, "description must be higher than 20 letter");
+        }else if (city == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Choose City.");
+        }else if (area == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Choose Area.");
+        } else if (category == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Category.");
         } else if (getEncodedImage.equals("") || getEncodedImage.length() == 0) {
             new CustomToast().Show_Toast(getActivity(), view, "Please add Image");
+        } else if (numStatus == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Select Product Status.");
         } else {
-            Toast.makeText(getActivity(), "Do Do.", Toast.LENGTH_SHORT)
-                    .show();
+            AddBTN.setEnabled(false);
             submit();
             postProduct(url,MethodID,object);
         }

@@ -31,14 +31,16 @@ public class EditJobTry extends BaseJobFragment {
             phone01.put("number", getPhone);
             PhoneArray.put(phone01);
 
-            if (getPhone2 != null && !getPhone2.isEmpty()) {
-                phone02.put("id", "null");
-                phone02.put("number", getPhone2);
-                PhoneArray.put(phone02);
-            } else {
+            if (PhID2 != null && !PhID2.isEmpty()) {
                 phone02.put("id", PhID2);
                 phone02.put("number", getPhone2);
                 PhoneArray.put(phone02);
+            } else {
+                if (getPhone2 != null && !getPhone2.isEmpty()){
+                    phone02.put("id", "null");
+                    phone02.put("number", getPhone2);
+                    PhoneArray.put(phone02);
+                }
             }
 
 

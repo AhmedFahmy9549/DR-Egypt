@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -43,7 +44,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
     ArrayList<String> CategoryNameArray, ExpLebelNameArray, EduLevelNameArray, EmpTypeNameArray;
     ArrayList<LocationModel> arrayModel, getArrayExiLevelModel, arrayEduLevelModel, EmpTypeModel;
     public Spinner spinnerCategory, spinnerExpLevel, spinnerEducLevel, spinnerEmpType;
-    public int category, numType, expLevel, eduLevel, EmpType;
+    public int category=-1, numType=-1, expLevel=-1, eduLevel=-1, EmpType=-1;
     public String getTitle, getSalary, getDesc, getAddress, getPhone, getPhone2;
     public RadioGroup radioGroupType;
     private RequestQueue mRequestQueue;
@@ -85,20 +86,27 @@ public abstract class BaseJobFragment extends BaseAddFragment {
     }
 
     // request
-    public void postJob(String url, int MethodID, JSONObject object) {
+    public void postJob(String url, final int MethodID, JSONObject object) {
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 MethodID, url, object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         Log.e("addJob", "res" + response);
+                        if (MethodID== Request.Method.POST){
+                            new CustomToast().Show_Toast_Success(getActivity(), view, "Job has been added and waiting for review");
+
+                        }else if (MethodID== Request.Method.PUT){
+                            new CustomToast().Show_Toast_Success(getActivity(), view, "Job has been updated and waiting for review");
+                        }
+                        getActivity().finish();
                     }
                 }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                AddBTN.setEnabled(true);
                 Log.e("addJob", "err" + error);
                 if (error == null || error.networkResponse == null) {
                     return;
@@ -152,15 +160,26 @@ public abstract class BaseJobFragment extends BaseAddFragment {
                 || getAddress.equals("") || getAddress.length() == 0
                 || getPhone.equals("") || getPhone.length() == 0) {
             new CustomToast().Show_Toast(getActivity(), view, "All fields are required.");
-        } else if (category == -1) {
-            new CustomToast().Show_Toast(getActivity(), view, "Please Select Job Category.");
-        } else if (getDesc.length() < 21) {
+        }else if (numType == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Select Job Type.");
+        }else if (getDesc.length() < 21) {
             new CustomToast().Show_Toast(getActivity(), view, "description must be higher than 20 letter");
-        } else if (getEncodedImage.equals("") || getEncodedImage.length() == 0) {
+        }else if (city == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Choose City.");
+        }else if (area == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Choose Area.");
+        } else if (category == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Choose Job Category.");
+        }else if (expLevel == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Choose Experience Level.");
+        }else if (eduLevel == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Choose Education Level.");
+        }else if (EmpType == -1) {
+            new CustomToast().Show_Toast(getActivity(), view, "Please Choose Employment Type.");
+        }  else if (getEncodedImage.equals("") || getEncodedImage.length() == 0) {
             new CustomToast().Show_Toast(getActivity(), view, "Please add Image");
         } else {
-            Toast.makeText(getActivity(), "Do Do.", Toast.LENGTH_SHORT)
-                    .show();
+            AddBTN.setEnabled(false);
             submit();
             postJob(url, MethodID, object);
         }
