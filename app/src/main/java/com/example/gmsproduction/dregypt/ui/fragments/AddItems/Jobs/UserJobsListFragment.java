@@ -1,4 +1,4 @@
-package com.example.gmsproduction.dregypt.ui.fragments.AddItems;
+package com.example.gmsproduction.dregypt.ui.fragments.AddItems.Jobs;
 
 import android.content.SharedPreferences;
 import android.graphics.Rect;

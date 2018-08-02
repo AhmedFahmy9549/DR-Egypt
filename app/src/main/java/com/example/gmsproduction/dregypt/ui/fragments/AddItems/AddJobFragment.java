@@ -63,7 +63,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 import static com.example.gmsproduction.dregypt.utils.Constants.basicUrl;
-
+@Deprecated
 public class AddJobFragment extends Fragment {
 
     private View view;

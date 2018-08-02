@@ -6,39 +6,31 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.DeleteUserJobRequest;
-import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.DeleteUserProductRequest;
 import com.example.gmsproduction.dregypt.Models.JobsModel;
 import com.example.gmsproduction.dregypt.Models.PhoneModel;
-import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.activities.DetailsJobs;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddJobFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.EditJobTry;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserJobsListFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.Jobs.EditJobTry;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.Jobs.UserJobsListFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.Utils;
 
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserJobAdapter extends RecyclerView.Adapter<UserJobAdapter.MyViewHolder> {
     private Context mContext;

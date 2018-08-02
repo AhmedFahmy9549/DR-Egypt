@@ -1,42 +1,16 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetRegionsRequest;
-import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddJobFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddJobTry;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddProductFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddProductTry;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserJobsListFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserProductsListFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.Jobs.AddJobTry;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.Products.AddProductTry;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.Jobs.UserJobsListFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.Products.UserProductsListFragment;
 import com.example.gmsproduction.dregypt.utils.Utils;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-import me.srodrigo.androidhintspinner.HintAdapter;
-import me.srodrigo.androidhintspinner.HintSpinner;
 
 public class AddItemActivity extends BaseActivity {
     int vald,language;

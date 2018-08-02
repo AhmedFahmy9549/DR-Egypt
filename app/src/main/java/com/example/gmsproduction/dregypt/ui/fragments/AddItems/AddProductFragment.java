@@ -71,7 +71,7 @@ import me.srodrigo.androidhintspinner.HintSpinner;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
-
+@Deprecated
 public class AddProductFragment extends Fragment {
 
     private View view;

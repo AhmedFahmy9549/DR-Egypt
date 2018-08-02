@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,17 +25,14 @@ import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.activities.DetailsProducts;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.AddProductFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.EditProductTry;
-import com.example.gmsproduction.dregypt.ui.fragments.AddItems.UserProductsListFragment;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.Products.EditProductTry;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.Products.UserProductsListFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.Utils;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class UserProductAdapter extends RecyclerView.Adapter<UserProductAdapter.MyViewHolder> {
     final String basicImgUrl = "http://gms-sms.com:89";

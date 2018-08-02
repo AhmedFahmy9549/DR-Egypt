@@ -1,16 +1,7 @@
-package com.example.gmsproduction.dregypt.ui.fragments.AddItems;
-
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+package com.example.gmsproduction.dregypt.ui.fragments.AddItems.Products;
 
 import com.android.volley.Request;
-import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.utils.Constants;
-import com.example.gmsproduction.dregypt.utils.CustomToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;

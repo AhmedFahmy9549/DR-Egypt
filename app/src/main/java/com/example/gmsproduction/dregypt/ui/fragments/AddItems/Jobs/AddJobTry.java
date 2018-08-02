@@ -1,9 +1,8 @@
-package com.example.gmsproduction.dregypt.ui.fragments.AddItems;
+package com.example.gmsproduction.dregypt.ui.fragments.AddItems.Jobs;
 
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.utils.Constants;
 
 import org.json.JSONArray;

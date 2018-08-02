@@ -1,4 +1,4 @@
-package com.example.gmsproduction.dregypt.ui.fragments.AddItems;
+package com.example.gmsproduction.dregypt.ui.fragments.AddItems.Products;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetProductAdCategoriesRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.fragments.AddItems.BaseAddFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 
