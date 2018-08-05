@@ -57,8 +57,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         getActivity().setTitle("Sign Up");
         ((LogInActivity) getActivity()).setActivityTitle("إنشاء حساب","Sign Up");
 
-
-
         initViews();
         setListeners();
         return view;
@@ -76,16 +74,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         login = (TextView) view.findViewById(R.id.already_user);
         terms_conditions = (CheckBox) view.findViewById(R.id.terms_conditions);
 
-        // Setting text selector over textviews
-       /* XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
-        try {
-            ColorStateList csl = ColorStateList.createFromXml(getResources(),
-                    xrp);
-
-            login.setTextColor(csl);
-            terms_conditions.setTextColor(csl);
-        } catch (Exception e) {
-        }*/
     }
 
     // Set Listeners
@@ -187,8 +175,6 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("Signup", "error" + error.getMessage());
-
-                    //VolleyLog.d("error", "Error: " + error.getMessage());
 
                 }
             }) {

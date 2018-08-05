@@ -74,21 +74,14 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class Login_Fragment extends Fragment implements OnClickListener {
-    private static View view;
-    private static EditText emailid, password;
-    private static Button loginButton2;
-    private static TextView forgotPassword, signUp;
-    private static CheckBox show_hide_password;
-    private static LinearLayout loginLayout;
-    private static Animation shakeAnimation;
-    private static FragmentManager fragmentManager;
-    Button facebookbtnLog;
-    private CallbackManager callbackManager;
-    List<String> permissionNeeds = Arrays.asList("user_photos", "email",
-            "user_birthday", "public_profile");
-    String id, name, email, gender, birthday, profile_pic;
-    HashMap<String, String> jsonObjectStore = new HashMap<String, String>();
+public class Login_Fragment extends BaseLoginFragment implements OnClickListener {
+    private  EditText emailid, password;
+    private  Button loginButton2;
+    private  TextView forgotPassword, signUp;
+    private  CheckBox show_hide_password;
+    private  LinearLayout loginLayout;
+    private  Animation shakeAnimation;
+    private  FragmentManager fragmentManager;
     private RequestQueue mRequestQueue;
 
     public Login_Fragment() {
@@ -102,18 +95,7 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 
         initViews();
         setListeners();
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(getActivity());
-        callbackManager = CallbackManager.Factory.create();
-
-        //facebook login button
-        facebookbtnLog = view.findViewById(R.id.fb_mang2);
-        facebookbtnLog.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                facebookMethod();
-            }
-        });
+        setFacebookbtn(R.id.fb_mang2);
 
         return view;
     }
@@ -134,17 +116,6 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         shakeAnimation = AnimationUtils.loadAnimation(getActivity(),
                 R.anim.shake);
 
-        // Setting text selector over textviews
-        /*XmlResourceParser xrp = getResources().getXml(R.drawable.text_selector);
-        try {
-            ColorStateList csl = ColorStateList.createFromXml(getResources(),
-                    xrp);
-
-            forgotPassword.setTextColor(csl);
-            show_hide_password.setTextColor(csl);
-            signUp.setTextColor(csl);
-        } catch (Exception e) {
-        }*/
     }
 
     // Set Listeners
@@ -252,134 +223,6 @@ public class Login_Fragment extends Fragment implements OnClickListener {
 
     }
 
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void facebookMethod() {
-        LoginManager.getInstance().logInWithReadPermissions(
-                this,
-                permissionNeeds
-        );
-        LoginManager.getInstance().registerCallback(
-                callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        // Handle success
-                        GraphRequest request = GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject object,
-                                                            GraphResponse response) {
-
-                                        jsonObjectStore.put("user", object.toString());
-                                        FacebookPostRequest facebookPostRequest = new FacebookPostRequest(getContext(), new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                Log.e("lol", response);
-
-                                            }
-                                        }, new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError error) {
-                                                Log.e("lol2", "" + error.getMessage());
-
-                                            }
-                                        });
-                                        facebookPostRequest.setBody(jsonObjectStore);
-                                        facebookPostRequest.start();
-
-
-                                        /*Log.e("LoginActivity",
-                                                object.toString());*/
-                                        try {
-                                            id = object.getString("id");
-                                            try {
-                                                URL profile_pic = new URL(
-                                                        "http://graph.facebook.com/" + id + "/picture?type=large");
-                                                Log.i("profile_pic",
-                                                        profile_pic + "");
-
-                                            } catch (MalformedURLException e) {
-                                                e.printStackTrace();
-                                            }
-                                            name = object.getString("name");
-                                            email = object.getString("email");
-                                            gender = object.getString("gender");
-                                            birthday = object.getString("birthday");
-                                            profile_pic = "http://graph.facebook.com/" + id + "/picture?type=large";
-                                            postyy(id, name, email, profile_pic);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-
-
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields",
-                                "id,name,email,gender, birthday");
-                        request.setParameters(parameters);
-                        request.executeAsync();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Log.e("LoginActivity",
-                                "onCancel");
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        Log.e("LoginActivity",
-                                exception.toString());
-                    }
-                }
-        );
-
-    }
-
-    //this method will post the data of user to the server
-    //facebookLogin
-    public void postyy(String id, String name, String email, String avatar) {
-
-        JSONObject jsonobject_one = new JSONObject();
-        try {
-            jsonobject_one.put("name", name);
-            jsonobject_one.put("email", email);
-            jsonobject_one.put("id", id);
-            jsonobject_one.put("avatar", avatar);
-
-            JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                    Request.Method.POST, Constants.basicUrl+"/auth/facebook/callback", jsonobject_one,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.e("lol", response.toString());
-
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("lol2", "" + error.getMessage());
-
-                    //VolleyLog.d("error", "Error: " + error.getMessage());
-
-                }
-            });
-            mRequestQueue = Volley.newRequestQueue(getActivity());
-            mRequestQueue.add(jsonObjReq);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
     //Normal Login
     public void postyNormal(String email, String password) {
         String url = "https://dregy01.frb.io/api/login";
@@ -454,12 +297,4 @@ public class Login_Fragment extends Fragment implements OnClickListener {
         }
     }
 
-   /* public void SharedPref(int id,String name,String email,String avatar){
-        SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE).edit();
-        editor.putInt("User_id", id);
-        editor.putString("User_name", name);
-        editor.putString("User_email", email);
-        editor.putString("User_avatar", avatar);
-        editor.apply();
-    }*/
 }

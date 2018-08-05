@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -25,12 +27,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SlidingDrawer;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.pusher.pushnotifications.PushNotifications;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -42,6 +47,12 @@ import com.txusballesteros.bubbles.BubbleLayout;
 import com.txusballesteros.bubbles.BubblesManager;
 import com.txusballesteros.bubbles.OnInitializedCallback;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.example.gmsproduction.dregypt.utils.Constants.USER_DETAILS;
 
 public class MainActivity extends BaseActivity
@@ -51,10 +62,10 @@ public class MainActivity extends BaseActivity
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
-    ImageView Menu_pic;
-    TextView Menu_title, medical_guideTXT, productTXT, jobsTXT, cosmeticsTXT;
+    CircleImageView Menu_pic;
+    TextView Menu_title, medical_guideTXT, productTXT, jobsTXT, cosmeticsTXT,Menu_Email;
     int id, language;
-    String userName = "Dr.Egypt", userAvatar = "";
+    String userName = "Dr.Egypt", userAvatar = "",userEmail;
     View header;
 
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
@@ -78,6 +89,7 @@ public class MainActivity extends BaseActivity
         id = prefs.getInt("User_id", 0);
         userName = prefs.getString("User_name", "Dr.Egypt");
         userAvatar = prefs.getString("User_avatar", null);
+        userEmail = prefs.getString("User_email", "Email");
 
            /* PushNotifications.start(getApplicationContext(), "f436d206-bd0a-4438-ad06-c3b10d485420");
             PushNotifications.subscribe(String.valueOf(id));
@@ -190,11 +202,19 @@ public class MainActivity extends BaseActivity
     }
 
 
-    public void SetUser(Context context) {
-        Picasso.with(context).load(userAvatar).fit().placeholder(R.drawable.icon).into(Menu_pic);
+    public void SetUser(Context context)  {
+
+        Glide.with(MainActivity.this)
+                .load(userAvatar)
+                .placeholder(R.drawable.user2)
+                .into(Menu_pic);
         Menu_title.setText(userName);
+        Menu_Email.setText(userEmail);
     }
 
+
+    
+    
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -365,6 +385,8 @@ public class MainActivity extends BaseActivity
 
         Menu_pic = header.findViewById(R.id.Menu_imageView);
         Menu_title = header.findViewById(R.id.Menu_Title);
+        Menu_Email = header.findViewById(R.id.Menu_userEmail);
+
 
         medical_guideTXT = findViewById(R.id.main_medicalGuide);
         productTXT = findViewById(R.id.main_product);

@@ -37,17 +37,11 @@ import java.util.List;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
-public class BasePage extends Fragment {
-    private static View view;
-    private static FragmentManager fragmentManager;
-    private static Button btnsignIn;
-    private static TextView SignUphere, loginhere, notNow;
-    private CallbackManager callbackManager;
-    private Button facebookbtn;
-    List<String> permissionNeeds = Arrays.asList("user_photos", "email",
-            "user_birthday", "public_profile");
-    String id, name, email, gender, birthday, profile_pic;
-
+public class BasePage extends BaseLoginFragment {
+    //private static View view;
+    private  FragmentManager fragmentManager;
+    private  Button btnsignIn;
+    private  TextView SignUphere, loginhere, notNow;
     public BasePage() {
 
     }
@@ -58,29 +52,13 @@ public class BasePage extends Fragment {
         view = inflater.inflate(R.layout.fragment_base_page, container, false);
         initViews();
         Click();
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(getActivity());
-        callbackManager = CallbackManager.Factory.create();
-
-        facebookbtn = view.findViewById(R.id.fb_mang);
-        facebookbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                facebookMethod();
-            }
-        });
+        setFacebookbtn(R.id.fb_mang);
 
         ((LogInActivity) getActivity()).setActivityTitle("تسجيل الدخول","Sign in");
         // Inflate the layout for this fragment
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
 
     private void initViews() {
         fragmentManager = getActivity().getSupportFragmentManager();
@@ -149,73 +127,5 @@ public class BasePage extends Fragment {
 
     }
 
-    public void facebookMethod() {
-        LoginManager.getInstance().logInWithReadPermissions(
-                this,
-                permissionNeeds
-        );
-        LoginManager.getInstance().registerCallback(
-                callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        Log.e("LOgiiin", "" + loginResult);
 
-
-                        // Handle success
-
-
-                        GraphRequest request = GraphRequest.newMeRequest(
-                                loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(JSONObject object,
-                                                            GraphResponse response) {
-
-
-                                        Log.e("LoginActivity",
-                                                response.toString());
-                                        try {
-                                            id = object.getString("id");
-                                            try {
-                                                URL profile_pic = new URL(
-                                                        "http://graph.facebook.com/" + id + "/picture?type=large");
-                                                Log.i("profile_pic",
-                                                        profile_pic + "");
-
-                                            } catch (MalformedURLException e) {
-                                                e.printStackTrace();
-                                            }
-                                            name = object.getString("name");
-                                            email = object.getString("email");
-                                            gender = object.getString("gender");
-                                            birthday = object.getString("birthday");
-                                            profile_pic = "http://graph.facebook.com/" + id + "/picture?type=large";
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields",
-                                "id,name,email,gender, birthday");
-                        request.setParameters(parameters);
-                        request.executeAsync();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Log.e("LoginActivity",
-                                "onCancel");
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        Log.e("LoginActivity",
-                                exception.toString());
-                    }
-                }
-        );
-
-    }
 }
