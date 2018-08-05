@@ -61,6 +61,7 @@ import com.facebook.login.LoginResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
@@ -215,9 +216,7 @@ public class Login_Fragment extends BaseLoginFragment implements OnClickListener
             // Else do login and do your stuff
         else {
             postyNormal(getEmailId, getPassword);
-
-            Toast.makeText(getActivity(), "Do Login.", Toast.LENGTH_SHORT)
-                    .show();
+            loginButton2.setEnabled(false);
         }
 
 
@@ -236,6 +235,7 @@ public class Login_Fragment extends BaseLoginFragment implements OnClickListener
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+                            loginButton2.setEnabled(true);
                             Log.e("Login", response.toString());
                             int id;
                             String name, email, avatar;
@@ -265,14 +265,33 @@ public class Login_Fragment extends BaseLoginFragment implements OnClickListener
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("Login", "error" + error.getMessage());
+                    loginButton2.setEnabled(true);
+                    final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                    Log.e("Login", "statusCode  " + statusCode);
+                    String body = null;
+                    //get response body and parse with appropriate encoding
+                    try {
+                        body = new String(error.networkResponse.data, "UTF-8");
+                        Log.e("Login", "body " + body);
+                    } catch (UnsupportedEncodingException e) {
+                        // exception
+                    }
+                    String result = body.substring(body.indexOf("[")+2, body.indexOf("\"]"));
+                    new CustomToast().Show_Toast_Fail(getActivity(),view,result);
+
+                    /*if (statusCode.equals("422")){
+                        new CustomToast().Show_Toast_Fail(getActivity(),view,"the username or password is incorrect");
+                    }else if(statusCode.equals("429")){
+                        String result = body.substring(body.indexOf("[")+2, body.indexOf("\"]"));
+                        new CustomToast().Show_Toast_Fail(getActivity(),view,result);
+                    }*/
 
                     if (error instanceof TimeoutError || error instanceof NoConnectionError) {
 
                     } else if (error instanceof AuthFailureError) {
                         //TODO
                     } else if (error instanceof ServerError) {
-                        new CustomToast().Show_Toast(getActivity(), view,
-                                "the username or password is incorrect");
+
                     } else if (error instanceof NetworkError) {
                         //TODO
                     } else if (error instanceof ParseError) {

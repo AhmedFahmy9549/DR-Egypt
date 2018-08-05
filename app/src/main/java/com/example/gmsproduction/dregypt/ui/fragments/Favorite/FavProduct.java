@@ -116,10 +116,10 @@ public class FavProduct extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-      /*          mAdapter = new ProductAdsAdapter(getContext(), modelArrayList,modelArrayList);
+                mAdapter = new ProductAdsAdapter(getContext(), modelArrayList);
                 LayoutManagaer = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(LayoutManagaer);
-                mRecyclerView.setAdapter(mAdapter);*/
+                mRecyclerView.setAdapter(mAdapter);
 
             }
         }, new Response.ErrorListener() {
