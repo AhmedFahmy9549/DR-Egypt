@@ -84,7 +84,6 @@ public class HospitalsActivity extends BaseActivity {
     private static final int REQUEST_LOCATION = 1;
     Button button;
     TextView textView;
-    LocationManager locationManager;
     String lattitude, longitude;
 
     @Override
@@ -97,8 +96,6 @@ public class HospitalsActivity extends BaseActivity {
 
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        getCurrLocation();
-
         recyclerView = findViewById(R.id.hospital_recycler);
         constraintLayout = findViewById(R.id.fragment_hospital);
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
@@ -182,6 +179,14 @@ public class HospitalsActivity extends BaseActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
         setActivityTitle("المستشفيات", "Hospitals");
+
+
+
+        getCurrLocation();
+
+        Log.e("duckduck",""+getMyCityName());
+
+
     }
 
     //menu option
@@ -471,133 +476,6 @@ public class HospitalsActivity extends BaseActivity {
 
     }
 
-    private void getCurrLocation() {
 
 
-        locationManager = (LocationManager)
-
-                getSystemService(Context.LOCATION_SERVICE);
-
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-
-        {        Log.e("GBSLOCATION","buildAlertMessageNoGps");
-
-            buildAlertMessageNoGps();
-
-        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
-
-        {
-            Log.e("GBSLOCATION","getLocation");
-            getLocation();
-        }
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
-                (this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-
-        } else {
-            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-            Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-            Location location2 = locationManager.getLastKnownLocation(LocationManager. PASSIVE_PROVIDER);
-
-            if (location != null) {
-                double latti = location.getLatitude();
-                double longi = location.getLongitude();
-                lattitude = String.valueOf(latti);
-                longitude = String.valueOf(longi);
-
-                Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
-                        + "\n" + "Longitude = " + longitude+"NETWORK_PROVIDER");
-
-
-
-
-                Geocoder gcd = new Geocoder(this, Locale.getDefault());
-                List<Address> addresses = null;
-                try {
-                    addresses = gcd.getFromLocation(latti, longi, 1);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                if (addresses.size() > 0) {
-                    System.out.println(addresses.get(0).getLocality());
-                }
-                else {
-                    // do your stuff
-                }
-
-
-            /*    Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                List<Address> addresses = null;
-                try {
-                    addresses = geocoder.getFromLocation(latti,longi, 1);
-                    String cityName = addresses.get(0).getAddressLine(0);
-                    String stateName = addresses.get(0).getAddressLine(0);
-                    String countryName = addresses.get(0).getAddressLine(0);
-                    Log.e("CityName",""+cityName);
-                    Log.e("countryName",""+countryName);
-                    Log.e("stateName",""+stateName);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-*/
-
-            } else  if (location1 != null) {
-                double latti = location1.getLatitude();
-                double longi = location1.getLongitude();
-                lattitude = String.valueOf(latti);
-                longitude = String.valueOf(longi);
-
-                Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
-                        + "\n" + "Longitude = " + longitude+"GPS_PROVIDER");
-
-
-            } else  if (location2 != null) {
-                double latti = location2.getLatitude();
-                double longi = location2.getLongitude();
-                lattitude = String.valueOf(latti);
-                longitude = String.valueOf(longi);
-
-                Log.e("GBSLOCATION","Your current location is"+ "\n" + "Lattitude = " + lattitude
-                        + "\n" + "Longitude = " + longitude+"PASSIVE_PROVIDER");
-
-            }else{
-
-                Toast.makeText(this,"Unble to Trace your location",Toast.LENGTH_SHORT).show();
-
-
-            }
-        }
-    }
-
-    protected void buildAlertMessageNoGps() {
-        Log.e("GBSLOCATION","Here");
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Please Turn ON your GPS Connection")
-                .setCancelable(false)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        Log.e("GBSLOCATION","Here");
-                        getLocation();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, final int id) {
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
-        Log.e("GBSLOCATION","sare");
-
-    }
 }
