@@ -184,6 +184,7 @@ public class HospitalsActivity extends BaseActivity {
 
         getCurrLocation();
 
+
         Log.e("duckduck",""+getMyCityName());
 
 
