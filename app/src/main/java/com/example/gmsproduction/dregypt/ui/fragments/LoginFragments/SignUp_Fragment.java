@@ -32,18 +32,19 @@ import com.example.gmsproduction.dregypt.utils.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SignUp_Fragment extends Fragment implements OnClickListener {
-    private static View view;
-    private static EditText fullName, emailId, mobileNumber, location,
+    private View view;
+    private EditText fullName, emailId, mobileNumber, location,
             password, confirmPassword;
-    private static TextView login;
-    private static Button signUpButton;
-    private static CheckBox terms_conditions;
+    private TextView login;
+    private Button signUpButton;
+    private CheckBox terms_conditions;
     private RequestQueue mRequestQueue;
 
     public SignUp_Fragment() {
@@ -55,7 +56,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.signup_layout, container, false);
         getActivity().setTitle("Sign Up");
-        ((LogInActivity) getActivity()).setActivityTitle("إنشاء حساب","Sign Up");
+        ((LogInActivity) getActivity()).setActivityTitle("إنشاء حساب", "Sign Up");
 
         initViews();
         setListeners();
@@ -107,7 +108,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
         String getFullName = fullName.getText().toString();
         String getEmailId = emailId.getText().toString();
         /*String getMobileNumber = mobileNumber.getText().toString();
-		String getLocation = location.getText().toString();*/
+        String getLocation = location.getText().toString();*/
         String getPassword = password.getText().toString();
         String getConfirmPassword = confirmPassword.getText().toString();
 
@@ -145,8 +146,7 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
             // Else do signup or do your stuff
         else {
             postyy(getFullName, getEmailId, getPassword, getConfirmPassword);
-            Toast.makeText(getActivity(), "Do SignUp.", Toast.LENGTH_SHORT)
-                    .show();
+            signUpButton.setEnabled(false);
         }
 
 
@@ -168,13 +168,32 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
                         @Override
                         public void onResponse(JSONObject response) {
                             Log.e("SignUp", response.toString());
+                            signUpButton.setEnabled(true);
+                            new CustomToast().Show_Toast_Success(getActivity(),view,"Sign up successfully");
+
+                            ((LogInActivity)getActivity()).replaceLoginFragment();
 
                         }
                     }, new Response.ErrorListener() {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("Signup", "error" + error.getMessage());
+                    String body;
+                    //get status code here
+                    final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                    Log.e("Signup", "statusCode  " + statusCode);
+                    if (statusCode.equals("422")){
+                        new CustomToast().Show_Toast(getActivity(),view,"The email has already been taken.");
+                    }
+
+                    //get response body and parse with appropriate encoding
+                    try {
+                        body = new String(error.networkResponse.data, "UTF-8");
+                        Log.e("Signup", "body " + body);
+                    } catch (UnsupportedEncodingException e) {
+                        // exception
+                    }
+                    signUpButton.setEnabled(true);
 
                 }
             }) {

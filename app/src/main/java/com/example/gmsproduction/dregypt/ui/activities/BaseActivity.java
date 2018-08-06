@@ -47,6 +47,7 @@ public class BaseActivity extends AppCompatActivity {
         localization("en"); // method to keep the app in english position even if the mobile was arabic language preset
         super.onCreate(savedInstanceState);
 
+
         //the language sharedprefs
         SharedPreferences prefs = getSharedPreferences("LangKey", MODE_PRIVATE);
 
