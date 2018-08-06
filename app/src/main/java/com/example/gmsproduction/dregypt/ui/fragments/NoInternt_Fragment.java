@@ -129,6 +129,15 @@ public class NoInternt_Fragment extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
+    public void ReloadAddJobs() {
+
+        ((AddItemActivity) getActivity()).JobFragment();
+        //((CosmeticsActivity)getActivity()).Progressbar();
+        Toast.makeText(getContext(), "Add Job", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
+
+    }
+
 
 
     private void lang(){

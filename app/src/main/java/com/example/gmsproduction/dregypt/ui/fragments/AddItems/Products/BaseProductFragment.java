@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetProductAdCategoriesRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.BaseAddFragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
@@ -106,7 +107,6 @@ public abstract class  BaseProductFragment extends BaseAddFragment {
                 Log.e("addpro", "err" + error);
                 AddBTN.setEnabled(true);
                 if (error == null || error.networkResponse == null) {
-                    return;
                 }
 
                 String body;
@@ -223,6 +223,7 @@ public abstract class  BaseProductFragment extends BaseAddFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                ((AddItemActivity)getActivity()).noInternet(R.id.additem_Include,5599);
 
             }
         });

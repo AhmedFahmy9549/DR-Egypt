@@ -21,7 +21,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
+import com.example.gmsproduction.dregypt.utils.Utils;
 import com.google.firebase.messaging.RemoteMessage;
 import com.pusher.pushnotifications.PushNotificationReceivedListener;
 import com.pusher.pushnotifications.PushNotifications;
@@ -235,5 +237,15 @@ public class BaseActivity extends AppCompatActivity {
         alert.show();
         Log.e("GBSLOCATION","sare");
 
+    }
+
+    public void noInternet(int view , int validation){
+        NoInternt_Fragment fragment = new NoInternt_Fragment();
+        Bundle arguments = new Bundle();
+        arguments.putInt("duck", validation);
+        fragment.setArguments(arguments);
+        final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(view, fragment, Utils.Error);
+        ft.commitAllowingStateLoss();
     }
 }

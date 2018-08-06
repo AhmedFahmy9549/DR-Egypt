@@ -24,6 +24,7 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.F
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.FiltersRequests.GetProductAdCategoriesRequest;
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
+import com.example.gmsproduction.dregypt.ui.activities.AddItemActivity;
 import com.example.gmsproduction.dregypt.ui.fragments.AddItems.BaseAddFragment;
 import com.example.gmsproduction.dregypt.utils.CustomToast;
 
@@ -51,7 +52,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
     private String url;
     private int MethodID;
     private JSONObject object;
-
+    public HintAdapter adapterCategory;
 
     @Override
     public View provideYourFragmentView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -69,9 +70,12 @@ public abstract class BaseJobFragment extends BaseAddFragment {
         getEducationLevel();
         getEmpType();
         setAdType();
+
         return view;
     }
-
+    public void useless(){
+        adapterCategory.notifyDataSetChanged();
+    }
     // setters
     public void setUrl(String url) {
         this.url = url;
@@ -191,7 +195,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
     private void getCategory() {
         CategoryNameArray = new ArrayList<>();
         arrayModel = new ArrayList<>();
-
+        adapterCategory = new HintAdapter<String>(getActivity(), "Choose Category", CategoryNameArray);
         GetJobAdCategoriesRequest getJobAdCategoriesRequest = new GetJobAdCategoriesRequest(getActivity(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -206,12 +210,13 @@ public abstract class BaseJobFragment extends BaseAddFragment {
                         CategoryNameArray.add(categName);
                         arrayModel.add(model);
                     }
+
                     if (getActivity() != null) {
                         HintSpinner<String> hintSpinner = new HintSpinner<>(
                                 spinnerCategory,
                                 // Default layout - You don't need to pass in any layout id, just your hint text and
                                 // your list data
-                                new HintAdapter<String>(getActivity(), "Choose Category", CategoryNameArray),
+                                adapterCategory,
                                 new HintSpinner.Callback<String>() {
                                     @Override
                                     public void onItemSelected(int position, String itemAtPosition) {
@@ -232,7 +237,6 @@ public abstract class BaseJobFragment extends BaseAddFragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
         getJobAdCategoriesRequest.start();
