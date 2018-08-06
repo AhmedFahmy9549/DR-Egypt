@@ -212,6 +212,7 @@ public class HospitalsActivity extends BaseActivity {
                 intent.putExtra("idFilter", 1);
                 startActivity(intent);
                 finish();
+
                 break;
         }
         return true;
