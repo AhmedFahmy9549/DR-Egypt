@@ -116,8 +116,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/already_user"
-            android:textColor="@color/black"
-             />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/BPLoginNow"
@@ -166,11 +165,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="@string/terms"
-            android:paddingEnd="5dp"
-            android:paddingStart="5dp"
             android:textSize="11sp" />
 
         <TextView
+            android:paddingLeft="5sp"
+            android:paddingStart="5sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

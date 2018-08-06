@@ -1,6 +1,7 @@
-<resources>
-    <string name="app_name">دكتور ايجيبت</string>
-    <string name="action_settings">الاعدادات</string>
+﻿<resources>
+    <string name="app_name">DR-EGYPT</string>
+
+    <string name="action_settings">Settings</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,101 +9,97 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
+    <!-- Facebook Strings -->
+    <string name="facebook_app_id">1256853057779143</string>
+    <string name="fb_login_protocol_scheme">fb1256853057779143</string>
 
     <!-- Start of Fahmy Strings -->
     <string name="toolbar_medical_Guide">الدليل الطبي</string>
     <string name="toolbar_hospital">المستشفيات</string>
     <string name="toolbar_clinics">العيادات</string>
     <string name="toolbar_pharmacy">الصيدليات</string>
-    <string name="toolbar_cosmetics">عيادات التجميل</string>
-    <string name="toolbar_jobs">الوظائف</string>
-    <string name="toolbar_products">المنتجات</string>
+    <string name="toolbar_cosmetics">مستحضرات التجميل</string>
+    <string name="toolbar_jobs">وظائف</string>
+    <string name="toolbar_products">منتجات</string>
     <string name="toolbar_Favorite">المفضلة</string>
-    <string name="toolbar_AddProduct">اضافة منتج</string>
+    <string name="toolbar_AddProduct">أضف منتج</string>
 
     <string name="text1_main">الدليل الطبي</string>
     <string name="text2_main">المنتجات</string>
     <string name="text3_main">الوظائف</string>
-    <string name="text4_main">عيادات التجميل</string>
+    <string name="text4_main">مستحضرات التجميل</string>
 
     <string name="text1_medical">المستشفيات</string>
     <string name="text2_medical">العيادات</string>
     <string name="text3_medical">الصيدليات</string>
 
-    <string name="textName_hospital">الاسم</string>
+    <string name="textName_hospital">الأسم</string>
     <string name="textAddress_hospital">العنوان</string>
-    <string name="textEmail_hospital">الايميل</string>
-    <string name="textWebSite_hospital">الموقع</string>
+    <string name="textEmail_hospital">البريد الإلكتروني</string>
+    <string name="textWebSite_hospital">الموقع الإلكتروني</string>
 
-    <string name="nameActivity_Main">دكتور ايجيبت</string>
+    <string name="nameActivity_Main">د-إيجيبت</string>
     <string name="nameActivity_Medical">الدليل الطبي</string>
-    <string name="nameActivity_Region">المنطقة</string>
-    <string name="nameActivity_Specialization">التخصصات</string>
-    <string name="nameActivity_Filters">التصنيفات</string>
+    <string name="nameActivity_Region"> المنطقة</string>
+    <string name="nameActivity_Specialization">التخصص</string>
+    <string name="nameActivity_Filters">مرشحات</string>
 
 
+    <string name="text_ExperienceLevel_detailsJobs">مستوى الخبرة: </string>
+    <string name="text_EducationLevel_detailsJobs">مستوى التعليم : </string>
+    <string name="text_EmploymentType_detailsJobs">نوع الوظيفة :  </string>
+    <string name="text_Salary_detailsJobs">الراتب: </string>
+    <string name="text_Created_detailsJobs">أنشيء:</string>
+    <string name="text_Phone_detailsJobs">تليفون: </string>
+    <string name="text_Phone">تليفون</string>
 
-    <string name="text_ExperienceLevel_detailsJobs">مستوي الخبرة :</string>
-    <string name="text_EducationLevel_detailsJobs">مستوي التعليم :</string>
-    <string name="text_EmploymentType_detailsJobs">نوع الوظيفة :</string>
-    <string name="text_Salary_detailsJobs">السعر :</string>
-    <string name="text_Created_detailsJobs">انشاء :</string>
-    <string name="text_Phone_detailsJobs">الهاتف :</string>
-    <string name="text_Phone">الهاتف</string>
-
-    <string name="text_Address_detailsJobs">العنوان :</string>
-
-
-
-
-
-
+    <string name="text_Address_detailsJobs">العنوان : </string>
 
 
     <!-- Start of Fahmy Strings -->
 
     <!-- Start of Hima Strings -->
-    <string name="hello_world">Hello world!</string>
-    <string name="email">الايميل</string>
     <string name="Favorite">المفضلة</string>
-    <string name="Enter_email">ادخل بريدك الالكتروني</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="Enter_email">أدخل بريدك الإلكتروني</string>
     <string name="passowrd">كلمة السر</string>
     <string name="login">دخول</string>
-    <string name="show_pwd">اظهر كلمة السر</string>
-    <string name="hide_pwd">اخفاء كلمة السر</string>
-    <string name="forgot">نسيت كلمة السر؟ </string>
+    <string name="show_pwd">أظهر كلمة السر</string>
+    <string name="hide_pwd">أخفي كلمة السر</string>
+    <string name="forgot">نسيت كلمة السر؟</string>
     <string name="closebutton">Close Button for Activity</string>
-    <string name="newUser">ليس لديك ايميل؟</string>
-    <string name="fullName">الاسم كامل</string>
+    <string name="newUser">لست عضو</string>
+    <string name="fullName">الأسم الكامل</string>
     <string name="location">الموقع</string>
     <string name="confirmPassword">تأكيد كلمة السر</string>
-    <string name="terms_conditions">بالضغط علي التسجيل تكون موافق علي جميع الشروط والاحكام</string>
+    <string name="terms_conditions">بالضغط على التسجيل أنت موافق على كافة الشروط .</string>
     <string name="signUp">تسجيل</string>
-    <string name="already_user">لديك ايميل ؟</string>
-    <string name="registered_emailid">من فضلك ادخل الاميل المسجل !</string>
-    <string name="submit">تسجيل</string>
-    <string name="back">رجوع</string>
-    <string name="Login"> <u>الدخول</u> </string>
-    <string name="Sign_Up_here"> <u>سجل هنا .</u> </string>
-    <string name="pls_S_In_Up">من فضلك ادخل الايميل او قم بالتسجيل</string>
-    <string name="Not_Now"><u>ليس الان</u></string>
-    <string name="terms_of_service"><u>الشروط والاحكام.</u></string>
-    <string name="terms">عن طريق إنشاء حساب فإنك توافق على</string>
+    <string name="already_user">لديك حساب؟</string>
+    <string name="registered_emailid">الرجاء إدخال البريد الالكتروني </string>
+    <string name="submit">أشترك</string>
+    <string name="back">الرجوع</string>
+    <string name="Login"> <u>دخول</u> </string>
+    <string name="Sign_Up_here"> <u>اشترك هنا.</u> </string>
+    <string name="pls_S_In_Up">الرجاء التسجيل او الدخول</string>
+    <string name="Not_Now"><u>ليس الأن</u></string>
+    <string name="terms_of_service"><u>الأحكام و الشروط</u></string>
+    <string name="terms">بإنشائك الحساب انت موافق على .</string>
     <string name="oror">أو</string>
-    <string name="facebooks">فيسبوك</string>
-    <string name="signUpwithEmail">إنشاء حساب جديد</string>
-    <string name="Submitz">إرسال</string>
+    <string name="facebooks">فيس بوك</string>
+    <string name="signUpwithEmail">التسجيل ببريد إلكتروني </string>
+    <string name="Submitz">أشترك</string>
 
 
-    <string name="More_Details"><u>المزيد من التفاصيل></u></string>
+    <string name="More_Details"><u>تفاصيل أكثر></u></string>
     <string name="ratingIconHeartFilled">♥</string>
     <string name="ratingIconHeartOutline">♡</string>
-    <string name="title_activity_favorite">المفضلة</string>
+    <string name="title_activity_favorite">الأنشطة المفضلة</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
+    <string name="title_activity_contact_us">الخريطة</string>
 
 
     <!-- Start of Hima Strings -->
@@ -110,39 +107,40 @@
     <string name="medical_guide">الدليل الطبي</string>
     <string name="products">المنتجات</string>
     <string name="jobs">الوظائف</string>
-    <string name="cosmetics">عيادات التجميل</string>
+    <string name="cosmetics">مستحضرات التجميل</string>
     <string name="hospitals">المستشفيات</string>
     <string name="clinics">العيادات</string>
     <string name="pharmacy">الصيدليات</string>
 
     <!-- Start of AddProduct/Jobs Strings -->
     <string name="title">الاسم</string>
-    <string name="description">تفاصيل</string>
-    <string name="description0">تفاصيل :</string>
+    <string name="description">الوصف</string>
+    <string name="description0">الوصف :</string>
 
     <string name="price">السعر</string>
-    <string name="choose_city">اختر مدينة</string>
-    <string name="choose_area">اختر منطقة</string>
+    <string name="choose_city">إختر المدينة</string>
+    <string name="choose_area">إختر المنطقة</string>
     <string name="address">العنوان</string>
-    <string name="category">الفئة</string>
-    <string name="mobileNumber">رقم الهاتف</string>
-    <string name="add_phone">أضف رقم اخر</string>
+    <string name="category">المصنف</string>
+    <string name="mobileNumber">الهاتف الخلوي</string>
+    <string name="add_phone">+أضف تليفون</string>
     <string name="add_image">أضف صورة</string>
     <string name="status">الحالة</string>
     <string name="newnew">جديد</string>
     <string name="used">مستعمل</string>
-    <string name="submit_product">تم</string>
+    <string name="submit_product">إشترك</string>
     <string name="salary">الراتب</string>
-    <string name="salary0">الراتب :</string>
+    <string name="salary0">الراتب:</string>
 
-    <string name="job_type">نوع العمل</string>
-    <string name="employer">صاحب العمل</string>
-    <string name="job_seeker">طالب عمل</string>
+    <string name="job_type">نوع الوظيفة</string>
+    <string name="employer">الموظف</string>
+    <string name="job_seeker">باحث عن وظيفة</string>
     <string name="experience_level">مستوى الخبرة</string>
     <string name="education_level">مستوى التعليم</string>
     <string name="employment_type">نوع الوظيفة</string>
-    <string name="submit_job">تم</string>
-    <string name="views">مشاهدة</string>
-    <string name="actions">تعديل</string>
+    <string name="submit_job">أشترك</string>
+    <string name="views">مشاهدات</string>
+    <string name="actions">الأحداث</string>
+
 
 </resources>

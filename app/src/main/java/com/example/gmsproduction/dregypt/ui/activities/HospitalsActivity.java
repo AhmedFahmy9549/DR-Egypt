@@ -211,6 +211,7 @@ public class HospitalsActivity extends BaseActivity {
                 Intent intent = new Intent(HospitalsActivity.this, FiltersActivity.class);
                 intent.putExtra("idFilter", 1);
                 startActivity(intent);
+                finish();
                 break;
         }
         return true;

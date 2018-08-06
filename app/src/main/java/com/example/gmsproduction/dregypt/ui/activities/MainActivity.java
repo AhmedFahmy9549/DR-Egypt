@@ -63,9 +63,9 @@ public class MainActivity extends BaseActivity
     ActionBarDrawerToggle toggle;
     NavigationView navigationView;
     CircleImageView Menu_pic;
-    TextView Menu_title, medical_guideTXT, productTXT, jobsTXT, cosmeticsTXT,Menu_Email;
+    TextView Menu_title, medical_guideTXT, productTXT, jobsTXT, cosmeticsTXT, Menu_Email;
     int id, language;
-    String userName = "Dr.Egypt", userAvatar = "",userEmail;
+    String userName = "Dr.Egypt", userAvatar = "", userEmail;
     View header;
 
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
@@ -84,7 +84,6 @@ public class MainActivity extends BaseActivity
         init();
         language = getIdLANG();
         setTitle("Dr.Egypt");
-
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         id = prefs.getInt("User_id", 0);
         userName = prefs.getString("User_name", "Dr.Egypt");
@@ -94,7 +93,6 @@ public class MainActivity extends BaseActivity
            /* PushNotifications.start(getApplicationContext(), "f436d206-bd0a-4438-ad06-c3b10d485420");
             PushNotifications.subscribe(String.valueOf(id));
             PushNotifications.subscribe(String.valueOf("all"));*/
-
 
 
         setSupportActionBar(toolbar);
@@ -132,43 +130,15 @@ public class MainActivity extends BaseActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        //menu items
-        if (id == 0) {
-            LogIn();
-        } else {
-            LogOut();
-        }
 
-        /*navigationView = new ActionBarDrawerToggle(this, drawer,
-                R.drawable.ic_action_menu, R.string.drawer_open, R.string.drawer_close) {
+        lang(language);
 
 
-    }*/
 
-       /* SharedPreferences prefs = getSharedPreferences(USER_DETAILS, MODE_PRIVATE);
-        String restoredText = prefs.getString("User_name", null);
-        Log.e("Visis",""+restoredText);*/
-
-
-        //VolleyLIbUtils volleyLIbUtils=new VolleyLIbUtils(this, Request.Method.GET,"http://192.168.9.69/dregy/public/api/hospitals",this,this);
-        //volleyLIbUtils.setListener(this);
-        //volleyLIbUtils.setErrorListener(this);
-        //volleyLIbUtils.start();
-
-       /* GetHospitalsRequest getHospitalsRequest=new GetHospitalsRequest(this,this,this);
-        getHospitalsRequest.start();*/
-
-       /* AddHospitalToFavouriteRequest addHospitalToFavouriteRequest = new AddHospitalToFavouriteRequest(this, 3, 3, this, this);
-        addHospitalToFavouriteRequest.setBody(hi);
-        addHospitalToFavouriteRequest.start();*/
-
-       /* GetHospitalsRequest getHospitalsRequest=new GetHospitalsRequest(this,this,this);
-        getHospitalsRequest.start();
-*/
 
         SetUser(MainActivity.this);
 
-        lang(language);
+
     }
 
 
@@ -189,6 +159,7 @@ public class MainActivity extends BaseActivity
         nav_Menu.findItem(R.id.nav_myJobs).setVisible(true);
         nav_Menu.findItem(R.id.nav_myProduct).setVisible(true);
         nav_Menu.findItem(R.id.nav_Favorite).setVisible(true);
+
     }
 
     private void LogIn() {
@@ -198,11 +169,13 @@ public class MainActivity extends BaseActivity
         nav_Menu.findItem(R.id.nav_myJobs).setVisible(false);
         nav_Menu.findItem(R.id.nav_myProduct).setVisible(false);
         nav_Menu.findItem(R.id.nav_Favorite).setVisible(false);
-
+        /*Menu_title.setVisibility(View.VISIBLE);
+        Menu_Email.setVisibility(View.GONE);
+        Menu_pic.setVisibility(View.VISIBLE);*/
     }
 
 
-    public void SetUser(Context context)  {
+    public void SetUser(Context context) {
 
         Glide.with(MainActivity.this)
                 .load(userAvatar)
@@ -213,8 +186,6 @@ public class MainActivity extends BaseActivity
     }
 
 
-    
-    
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -438,20 +409,41 @@ public class MainActivity extends BaseActivity
     }
 
     private void lang(int lang) {
+
+
+
         if (lang == 1) {
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer);
+            Log.e("navigationView", "english");
+
+
             medical_guideTXT.setText("Medical Guide");
             productTXT.setText("Products");
             jobsTXT.setText("Jobs");
             cosmeticsTXT.setText("Cosmetics");
+
             setTitle("Dr.Egypt");
 
         } else if (lang == 2) {
+
+            Log.e("navigationView", "arabic");
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.activity_main_drawer_ar);
+
+
             medical_guideTXT.setText("الدليل الطبي");
             productTXT.setText("المنتجات");
             jobsTXT.setText("الوظائف");
             cosmeticsTXT.setText("عيادات التجميل");
             setTitle("دكتور ايجيبت");
 
+        }
+
+        if (id == 0) {
+            LogIn();
+        } else {
+            LogOut();
         }
 
     }

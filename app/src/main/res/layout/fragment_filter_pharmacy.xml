@@ -163,10 +163,14 @@
         android:layout_margin="10dp"
         android:text="Rating"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"
+
+        />
 
 
     <android.support.constraint.ConstraintLayout
+        android:visibility="gone"
         android:id="@id/parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

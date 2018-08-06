@@ -71,7 +71,6 @@ public class HospitalFilters extends Fragment {
             @Override
             public void onClick(View view) {
                 setSpinnerRating();
-
                 Log.e("TTTTTTTTTTTTT", "Num =Rate" + numRate);
                 Log.e("FFFFFFFFFFFFF", "City=" + city);
                 Log.e("CCCCCCCCCCCCC", "Area=" + area);
@@ -84,8 +83,12 @@ public class HospitalFilters extends Fragment {
                 editor.putInt("speciality", speciality);
 
                 editor.apply();
+
                 Intent intent = new Intent(getActivity(), HospitalsActivity.class);
                 startActivity(intent);
+                getActivity().finish();
+
+
 
 
             }

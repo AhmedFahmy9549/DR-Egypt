@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <!--<group android:checkableBehavior="single">
+
+
+    </group>-->
+
+
+    <item
+        android:id="@+id/Nav_Medical"
+        android:title="الدليل الطبي" />
+    <item
+        android:id="@+id/nav_pro"
+        android:title="المنتجات" />
+    <item
+        android:id="@+id/nav_job"
+        android:title="الوظائف" />
+    <item
+        android:id="@+id/nav_cos"
+        android:title="مستحضرات التجميل" />
+
+    <item
+        android:id="@+id/nav_Favorite"
+        android:title="المفضلة"
+        android:visible="false"
+
+        />
+    <item
+        android:id="@+id/nav_AddProduct"
+        android:title="اضافة وظيفة "
+        android:visible="false"
+        />
+    <item
+        android:id="@+id/nav_myProduct"
+        android:title="منتجاتي" />
+    <item
+        android:id="@+id/nav_AddJob"
+        android:title="اضافة وظيفة"
+        android:visible="false"
+        />
+    <item
+        android:id="@+id/nav_myJobs"
+        android:title="وظائفي" />
+
+
+    <item android:title="التواصل">
+        <menu>
+            <item
+                android:id="@+id/nav_abo"
+                android:title="عن الشركة" />
+            <item
+                android:id="@+id/nav_cont"
+                android:title="اتصل بنا" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/nav_log"
+        android:title="دخول" />
+    <item
+        android:id="@+id/nav_logOut"
+        android:title="خروج"
+        android:visible="false"
+        />
+
+</menu>
+
+
