@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -27,12 +29,15 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.F
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.ClinicsActivity;
+import com.example.gmsproduction.dregypt.ui.activities.FiltersActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -53,6 +58,12 @@ public class ClinicsFilters extends Fragment {
     String MY_PREFS_NAME = "FiltersCli";
 
 
+    TextView manuelTXT,uselessTXT,gpsBtn,gbsText;
+    ConstraintLayout constrainLocation;
+    LinearLayout linearLocationManuel;
+
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,6 +76,15 @@ public class ClinicsFilters extends Fragment {
         applay = view.findViewById(R.id.btn_applay);
 
         radioGroup = view.findViewById(R.id.radio_group);
+
+        manuelTXT= view.findViewById(R.id.filter_choose_location);
+        gpsBtn= view.findViewById(R.id.filter_detect_location);
+        constrainLocation = view.findViewById(R.id.filter_location_choice);
+        linearLocationManuel = view.findViewById(R.id.filter_location_select);
+        uselessTXT = view.findViewById(R.id.uselessCity);
+        gbsText= view.findViewById(R.id.gbstext);
+
+        click();
 
         applay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,7 +377,59 @@ public class ClinicsFilters extends Fragment {
 
     }
 
+    private void click(){
+        manuelTXT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* constrainLocation.setVisibility(View.GONE);
+                uselessTXT.setVisibility(view.GONE);*/
+                linearLocationManuel.setVisibility(View.VISIBLE);
+                gbsText.setVisibility(View.GONE);
 
+
+            }
+        });
+
+
+        gpsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                linearLocationManuel.setVisibility(View.GONE);
+                gbsText.setVisibility(View.VISIBLE);
+                ((FiltersActivity)getActivity()).getCurrLocation();
+                String x=((FiltersActivity)getActivity()).getMyCityName();
+                Log.e("MY Location=",""+x);
+                gbsText.setText("Location: "+x);
+                SearchInGps(x);
+
+
+            }
+        });
+    }
+
+    private void SearchInGps(String gover){
+        HashMap<Integer, String> meMap=new HashMap<Integer, String>();
+        meMap.put(2,"Matrouh Governorate");
+        meMap.put(1,"Alexandria Governorate ");
+        meMap.put(4,"Giza Governorate");
+        meMap.put(5,"White");
+
+        city= (int) getKeyFromValue(meMap,gover);
+        area=0;
+
+        Log.e("GETCURRENTLOCATION",""+city);
+
+    }
+
+
+    public static Object getKeyFromValue(Map hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
+    }
 }
 
 

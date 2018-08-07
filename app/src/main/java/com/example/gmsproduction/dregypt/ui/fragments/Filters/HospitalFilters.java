@@ -37,6 +37,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -56,7 +59,7 @@ public class HospitalFilters extends Fragment {
     int x, numRate, city, area,speciality;
     String MY_PREFS_NAME = "FiltersH";
 
-    TextView manuelTXT,autoTXT,uselessTXT;
+    TextView manuelTXT,uselessTXT,gpsBtn,gbsText;
     ConstraintLayout constrainLocation;
     LinearLayout linearLocationManuel;
 
@@ -66,6 +69,7 @@ public class HospitalFilters extends Fragment {
         view = inflater.inflate(R.layout.fragment_filter_hospital, container, false);
         init();
         click();
+
         applay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,32 +105,71 @@ public class HospitalFilters extends Fragment {
         applay = view.findViewById(R.id.btn_applay);
         spinner2= view.findViewById(R.id.spinner_speciality);
         manuelTXT= view.findViewById(R.id.filter_choose_location);
-        autoTXT= view.findViewById(R.id.filter_detect_location);
+        gpsBtn= view.findViewById(R.id.filter_detect_location);
         radioGroup = view.findViewById(R.id.radio_group);
         constrainLocation = view.findViewById(R.id.filter_location_choice);
         linearLocationManuel = view.findViewById(R.id.filter_location_select);
         uselessTXT = view.findViewById(R.id.uselessCity);
+        gbsText= view.findViewById(R.id.gbstext);
+
+
+
     }
 
     private void click(){
         manuelTXT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                constrainLocation.setVisibility(View.GONE);
-                uselessTXT.setVisibility(view.GONE);
+               /* constrainLocation.setVisibility(View.GONE);
+                uselessTXT.setVisibility(view.GONE);*/
                 linearLocationManuel.setVisibility(View.VISIBLE);
+                gbsText.setVisibility(View.GONE);
+
 
             }
         });
 
 
-        autoTXT.setOnClickListener(new View.OnClickListener() {
+        gpsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                linearLocationManuel.setVisibility(View.GONE);
+                gbsText.setVisibility(View.VISIBLE);
+                ((FiltersActivity)getActivity()).getCurrLocation();
+                String x=((FiltersActivity)getActivity()).getMyCityName();
+                Log.e("MY Location=",""+x);
+                gbsText.setText("Location: "+x);
+                SearchInGps(x);
+
 
             }
         });
     }
+
+    private void SearchInGps(String gover){
+        HashMap<Integer, String> meMap=new HashMap<Integer, String>();
+        meMap.put(2,"Matrouh Governorate");
+        meMap.put(1,"Alexandria Governorate ");
+        meMap.put(4,"Giza Governorate");
+        meMap.put(5,"White");
+
+        city= (int) getKeyFromValue(meMap,gover);
+        area=0;
+
+        Log.e("GETCURRENTLOCATION",""+city);
+
+    }
+
+
+    public static Object getKeyFromValue(Map hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
+    }
+
 
     private void getLocation() {
         GetRegionsRequest getRegionsRequest = new GetRegionsRequest(getActivity(), new Response.Listener<String>() {

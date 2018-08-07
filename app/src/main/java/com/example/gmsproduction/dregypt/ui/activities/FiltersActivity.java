@@ -13,7 +13,7 @@ import com.example.gmsproduction.dregypt.ui.fragments.Filters.JobsFilters;
 import com.example.gmsproduction.dregypt.ui.fragments.Filters.PharmacyFilters;
 import com.example.gmsproduction.dregypt.ui.fragments.Filters.ProductFilters;
 
-public class FiltersActivity extends AppCompatActivity {
+public class FiltersActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
