@@ -19,7 +19,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
-            android:text="Location"
+            android:text="@string/llocation"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -211,7 +211,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Feature"
+        android:text="@string/feature"
         android:textSize="20sp"
         android:textStyle="bold" />
     <LinearLayout
@@ -225,14 +225,14 @@
             android:id="@+id/checkbox_fullDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="24 Hour"
+            android:text="@string/hour24"
             android:layout_weight="1" />
 
         <CheckBox
             android:id="@+id/checkbox_delivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home Delivery"
+            android:text="@string/homeDelivery"
             android:layout_weight="1"
 
             />
