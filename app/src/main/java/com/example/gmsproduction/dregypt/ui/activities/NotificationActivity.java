@@ -5,11 +5,14 @@ import android.os.Bundle;
 
 import com.example.gmsproduction.dregypt.R;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
+
+
+
     }
 }

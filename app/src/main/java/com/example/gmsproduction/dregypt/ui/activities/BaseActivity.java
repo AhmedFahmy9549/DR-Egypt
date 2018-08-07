@@ -142,8 +142,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-
-
     //location
     public void getCurrLocation() {
 
@@ -247,5 +245,14 @@ public class BaseActivity extends AppCompatActivity {
         final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(view, fragment, Utils.Error);
         ft.commitAllowingStateLoss();
+    }
+
+    private void notification(){
+        SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+        editor.putString("title", "Elena");
+        editor.putString("body", "");
+        editor.apply();
+
+
     }
 }

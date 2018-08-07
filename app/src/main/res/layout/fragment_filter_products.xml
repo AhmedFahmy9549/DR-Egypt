@@ -34,7 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="Choose City"
+                        android:text="@string/choose_city"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="Choose Area"
+                        android:text="@string/choose_area"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -135,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Status"
+                android:text="@string/status"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="All" />
+                    android:text="@string/all" />
 
 
                 <RadioButton
@@ -159,14 +159,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="New" />
+                    android:text="@string/newnew" />
 
                 <RadioButton
                     android:id="@+id/radio_status3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Used" />
+                    android:text="@string/used" />
             </RadioGroup>
 
 
@@ -252,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"
-                android:text="Apply"
+                android:text="@string/apply"
                 android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>

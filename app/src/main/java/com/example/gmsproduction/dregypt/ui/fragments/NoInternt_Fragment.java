@@ -80,7 +80,6 @@ public class NoInternt_Fragment extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
-
     public void ReloadCosmetics() {
 
         ((CosmeticsActivity) getActivity()).getCosmetics("");
@@ -88,7 +87,6 @@ public class NoInternt_Fragment extends Fragment {
         Toast.makeText(getContext(), "Cosmetic", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
     }
-
     public void ReloadJobs() {
 
         ((JobsActivity) getActivity()).getJobs("");

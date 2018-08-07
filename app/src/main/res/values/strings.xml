@@ -142,5 +142,28 @@
     <string name="views">Views</string>
     <string name="actions">Actions</string>
 
+    <!-- end of AddProduct/Jobs Strings -->
+
+
+    <!-- Start of Filters Strings -->
+
+    <string name="all">All</string>
+    <string name="speciality">Speciality</string>
+    <string name="apply">Apply</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </resources>

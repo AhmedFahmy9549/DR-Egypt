@@ -142,5 +142,14 @@
     <string name="views">مشاهدات</string>
     <string name="actions">الأحداث</string>
 
+    <!-- end of AddProduct/Jobs Strings -->
+
+
+    <!-- Start of Filters Strings -->
+
+    <string name="all">الكل</string>
+    <string name="speciality">التخصص</string>
+
+
 
 </resources>

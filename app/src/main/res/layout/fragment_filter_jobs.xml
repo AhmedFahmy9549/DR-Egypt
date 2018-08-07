@@ -34,7 +34,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="Choose City"
+                        android:text="@string/choose_city"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="Choose Area"
+                        android:text="@string/choose_area"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Category"
+                android:text="@string/category"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -135,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Ad Type"
+                android:text="@string/job_type"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="All" />
+                    android:text="@string/all" />
 
 
                 <RadioButton
@@ -159,14 +159,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Employer" />
+                    android:text="@string/employer" />
 
                 <RadioButton
                     android:id="@+id/radio_type3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Job Seeker" />
+                    android:text="@string/job_seeker" />
             </RadioGroup>
 
 
@@ -192,7 +192,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="Experience Level"
+                        android:text="@string/experience_level"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -215,7 +215,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Education Level"
+                android:text="@string/education_level"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -231,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"
-                android:text="Apply"
+                android:text="@string/apply"
                 android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
