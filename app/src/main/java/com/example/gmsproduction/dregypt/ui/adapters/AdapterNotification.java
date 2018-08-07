@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.gmsproduction.dregypt.Models.NotificationModel;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.DetailsProducts;
@@ -35,11 +36,11 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class AdapterNotification extends RecyclerView.Adapter<AdapterNotification.MyViewHolder> {
     private Context mContext;
-    private ArrayList<ProductsModel> mArrayList;
+    private ArrayList<NotificationModel> mArrayList;
 
 
 
-    public AdapterNotification(Context mContext, ArrayList<ProductsModel> mArrayList) {
+    public AdapterNotification(Context mContext, ArrayList<NotificationModel> mArrayList) {
         this.mContext = mContext;
         this.mArrayList = mArrayList;
     }
@@ -52,7 +53,15 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
 
     @Override
     public void onBindViewHolder(final AdapterNotification.MyViewHolder holder, final int position) {
-        ProductsModel currentItem = mArrayList.get(position);
+        NotificationModel currentItem = mArrayList.get(position);
+
+        String title = currentItem.getTitle();
+        String body = currentItem.getBody();
+
+        if (!body.equals("null")){
+            holder.title.setText(title);
+            holder.body.setText(body);
+        }
 
 
     }

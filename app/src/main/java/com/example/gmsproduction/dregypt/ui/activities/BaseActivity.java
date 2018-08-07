@@ -52,6 +52,8 @@ public class BaseActivity extends AppCompatActivity {
 
         //the language sharedprefs
         SharedPreferences prefs = getSharedPreferences("LangKey", MODE_PRIVATE);
+        SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+        editor.apply();
 
         idLANG = prefs.getInt("languageNum", 1); //0 is the default value.
 
@@ -68,6 +70,7 @@ public class BaseActivity extends AppCompatActivity {
             public void onMessageReceived(RemoteMessage remoteMessage) {
                 Log.e("msssg", "" + remoteMessage.getNotification().getTitle());
                 Log.e("msssg", "" + remoteMessage.getNotification().getBody());
+                notification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
 
             }
         });
@@ -247,11 +250,27 @@ public class BaseActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
-    private void notification(){
-        SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
-        editor.putString("title", "Elena");
-        editor.putString("body", "");
-        editor.apply();
+    private void notification(String title, String body){
+        int x=1;
+        SharedPreferences prefs = getSharedPreferences("notification", MODE_PRIVATE);
+        x = prefs.getInt("x", 1);
+         if (x==2){
+            SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+            editor.putString("title1", title);
+            editor.putString("body1", body);
+            editor.putInt("x",1);
+            editor.apply();
+        }else if (x==1){
+            SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
+            editor.putString("title", title);
+            editor.putString("body", body);
+            editor.putInt("x",2);
+            editor.apply();
+
+        }
+
+
+
 
 
     }
