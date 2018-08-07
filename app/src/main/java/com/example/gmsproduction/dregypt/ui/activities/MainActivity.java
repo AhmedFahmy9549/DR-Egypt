@@ -307,6 +307,11 @@ public class MainActivity extends BaseActivity
                 startActivity(intent);
                 break;
 
+            case R.id.nav_abo:
+                intent = new Intent(this, AboutUsActivity.class);
+                startActivity(intent);
+                break;
+
 
         }
 
