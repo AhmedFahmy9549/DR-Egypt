@@ -8,12 +8,86 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/uselessCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Location"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/filter_location_choice"
+            android:layout_below="@id/uselessCity"
+            android:visibility="visible"
+            >
+
+            <TextView
+                android:id="@+id/filter_choose_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:padding="20dp"
+                android:text="Choose Location"
+                android:background="@drawable/shape_circle_corner_v02"
+                android:backgroundTint="@color/black"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/filter_detect_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_circle_corner_v02"
+                android:backgroundTint="@color/black"
+                android:padding="20dp"
+                android:text="Detect Location"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/filter_choose_location"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+
+    </RelativeLayout>
+
+
     <LinearLayout
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2">
+        android:weightSum="2"
+        android:visibility="gone"
+        android:id="@+id/filter_location_select"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@string/choose_city"
+                android:text="Choose City"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -48,7 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@string/choose_area"
+                android:text="Choose Area"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -61,6 +135,17 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/gbstext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textColor="#000"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <!-- <TextView
          android:layout_width="wrap_content"

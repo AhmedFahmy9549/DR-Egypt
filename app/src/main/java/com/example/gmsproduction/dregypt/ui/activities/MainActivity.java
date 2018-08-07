@@ -130,7 +130,6 @@ public class MainActivity extends BaseActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-
         lang(language);
 
 
@@ -420,6 +419,8 @@ public class MainActivity extends BaseActivity
         if (lang == 1) {
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer);
+            navigationView.setTextDirection(View.TEXT_DIRECTION_FIRST_STRONG_LTR);
+            navigationView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             Log.e("navigationView", "english");
 
 
@@ -435,6 +436,8 @@ public class MainActivity extends BaseActivity
             Log.e("navigationView", "arabic");
             navigationView.getMenu().clear();
             navigationView.inflateMenu(R.menu.activity_main_drawer_ar);
+            navigationView.setTextDirection(View.TEXT_DIRECTION_ANY_RTL);
+            navigationView.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
 
             medical_guideTXT.setText("الدليل الطبي");

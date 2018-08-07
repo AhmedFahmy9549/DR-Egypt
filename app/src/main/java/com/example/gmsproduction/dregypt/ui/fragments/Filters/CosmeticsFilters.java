@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -27,12 +29,15 @@ import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.F
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.activities.CosmeticsActivity;
+import com.example.gmsproduction.dregypt.ui.activities.FiltersActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -42,15 +47,20 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class CosmeticsFilters extends Fragment {
     View view;
-    Spinner spinner, spinner1,spinner2;
+    Spinner spinner, spinner1, spinner2;
     ArrayList<LocationModel> array, array2;
-    ArrayList<String> name_array, name_array2,SpecialNameArray;
+    ArrayList<String> name_array, name_array2, SpecialNameArray;
     LinearLayout linearLayout;
     Button applay;
     RadioGroup radioGroup;
     RadioButton radioButton;
-    int x, numRate, city, area,speciality;
+    int x, numRate, city, area, speciality;
     String MY_PREFS_NAME = "FiltersCos";
+
+
+    TextView manuelTXT, uselessTXT, gpsBtn, gbsText;
+    ConstraintLayout constrainLocation;
+    LinearLayout linearLocationManuel;
 
 
     @Nullable
@@ -59,13 +69,19 @@ public class CosmeticsFilters extends Fragment {
         view = inflater.inflate(R.layout.fragment_filter_cosmetics, container, false);
         spinner = view.findViewById(R.id.spinner_city);
         spinner1 = view.findViewById(R.id.spinner_area);
-        spinner2= view.findViewById(R.id.spinner_speciality);
-
+        spinner2 = view.findViewById(R.id.spinner_speciality);
         linearLayout = view.findViewById(R.id.linear_area);
         applay = view.findViewById(R.id.btn_applay);
-
         radioGroup = view.findViewById(R.id.radio_group);
+        manuelTXT = view.findViewById(R.id.filter_choose_location);
+        gpsBtn = view.findViewById(R.id.filter_detect_location);
+        constrainLocation = view.findViewById(R.id.filter_location_choice);
+        linearLocationManuel = view.findViewById(R.id.filter_location_select);
+        uselessTXT = view.findViewById(R.id.uselessCity);
+        gbsText = view.findViewById(R.id.gbstext);
 
+
+        click();
         applay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,7 +91,6 @@ public class CosmeticsFilters extends Fragment {
                 Log.e("FFFFFFFFFFFFF", "City=" + city);
                 Log.e("CCCCCCCCCCCCC", "Area=" + area);
                 Log.e("YYYYYYYYYYYYY", "Special=" + speciality);
-
 
 
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
@@ -285,18 +300,18 @@ public class CosmeticsFilters extends Fragment {
 
     }
 
-    private void  getSpeciality(){
-        SpecialNameArray=new ArrayList<>();
-        array=new ArrayList<>();
+    private void getSpeciality() {
+        SpecialNameArray = new ArrayList<>();
+        array = new ArrayList<>();
 
-        array.add(new LocationModel("",-1));
+        array.add(new LocationModel("", -1));
         SpecialNameArray.add("All");
-        Log.e("specName","Hi");
+        Log.e("specName", "Hi");
 
         GetCosmeticClinicSpecialitiesRequest getCosmeticClinicSpecialitiesRequest = new GetCosmeticClinicSpecialitiesRequest(getActivity(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("specName",response);
+                Log.e("specName", response);
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -307,7 +322,7 @@ public class CosmeticsFilters extends Fragment {
                         int specId = object.getInt("id");
                         LocationModel model = new LocationModel(specName, specId);
 
-                        Log.e("specName",specName);
+                        Log.e("specName", specName);
                         SpecialNameArray.add(specName);
                         array.add(model);
                     }
@@ -338,8 +353,6 @@ public class CosmeticsFilters extends Fragment {
                             speciality = locationModel.getLocId();
 
 
-
-
                         }
 
 
@@ -354,13 +367,68 @@ public class CosmeticsFilters extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("ERrorMessage",""+error.getMessage());
+                Log.e("ERrorMessage", "" + error.getMessage());
 
             }
         });
         getCosmeticClinicSpecialitiesRequest.start();
 
 
+    }
+
+
+    private void click() {
+        manuelTXT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /* constrainLocation.setVisibility(View.GONE);
+                uselessTXT.setVisibility(view.GONE);*/
+                linearLocationManuel.setVisibility(View.VISIBLE);
+                gbsText.setVisibility(View.GONE);
+
+
+            }
+        });
+
+
+        gpsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                linearLocationManuel.setVisibility(View.GONE);
+                gbsText.setVisibility(View.VISIBLE);
+                ((FiltersActivity) getActivity()).getCurrLocation();
+                String x = ((FiltersActivity) getActivity()).getMyCityName();
+                Log.e("MY Location=", "" + x);
+                gbsText.setText("Location: " + x);
+                SearchInGps(x);
+
+
+            }
+        });
+    }
+
+    private void SearchInGps(String gover) {
+        HashMap<Integer, String> meMap = new HashMap<Integer, String>();
+        meMap.put(2, "Matrouh Governorate");
+        meMap.put(1, "Alexandria Governorate ");
+        meMap.put(4, "Giza Governorate");
+        meMap.put(5, "White");
+
+        city = (int) getKeyFromValue(meMap, gover);
+        area = 0;
+
+        Log.e("GETCURRENTLOCATION", "" + city);
+
+    }
+
+
+    public static Object getKeyFromValue(Map hm, Object value) {
+        for (Object o : hm.keySet()) {
+            if (hm.get(o).equals(value)) {
+                return o;
+            }
+        }
+        return null;
     }
 
 
