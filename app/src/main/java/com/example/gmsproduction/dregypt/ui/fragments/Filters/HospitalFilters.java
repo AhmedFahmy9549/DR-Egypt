@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Response;
@@ -54,19 +56,16 @@ public class HospitalFilters extends Fragment {
     int x, numRate, city, area,speciality;
     String MY_PREFS_NAME = "FiltersH";
 
+    TextView manuelTXT,autoTXT,uselessTXT;
+    ConstraintLayout constrainLocation;
+    LinearLayout linearLocationManuel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_filter_hospital, container, false);
-        spinner = view.findViewById(R.id.spinner_city);
-        spinner1 = view.findViewById(R.id.spinner_area);
-        linearLayout = view.findViewById(R.id.linear_area);
-        applay = view.findViewById(R.id.btn_applay);
-        spinner2= view.findViewById(R.id.spinner_speciality);
-
-        radioGroup = view.findViewById(R.id.radio_group);
-
+        init();
+        click();
         applay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,14 +87,45 @@ public class HospitalFilters extends Fragment {
                 startActivity(intent);
                 getActivity().finish();
 
-
-
-
             }
         });
         getLocation();
         getSpeciality();
         return view;
+    }
+
+    private void init(){
+        spinner = view.findViewById(R.id.spinner_city);
+        spinner1 = view.findViewById(R.id.spinner_area);
+        linearLayout = view.findViewById(R.id.linear_area);
+        applay = view.findViewById(R.id.btn_applay);
+        spinner2= view.findViewById(R.id.spinner_speciality);
+        manuelTXT= view.findViewById(R.id.filter_choose_location);
+        autoTXT= view.findViewById(R.id.filter_detect_location);
+        radioGroup = view.findViewById(R.id.radio_group);
+        constrainLocation = view.findViewById(R.id.filter_location_choice);
+        linearLocationManuel = view.findViewById(R.id.filter_location_select);
+        uselessTXT = view.findViewById(R.id.uselessCity);
+    }
+
+    private void click(){
+        manuelTXT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                constrainLocation.setVisibility(View.GONE);
+                uselessTXT.setVisibility(view.GONE);
+                linearLocationManuel.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+
+        autoTXT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void getLocation() {

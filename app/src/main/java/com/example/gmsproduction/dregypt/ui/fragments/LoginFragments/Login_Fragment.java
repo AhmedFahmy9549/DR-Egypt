@@ -266,11 +266,12 @@ public class Login_Fragment extends BaseLoginFragment implements OnClickListener
                 public void onErrorResponse(VolleyError error) {
                     Log.e("Login", "error" + error.getMessage());
                     loginButton2.setEnabled(true);
-                    final String statusCode = String.valueOf(error.networkResponse.statusCode);
-                    Log.e("Login", "statusCode  " + statusCode);
                     String body = null;
+
                     //get response body and parse with appropriate encoding
                     try {
+                        final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                        Log.e("Login", "statusCode  " + statusCode);
                         body = new String(error.networkResponse.data, "UTF-8");
                         Log.e("Login", "body " + body);
                     } catch (UnsupportedEncodingException e) {

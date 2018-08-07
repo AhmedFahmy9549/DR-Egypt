@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 
 public class MedicalGuideActivity extends BaseActivity implements View.OnClickListener , BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private SliderLayout mDemoSlider;
-    ImageView hospitalBtn,ClinicBtn,PharmacyBtn;
+    RelativeLayout hospitalBtn,ClinicBtn,PharmacyBtn;
     TextView hospitalText,ClinicText,PharmacyText;
     int language;
 
@@ -29,9 +30,9 @@ public class MedicalGuideActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_medical_guide);
         language = getIdLANG();
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
-        hospitalBtn=(ImageView) findViewById(R.id.next_name1);
-        ClinicBtn=(ImageView) findViewById(R.id.next_name2);
-        PharmacyBtn=(ImageView) findViewById(R.id.next_name3);
+        hospitalBtn= findViewById(R.id.next_name1);
+        ClinicBtn= findViewById(R.id.next_name2);
+        PharmacyBtn= findViewById(R.id.next_name3);
 
         hospitalText=(TextView) findViewById(R.id.text_name1);
         ClinicText=(TextView) findViewById(R.id.text_name2);

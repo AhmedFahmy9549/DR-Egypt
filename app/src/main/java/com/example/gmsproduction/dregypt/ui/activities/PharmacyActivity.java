@@ -215,7 +215,7 @@ public class PharmacyActivity extends BaseActivity {
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.Pharmacy_Include, fragment, Utils.Error);
-                    ft.commit();
+                    ft.commitAllowingStateLoss();
 
                 } else if (error instanceof AuthFailureError) {
                     //TODO
@@ -328,7 +328,7 @@ public class PharmacyActivity extends BaseActivity {
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.Pharmacy_Include, fragment, Utils.Error);
-                    ft.commit();
+                    ft.commitAllowingStateLoss();
 
                 } else if (error instanceof AuthFailureError) {
                     //TODO

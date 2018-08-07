@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -55,6 +56,7 @@ public class CosmeticsActivity extends BaseActivity {
     Map<String, String> body = new HashMap<>();
     String url = Constants.basicUrl + "/cosmetic-clinics/search";
     String test;
+    ProgressBar progressBar;
 
 
     LinearLayoutManager linearLayoutManager;
@@ -73,6 +75,10 @@ public class CosmeticsActivity extends BaseActivity {
 
         //recycdler View
         mRecyclerView = findViewById(R.id.Recycler_Cosmetic);
+        progressBar = (ProgressBar) findViewById(R.id.cosmetic_Progressbar);
+        progressBar.setVisibility(View.VISIBLE);
+
+
 
         getCosmeticsPagenatin("");
 
@@ -269,6 +275,8 @@ public class CosmeticsActivity extends BaseActivity {
             public void onErrorResponse(VolleyError error) {
 
                 if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    progressBar.setVisibility(View.GONE);
+
                     /*fragmentManager
                             .beginTransaction()
                             .add(R.id.Cosmetic_Include, new NoInternt_Fragment(),
@@ -279,7 +287,7 @@ public class CosmeticsActivity extends BaseActivity {
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.Cosmetic_Include, fragment, Utils.Error);
-                    ft.commit();
+                    ft.commitAllowingStateLoss();
 
                 } else if (error instanceof AuthFailureError) {
                     //TODO
@@ -357,6 +365,7 @@ public class CosmeticsActivity extends BaseActivity {
     }
 
     public void PagenationResponse(String response) {
+        progressBar.setVisibility(View.GONE);
 
         Log.e("tagyyy", response);
         try {

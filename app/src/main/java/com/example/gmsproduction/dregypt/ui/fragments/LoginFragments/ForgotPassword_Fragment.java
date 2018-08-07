@@ -130,16 +130,16 @@ public class ForgotPassword_Fragment extends Fragment implements
                     return;
                 }
 
-                String body;
-                //get status code here
-                final String statusCode = String.valueOf(error.networkResponse.statusCode);
-                Log.e("forgetEmail", "statusCode  " + statusCode);
-                if (statusCode.equals("404")){
-                    new CustomToast().Show_Toast_Fail(getActivity(),view,"There is no account associated with this email");
-                }
-
-                //get response body and parse with appropriate encoding
                 try {
+                    String body;
+                    //get status code here
+                    final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                    Log.e("forgetEmail", "statusCode  " + statusCode);
+
+                    if (statusCode.equals("404")){
+                        new CustomToast().Show_Toast_Fail(getActivity(),view,"There is no account associated with this email");
+                    }
+
                     body = new String(error.networkResponse.data, "UTF-8");
                     Log.e("forgetEmail", "body " + body);
                 } catch (UnsupportedEncodingException e) {

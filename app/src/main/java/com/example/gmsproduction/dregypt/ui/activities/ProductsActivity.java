@@ -65,7 +65,6 @@ public class ProductsActivity extends BaseActivity {
 
     String id, title, description, price, image, status, address, created_at, phone_1, phone_2, category;
     int userid,language;
-    SliderLayout mDemoSlider;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String url = Constants.basicUrl + "/product-ads/search";
@@ -74,7 +73,6 @@ public class ProductsActivity extends BaseActivity {
     DetailsProducts detailsProducts;
     String test;
     ProgressBar progressBar;
-    public static final String CheckInternet = "CheckInternet";
 
     LinearLayoutManager LayoutManagaer;
     int page = 1;
@@ -353,7 +351,7 @@ public class ProductsActivity extends BaseActivity {
                     fragment.setArguments(arguments);
                     final android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.dodododo, fragment, Utils.Error);
-                    ft.commit();
+                    ft.commitAllowingStateLoss();
                     /*fragmentManager
                             .beginTransaction()
                             .add(R.id.dodododo, new NoInternt_Fragment(),

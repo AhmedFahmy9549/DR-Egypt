@@ -178,16 +178,17 @@ public class SignUp_Fragment extends Fragment implements OnClickListener {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    String body;
                     //get status code here
-                    final String statusCode = String.valueOf(error.networkResponse.statusCode);
-                    Log.e("Signup", "statusCode  " + statusCode);
-                    if (statusCode.equals("422")){
-                        new CustomToast().Show_Toast(getActivity(),view,"The email has already been taken.");
-                    }
+
 
                     //get response body and parse with appropriate encoding
                     try {
+                        String body;
+                        final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                        Log.e("Signup", "statusCode  " + statusCode);
+                        if (statusCode.equals("422")){
+                            new CustomToast().Show_Toast(getActivity(),view,"The email has already been taken.");
+                        }
                         body = new String(error.networkResponse.data, "UTF-8");
                         Log.e("Signup", "body " + body);
                     } catch (UnsupportedEncodingException e) {
