@@ -47,21 +47,21 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ClinicsFilters extends Fragment {
     View view;
-    Spinner spinner, spinner1,spinner2;
+    Spinner spinner, spinner1, spinner2;
     ArrayList<LocationModel> array, array2;
-    ArrayList<String> name_array, name_array2,SpecialNameArray;
+    ArrayList<String> name_array, name_array2, SpecialNameArray;
     LinearLayout linearLayout;
     Button applay;
     RadioGroup radioGroup;
     RadioButton radioButton;
-    int x, numRate, city, area,speciality;
+    int x, numRate, city, area, speciality;
     String MY_PREFS_NAME = "FiltersCli";
+    String specName,specName1,specName2;
 
 
-    TextView manuelTXT,uselessTXT,gpsBtn,gbsText;
+    TextView manuelTXT, uselessTXT, gpsBtn, gbsText;
     ConstraintLayout constrainLocation;
     LinearLayout linearLocationManuel;
-
 
 
     @Nullable
@@ -70,19 +70,19 @@ public class ClinicsFilters extends Fragment {
         view = inflater.inflate(R.layout.fragment_filter_clinics, container, false);
         spinner = view.findViewById(R.id.spinner_city);
         spinner1 = view.findViewById(R.id.spinner_area);
-        spinner2= view.findViewById(R.id.spinner_speciality);
+        spinner2 = view.findViewById(R.id.spinner_speciality);
 
         linearLayout = view.findViewById(R.id.linear_area);
         applay = view.findViewById(R.id.btn_applay);
 
         radioGroup = view.findViewById(R.id.radio_group);
 
-        manuelTXT= view.findViewById(R.id.filter_choose_location);
-        gpsBtn= view.findViewById(R.id.filter_detect_location);
+        manuelTXT = view.findViewById(R.id.filter_choose_location);
+        gpsBtn = view.findViewById(R.id.filter_detect_location);
         constrainLocation = view.findViewById(R.id.filter_location_choice);
         linearLocationManuel = view.findViewById(R.id.filter_location_select);
         uselessTXT = view.findViewById(R.id.uselessCity);
-        gbsText= view.findViewById(R.id.gbstext);
+        gbsText = view.findViewById(R.id.gbstext);
 
         click();
 
@@ -95,7 +95,6 @@ public class ClinicsFilters extends Fragment {
                 Log.e("FFFFFFFFFFFFF", "City=" + city);
                 Log.e("CCCCCCCCCCCCC", "Area=" + area);
                 Log.e("YYYYYYYYYYYYY", "Special=" + speciality);
-
 
 
                 SharedPreferences.Editor editor = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
@@ -123,14 +122,28 @@ public class ClinicsFilters extends Fragment {
                 array = new ArrayList<>();
                 name_array = new ArrayList<>();
 
-                name_array.add("All");
+                if (((FiltersActivity) getActivity()).getLanguage() == 1) {
+                    name_array.add("All");
+
+                } else
+                    name_array.add("الكل");
+
+
                 array.add(new LocationModel("", -1));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+
+                        if (((FiltersActivity) getActivity()).getLanguage() == 1) {
+                             specName = object.getString("en_name");
+
+                        } else {
+                             specName = object.getString("ar_name");
+
+                        }
+
                         int regionId = object.getInt("id");
 
                         LocationModel model = new LocationModel(specName, regionId);
@@ -196,7 +209,13 @@ public class ClinicsFilters extends Fragment {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
 
-        name_array2.add("All");
+        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+            name_array2.add("All");
+
+        }
+        else
+            name_array2.add("الكل");
+
         array2.add(new LocationModel("", -1));
 
 
@@ -210,14 +229,22 @@ public class ClinicsFilters extends Fragment {
                     JSONArray jsonArray = jsonObject1.getJSONArray("cities");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                             specName1 = object.getString("en_name");
+
+                        }
+                        else
+                             specName1 = object.getString("ar_name");
+
+
                         int regionId = object.getInt("id");
 
-                        LocationModel model = new LocationModel(specName, regionId);
+                        LocationModel model = new LocationModel(specName1, regionId);
 
 
                         array2.add(model);
-                        name_array2.add(specName);
+                        name_array2.add(specName1);
 
                     }
 
@@ -305,12 +332,19 @@ public class ClinicsFilters extends Fragment {
 
     }
 
-    private void  getSpeciality(){
-        SpecialNameArray=new ArrayList<>();
-        array=new ArrayList<>();
+    private void getSpeciality() {
+        SpecialNameArray = new ArrayList<>();
+        array = new ArrayList<>();
 
-        array.add(new LocationModel("",-1));
-        SpecialNameArray.add("All");
+        array.add(new LocationModel("", -1));
+
+        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+            SpecialNameArray.add("All");
+
+        }
+        else
+            SpecialNameArray.add("الكل");
+
 
         GetClinicSpecialitiesRequest getClinicSpecialitiesRequest = new GetClinicSpecialitiesRequest(getActivity(), new Response.Listener<String>() {
             @Override
@@ -320,10 +354,18 @@ public class ClinicsFilters extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                             specName2 = object.getString("en_name");
+
+                        }
+                        else
+                             specName2 = object.getString("ar_name");
+
                         int specId = object.getInt("id");
-                        LocationModel model = new LocationModel(specName, specId);
-                        SpecialNameArray.add(specName);
+                        LocationModel model = new LocationModel(specName2, specId);
+                        SpecialNameArray.add(specName2);
                         array.add(model);
                     }
 
@@ -353,8 +395,6 @@ public class ClinicsFilters extends Fragment {
                             speciality = locationModel.getLocId();
 
 
-
-
                         }
 
 
@@ -377,7 +417,7 @@ public class ClinicsFilters extends Fragment {
 
     }
 
-    private void click(){
+    private void click() {
         manuelTXT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -396,10 +436,10 @@ public class ClinicsFilters extends Fragment {
             public void onClick(View view) {
                 linearLocationManuel.setVisibility(View.GONE);
                 gbsText.setVisibility(View.VISIBLE);
-                ((FiltersActivity)getActivity()).getCurrLocation();
-                String x=((FiltersActivity)getActivity()).getMyCityName();
-                Log.e("MY Location=",""+x);
-                gbsText.setText("Location: "+x);
+                ((FiltersActivity) getActivity()).getCurrLocation();
+                String x = ((FiltersActivity) getActivity()).getMyCityName();
+                Log.e("MY Location=", "" + x);
+                gbsText.setText("Location: " + x);
                 SearchInGps(x);
 
 
@@ -407,17 +447,20 @@ public class ClinicsFilters extends Fragment {
         });
     }
 
-    private void SearchInGps(String gover){
-        HashMap<Integer, String> meMap=new HashMap<Integer, String>();
-        meMap.put(2,"Matrouh Governorate");
-        meMap.put(1,"Alexandria Governorate ");
-        meMap.put(4,"Giza Governorate");
-        meMap.put(5,"White");
+    private void SearchInGps(String gover) {
 
-        city= (int) getKeyFromValue(meMap,gover);
-        area=0;
 
-        Log.e("GETCURRENTLOCATION",""+city);
+        try {
+            city = (int) getKeyFromValue(((FiltersActivity) getActivity()).init(), gover);
+
+        } catch (Exception e) {
+
+
+        }
+
+        area = 0;
+
+        Log.e("GETCURRENTLOCATION", "" + city);
 
     }
 

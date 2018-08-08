@@ -56,6 +56,7 @@ public class CosmeticsFilters extends Fragment {
     RadioButton radioButton;
     int x, numRate, city, area, speciality;
     String MY_PREFS_NAME = "FiltersCos";
+    String specName,specName1,specName2;
 
 
     TextView manuelTXT, uselessTXT, gpsBtn, gbsText;
@@ -118,14 +119,30 @@ public class CosmeticsFilters extends Fragment {
                 array = new ArrayList<>();
                 name_array = new ArrayList<>();
 
-                name_array.add("All");
+                if(((FiltersActivity)getActivity()).getLanguage()==1){
+                    name_array.add("All");
+
+
+                }
+                else
+                    name_array.add("الكل");
+
                 array.add(new LocationModel("", -1));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+
+                             specName = object.getString("en_name");
+
+                        }
+                        else
+                             specName = object.getString("ar_name");
+
+
                         int regionId = object.getInt("id");
 
                         LocationModel model = new LocationModel(specName, regionId);
@@ -191,7 +208,14 @@ public class CosmeticsFilters extends Fragment {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
 
-        name_array2.add("All");
+        if(((FiltersActivity)getActivity()).getLanguage()==1){
+            name_array2.add("All");
+
+
+        }
+        else
+            name_array2.add("الكل");
+
         array2.add(new LocationModel("", -1));
 
 
@@ -205,14 +229,20 @@ public class CosmeticsFilters extends Fragment {
                     JSONArray jsonArray = jsonObject1.getJSONArray("cities");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                             specName1 = object.getString("en_name");
+
+                        }
+                        else
+                             specName1 = object.getString("ar_name");
                         int regionId = object.getInt("id");
 
-                        LocationModel model = new LocationModel(specName, regionId);
+                        LocationModel model = new LocationModel(specName1, regionId);
 
 
                         array2.add(model);
-                        name_array2.add(specName);
+                        name_array2.add(specName1);
 
                     }
 
@@ -305,7 +335,16 @@ public class CosmeticsFilters extends Fragment {
         array = new ArrayList<>();
 
         array.add(new LocationModel("", -1));
-        SpecialNameArray.add("All");
+
+
+        if(((FiltersActivity)getActivity()).getLanguage()==1){
+            SpecialNameArray.add("All");
+
+
+        }
+        else
+            SpecialNameArray.add("الكل");
+
         Log.e("specName", "Hi");
 
         GetCosmeticClinicSpecialitiesRequest getCosmeticClinicSpecialitiesRequest = new GetCosmeticClinicSpecialitiesRequest(getActivity(), new Response.Listener<String>() {
@@ -318,12 +357,21 @@ public class CosmeticsFilters extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
-                        int specId = object.getInt("id");
-                        LocationModel model = new LocationModel(specName, specId);
 
-                        Log.e("specName", specName);
-                        SpecialNameArray.add(specName);
+                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+
+                             specName2 = object.getString("en_name");
+                        }
+
+                        else
+                             specName2 = object.getString("ar_name");
+
+
+
+                        int specId = object.getInt("id");
+                        LocationModel model = new LocationModel(specName2, specId);
+
+                        SpecialNameArray.add(specName2);
                         array.add(model);
                     }
 
@@ -408,13 +456,13 @@ public class CosmeticsFilters extends Fragment {
     }
 
     private void SearchInGps(String gover) {
-        HashMap<Integer, String> meMap = new HashMap<Integer, String>();
-        meMap.put(2, "Matrouh Governorate");
-        meMap.put(1, "Alexandria Governorate ");
-        meMap.put(4, "Giza Governorate");
-        meMap.put(5, "White");
+        try {
+            city = (int) getKeyFromValue(((FiltersActivity) getActivity()).init(), gover);
 
-        city = (int) getKeyFromValue(meMap, gover);
+        } catch (Exception e) {
+
+
+        }
         area = 0;
 
         Log.e("GETCURRENTLOCATION", "" + city);

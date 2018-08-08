@@ -63,6 +63,7 @@ public class JobsFilters extends Fragment {
     TextView manuelTXT,uselessTXT,gpsBtn,gbsText;
     ConstraintLayout constrainLocation;
     LinearLayout linearLocationManuel;
+    String specName,specName1,categName,categName1,categName2;
 
     @Nullable
     @Override
@@ -138,14 +139,28 @@ public class JobsFilters extends Fragment {
                 arrayModel = new ArrayList<>();
                 name_array = new ArrayList<>();
 
-                name_array.add("All");
+                if(((FiltersActivity)getActivity()).getLanguage()==1){
+                    name_array.add("All");
+
+
+                }
+                else
+                    name_array.add("الكل");
+
                 arrayModel.add(new LocationModel("", -1));
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                             specName = object.getString("en_name");
+
+                        }
+                        else
+                             specName = object.getString("ar_name");
+
                         int regionId = object.getInt("id");
 
                         LocationModel model = new LocationModel(specName, regionId);
@@ -211,7 +226,15 @@ public class JobsFilters extends Fragment {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
 
-        name_array2.add("All");
+        if(((FiltersActivity)getActivity()).getLanguage()==1){
+            name_array2.add("All");
+
+
+        }
+        else
+            name_array2.add("الكل");
+
+
         array2.add(new LocationModel("", -1));
 
 
@@ -225,14 +248,23 @@ public class JobsFilters extends Fragment {
                     JSONArray jsonArray = jsonObject1.getJSONArray("cities");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                             specName1 = object.getString("en_name");
+
+                        }
+
+                        else
+                            specName1 = object.getString("ar_name");
+
+
                         int regionId = object.getInt("id");
 
-                        LocationModel model = new LocationModel(specName, regionId);
+                        LocationModel model = new LocationModel(specName1, regionId);
 
 
                         array2.add(model);
-                        name_array2.add(specName);
+                        name_array2.add(specName1);
 
                     }
 
@@ -286,7 +318,13 @@ public class JobsFilters extends Fragment {
         arrayModel = new ArrayList<>();
 
         arrayModel.add(new LocationModel("", -1));
-        CategoryNameArray.add("All");
+
+
+        if(((FiltersActivity)getActivity()).getLanguage()==1){
+            CategoryNameArray.add("All");
+        }
+        else
+            CategoryNameArray.add("الكل");
 
         GetJobAdCategoriesRequest getJobAdCategoriesRequest = new GetJobAdCategoriesRequest(getActivity(), new Response.Listener<String>() {
             @Override
@@ -296,7 +334,16 @@ public class JobsFilters extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String categName = object.getString("en_name");
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+
+                             categName = object.getString("en_name");
+
+                        }
+                        else
+                             categName = object.getString("ar_name");
+
+
                         int categId = object.getInt("id");
                         LocationModel model = new LocationModel(categName, categId);
                         CategoryNameArray.add(categName);
@@ -383,8 +430,13 @@ public class JobsFilters extends Fragment {
         getArrayExiLevelModel = new ArrayList<>();
 
         getArrayExiLevelModel.add(new LocationModel("", -1));
-        ExpLebelNameArray.add("All");
 
+
+        if(((FiltersActivity)getActivity()).getLanguage()==1){
+            ExpLebelNameArray.add("All");
+        }
+        else
+            ExpLebelNameArray.add("الكل");
         GetJobExperienceLevelsRequest getJobExperienceLevelsRequest = new GetJobExperienceLevelsRequest(getActivity(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -393,10 +445,18 @@ public class JobsFilters extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String categName = object.getString("en_name");
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                             categName1 = object.getString("en_name");
+
+                        }
+                        else
+                             categName1 = object.getString("ar_name");
+
+
                         int categId = object.getInt("id");
-                        LocationModel model = new LocationModel(categName, categId);
-                        ExpLebelNameArray.add(categName);
+                        LocationModel model = new LocationModel(categName1, categId);
+                        ExpLebelNameArray.add(categName1);
                         getArrayExiLevelModel.add(model);
                     }
 
@@ -453,7 +513,15 @@ public class JobsFilters extends Fragment {
         arrayEduLevelModel = new ArrayList<>();
 
         arrayEduLevelModel.add(new LocationModel("", -1));
-        EduLevelNameArray.add("All");
+
+
+        if(((FiltersActivity)getActivity()).getLanguage()==1){
+            EduLevelNameArray.add("All");
+
+
+        }
+        else
+            EduLevelNameArray.add("الكل");
 
         GetJobEducationLevelsRequest getJobEducationLevelsRequest = new GetJobEducationLevelsRequest(getActivity(), new Response.Listener<String>() {
             @Override
@@ -463,10 +531,18 @@ public class JobsFilters extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String categName = object.getString("en_name");
+
+                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                             categName2 = object.getString("en_name");
+
+
+                        }
+                        else
+                             categName2 = object.getString("ar_name");
+
                         int categId = object.getInt("id");
-                        LocationModel model = new LocationModel(categName, categId);
-                        EduLevelNameArray.add(categName);
+                        LocationModel model = new LocationModel(categName2, categId);
+                        EduLevelNameArray.add(categName2);
                         arrayEduLevelModel.add(model);
                     }
 
@@ -550,13 +626,14 @@ public class JobsFilters extends Fragment {
     }
 
     private void SearchInGps(String gover){
-        HashMap<Integer, String> meMap=new HashMap<Integer, String>();
-        meMap.put(2,"Matrouh Governorate");
-        meMap.put(1,"Alexandria Governorate ");
-        meMap.put(4,"Giza Governorate");
-        meMap.put(5,"White");
+        try {
+            city = (int) getKeyFromValue(((FiltersActivity) getActivity()).init(), gover);
 
-        city= (int) getKeyFromValue(meMap,gover);
+        } catch (Exception e) {
+
+
+        }
+
         area=0;
 
         Log.e("GETCURRENTLOCATION",""+city);
