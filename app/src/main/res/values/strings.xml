@@ -155,11 +155,13 @@
 
     <string name="all">All</string>
     <string name="speciality">Speciality</string>
-    <string name="apply">Apply</string>
+    <string name="aapply">Apply</string>
     <string name="llocation">Location</string>
     <string name="feature">Feature</string>
     <string name="homeDelivery">Home Delivery</string>
     <string name="hour24">24 Hour</string>
+    <string name="choose_location">Choose Location</string>
+    <string name="detect_location">Detect Location</string>
 
 
 

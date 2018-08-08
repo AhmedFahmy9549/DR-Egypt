@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_circle_corner_v02"
+    >
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -15,9 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/email"
             android:drawablePadding="8dp"
-            android:drawableTint="@android:color/darker_gray"
             android:gravity="center_vertical"
             android:hint="@string/title"
             android:inputType="text"
@@ -36,9 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/email"
             android:drawablePadding="8dp"
-            android:drawableTint="@android:color/darker_gray"
             android:gravity="center_vertical"
             android:hint="@string/price"
             android:inputType="number"
@@ -57,9 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/email"
             android:drawablePadding="8dp"
-            android:drawableTint="@android:color/darker_gray"
             android:gravity="center_vertical"
             android:hint="@string/description"
             android:inputType="text"
@@ -130,9 +126,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/email"
             android:drawablePadding="8dp"
-            android:drawableTint="@android:color/darker_gray"
             android:gravity="center_vertical"
             android:hint="@string/address"
             android:inputType="text"
@@ -176,7 +170,7 @@
                 android:layout_toLeftOf="@+id/Add_product_Add2ndPhone"
                 android:layout_toStartOf="@+id/Add_product_Add2ndPhone"
                 android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/email"
+                android:drawableLeft="@drawable/phone"
                 android:drawablePadding="8dp"
                 android:drawableTint="@android:color/darker_gray"
                 android:gravity="center_vertical"
@@ -195,7 +189,7 @@
                 android:layout_toLeftOf="@+id/Add_product_Add2ndPhone"
                 android:layout_toStartOf="@+id/Add_product_Add2ndPhone"
                 android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/email"
+                android:drawableLeft="@drawable/phone"
                 android:drawablePadding="8dp"
                 android:drawableTint="@android:color/darker_gray"
                 android:gravity="center_vertical"
@@ -207,12 +201,17 @@
                 android:textSize="16sp"
                 android:visibility="gone" />
 
-            <Button
+            <TextView
                 android:id="@+id/Add_product_Add2ndPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:background="@drawable/input_background"
+                android:backgroundTint="@android:color/darker_gray"
+                android:layout_centerVertical="true"
                 android:text="@string/add_phone" />
 
         </RelativeLayout>
@@ -226,7 +225,13 @@
             android:id="@+id/Add_product_Image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_image" />
+            android:background="@drawable/input_background"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/add_image"  />
 
         <View
             android:layout_width="match_parent"
@@ -277,15 +282,19 @@
 
         </LinearLayout>
 
+<!--
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@android:color/darker_gray" />
+-->
 
         <Button
             android:id="@+id/Add_product_FinishBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/input_background"
+            android:backgroundTint="@android:color/holo_green_dark"
             android:text="@string/submit_product" />
 
     </LinearLayout>

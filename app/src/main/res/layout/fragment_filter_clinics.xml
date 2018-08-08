@@ -40,7 +40,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:padding="20dp"
-                android:text="Choose Location"
+                android:text="@string/choose_location"
                 android:background="@drawable/shape_circle_corner_v02"
                 android:backgroundTint="@color/black"
                 android:textAllCaps="false"
@@ -64,7 +64,7 @@
                 android:background="@drawable/shape_circle_corner_v02"
                 android:backgroundTint="@color/black"
                 android:padding="20dp"
-                android:text="Detect Location"
+                android:text="@string/detect_location"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -287,7 +287,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="@color/colorPrimary"
-        android:text="@string/apply"
+        android:text="@string/aapply"
         android:textColor="@color/white" />
 
 

@@ -154,11 +154,13 @@
 
     <string name="all">الكل</string>
     <string name="speciality">التخصص</string>
+    <string name="aapply">تم</string>
     <string name="llocation">الموقع</string>
     <string name="feature">خدمات</string>
     <string name="homeDelivery">التوصيل للمنزل</string>
     <string name="hour24">24 ساعة</string>
-
+    <string name="choose_location">اختر موقع</string>
+    <string name="detect_location">تحديد الموقع</string>
 
 
 

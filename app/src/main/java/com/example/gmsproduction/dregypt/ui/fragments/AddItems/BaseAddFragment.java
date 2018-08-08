@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -75,7 +76,8 @@ public abstract class BaseAddFragment extends Fragment {
     private String mFragmentName,mFragmentNameAr;
     private ArrayList<LocationModel> arrayModel, array2;
     private LinearLayout linearLayout;
-    public Button AddBTN, imagetestbtn, addphone2;
+    public Button AddBTN, imagetestbtn;
+    public TextView addphone2;
     public static final int RESULT_IMG = 1;
 
     public void onCreate(Bundle savedInstanceState) {
