@@ -274,4 +274,17 @@ public class BaseActivity extends AppCompatActivity {
 
 
     }
+
+    public String checkLanguage(int language){
+        if(language==1){
+            return "en";
+
+        }
+        else{
+            return "ar";
+
+        }
+
+
+    }
 }

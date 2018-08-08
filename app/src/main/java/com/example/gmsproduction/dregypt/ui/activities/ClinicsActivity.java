@@ -55,15 +55,17 @@ public class ClinicsActivity extends BaseActivity {
 
     LinearLayoutManager linearLayoutManager;
     int page = 1;
-    int last_page,language;
+    int last_page, language;
     private ProgressBar progressBar;
+    String lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clinics);
-        language=getIdLANG();
+        language = getIdLANG();
         localization(language);
+        lang = checkLanguage(language);
         recyclerView = findViewById(R.id.hospital_recycler);
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
@@ -87,7 +89,7 @@ public class ClinicsActivity extends BaseActivity {
 
                     arrayList = new ArrayList<>();
                     page = 1;
-                    adapterx = new AdapterHospitalRecylcer(ClinicsActivity.this, arrayList,99404);
+                    adapterx = new AdapterHospitalRecylcer(ClinicsActivity.this, arrayList, 99404);
                     linearLayoutManager = new LinearLayoutManager(ClinicsActivity.this);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapterx);
@@ -137,11 +139,11 @@ public class ClinicsActivity extends BaseActivity {
             }
         });
 
-        adapterx = new AdapterHospitalRecylcer(this, arrayList,99404);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList, 99404);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
-        setActivityTitle("العيادات","Clinics");
+        setActivityTitle("العيادات", "Clinics");
     }
 
     //menu option
@@ -255,10 +257,10 @@ public class ClinicsActivity extends BaseActivity {
             JSONArray jsonArray = jsonObject.getJSONArray("data");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                String name_hos = object.getString("en_name");
+                String name_hos = object.getString(lang + "_name");
                 int id_hos = object.getInt("id");
-                String address_hos = object.getString("en_address");
-                String note_hos = object.getString("en_note");
+                String address_hos = object.getString(lang + "_address");
+                String note_hos = object.getString(lang + "_note");
                 String website_hos = object.getString("website");
                 String email_hos = object.getString("email");
                 String img_hos = Constants.ImgUrl + object.getString("img");
@@ -291,7 +293,7 @@ public class ClinicsActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        adapterx = new AdapterHospitalRecylcer(this, arrayList,99404);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList, 99404);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
@@ -363,10 +365,10 @@ public class ClinicsActivity extends BaseActivity {
             JSONArray jsonArray = jsonObject.getJSONArray("data");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                String name_hos = object.getString("en_name");
+                String name_hos = object.getString(lang + "_name");
                 int id_hos = object.getInt("id");
-                String address_hos = object.getString("en_address");
-                String note_hos = object.getString("en_note");
+                String address_hos = object.getString(lang + "_address");
+                String note_hos = object.getString(lang + "_note");
                 String website_hos = object.getString("website");
                 String email_hos = object.getString("email");
                 String img_hos = Constants.ImgUrl + object.getString("img");

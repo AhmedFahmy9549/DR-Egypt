@@ -62,6 +62,7 @@ public class CosmeticsActivity extends BaseActivity {
     LinearLayoutManager linearLayoutManager;
     int page = 1;
     int last_page,language;
+    private String lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,8 @@ public class CosmeticsActivity extends BaseActivity {
         setContentView(R.layout.activity_cosmetics);
         language = getIdLANG();
         localization(language);
+        lang = checkLanguage(language);
+
         //fragmentManager = getSupportFragmentManager();
 
         //Request for all Main products
@@ -213,11 +216,11 @@ public class CosmeticsActivity extends BaseActivity {
             for (int a = 0; a < dataArray.length(); a++) {
                 JSONObject dataObject = dataArray.getJSONObject(a);
                 id = dataObject.getString("id");
-                title = dataObject.getString("en_name");
+                title = dataObject.getString(lang+"_name");
                 image = Constants.ImgUrl + dataObject.getString("img");
-                address = dataObject.getString("en_address");
+                address = dataObject.getString(lang+"_address");
                 created_at = dataObject.getString("created_at");
-                description = dataObject.getString("en_note");
+                description = dataObject.getString(lang+"_note");
                 email = dataObject.getString("email");
                 website = dataObject.getString("website");
                 try {
@@ -374,11 +377,11 @@ public class CosmeticsActivity extends BaseActivity {
             for (int a = 0; a < dataArray.length(); a++) {
                 JSONObject dataObject = dataArray.getJSONObject(a);
                 id = dataObject.getString("id");
-                title = dataObject.getString("en_name");
+                title = dataObject.getString(lang+"_name");
                 image = Constants.ImgUrl + dataObject.getString("img");
-                address = dataObject.getString("en_address");
+                address = dataObject.getString(lang+"_address");
                 created_at = dataObject.getString("created_at");
-                description = dataObject.getString("en_note");
+                description = dataObject.getString(lang+"_note");
                 email = dataObject.getString("email");
                 website = dataObject.getString("website");
                 try {

@@ -57,7 +57,7 @@ public class JobsActivity extends BaseActivity {
     LinearLayoutManager LayoutManagaer;
     int page = 1;
     int last_page,mUSERid,language;
-
+    private String lang;
 
 
     @Override
@@ -70,6 +70,7 @@ public class JobsActivity extends BaseActivity {
         mUSERid = prefs.getInt("User_id", 0);
         language = getIdLANG();
         localization(language);
+        lang=checkLanguage(language);
 
 
         //Request for main Jobs
@@ -291,13 +292,13 @@ public class JobsActivity extends BaseActivity {
                     phone_2 = "No phone has been added";
                 }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
-                category = categoryObject.getString("en_name");
+                category = categoryObject.getString(lang+"_name");
                 JSONObject experienceObject = dataObject.getJSONObject("experience_level");
-                experience = experienceObject.getString("en_name");
+                experience = experienceObject.getString(lang+"_name");
                 JSONObject educationObject = dataObject.getJSONObject("education_level");
-                education_level = educationObject.getString("en_name");
+                education_level = educationObject.getString(lang+"_name");
                 JSONObject employmentObject = dataObject.getJSONObject("employment_type");
-                employment_type = employmentObject.getString("en_name");
+                employment_type = employmentObject.getString(lang+"_name");
 
 
                 modelArrayList.add(new JobsModel(id, userId, title, description, salary, image, status, address, created_at, phone_1, phone_2, category, experience, education_level, employment_type));
@@ -340,13 +341,13 @@ public class JobsActivity extends BaseActivity {
                     phone_2 = "No phone has been added";
                 }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
-                category = categoryObject.getString("en_name");
+                category = categoryObject.getString(lang+"_name");
                 JSONObject experienceObject = dataObject.getJSONObject("experience_level");
-                experience = experienceObject.getString("en_name");
+                experience = experienceObject.getString(lang+"_name");
                 JSONObject educationObject = dataObject.getJSONObject("education_level");
-                education_level = educationObject.getString("en_name");
+                education_level = educationObject.getString(lang+"_name");
                 JSONObject employmentObject = dataObject.getJSONObject("employment_type");
-                employment_type = employmentObject.getString("en_name");
+                employment_type = employmentObject.getString(lang+"_name");
 
 
                 modelArrayList.add(new JobsModel(id, userId, title, description, salary, image, status, address, created_at, phone_1, phone_2, category, experience, education_level, employment_type));

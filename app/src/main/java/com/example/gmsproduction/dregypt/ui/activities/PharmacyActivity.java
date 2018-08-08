@@ -57,6 +57,7 @@ public class PharmacyActivity extends BaseActivity {
     int page = 1;
     int last_page,language;
     private ProgressBar progressBar;
+    private String lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class PharmacyActivity extends BaseActivity {
         setContentView(R.layout.activity_pharmacy);
         language=getIdLANG();
         localization(language);
+        lang=checkLanguage(language);
         recyclerView = findViewById(R.id.hospital_recycler);
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
@@ -246,10 +248,10 @@ public class PharmacyActivity extends BaseActivity {
             JSONArray jsonArray = jsonObject.getJSONArray("data");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                String name_hos = object.getString("en_name");
+                String name_hos = object.getString(lang+"_name");
                 int id_hos = object.getInt("id");
-                String address_hos = object.getString("en_address");
-                String note_hos = object.getString("en_note");
+                String address_hos = object.getString(lang+"_address");
+                String note_hos = object.getString(lang+"_note");
                 String website_hos = object.getString("website");
                 String email_hos = object.getString("email");
                 String img_hos = Constants.ImgUrl + object.getString("img");
@@ -357,10 +359,10 @@ public class PharmacyActivity extends BaseActivity {
             JSONArray jsonArray = jsonObject.getJSONArray("data");
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                String name_hos = object.getString("en_name");
+                String name_hos = object.getString(lang+"_name");
                 int id_hos = object.getInt("id");
-                String address_hos = object.getString("en_address");
-                String note_hos = object.getString("en_note");
+                String address_hos = object.getString(lang+"_address");
+                String note_hos = object.getString(lang+"_note");
                 String website_hos = object.getString("website");
                 String email_hos = object.getString("email");
                 String img_hos = Constants.ImgUrl + object.getString("img");

@@ -77,6 +77,7 @@ public class ProductsActivity extends BaseActivity {
     LinearLayoutManager LayoutManagaer;
     int page = 1;
     int last_page;
+    private String lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class ProductsActivity extends BaseActivity {
         userid = prefs.getInt("User_id", 0);
         language = getIdLANG();
         localization(language);
+        lang=checkLanguage(language);
 
 
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
@@ -294,7 +296,7 @@ public class ProductsActivity extends BaseActivity {
                     phone_2 = "No phone has been added";
                 }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
-                category = categoryObject.getString("en_name");
+                category = categoryObject.getString(lang+"_name");
 
                 modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
             }
@@ -472,7 +474,7 @@ public class ProductsActivity extends BaseActivity {
                     phone_2 = "No phone has been added";
                 }
                 JSONObject categoryObject = dataObject.getJSONObject("category");
-                category = categoryObject.getString("en_name");
+                category = categoryObject.getString(lang+"_name");
                 modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
             }
 
