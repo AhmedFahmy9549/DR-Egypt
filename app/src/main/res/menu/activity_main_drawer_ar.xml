@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="end"
+    android:layoutDirection="rtl"
+    android:layout_gravity="end"
+    >
 
     <!--<group android:checkableBehavior="single">
 
@@ -20,7 +25,7 @@
         android:title="الوظائف" />
     <item
         android:id="@+id/nav_cos"
-        android:title="مستحضرات التجميل" />
+        android:title="عيادات التجميل" />
 
     <item
         android:id="@+id/nav_Favorite"
@@ -65,7 +70,6 @@
         android:title="خروج"
         android:visible="false"
         />
-
 </menu>
 
 
