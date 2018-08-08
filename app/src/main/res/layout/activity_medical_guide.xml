@@ -48,10 +48,12 @@
     <RelativeLayout
         android:id="@+id/next_name1"
         android:layout_width="match_parent"
-
+        android:layout_marginTop="20dp"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_centerVertical="true"
+
             android:id="@+id/image_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,6 +63,8 @@
             android:src="@drawable/hospital_medical" />
 
         <TextView
+            android:layout_centerVertical="true"
+
             android:id="@+id/text_name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,6 +78,9 @@
 
 
         <ImageView
+            android:layout_centerVertical="true"
+
+            android:id="@+id/medical_Guide_img1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -93,6 +100,8 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_centerVertical="true"
+
             android:id="@+id/image_name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,6 +111,8 @@
             android:src="@drawable/clinic_medical" />
 
         <TextView
+            android:layout_centerVertical="true"
+
             android:id="@+id/text_name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -116,6 +127,10 @@
 
 
         <ImageView
+            android:layout_centerVertical="true"
+
+            android:id="@+id/medical_Guide_img2"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -136,6 +151,7 @@
             android:id="@+id/image_name3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
@@ -145,6 +161,8 @@
             android:id="@+id/text_name3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
@@ -155,6 +173,9 @@
 
 
         <ImageView
+            android:id="@+id/medical_Guide_img3"
+            android:layout_centerVertical="true"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 

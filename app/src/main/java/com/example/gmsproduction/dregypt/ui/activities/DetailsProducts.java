@@ -35,11 +35,11 @@ import java.util.Map;
 
 public class DetailsProducts extends AppCompatActivity {
     ImageView imageView;
-    TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1, texttestr;
-    int position, userid, productID;
-    String idz, titlez, description, price, status, image, address, created_at, phone_1, phone_2, cz;
+    TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1, TXTStatus, btnNext, btnPrevious;
+    int position, userid, productID,language;
+    String idz, titlez, description, price, checkStatus,status, image, address, created_at, phone_1, phone_2, cz;
     ToggleButton toggleButton;
-    Button btnNext, btnPrevious;
+    //Button btnNext, btnPrevious;
     LinearLayout Dial;
     ExpandableRelativeLayout expandableLayout1;
     ArrayList<ProductsModel> models;
@@ -55,8 +55,9 @@ public class DetailsProducts extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userid = prefs.getInt("User_id", 0);
         cz = String.valueOf(userid);
+        SharedPreferences prefsLang = getSharedPreferences("LangKey", MODE_PRIVATE);
 
-
+        language =  prefsLang.getInt("languageNum", 1);
 
         //intent and bundle
         extras();
@@ -116,6 +117,7 @@ public class DetailsProducts extends AppCompatActivity {
         TXTaddress = findViewById(R.id.Address_ProductDetails);
         TXTcreated_at = findViewById(R.id.Date_ProductDetails);
         TXTphone_1 = findViewById(R.id.Phone_ProductDetails);
+        TXTStatus = findViewById(R.id.Status_ProductDetails);
         toggleButton = (ToggleButton) findViewById(R.id.Details_ToggleButton);
         Dial = findViewById(R.id.DetailsProduct_Dial);
         btnNext = findViewById(R.id.DetailsProduct_Next);
@@ -132,7 +134,7 @@ public class DetailsProducts extends AppCompatActivity {
         titlez = models.get(position).getTitlez();
         description = models.get(position).getDescription();
         price = models.get(position).getPrice();
-        status = models.get(position).getStatus();
+        checkStatus = models.get(position).getStatus();
         image = models.get(position).getImage();
         address = models.get(position).getAddress();
         created_at = models.get(position).getCreated_at();
@@ -149,7 +151,29 @@ public class DetailsProducts extends AppCompatActivity {
 
     private void Deploy() {
         TXTdescription.setText(description);
-        TXTprice.setText(price + "$");
+        if (language==1){
+            TXTprice.setText(price + " L.E");
+        }else if (language==2){
+            TXTprice.setText(price + " ج.م");
+        }
+
+
+
+        if (checkStatus.equals("1")) {
+            if (language == 1) {
+                status = "New";
+            }else if (language==2){
+                status = "جديد";
+            }
+        } else {
+            if (language == 1) {
+                status = "Used";
+            }else if (language==2){
+                status = "مستعمل";
+            }
+        }
+        TXTStatus.setText(status);
+
         TXTaddress.setText(address);
         TXTcreated_at.setText(created_at);
         TXTphone_1.setText(phone_1);

@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -67,7 +68,7 @@ public class MainActivity extends BaseActivity
     int id, language;
     String userName = "Dr.Egypt", userAvatar = "", userEmail;
     View header;
-
+    ConstraintLayout menu_Notification;
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
     private static final int REQUEST_LOCATION = 1;
 
@@ -132,7 +133,13 @@ public class MainActivity extends BaseActivity
 
         lang(language);
 
-
+        menu_Notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         SetUser(MainActivity.this);
@@ -361,6 +368,7 @@ public class MainActivity extends BaseActivity
         Menu_pic = header.findViewById(R.id.Menu_imageView);
         Menu_title = header.findViewById(R.id.Menu_Title);
         Menu_Email = header.findViewById(R.id.Menu_userEmail);
+        menu_Notification = header.findViewById(R.id.Menu_Notification);
 
 
         medical_guideTXT = findViewById(R.id.main_medicalGuide);

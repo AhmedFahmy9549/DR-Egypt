@@ -80,7 +80,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         final String description = currentItem.getDescription();
         final String price = currentItem.getPrice();
         CheckStatus = currentItem.getStatus();
-        if (CheckStatus == "1") {
+        if (CheckStatus.equals("1")) {
             if (idLANG == 1) {
                 status = "New";
             }else if (idLANG==2){

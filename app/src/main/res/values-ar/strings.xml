@@ -101,6 +101,8 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="title_activity_contact_us">الخريطة</string>
 
+    <string name="createdBy">البائع : </string>
+
 
     <!-- Start of Hima Strings -->
 
@@ -111,6 +113,9 @@
     <string name="hospitals">المستشفيات</string>
     <string name="clinics">العيادات</string>
     <string name="pharmacy">الصيدليات</string>
+
+    <string name="nextpro">المنتج التالي</string>
+    <string name="prevpro">المنتج السابق</string>
 
     <!-- Start of AddProduct/Jobs Strings -->
     <string name="title">الاسم</string>

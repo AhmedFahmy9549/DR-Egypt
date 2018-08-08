@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -15,12 +16,14 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.example.gmsproduction.dregypt.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
 public class MedicalGuideActivity extends BaseActivity implements View.OnClickListener , BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     private SliderLayout mDemoSlider;
     RelativeLayout hospitalBtn,ClinicBtn,PharmacyBtn;
+    ImageView arrow1,arrow2,arrow3;
     TextView hospitalText,ClinicText,PharmacyText;
     int language;
 
@@ -37,6 +40,23 @@ public class MedicalGuideActivity extends BaseActivity implements View.OnClickLi
         hospitalText=(TextView) findViewById(R.id.text_name1);
         ClinicText=(TextView) findViewById(R.id.text_name2);
         PharmacyText=(TextView) findViewById(R.id.text_name3);
+
+        arrow1 = findViewById(R.id.medical_Guide_img1);
+        arrow2 = findViewById(R.id.medical_Guide_img2);
+        arrow3 = findViewById(R.id.medical_Guide_img3);
+
+        if (language==1){
+            Picasso.with(this).load(R.drawable.next_medical).into(arrow1);
+            Picasso.with(this).load(R.drawable.next_medical).into(arrow2);
+            Picasso.with(this).load(R.drawable.next_medical).into(arrow3);
+
+
+        }else if (language==2){
+            Picasso.with(this).load(R.drawable.ic_expand_more).into(arrow1);
+            Picasso.with(this).load(R.drawable.ic_expand_more).into(arrow2);
+            Picasso.with(this).load(R.drawable.ic_expand_more).into(arrow3);
+        }
+
 
         lang();
 
