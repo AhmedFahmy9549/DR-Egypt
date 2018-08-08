@@ -446,8 +446,13 @@ public class CosmeticsFilters extends Fragment {
                 gbsText.setVisibility(View.VISIBLE);
                 ((FiltersActivity) getActivity()).getCurrLocation();
                 String x = ((FiltersActivity) getActivity()).getMyCityName();
-                Log.e("MY Location=", "" + x);
-                gbsText.setText("Location: " + x);
+                if(((FiltersActivity)getActivity()).getLanguage()==1) {
+
+                    gbsText.setText("Location: " + x);
+                }
+                else
+                    gbsText.setText("الموقع: " + x);
+
                 SearchInGps(x);
 
 

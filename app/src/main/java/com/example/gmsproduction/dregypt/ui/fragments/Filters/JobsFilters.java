@@ -617,7 +617,14 @@ public class JobsFilters extends Fragment {
                 ((FiltersActivity)getActivity()).getCurrLocation();
                 String x=((FiltersActivity)getActivity()).getMyCityName();
                 Log.e("MY Location=",""+x);
-                gbsText.setText("Location: "+x);
+
+                if(((FiltersActivity)getActivity()).getLanguage()==1) {
+
+                    gbsText.setText("Location: " + x);
+                }
+                else
+                    gbsText.setText("الموقع: " + x);
+
                 SearchInGps(x);
 
 
