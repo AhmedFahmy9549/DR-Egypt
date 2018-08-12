@@ -1,3 +1,4 @@
+/*
 package com.example.gmsproduction.dregypt.ui.fragments.Clinincs;
 
 
@@ -29,9 +30,11 @@ import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
 
+*/
 /**
  * A simple {@link Fragment} subclass.
- */
+ *//*
+
 public class ClinicsFragment extends Fragment implements Response.Listener<String>, Response.ErrorListener {
     RecyclerView recyclerView;
     View view;
@@ -131,3 +134,4 @@ public class ClinicsFragment extends Fragment implements Response.Listener<Strin
 
     }
 }
+*/

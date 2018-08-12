@@ -41,7 +41,7 @@ public class FavProduct extends Fragment {
     private ProductAdsAdapter mAdapter;
     private ArrayList<ProductsModel> modelArrayList;
     LinearLayoutManager LayoutManagaer;
-
+    ArrayList<Integer> favArray = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,6 +97,7 @@ public class FavProduct extends Fragment {
                         String status = dataObject.getString("status");
                         String address = dataObject.getString("address");
                         String created_at = dataObject.getString("created_at");
+                        String created_by = dataObject.getString("user_name");
                         String description = dataObject.getString("description");
                         try {
                             JSONArray phoneArray = dataObject.getJSONArray("phone");
@@ -110,13 +111,13 @@ public class FavProduct extends Fragment {
                         JSONObject categoryObject = dataObject.getJSONObject("category");
                         String category = categoryObject.getString("en_name");
 
-                        modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
+                        modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at,created_by, phone_1, phone_2));
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                mAdapter = new ProductAdsAdapter(getContext(), modelArrayList);
+                mAdapter = new ProductAdsAdapter(getContext(), modelArrayList,favArray);
                 LayoutManagaer = new GridLayoutManager(getContext(), 2);
                 mRecyclerView.setLayoutManager(LayoutManagaer);
                 mRecyclerView.setAdapter(mAdapter);

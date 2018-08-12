@@ -41,6 +41,7 @@ public class FavCosmetic extends Fragment {
     private ArrayList<CosmeticModel> modelArrayList;
     LinearLayoutManager linearLayoutManager;
     String phone_1, phone_2;
+    private ArrayList<Integer> favArray = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,7 +96,7 @@ public class FavCosmetic extends Fragment {
                 }
                 linearLayoutManager = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(linearLayoutManager);
-                mAdapter = new CosmeticClinicsAdapter(getContext(), modelArrayList);
+                mAdapter = new CosmeticClinicsAdapter(getContext(), modelArrayList,favArray);
                 mRecyclerView.setAdapter(mAdapter);
 
             }

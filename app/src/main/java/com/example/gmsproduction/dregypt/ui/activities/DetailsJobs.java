@@ -34,7 +34,7 @@ public class DetailsJobs extends AppCompatActivity {
     ToggleButton toggleButton;
     Map<String, String> body = new HashMap<>();
     Map<String, String> Posty = new HashMap<>();
-    int userid,JobID;
+    int userid,JobID,favCheck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +83,7 @@ public class DetailsJobs extends AppCompatActivity {
         experience = extra.getStringExtra("JDexperience");
         education_level = extra.getStringExtra("JDeducation_level");
         employment_type = extra.getStringExtra("JDemployment_type");
+        favCheck = extra.getIntExtra("fav",0);
 
 
 
@@ -102,8 +103,14 @@ public class DetailsJobs extends AppCompatActivity {
         setTitle(title);
 
 
-        toggleButton.setChecked(false);
-        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_toggle_star_color));
+        if (favCheck==1){
+            toggleButton.setChecked(true);
+            toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_toggle_star_color2));
+
+        }else {
+            toggleButton.setChecked(false);
+            toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_toggle_star_color));
+        }
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

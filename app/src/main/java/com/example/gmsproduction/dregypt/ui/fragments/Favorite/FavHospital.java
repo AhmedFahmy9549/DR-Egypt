@@ -5,6 +5,7 @@ package com.example.gmsproduction.dregypt.ui.fragments.Favorite;
  */
 
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.DisplayHosFavoriteByID;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.DisplayProFavoriteByID;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetFavoriteProducts;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.Models.ProductsModel;
 import com.example.gmsproduction.dregypt.R;
@@ -31,16 +33,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FavHospital extends Fragment {
     int userid;
     ArrayList<HospitalModel> arrayList;
     private AdapterHospitalRecylcer adapterx;
+    private ArrayList<Integer> favArray = new ArrayList<>();
+    Map<String, String> body = new HashMap<>();
+
     LinearLayoutManager linearLayoutManager;
     private RecyclerView mRecyclerView;
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,17 +104,17 @@ public class FavHospital extends Fragment {
 
 
                         arrayList.add(model);
+
                     }
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                adapterx = new AdapterHospitalRecylcer(getContext(), arrayList, 99505);
+                adapterx = new AdapterHospitalRecylcer(getContext(), arrayList, 99505,favArray);
+                mRecyclerView.setAdapter(adapterx);
                 linearLayoutManager = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(linearLayoutManager);
-                mRecyclerView.setAdapter(adapterx);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -110,5 +124,36 @@ public class FavHospital extends Fragment {
         });
         disp.start();
     }
+    /*private void getFavID() {
+        body.put("category", "hospital");
+        SharedPreferences prefs = getActivity().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        int userid = prefs.getInt("User_id", 0);
+        GetFavoriteProducts getFavId = new GetFavoriteProducts(getApplicationContext(), userid, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int a = 0; a < array.length(); a++) {
+                        JSONObject object = array.getJSONObject(a);
+                        int favourable_id = object.getInt("favourable_id");
+                        favArray.add(favourable_id);
+                    }
+                    adapterx.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getFavId.setBody((HashMap) body);
+        getFavId.start();
+
+    }*/
 
 }

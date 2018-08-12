@@ -17,7 +17,6 @@
             android:layout_height="wrap_content">
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,17 +67,17 @@
 
 
                     <LinearLayout
-                        android:visibility="invisible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="top"
-
                         android:layout_marginEnd="20dp"
+
                         android:layout_marginRight="20dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="invisible">
 
                         <ToggleButton
                             android:id="@+id/Details_ToggleButton2"
@@ -100,9 +99,9 @@
                 android:layout_height="38dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="175dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
+                android:layout_marginTop="175dp"
                 app:cardCornerRadius="19dp"
                 app:cardElevation="6dp">
 
@@ -159,15 +158,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp">
+
                     <TextView
+                        android:id="@+id/ProductsDetails_Createdby"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/ProductsDetails_Createdby"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginStart="15dp"
                         android:text="@string/createdBy"
-                        android:layout_marginLeft="15dp"
-                        android:textColor="@android:color/holo_red_dark"
-                        />
+                        android:textColor="@android:color/holo_red_dark" />
 
                     <TextView
                         android:id="@+id/Date_ProductDetails"
@@ -191,6 +190,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/darker_gray" />
+
         <LinearLayout
             android:id="@+id/Product_test"
             android:layout_width="match_parent"
@@ -260,32 +260,33 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
             android:background="@android:color/darker_gray" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:paddingBottom="20dp"
-            >
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp">
+
             <TextView
                 android:id="@+id/DetailsProduct_Next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/shape_circle_corner_v02"
                 android:backgroundTint="@color/colorPrimary"
                 android:padding="10dp"
-                android:text="@string/nextpro"
-                android:layout_alignParentRight="true" />
+                android:text="@string/nextpro" />
+
             <TextView
                 android:id="@+id/DetailsProduct_previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/shape_circle_corner_v02"
                 android:backgroundTint="@color/colorPrimary"
                 android:padding="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/prevpro"
-                />
+                android:text="@string/prevpro" />
         </RelativeLayout>
 
         <!--

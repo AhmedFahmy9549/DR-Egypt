@@ -25,6 +25,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnScrollListener;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.CosmeticClinicsRequests.SearchCosmeticClinicsRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetFavoriteProducts;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.CosmeticClinicsAdapter;
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
@@ -57,11 +58,12 @@ public class CosmeticsActivity extends BaseActivity {
     String url = Constants.basicUrl + "/cosmetic-clinics/search";
     String test;
     ProgressBar progressBar;
+    private ArrayList<Integer> favArray = new ArrayList<>();
 
 
     LinearLayoutManager linearLayoutManager;
     int page = 1;
-    int last_page,language;
+    int last_page,language,userID;
     private String lang;
 
     @Override
@@ -71,6 +73,8 @@ public class CosmeticsActivity extends BaseActivity {
         language = getIdLANG();
         localization(language);
         lang = checkLanguage(language);
+        SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        userID = prefs.getInt("User_id", 0);
 
         //fragmentManager = getSupportFragmentManager();
 
@@ -101,7 +105,7 @@ public class CosmeticsActivity extends BaseActivity {
                     test = "";
                     modelArrayList = new ArrayList<>();
                     page = 1;
-                    mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList);
+                    mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList,favArray);
                     linearLayoutManager = new LinearLayoutManager(CosmeticsActivity.this);
                     mRecyclerView.setLayoutManager(linearLayoutManager);
                     mRecyclerView.setAdapter(mAdapter);
@@ -144,12 +148,18 @@ public class CosmeticsActivity extends BaseActivity {
 
         linearLayoutManager = new LinearLayoutManager(CosmeticsActivity.this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList);
+        mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList,favArray);
         mRecyclerView.setAdapter(mAdapter);
 
         setActivityTitle("عيادات التجميل","Cosmetics");
+        getFavID();
     }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        favArray.clear();
+        getFavID();
+    }
 
     //menu option
     @Override
@@ -246,7 +256,7 @@ public class CosmeticsActivity extends BaseActivity {
         }
         linearLayoutManager = new LinearLayoutManager(CosmeticsActivity.this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList);
+        mAdapter = new CosmeticClinicsAdapter(CosmeticsActivity.this, modelArrayList,favArray);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -451,4 +461,36 @@ public class CosmeticsActivity extends BaseActivity {
         editor.apply();
 
     }
+
+    private void getFavID() {
+        body.put("category", "cosmetic");
+        GetFavoriteProducts getFavId = new GetFavoriteProducts(CosmeticsActivity.this, userID, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("FavPage", "cos" + response);
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int a = 0; a < array.length(); a++) {
+                        JSONObject object = array.getJSONObject(a);
+                        int favourable_id = object.getInt("favourable_id");
+                        favArray.add(favourable_id);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getFavId.setBody((HashMap) body);
+        getFavId.start();
+
+    }
+
 }

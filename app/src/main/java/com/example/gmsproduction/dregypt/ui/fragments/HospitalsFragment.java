@@ -1,3 +1,4 @@
+/*
 package com.example.gmsproduction.dregypt.ui.fragments;
 
 
@@ -36,14 +37,18 @@ import java.util.HashMap;
 
 import static android.content.Context.MODE_PRIVATE;
 
+*/
 /**
  * A simple {@link Fragment} subclass.
- */
+ *//*
+
 public class HospitalsFragment extends Fragment {
     RecyclerView recyclerView;
     View view;
     String TAG = "HospitalsFragment";
     HashMap<String, String> parms = new HashMap<>();
+    private ArrayList<Integer> favArray = new ArrayList<>();
+
     ArrayList<HospitalModel> arrayList = new ArrayList<>();
     private AdapterHospitalRecylcer adapterx;
     private Button btnFilter;
@@ -62,7 +67,8 @@ public class HospitalsFragment extends Fragment {
         //btnFilter=view.findViewById(R.id.btn_filter);
 
 
-        /*btnFilter.setOnClickListener(new View.OnClickListener() {
+        */
+/*btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity(). getSupportFragmentManager()
@@ -73,7 +79,8 @@ public class HospitalsFragment extends Fragment {
 
             }
         });
-*/
+*//*
+
         SharedPreferences prefs = getActivity().getSharedPreferences("Location", MODE_PRIVATE);
         int city_id = prefs.getInt("city_id", 0); //0 is the default value.
         int region_id = prefs.getInt("region_id", 0);
@@ -150,7 +157,7 @@ public class HospitalsFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterHospitalRecylcer(getActivity(), arrayList,99505);
+        adapterx = new AdapterHospitalRecylcer(getActivity(), arrayList,99505,favArray);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
@@ -168,11 +175,13 @@ public class HospitalsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-      /*  if (searchView.isSearchOpen()) {
+      */
+/*  if (searchView.isSearchOpen()) {
             searchView.closeSearch();
         } else {
             super.onBackPressed();
-        }*/
+        }*//*
+
     }
 
     @Override
@@ -182,3 +191,4 @@ public class HospitalsFragment extends Fragment {
 }
 
 
+*/

@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.example.gmsproduction.dregypt.Models.LocationModel;
 import com.example.gmsproduction.dregypt.R;
-import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.CityClinicFragment;
-import com.example.gmsproduction.dregypt.ui.fragments.Clinincs.ClinicsFragment;
 
 import java.util.ArrayList;
 

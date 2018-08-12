@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.DisplayClinFavoriteByID;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.HospitalsRequests.DisplayHosFavoriteByID;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetFavoriteProducts;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
@@ -28,13 +29,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FavClinics extends Fragment {
     int userid;
     ArrayList<HospitalModel> arrayList;
     private AdapterHospitalRecylcer adapterx;
+    private ArrayList<Integer> favArray = new ArrayList<>();
+    Map<String, String> body = new HashMap<>();
+
     LinearLayoutManager linearLayoutManager;
     private RecyclerView mRecyclerView;
 
@@ -92,7 +99,7 @@ public class FavClinics extends Fragment {
                     e.printStackTrace();
                 }
 
-                adapterx = new AdapterHospitalRecylcer(getContext(), arrayList, 99404);
+                adapterx = new AdapterHospitalRecylcer(getContext(), arrayList, 99404,favArray);
                 linearLayoutManager = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(linearLayoutManager);
                 mRecyclerView.setAdapter(adapterx);
@@ -105,5 +112,39 @@ public class FavClinics extends Fragment {
         });
         disp.start();
     }
+
+    /*private void getFavID() {
+        body.put("category", "clinic");
+        SharedPreferences prefs = getActivity().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        int userid = prefs.getInt("User_id", 0);
+        GetFavoriteProducts getFavId = new GetFavoriteProducts(getApplicationContext(), userid, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int a = 0; a < array.length(); a++) {
+                        JSONObject object = array.getJSONObject(a);
+                        int favourable_id = object.getInt("favourable_id");
+                        favArray.add(favourable_id);
+
+                    }
+                    adapterx.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getFavId.setBody((HashMap) body);
+        getFavId.start();
+
+    }*/
 
 }

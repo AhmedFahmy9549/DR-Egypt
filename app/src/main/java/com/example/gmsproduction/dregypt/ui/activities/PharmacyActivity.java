@@ -23,6 +23,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnScrollListener;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.PharmacyRequests.SearchPharmacyRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetFavoriteProducts;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
@@ -47,6 +48,8 @@ public class PharmacyActivity extends BaseActivity {
     String TAG = "PharmacyFragment";
     HashMap<String, String> parms = new HashMap<>();
     ArrayList<HospitalModel> arrayList=new ArrayList<>();
+    private ArrayList<Integer> favArray = new ArrayList<>();
+
     private AdapterHospitalRecylcer adapterx;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
@@ -89,7 +92,7 @@ public class PharmacyActivity extends BaseActivity {
 
                     arrayList = new ArrayList<>();
                     page = 1;
-                    adapterx = new AdapterHospitalRecylcer(PharmacyActivity.this, arrayList,99303);
+                    adapterx = new AdapterHospitalRecylcer(PharmacyActivity.this, arrayList,99303,favArray);
                     linearLayoutManager = new LinearLayoutManager(PharmacyActivity.this);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapterx);
@@ -129,14 +132,21 @@ public class PharmacyActivity extends BaseActivity {
                 getPharmacy(test);
             }
         });
-        adapterx = new AdapterHospitalRecylcer(this, arrayList,99303);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList,99303,favArray);
          linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
 
         setActivityTitle("الصيدليات","Pharmacies");
-    }
 
+        getFavID();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        favArray.clear();
+        getFavID();
+    }
     //menu option
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -282,7 +292,7 @@ public class PharmacyActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        adapterx = new AdapterHospitalRecylcer(this, arrayList,99303);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList,99303,favArray);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
@@ -438,4 +448,37 @@ public class PharmacyActivity extends BaseActivity {
         editor.apply();
 
     }
+
+    private void getFavID() {
+        body.put("category", "pharmacy");
+        SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        int userid = prefs.getInt("User_id", 0);
+        GetFavoriteProducts getFavId = new GetFavoriteProducts(getApplicationContext(), userid, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int a = 0; a < array.length(); a++) {
+                        JSONObject object = array.getJSONObject(a);
+                        int favourable_id = object.getInt("favourable_id");
+                        favArray.add(favourable_id);
+                    }
+                    adapterx.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getFavId.setBody((HashMap) body);
+        getFavId.start();
+
+    }
+
 }

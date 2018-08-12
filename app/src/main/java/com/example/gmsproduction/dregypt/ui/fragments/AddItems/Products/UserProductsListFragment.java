@@ -90,6 +90,7 @@ public class UserProductsListFragment extends Fragment {
                         String status = dataObject.getString("status");
                         String address = dataObject.getString("address");
                         String created_at = dataObject.getString("created_at");
+                        String created_by = dataObject.getString("user_name");
                         String description = dataObject.getString("description");
 
 
@@ -127,7 +128,7 @@ public class UserProductsListFragment extends Fragment {
                         mArraylist.add(favcount);
                         mArraylist2.add(viewCount);
 
-                        modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone01, phone02));
+                        modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at,created_by, phone01, phone02));
 
                     }
                 } catch (JSONException e) {

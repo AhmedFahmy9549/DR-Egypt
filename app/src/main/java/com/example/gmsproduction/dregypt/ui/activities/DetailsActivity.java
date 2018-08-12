@@ -45,7 +45,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class DetailsActivity extends AppCompatActivity {
     private String name, address, note, website, email, img, phone1, phone2, createdAt;
-    private int type, userid, MDID;
+    private int type, userid, MDID,favCheck;
     TextView TXTname, TXTaddress, TXTwebsite, TXTemail, TXTphone1, TXTphone2;
     ImageView TXTimg;
     ToggleButton toggleButton;
@@ -105,6 +105,8 @@ public class DetailsActivity extends AppCompatActivity {
         phone2 = extra.getStringExtra("phone2");
         type = extra.getIntExtra("type", 0);
         MDID = extra.getIntExtra("id", 0);
+        favCheck = extra.getIntExtra("fav",0);
+
     }
 
     public void Deploy() {
@@ -128,8 +130,14 @@ public class DetailsActivity extends AppCompatActivity {
             ViewsCosm();
         }
 
-        toggleButton.setChecked(false);
-        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        if (favCheck==1){
+            toggleButton.setChecked(true);
+            toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
+
+        }else {
+            toggleButton.setChecked(false);
+            toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        }
         if (type == 99505) {
             hospitalFav();
             hospitalRating();

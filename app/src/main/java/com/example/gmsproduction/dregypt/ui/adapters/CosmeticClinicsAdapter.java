@@ -34,13 +34,16 @@ public class CosmeticClinicsAdapter extends RecyclerView.Adapter<CosmeticClinics
     int LastPosition = -1;
     //RecyclerViewClickListener ClickListener ;
 
+    ArrayList<Integer> favArray;
 
     public CosmeticClinicsAdapter() {
     }
 
-    public CosmeticClinicsAdapter(Context context, ArrayList<CosmeticModel> mArrayList) {
+    public CosmeticClinicsAdapter(Context context, ArrayList<CosmeticModel> mArrayList, ArrayList<Integer> favArray) {
         this.context = context;
         this.mArrayList = mArrayList;
+        this.favArray = favArray;
+
     }
 
     /* public void setClickListener(RecyclerViewClickListener clickListener){
@@ -66,23 +69,20 @@ public class CosmeticClinicsAdapter extends RecyclerView.Adapter<CosmeticClinics
         holder.TXTwebsite.setText(site);
         int ratingcount = currentItem.getRating_counts();
         holder.TXTratingCount.setText(String.valueOf(ratingcount));
+        final int favCheck;
 
         final int id = Integer.valueOf(currentItem.getIdz());
 
 
         Picasso.with(context).load(currentItem.getImage()).fit().centerInside().into(holder.IMGcover);
 
-        holder.toggleButton.setChecked(false);
-        holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-        holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
-                else
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-            }
-        });
+        if (favArray.contains(id)) {
+            holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
+            favCheck = 1;
+        } else {
+            holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            favCheck = 2;
+        }
 
 
         holder.ratingBar.setRating(currentItem.getRating().floatValue());
@@ -100,6 +100,7 @@ public class CosmeticClinicsAdapter extends RecyclerView.Adapter<CosmeticClinics
                 intent.putExtra("note", currentItem.getDescription());
                 intent.putExtra("id", id);
                 intent.putExtra("type", 99101);
+                intent.putExtra("fav",favCheck);
 
                 context.startActivity(intent);
             }

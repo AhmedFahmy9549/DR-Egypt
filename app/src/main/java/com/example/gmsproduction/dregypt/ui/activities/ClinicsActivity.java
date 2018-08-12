@@ -23,6 +23,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnScrollListener;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ClinicRequests.SearchClinicsRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetFavoriteProducts;
 import com.example.gmsproduction.dregypt.Models.HospitalModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHospitalRecylcer;
@@ -46,6 +47,7 @@ public class ClinicsActivity extends BaseActivity {
 
     HashMap<String, String> parms = new HashMap<>();
     ArrayList<HospitalModel> arrayList = new ArrayList<>();
+    private ArrayList<Integer> favArray = new ArrayList<>();
 
     private AdapterHospitalRecylcer adapterx;
     MaterialSearchView searchView;
@@ -58,7 +60,12 @@ public class ClinicsActivity extends BaseActivity {
     int last_page, language;
     private ProgressBar progressBar;
     String lang;
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        favArray.clear();
+        getFavID();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +96,7 @@ public class ClinicsActivity extends BaseActivity {
 
                     arrayList = new ArrayList<>();
                     page = 1;
-                    adapterx = new AdapterHospitalRecylcer(ClinicsActivity.this, arrayList, 99404);
+                    adapterx = new AdapterHospitalRecylcer(ClinicsActivity.this, arrayList, 99404,favArray);
                     linearLayoutManager = new LinearLayoutManager(ClinicsActivity.this);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(adapterx);
@@ -139,11 +146,12 @@ public class ClinicsActivity extends BaseActivity {
             }
         });
 
-        adapterx = new AdapterHospitalRecylcer(this, arrayList, 99404);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList, 99404,favArray);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
         setActivityTitle("العيادات", "Clinics");
+        getFavID();
     }
 
     //menu option
@@ -293,7 +301,7 @@ public class ClinicsActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        adapterx = new AdapterHospitalRecylcer(this, arrayList, 99404);
+        adapterx = new AdapterHospitalRecylcer(this, arrayList, 99404,favArray);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapterx);
@@ -442,6 +450,38 @@ public class ClinicsActivity extends BaseActivity {
         editor.putInt("speciality", 0);
 
         editor.apply();
+
+    }
+
+    private void getFavID() {
+        body.put("category", "clinic");
+        SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
+        int userid = prefs.getInt("User_id", 0);
+        GetFavoriteProducts getFavId = new GetFavoriteProducts(getApplicationContext(), userid, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int a = 0; a < array.length(); a++) {
+                        JSONObject object = array.getJSONObject(a);
+                        int favourable_id = object.getInt("favourable_id");
+                        favArray.add(favourable_id);
+                    }
+                    adapterx.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getFavId.setBody((HashMap) body);
+        getFavId.start();
 
     }
 

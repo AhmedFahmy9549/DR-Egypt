@@ -43,18 +43,18 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     final String basicImgUrl = "http://gms-sms.com:89";
     private Context mContext;
     private ArrayList<ProductsModel> mArrayList;
-    int LastPosition = -1, userid,idLANG;
+    int LastPosition = -1, userid, idLANG;
     RecyclerViewClickListener ClickListener;
     String CheckStatus;
     String status;
     ArrayList<Integer> favArray;
 
 
-    public ProductAdsAdapter(Context mContext, ArrayList<ProductsModel> mArrayList) {
+    public ProductAdsAdapter(Context mContext, ArrayList<ProductsModel> mArrayList, ArrayList<Integer> favArray) {
         this.mContext = mContext;
         this.mArrayList = mArrayList;
         this.favArray = favArray;
-        Log.e("HiFrom", "" + favArray);
+        Log.e("HiFrom", "ad" + favArray);
     }
 
     public void setClickListener(RecyclerViewClickListener clickListener) {
@@ -75,6 +75,7 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         ProductsModel currentItem = mArrayList.get(position);
+        Log.e("adapterx", "fav " + favArray);
         final String id = currentItem.getIdz();
         final String title = currentItem.getTitlez();
         final String description = currentItem.getDescription();
@@ -83,13 +84,13 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         if (CheckStatus.equals("1")) {
             if (idLANG == 1) {
                 status = "New";
-            }else if (idLANG==2){
+            } else if (idLANG == 2) {
                 status = "جديد";
             }
         } else {
             if (idLANG == 1) {
                 status = "Used";
-            }else if (idLANG==2){
+            } else if (idLANG == 2) {
                 status = "مستعمل";
             }
         }
@@ -99,6 +100,41 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
         final String phone_1 = currentItem.getPhone_1();
         final String phone_2 = currentItem.getPhone_2();
         final String Category = currentItem.getCategory();
+        final int favCheck;
+
+
+        holder.ProductCategory.setText(Category);
+        holder.ProductTitle.setText(title);
+        if (idLANG == 1) {
+            holder.ProductPrice.setText(price + " L.E ");
+
+        } else if (idLANG == 2) {
+            holder.ProductPrice.setText(price + " ج.م ");
+
+        }
+
+        holder.ProductStatus.setText(status);
+        Picasso.with(mContext).load(image).fit().centerInside().into(holder.imageView);
+
+        if (favArray.contains(Integer.valueOf(id))) {
+            holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
+            favCheck = 1;
+        } else {
+            holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            favCheck = 2;
+        }
+        /*holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
+                else
+                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            }
+        });*/
+
+        //setAnimation(holder.cardView,position);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,37 +144,10 @@ public class ProductAdsAdapter extends RecyclerView.Adapter<ProductAdsAdapter.My
                 bundle.putSerializable("arrz", mArrayList);
                 intent.putExtras(bundle);
                 intent.putExtra("position", position);
-
+                intent.putExtra("fav",favCheck);
                 mContext.startActivity(intent);
             }
         });
-
-        holder.ProductCategory.setText(Category);
-        holder.ProductTitle.setText(title);
-        if (idLANG==1){
-            holder.ProductPrice.setText(price + " L.E ");
-
-        }else if (idLANG==2){
-            holder.ProductPrice.setText(price+" ج.م ");
-
-        }
-
-        holder.ProductStatus.setText(status);
-        Picasso.with(mContext).load(image).fit().centerInside().into(holder.imageView);
-
-        holder.toggleButton.setChecked(false);
-        holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-        holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
-                else
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-            }
-        });
-
-        //setAnimation(holder.cardView,position);
 
     }
 

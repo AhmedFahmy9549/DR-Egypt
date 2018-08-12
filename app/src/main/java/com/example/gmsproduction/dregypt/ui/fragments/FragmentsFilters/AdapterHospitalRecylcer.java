@@ -41,10 +41,13 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
     int x;
     String TAG = "HospitalsFragment";
     Intent intent;
+    ArrayList<Integer> favArray;
 
-    public AdapterHospitalRecylcer(Context context, ArrayList<HospitalModel> arrayList, int x) {
+    public AdapterHospitalRecylcer(Context context, ArrayList<HospitalModel> arrayList, int x, ArrayList<Integer> favArray) {
         this.context = context;
         this.arrayList = arrayList;
+        this.favArray = favArray;
+
         this.x = x;
     }
 
@@ -60,7 +63,7 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
     public void onBindViewHolder(final Myholder holder, final int position) {
 
         final HospitalModel model = arrayList.get(position);
-
+        final int favCheck;
 
         holder.textName.setText(model.getName());
         holder.textAddreess.setText(model.getAddress());
@@ -71,17 +74,15 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
 
         Picasso.with(context).load(model.getImg()).into(holder.imageView);
         Log.e("Imagggge", model.getImg());
-        holder.toggleFav.setChecked(false);
-        holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-        holder.toggleFav.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
-                else
-                    holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
-            }
-        });
+
+        if (favArray.contains(model.getId())) {
+            holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
+            favCheck = 1;
+        } else {
+            holder.toggleFav.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+            favCheck = 2;
+        }
+
 
         holder.ratingBar.setRating(model.getRating());
 
@@ -99,6 +100,7 @@ public class AdapterHospitalRecylcer extends RecyclerView.Adapter<AdapterHospita
                 intent.putExtra("note", model.getNote());
                 intent.putExtra("type", x);
                 intent.putExtra("id", model.getId());
+                intent.putExtra("fav",favCheck);
                 context.startActivity(intent);
             }
         });

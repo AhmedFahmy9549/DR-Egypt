@@ -35,6 +35,8 @@ public class FavPharmacy extends Fragment {
     int userid;
     ArrayList<HospitalModel> arrayList;
     private AdapterHospitalRecylcer adapterx;
+    private ArrayList<Integer> favArray = new ArrayList<>();
+
     LinearLayoutManager linearLayoutManager;
     private RecyclerView mRecyclerView;
 
@@ -90,7 +92,7 @@ public class FavPharmacy extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                adapterx = new AdapterHospitalRecylcer(getContext(), arrayList, 99303);
+                adapterx = new AdapterHospitalRecylcer(getContext(), arrayList, 99303,favArray);
                 linearLayoutManager = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(linearLayoutManager);
                 mRecyclerView.setAdapter(adapterx);

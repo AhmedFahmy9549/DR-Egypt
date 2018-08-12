@@ -38,6 +38,8 @@ public class FavJobs extends Fragment {
     private RecyclerView mRecyclerView;
     private JobAdsAdapter mAdapter;
     private ArrayList<JobsModel> modelArrayList;
+    private ArrayList<Integer> favArray = new ArrayList<>();
+
     LinearLayoutManager LayoutManagaer;
     int userid;
     String phone_1, phone_2;
@@ -102,7 +104,7 @@ public class FavJobs extends Fragment {
                 }
                 LayoutManagaer = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(LayoutManagaer);
-                mAdapter = new JobAdsAdapter(getContext(), modelArrayList);
+                mAdapter = new JobAdsAdapter(getContext(), modelArrayList,favArray);
                 mRecyclerView.setAdapter(mAdapter);
 
             }

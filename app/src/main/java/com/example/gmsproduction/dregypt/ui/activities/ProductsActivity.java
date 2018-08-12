@@ -61,35 +61,33 @@ public class ProductsActivity extends BaseActivity {
     private RecyclerView mRecyclerView;
     private ProductAdsAdapter mAdapter;
     private ArrayList<ProductsModel> modelArrayList = new ArrayList<>();
-    private ArrayList<Integer> favArray = new ArrayList<>();
+    private ArrayList<Integer> favArray;
 
-    String id, title, description, price, image, status, address, created_at, phone_1, phone_2, category;
+    String id, title, description, price, image, status, address, created_at,created_by, phone_1, phone_2, category;
     int userid,language;
     MaterialSearchView searchView;
     Map<String, String> body = new HashMap<>();
     String url = Constants.basicUrl + "/product-ads/search";
     private FragmentManager fragmentManager;
-    ArrayList<Integer> fav_List = new ArrayList<>();
-    DetailsProducts detailsProducts;
     String test;
     ProgressBar progressBar;
-
     LinearLayoutManager LayoutManagaer;
     int page = 1;
     int last_page;
     private String lang;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recycler_products);
+        favArray = new ArrayList<>();
 
         SharedPreferences prefs = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userid = prefs.getInt("User_id", 0);
         language = getIdLANG();
         localization(language);
         lang=checkLanguage(language);
-
 
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
@@ -150,7 +148,7 @@ public class ProductsActivity extends BaseActivity {
                     favArray = new ArrayList<>();
 
                     page = 1;
-                    mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+                    mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
                     LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
                     mRecyclerView.setLayoutManager(LayoutManagaer);
                     mRecyclerView.setAdapter(mAdapter);
@@ -192,12 +190,23 @@ public class ProductsActivity extends BaseActivity {
             }
         });
         LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
-        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.setAdapter(mAdapter);
 
         //tool bar title changer
         setActivityTitle("المنتجات","Products");
+
+
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        favArray.clear();
+        getFavID();
 
 
     }
@@ -268,52 +277,17 @@ public class ProductsActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
+    //RESPONSE
     public void ProductResponse(String response) {
         modelArrayList = new ArrayList<>();
         progressBar.setVisibility(View.GONE);
         Log.e("tagyyy", response);
-        try {
-            JSONObject object = new JSONObject(response);
-            JSONArray dataArray = object.getJSONArray("data");
-            for (int a = 0; a < dataArray.length(); a++) {
-                JSONObject dataObject = dataArray.getJSONObject(a);
-                id = dataObject.getString("id");
-                title = dataObject.getString("title");
-                price = dataObject.getString("price");
-                image = Constants.ImgUrl + dataObject.getString("img");
-                status = dataObject.getString("status");
-                address = dataObject.getString("address");
-                created_at = dataObject.getString("created_at");
-                description = dataObject.getString("description");
-                try {
-                    JSONArray phoneArray = dataObject.getJSONArray("phone");
-                    phone_1 = (String) phoneArray.get(0);
-                    phone_2 = (String) phoneArray.get(1);
-                } catch (Exception e) {
-                    JSONArray phoneArray = dataObject.getJSONArray("phone");
-                    phone_1 = (String) phoneArray.get(0);
-                    phone_2 = "No phone has been added";
-                }
-                JSONObject categoryObject = dataObject.getJSONObject("category");
-                category = categoryObject.getString(lang+"_name");
-
-                modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("error", e.toString());
-
-        }
+        responseProduct(response,0);
         getFavID();
-        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList);
+        mAdapter = new ProductAdsAdapter(ProductsActivity.this, modelArrayList,favArray);
         LayoutManagaer = new GridLayoutManager(ProductsActivity.this, 2);
         mRecyclerView.setLayoutManager(LayoutManagaer);
         mRecyclerView.setAdapter(mAdapter);
-
-
     }
 
     public void getProducts(String keyword) {
@@ -448,49 +422,10 @@ public class ProductsActivity extends BaseActivity {
     }
 
     public void PagenationResponse(String response) {
-        getFavID();
         progressBar.setVisibility(View.GONE);
         Log.e("tagyyy", response);
-        try {
-            JSONObject object = new JSONObject(response);
-            JSONArray dataArray = object.getJSONArray("data");
-            for (int a = 0; a < dataArray.length(); a++) {
-                JSONObject dataObject = dataArray.getJSONObject(a);
-                id = dataObject.getString("id");
-                title = dataObject.getString("title");
-                price = dataObject.getString("price");
-                image = Constants.ImgUrl + dataObject.getString("img");
-                status = dataObject.getString("status");
-                address = dataObject.getString("address");
-                created_at = dataObject.getString("created_at");
-                description = dataObject.getString("description");
-                try {
-                    JSONArray phoneArray = dataObject.getJSONArray("phone");
-                    phone_1 = (String) phoneArray.get(0);
-                    phone_2 = (String) phoneArray.get(1);
-                } catch (Exception e) {
-                    JSONArray phoneArray = dataObject.getJSONArray("phone");
-                    phone_1 = (String) phoneArray.get(0);
-                    phone_2 = "No phone has been added";
-                }
-                JSONObject categoryObject = dataObject.getJSONObject("category");
-                category = categoryObject.getString(lang+"_name");
-                modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at, phone_1, phone_2));
-            }
 
-            JSONObject meta = object.getJSONObject("meta");
-            last_page = meta.getInt("last_page");
-
-
-            Log.e("PageeeCurrent=", page + "");
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("error", e.toString());
-
-        }
-
+        responseProduct(response,1);
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(LayoutManagaer) {
             @Override
@@ -512,49 +447,6 @@ public class ProductsActivity extends BaseActivity {
 
         mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), modelArrayList.size() - 1);
 
-    }
-
-
-    private AlertDialog makeAndShowDialogBox(String msg) {
-        AlertDialog myQuittingDialogBox = new AlertDialog.Builder(this)
-
-                .setCancelable(false)
-                .setTitle("No Internet Connection")
-                .setMessage(msg)
-
-                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        //whatever should be done when answering "YES" goes here
-                        getProducts("");
-                    }
-                })//setPositiveButton
-                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        //whatever should be done when answering "NO" goes here
-                        finish();
-                    }
-                })//setNegativeButton
-
-                .create();
-
-        return myQuittingDialogBox;
-    }
-
-    // Private class isNetworkAvailable
-    private boolean isNetworkAvailable() {
-        // Using ConnectivityManager to check for Network Connection
-        ConnectivityManager connectivityManager = (ConnectivityManager) this
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager
-                .getActiveNetworkInfo();
-
-        // use this
-         /*if (!isNetworkAvailable()) {
-            Toast.makeText(this, "No Internet", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this, "Internet", Toast.LENGTH_SHORT).show();
-        }*/
-        return activeNetworkInfo != null;
     }
 
     public void Progressbar() {
@@ -591,14 +483,15 @@ public class ProductsActivity extends BaseActivity {
                         JSONObject object = array.getJSONObject(a);
                         int favourable_id = object.getInt("favourable_id");
                         favArray.add(favourable_id);
-
+                        Log.e("HiFrom", "1" + favArray);
                     }
+                        mAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Log.e("FavPage", "Err pro : " + response);
+
                 }
-                Log.e("HiFrom", "" + favArray);
-
-
+                Log.e("HiFrom", "2" + favArray);
 
             }
         }, new Response.ErrorListener() {
@@ -609,8 +502,53 @@ public class ProductsActivity extends BaseActivity {
         });
         getFavId.setBody((HashMap) body);
         getFavId.start();
+        Log.e("HiFrom", "3" + favArray);
+
     }
 
+
+    public void responseProduct(String response,int check){
+        try {
+            JSONObject object = new JSONObject(response);
+            JSONArray dataArray = object.getJSONArray("data");
+            for (int a = 0; a < dataArray.length(); a++) {
+                JSONObject dataObject = dataArray.getJSONObject(a);
+                id = dataObject.getString("id");
+                title = dataObject.getString("title");
+                price = dataObject.getString("price");
+                image = Constants.ImgUrl + dataObject.getString("img");
+                status = dataObject.getString("status");
+                address = dataObject.getString("address");
+                created_at = dataObject.getString("created_at");
+                created_by = dataObject.getString("user_name");
+                description = dataObject.getString("description");
+                try {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = (String) phoneArray.get(1);
+                } catch (Exception e) {
+                    JSONArray phoneArray = dataObject.getJSONArray("phone");
+                    phone_1 = (String) phoneArray.get(0);
+                    phone_2 = "No phone has been added";
+                }
+                JSONObject categoryObject = dataObject.getJSONObject("category");
+                category = categoryObject.getString(lang+"_name");
+                modelArrayList.add(new ProductsModel(id, title, category, description, price, status, image, address, created_at,created_by, phone_1, phone_2));
+            }
+
+            if (check == 1){
+            JSONObject meta = object.getJSONObject("meta");
+            last_page = meta.getInt("last_page");
+            Log.e("PageeeCurrent=", page + "");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Log.e("error", e.toString());
+
+        }
+
+    }
 }
 
 

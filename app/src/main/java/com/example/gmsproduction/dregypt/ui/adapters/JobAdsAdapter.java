@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +26,18 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
     final String basicImgUrl = "http://gms-sms.com:89";
     private Context mContext;
     private ArrayList<JobsModel> mArrayList;
+    ArrayList<Integer> favArray;
     int LastPosition = -1;
 
     //RecyclerViewClickListener ClickListener ;
     public JobAdsAdapter() {
     }
 
-    public JobAdsAdapter(Context mContext, ArrayList<JobsModel> mArrayList) {
+    public JobAdsAdapter(Context mContext, ArrayList<JobsModel> mArrayList, ArrayList<Integer> favArray) {
         this.mContext = mContext;
         this.mArrayList = mArrayList;
+        this.favArray = favArray;
+
     }
 
     /*  public void setClickListener(RecyclerViewClickListener clickListener){
@@ -56,24 +60,20 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
         final String created_at = currentItem.getCreated_at();
         final String phone_1 = currentItem.getPhone_1();
         final String phone_2 = currentItem.getPhone_2();
-
+        final int favCheck;
         holder.TxTTitle.setText(title);
         holder.TxTAdress.setText(address);
         holder.TxTPhone.setText(phone_1);
         holder.TxTDate.setText(created_at);
+        Log.e("zz", "id : "+id +" fav: " +favArray );
 
-        //togglebutton
-        holder.toggleButton.setChecked(false);
-        holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_toggle_star_color));
-        holder.toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked)
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_toggle_star_color2));
-                else
-                    holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_toggle_star_color));
-            }
-        });
+        if (favArray.contains(Integer.valueOf(id))) {
+            holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_toggle_star_color2));
+            favCheck = 1;
+        } else {
+            holder.toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_toggle_star_color));
+            favCheck = 2;
+        }
 
         holder.TXTMoreDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +91,7 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
                 intent.putExtra("JDexperience",currentItem.getExperience());
                 intent.putExtra("JDeducation_level",currentItem.getEducation_level());
                 intent.putExtra("JDemployment_type",currentItem.getEmployment_type());
+                intent.putExtra("fav",favCheck);
                 mContext.startActivity(intent);
 
             }
@@ -111,6 +112,7 @@ public class JobAdsAdapter extends RecyclerView.Adapter<JobAdsAdapter.MyViewHold
                 intent.putExtra("JDexperience",currentItem.getExperience());
                 intent.putExtra("JDeducation_level",currentItem.getEducation_level());
                 intent.putExtra("JDemployment_type",currentItem.getEmployment_type());
+                intent.putExtra("fav",favCheck);
                 mContext.startActivity(intent);
 
             }

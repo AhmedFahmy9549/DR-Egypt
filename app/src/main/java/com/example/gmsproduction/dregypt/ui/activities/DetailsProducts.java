@@ -2,10 +2,15 @@ package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,9 +40,9 @@ import java.util.Map;
 
 public class DetailsProducts extends AppCompatActivity {
     ImageView imageView;
-    TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at, TXTphone_1, TXTStatus, btnNext, btnPrevious;
-    int position, userid, productID,language;
-    String idz, titlez, description, price, checkStatus,status, image, address, created_at, phone_1, phone_2, cz;
+    TextView TXTdescription, TXTprice, TXTaddress, TXTcreated_at,TXTcreated_by, TXTphone_1, TXTStatus, btnNext, btnPrevious;
+    int position, userid, productID,language,favCheck;
+    String idz, titlez, description, price, checkStatus,status, image, address, created_at,created_by, phone_1, phone_2, cz;
     ToggleButton toggleButton;
     //Button btnNext, btnPrevious;
     LinearLayout Dial;
@@ -116,6 +121,7 @@ public class DetailsProducts extends AppCompatActivity {
         TXTprice = findViewById(R.id.Price_ProductDetails);
         TXTaddress = findViewById(R.id.Address_ProductDetails);
         TXTcreated_at = findViewById(R.id.Date_ProductDetails);
+        TXTcreated_by = findViewById(R.id.ProductsDetails_Createdby);
         TXTphone_1 = findViewById(R.id.Phone_ProductDetails);
         TXTStatus = findViewById(R.id.Status_ProductDetails);
         toggleButton = (ToggleButton) findViewById(R.id.Details_ToggleButton);
@@ -140,6 +146,7 @@ public class DetailsProducts extends AppCompatActivity {
         created_at = models.get(position).getCreated_at();
         phone_1 = models.get(position).getPhone_1();
         phone_2 = models.get(position).getPhone_2();
+        created_by= models.get(position).getCreated_by();
     }
 
     private void extras() {
@@ -147,6 +154,7 @@ public class DetailsProducts extends AppCompatActivity {
         position = intent.getIntExtra("position", 0);
         Bundle getextra = getIntent().getExtras();
         models = (ArrayList<ProductsModel>) getextra.getSerializable("arrz");
+        favCheck = intent.getIntExtra("fav",0);
     }
 
     private void Deploy() {
@@ -177,9 +185,31 @@ public class DetailsProducts extends AppCompatActivity {
         TXTaddress.setText(address);
         TXTcreated_at.setText(created_at);
         TXTphone_1.setText(phone_1);
+
+        //change String color
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        SpannableString mSpannable= new SpannableString(created_by);
+        mSpannable.setSpan(new ForegroundColorSpan(Color.GRAY), 0, created_by.length(), 0);
+        builder.append(mSpannable);
+
+        String seller = getString(R.string.createdBy);
+
+        String text = "<font color='red'>"+seller+"</font> <font color='gray'>"+created_by+"</font>";
+        TXTcreated_by.setText(Html.fromHtml(text), TextView.BufferType.SPANNABLE);
+
+        // append the seller name
+        //TXTcreated_by.setText(builder, TextView.BufferType.SPANNABLE);
         Picasso.with(this).load(image).fit().centerCrop().into(imageView);
-        toggleButton.setChecked(false);
-        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        if (favCheck==1){
+            toggleButton.setChecked(true);
+            toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp_fill));
+
+        }else {
+            toggleButton.setChecked(false);
+            toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));
+        }
+        /*toggleButton.setChecked(false);
+        toggleButton.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_black_24dp));*/
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

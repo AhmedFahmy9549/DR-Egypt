@@ -23,6 +23,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.example.gmsproduction.dregypt.Data.localDataSource.EndlessRecyclerOnScrollListener;
 import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.JobAdsRequests.SearchJobAdRequest;
+import com.example.gmsproduction.dregypt.Data.remoteDataSource.NetworkRequests.ProductAdsRequests.GetFavoriteProducts;
 import com.example.gmsproduction.dregypt.Models.JobsModel;
 import com.example.gmsproduction.dregypt.R;
 import com.example.gmsproduction.dregypt.ui.adapters.JobAdsAdapter;
@@ -53,13 +54,19 @@ public class JobsActivity extends BaseActivity {
     String url = Constants.basicUrl + "/job-ads/search";
     String test;
     private FragmentManager fragmentManager;
+    private ArrayList<Integer> favArray = new ArrayList<>();
 
     LinearLayoutManager LayoutManagaer;
     int page = 1;
     int last_page,mUSERid,language;
     private String lang;
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        favArray.clear();
+        getFavID();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +107,7 @@ public class JobsActivity extends BaseActivity {
                     test = "";
                     modelArrayList = new ArrayList<>();
                     page = 1;
-                    mAdapter = new JobAdsAdapter(JobsActivity.this, modelArrayList);
+                    mAdapter = new JobAdsAdapter(JobsActivity.this, modelArrayList,favArray);
                     LayoutManagaer = new LinearLayoutManager(JobsActivity.this);
                     mRecyclerView.setLayoutManager(LayoutManagaer);
                     mRecyclerView.setAdapter(mAdapter);
@@ -143,10 +150,11 @@ public class JobsActivity extends BaseActivity {
 
         LayoutManagaer = new LinearLayoutManager(JobsActivity.this);
         mRecyclerView.setLayoutManager(LayoutManagaer);
-        mAdapter = new JobAdsAdapter(JobsActivity.this, modelArrayList);
+        mAdapter = new JobAdsAdapter(JobsActivity.this, modelArrayList,favArray);
         mRecyclerView.setAdapter(mAdapter);
 
         setActivityTitle("الوظائف","Jobs");
+        getFavID();
     }
 
     //menu option
@@ -310,7 +318,7 @@ public class JobsActivity extends BaseActivity {
         }
         LayoutManagaer = new LinearLayoutManager(JobsActivity.this);
         mRecyclerView.setLayoutManager(LayoutManagaer);
-        mAdapter = new JobAdsAdapter(JobsActivity.this, modelArrayList);
+        mAdapter = new JobAdsAdapter(JobsActivity.this, modelArrayList,favArray);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -469,4 +477,36 @@ public class JobsActivity extends BaseActivity {
         editor.apply();
 
     }
+
+    private void getFavID() {
+        body.put("category", "job");
+        GetFavoriteProducts getFavId = new GetFavoriteProducts(JobsActivity.this, mUSERid, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("FavPage", "res" + response);
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int a = 0; a < array.length(); a++) {
+                        JSONObject object = array.getJSONObject(a);
+                        int favourable_id = object.getInt("favourable_id");
+                        favArray.add(favourable_id);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        getFavId.setBody((HashMap) body);
+        getFavId.start();
+
+    }
+
 }
