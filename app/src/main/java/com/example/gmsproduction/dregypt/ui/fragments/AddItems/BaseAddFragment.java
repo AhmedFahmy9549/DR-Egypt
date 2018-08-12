@@ -169,7 +169,9 @@ public abstract class BaseAddFragment extends Fragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+
+
+                        String specName = object.getString(  ((AddItemActivity)getActivity()).lang+"_name");
                         int regionId = object.getInt("id");
 
                         LocationModel model = new LocationModel(specName, regionId);
@@ -257,7 +259,7 @@ public abstract class BaseAddFragment extends Fragment {
                     JSONArray jsonArray = jsonObject1.getJSONArray("cities");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String specName = object.getString("en_name");
+                        String specName = object.getString(((AddItemActivity)getActivity()).lang+"_name");
                         int regionId = object.getInt("id");
 
                         LocationModel model = new LocationModel(specName, regionId);

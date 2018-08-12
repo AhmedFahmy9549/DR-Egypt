@@ -187,7 +187,7 @@ public abstract class  BaseProductFragment extends BaseAddFragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String categName = object.getString("en_name");
+                        String categName = object.getString(((AddItemActivity)getActivity()).lang+"_name");
                         int categId = object.getInt("id");
                         LocationModel model = new LocationModel(categName, categId);
                         CategoryNameArray.add(categName);

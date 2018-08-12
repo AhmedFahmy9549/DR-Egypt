@@ -29,6 +29,7 @@ public class FiltersActivity extends BaseActivity {
 
         language = getIdLANG();
         localization(language);
+        setActivityTitle("فلاتر","Filters");
 
 
         int id = intent.getIntExtra("idFilter", 0);

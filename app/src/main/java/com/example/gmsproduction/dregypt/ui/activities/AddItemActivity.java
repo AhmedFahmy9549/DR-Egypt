@@ -15,6 +15,7 @@ import com.example.gmsproduction.dregypt.utils.Utils;
 public class AddItemActivity extends BaseActivity {
     int vald,language;
     private FragmentManager fragmentManager;
+    public String lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ public class AddItemActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
         language = getIdLANG();
         localization(language);
+        lang=checkLanguage(language);
         setContentView(R.layout.add_item);
         //back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -204,7 +204,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String categName = object.getString("en_name");
+                        String categName = object.getString(((AddItemActivity)getActivity()).lang+"_name");
                         int categId = object.getInt("id");
                         LocationModel model = new LocationModel(categName, categId);
                         CategoryNameArray.add(categName);
@@ -256,7 +256,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String categName = object.getString("en_name");
+                        String categName = object.getString(((AddItemActivity)getActivity()).lang+"_name");
                         int categId = object.getInt("id");
                         LocationModel model = new LocationModel(categName, categId);
                         ExpLebelNameArray.add(categName);
@@ -308,7 +308,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String categName = object.getString("en_name");
+                        String categName = object.getString(((AddItemActivity)getActivity()).lang+"_name");
                         int categId = object.getInt("id");
                         LocationModel model = new LocationModel(categName, categId);
                         EduLevelNameArray.add(categName);
@@ -362,7 +362,7 @@ public abstract class BaseJobFragment extends BaseAddFragment {
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
-                        String categName = object.getString("en_name");
+                        String categName = object.getString(((AddItemActivity)getActivity()).lang+"_name");
                         int categId = object.getInt("id");
                         LocationModel model = new LocationModel(categName, categId);
                         EmpTypeNameArray.add(categName);
