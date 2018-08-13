@@ -55,29 +55,41 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         >
+
+
+
+
+
                         <TextView
                             android:id="@+id/filtering"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/filter"
+                            android:drawablePadding="10dp"
+                            android:drawableStart="@drawable/filter"
+                            android:gravity="start|center"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
                             android:text="@string/nameActivity_Filters"
                             android:textColor="@android:color/black"
-                            android:gravity="center" />
 
-
+                            />
                         <View
                             android:layout_width="1px"
                             android:layout_height="match_parent"
                             android:background="@android:color/darker_gray" />
-
-
                         <TextView
                             android:id="@+id/sorting"
                             android:layout_width="0dp"
-                            android:gravity="center"
+                            android:gravity="start|center"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:drawableStart="@drawable/sort"
+                            android:drawablePadding="10dp"
                             android:text="Sort"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
                             android:textColor="@android:color/black" />
 
                     </LinearLayout>
