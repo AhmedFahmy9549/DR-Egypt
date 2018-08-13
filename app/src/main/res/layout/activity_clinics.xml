@@ -15,18 +15,10 @@
         android:layout_below="@id/toolbar_container_Clinic"
         android:layout_marginTop="10dp" />
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/toolbar_container_Clinic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/appbar_padding_top"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_Clinic"
             android:layout_width="match_parent"
@@ -34,77 +26,85 @@
             android:background="@color/colorPrimary"
             app:title="@string/toolbar_clinics"
             app:titleTextColor="@color/white" />
+        <LinearLayout
+            android:id="@+id/filterSorting_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:layout_below="@+id/toolbar_Clinic"
+            >
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/white"
-                >
+                android:layout_height="match_parent"
+                android:layout_marginBottom="3dp"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="3dp">
 
-                <android.support.v7.widget.CardView
+                <LinearLayout
+                    android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="3dp"
-                    app:cardCornerRadius="0dp"
-                    app:cardElevation="3dp"
-                    >
-                    <LinearLayout
-                        android:id="@+id/tabs"
-                        android:layout_width="match_parent"
+                    android:layout_weight="2"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp">
+
+                    <TextView
+                        android:id="@+id/filtering"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        android:layout_weight="2"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        >
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/filter"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/filter"
+                        android:gravity="start|center"
+                        android:paddingEnd="20dp"
+                        android:paddingStart="20dp"
+                        android:text="@string/nameActivity_Filters"
+                        android:textColor="@android:color/black"
+
+                        />
+
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/sorting"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/sort"
+                        android:gravity="start|center"
+                        android:paddingEnd="20dp"
+                        android:paddingStart="20dp"
+                        android:text="Sort"
+                        android:textColor="@android:color/black" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <!--<android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/appbar_padding_top"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
 
 
-
-
-                        <TextView
-                            android:id="@+id/filtering"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:drawableLeft="@drawable/filter"
-                            android:drawablePadding="10dp"
-                            android:drawableStart="@drawable/filter"
-                            android:gravity="start|center"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="20dp"
-                            android:text="@string/nameActivity_Filters"
-                            android:textColor="@android:color/black"
-
-                            />
-                        <View
-                            android:layout_width="1px"
-                            android:layout_height="match_parent"
-                            android:background="@android:color/darker_gray" />
-                        <TextView
-                            android:id="@+id/sorting"
-                            android:layout_width="0dp"
-                            android:gravity="start|center"
-                            android:layout_weight="1"
-                            android:layout_height="match_parent"
-                            android:drawableStart="@drawable/sort"
-                            android:drawablePadding="10dp"
-                            android:text="Sort"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="20dp"
-                            android:textColor="@android:color/black" />
-
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-        </android.support.design.widget.AppBarLayout>
+        </android.support.design.widget.AppBarLayout>-->
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/search_view_Clinic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
-    </FrameLayout>
+    </RelativeLayout>
 </RelativeLayout>

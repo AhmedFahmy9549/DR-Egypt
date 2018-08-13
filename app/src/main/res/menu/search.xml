@@ -17,6 +17,7 @@
         android:title="@string/abc_search_hint"
         app:showAsAction="always" />
     <item
+        android:visible="false"
         android:id="@+id/action_filters"
         android:icon="@drawable/filter"
         android:orderInCategory="202"
