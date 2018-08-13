@@ -166,12 +166,12 @@
     <string name="sort">Order By</string>
     <string name="cancel">Cancel</string>
     <string name="rate">Rate</string>
-    <string name="rateLTH">low to high</string>
-    <string name="rateHTL">high to low</string>
+    <string name="rateLTH">Low to High</string>
+    <string name="rateHTL">High to Low</string>
 
-    <string name="newest">newest</string>
-    <string name="oldest">oldest</string>
-    <string name="Updated">updated at</string>
+    <string name="newest">Newest</string>
+    <string name="oldest">Oldest</string>
+    <string name="Updated">Updated at</string>
 
 
 

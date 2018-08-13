@@ -64,7 +64,11 @@
                             android:layout_height="match_parent"
                             android:text="@string/nameActivity_Filters"
                             android:textColor="@android:color/black"
+                            android:drawableEnd="@drawable/filter"
+                            android:drawableRight="@drawable/filter"
                             android:gravity="center" />
+
+
 
 
                         <View
@@ -79,6 +83,8 @@
                             android:gravity="center"
                             android:layout_weight="1"
                             android:layout_height="match_parent"
+                            android:drawableEnd="@drawable/sort"
+                            android:drawableRight="@drawable/sort"
                             android:text="Sort"
                             android:textColor="@android:color/black" />
 
