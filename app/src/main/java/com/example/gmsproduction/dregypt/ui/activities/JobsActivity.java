@@ -12,7 +12,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -55,6 +60,7 @@ public class JobsActivity extends BaseActivity {
     String test;
     private FragmentManager fragmentManager;
     private ArrayList<Integer> favArray = new ArrayList<>();
+    TextView txtFilter , txtSort;
 
     LinearLayoutManager LayoutManagaer;
     int page = 1;
@@ -80,10 +86,25 @@ public class JobsActivity extends BaseActivity {
         lang=checkLanguage(language);
 
 
-        //Request for main Jobs
-        /*final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(this,url,this,this);
-        searchJobAdRequest.setBody((HashMap) body);
-        searchJobAdRequest.start();*/
+        txtFilter = findViewById(R.id.filtering);
+        txtSort = findViewById(R.id.sorting);
+
+        txtFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(JobsActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 6);
+                startActivity(intent);
+            }
+        });
+
+
+        txtSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sorting();
+            }
+        });
 
 
         //Recycle
@@ -509,4 +530,66 @@ public class JobsActivity extends BaseActivity {
 
     }
 
+    private void sorting(){
+        MaterialDialog dialog = new MaterialDialog.Builder(JobsActivity.this)
+                .title(R.string.sort)
+                .titleColor(getResources().getColor(R.color.black))
+                .customView(R.layout.sorting_jobs, true)
+                .positiveText(R.string.aapply)
+                .positiveColor(getResources().getColor(R.color.greeny))
+                .negativeText(R.string.cancel)
+                .negativeColor(getResources().getColor(R.color.redy))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        Toast.makeText(JobsActivity.this, "done", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .show();
+        View views = dialog.getCustomView();
+
+        RadioGroup radioGroupType = views.findViewById(R.id.Job_rate_RadioGroup);
+        RadioGroup radioSalary = views.findViewById(R.id.JobSalary_rate_RadioGroup);
+
+        radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                switch (checkedId) {
+
+                    case R.id.JobRadio_Oldest:
+                        Toast.makeText(JobsActivity.this, "Oldest", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.JobRadio_Newest:
+                        Toast.makeText(JobsActivity.this, "Newest", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        Toast.makeText(JobsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
+        radioSalary.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                switch (checkedId) {
+
+                    case R.id.JobSalaryRadio_LTH:
+                        Toast.makeText(JobsActivity.this, "LTH", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.JobSalaryRadio_HTL:
+                        Toast.makeText(JobsActivity.this, "HTL", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        Toast.makeText(JobsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+    }
 }

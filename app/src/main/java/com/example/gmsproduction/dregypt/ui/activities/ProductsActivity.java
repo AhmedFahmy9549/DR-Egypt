@@ -22,8 +22,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -75,6 +79,7 @@ public class ProductsActivity extends BaseActivity {
     int page = 1;
     int last_page;
     private String lang;
+    TextView txtFilter , txtSort;
 
 
     @Override
@@ -88,6 +93,27 @@ public class ProductsActivity extends BaseActivity {
         language = getIdLANG();
         localization(language);
         lang=checkLanguage(language);
+
+        txtFilter = findViewById(R.id.filtering);
+        txtSort = findViewById(R.id.sorting);
+
+        txtFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProductsActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 4);
+                startActivity(intent);
+            }
+        });
+
+
+        txtSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sorting();
+            }
+        });
+
 
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
@@ -548,6 +574,69 @@ public class ProductsActivity extends BaseActivity {
 
         }
 
+    }
+
+    private void sorting(){
+        MaterialDialog dialog = new MaterialDialog.Builder(ProductsActivity.this)
+                .title(R.string.sort)
+                .titleColor(getResources().getColor(R.color.black))
+                .customView(R.layout.sorting_products, true)
+                .positiveText(R.string.aapply)
+                .positiveColor(getResources().getColor(R.color.greeny))
+                .negativeText(R.string.cancel)
+                .negativeColor(getResources().getColor(R.color.redy))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        Toast.makeText(ProductsActivity.this, "done", Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .show();
+        View views = dialog.getCustomView();
+
+        RadioGroup radioGroupType = views.findViewById(R.id.Pro_rate_RadioGroup);
+        RadioGroup radioPrice = views.findViewById(R.id.Proprice_rate_RadioGroup);
+
+        radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                switch (checkedId) {
+
+                    case R.id.ProRadio_Oldest:
+                        Toast.makeText(ProductsActivity.this, "Oldest", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.ProRadio_Newest:
+                        Toast.makeText(ProductsActivity.this, "Newest", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        Toast.makeText(ProductsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
+        radioPrice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                switch (checkedId) {
+
+                    case R.id.priceRadio_LTH:
+                        Toast.makeText(ProductsActivity.this, "LTH", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.priceRadio_HTL:
+                        Toast.makeText(ProductsActivity.this, "HTL", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        Toast.makeText(ProductsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
     }
 }
 

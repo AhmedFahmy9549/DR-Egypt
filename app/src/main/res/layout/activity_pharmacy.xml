@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,12 +12,20 @@
         layout="@layout/fragment_hospitals"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize" />
+        android:layout_below="@id/toolbar_container_Pharmacy"
+        android:layout_marginTop="10dp"
+        />
 
     <FrameLayout
         android:id="@+id/toolbar_container_Pharmacy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/appbar_padding_top"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_Pharmacy"
@@ -26,6 +34,59 @@
             android:background="@color/colorPrimary"
             app:title="@string/toolbar_pharmacy"
             app:titleTextColor="@color/white" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                >
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="3dp"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="3dp"
+                    >
+                    <LinearLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="2"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        >
+                        <TextView
+                            android:id="@+id/filtering"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:text="@string/nameActivity_Filters"
+                            android:textColor="@android:color/black"
+                            android:gravity="center" />
+
+
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/darker_gray" />
+
+
+                        <TextView
+                            android:id="@+id/sorting"
+                            android:layout_width="0dp"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:text="Sort"
+                            android:textColor="@android:color/black" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+        </android.support.design.widget.AppBarLayout>
 
         <com.miguelcatalan.materialsearchview.MaterialSearchView
             android:id="@+id/search_view_Pharmacy"
@@ -33,4 +94,4 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
     </FrameLayout>
-</FrameLayout>
+</RelativeLayout>

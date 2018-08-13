@@ -4,7 +4,8 @@
     <color name="colorPrimaryDark">#3793A6</color>
     <color name="colorAccent">#FF4081</color>
 
-
+    <color name="greeny">#008000</color>
+    <color name="redy">#FF0000</color>
 
 
     <color name="ratingBarActivied">#EB922D</color>

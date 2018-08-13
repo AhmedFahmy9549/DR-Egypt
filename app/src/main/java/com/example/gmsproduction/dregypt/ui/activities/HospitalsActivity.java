@@ -1,21 +1,8 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.provider.Settings;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,10 +13,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -47,20 +37,14 @@ import com.example.gmsproduction.dregypt.ui.fragments.FragmentsFilters.AdapterHo
 import com.example.gmsproduction.dregypt.ui.fragments.NoInternt_Fragment;
 import com.example.gmsproduction.dregypt.utils.Constants;
 import com.example.gmsproduction.dregypt.utils.Utils;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class HospitalsActivity extends BaseActivity {
@@ -89,6 +73,7 @@ public class HospitalsActivity extends BaseActivity {
     TextView textView;
     String lattitude, longitude;
     private String lang;
+    TextView txtFilter , txtSort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +84,27 @@ public class HospitalsActivity extends BaseActivity {
         lang=checkLanguage(language);
         //setTitle("Hospitals");
 
+
+        txtFilter = findViewById(R.id.filtering);
+        txtSort = findViewById(R.id.sorting);
+
+        txtFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HospitalsActivity.this, FiltersActivity.class);
+                intent.putExtra("idFilter", 1);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+        txtSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sorting();
+            }
+        });
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         recyclerView = findViewById(R.id.hospital_recycler);
@@ -522,5 +528,43 @@ public class HospitalsActivity extends BaseActivity {
 
     }
 
+    private void sorting(){
+        MaterialDialog dialog = new MaterialDialog.Builder(HospitalsActivity.this)
+                .title(R.string.sort)
+                .titleColor(getResources().getColor(R.color.black))
+                .customView(R.layout.sorting_medical, true)
+                .positiveText(R.string.aapply)
+                .positiveColor(getResources().getColor(R.color.greeny))
+                .negativeText(R.string.cancel)
+                .negativeColor(getResources().getColor(R.color.redy))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        Toast.makeText(HospitalsActivity.this, "done", Toast.LENGTH_SHORT).show();
 
+                    }
+                })
+                .show();
+        View views = dialog.getCustomView();
+
+        RadioGroup radioGroupType = views.findViewById(R.id.Cosmetic_rate_RadioGroup);
+        radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                switch (checkedId) {
+
+                    case R.id.CosmeticRadio_LTH:
+                        Toast.makeText(HospitalsActivity.this, "toast", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.CosmeticRadio_HTL:
+                        Toast.makeText(HospitalsActivity.this, "toast2", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(HospitalsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+    }
 }
