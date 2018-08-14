@@ -27,6 +27,7 @@ public class NotificationActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mArraylist = new ArrayList<>();
 
+        setActivityTitle("اشعارات","Notifications");
 
         SharedPreferences prefs = getSharedPreferences("notification", MODE_PRIVATE);
         String title = prefs.getString("title", "null");
@@ -37,7 +38,7 @@ public class NotificationActivity extends BaseActivity {
         if (!body.equals("null")){
             mArraylist.add(new NotificationModel(title,body));
         }
-        if (!body.equals("null")){
+        if (!body1.equals("null")){
             mArraylist.add(new NotificationModel(title1,body1));
         }
         mAdapter = new AdapterNotification(this,mArraylist);

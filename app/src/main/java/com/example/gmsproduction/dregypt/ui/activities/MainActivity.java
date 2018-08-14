@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.facebook.login.LoginManager;
 import com.pusher.pushnotifications.PushNotifications;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -297,6 +298,7 @@ public class MainActivity extends BaseActivity
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
+                                LoginManager.getInstance().logOut();
                                 Intent intent;
                                 SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE).edit();
                                 editor.clear().apply();

@@ -90,8 +90,10 @@ public class UserProductsListFragment extends Fragment {
                         String status = dataObject.getString("status");
                         String address = dataObject.getString("address");
                         String created_at = dataObject.getString("created_at");
-                        String created_by = dataObject.getString("user_name");
                         String description = dataObject.getString("description");
+
+                        JSONObject userObject = dataObject.getJSONObject("user");
+                        String created_by = userObject.getString("name");
 
 
                         //get phone id and num

@@ -127,8 +127,12 @@ public class ProductFilters extends Fragment {
             public void onResponse(String response) {
                 arrayModel = new ArrayList<>();
                 name_array = new ArrayList<>();
+                int lan = 1;
+                if (getActivity()!=null){
+                    lan = ((FiltersActivity)getActivity()).getLanguage();
+                }
 
-                if(((FiltersActivity)getActivity()).getLanguage()==1){
+                if(lan==1){
                     name_array.add("All");
 
 
@@ -361,12 +365,19 @@ public class ProductFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
+
+
                         if(((FiltersActivity)getActivity()).getLanguage()==1){
                              categName = object.getString("en_name");
+                            Log.e("Msa","hi+"+((FiltersActivity)getActivity()).getLanguage());
 
                         }
                         else
+
                              categName = object.getString("ar_name");
+                        Log.e("Msa","hi+"+((FiltersActivity)getActivity()).getLanguage());
+
+
 
 
                         int categId = object.getInt("id");

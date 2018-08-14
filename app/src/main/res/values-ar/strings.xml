@@ -164,6 +164,8 @@
 
 
     <string name="sort">ترتيب</string>
+    <string name="sorting">ترتيب</string>
+
     <string name="cancel">رفض</string>
     <string name="rate">تقييم</string>
     <string name="rateLTH">الاقل الي الاكبر</string>

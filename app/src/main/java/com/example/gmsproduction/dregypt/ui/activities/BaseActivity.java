@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity {
         idLANG = prefs.getInt("languageNum", 1); //0 is the default value.
 
         SharedPreferences prefs2 = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
-        userId = prefs.getInt("User_id", 0);
+        userId = prefs2.getInt("User_id", 0);
         userName = prefs2.getString("User_name", "Dr.Egypt");
         userAvatar = prefs2.getString("User_avatar", null);
         //push notification

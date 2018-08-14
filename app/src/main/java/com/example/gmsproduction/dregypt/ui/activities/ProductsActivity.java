@@ -97,7 +97,8 @@ public class ProductsActivity extends BaseActivity {
 
         txtFilter = findViewById(R.id.filtering);
         txtSort = findViewById(R.id.sorting);
-
+        txtFilter.setText(R.string.nameActivity_Filters);
+        txtSort.setText(R.string.sorting);
         txtFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

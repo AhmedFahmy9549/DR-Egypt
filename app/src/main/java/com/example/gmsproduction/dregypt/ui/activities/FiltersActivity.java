@@ -1,8 +1,10 @@
 package com.example.gmsproduction.dregypt.ui.activities;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Switch;
 
 import com.example.gmsproduction.dregypt.R;
@@ -80,7 +82,7 @@ public class FiltersActivity extends BaseActivity {
     public int getLanguage() {
         language = getIdLANG();
         localization(language);
-
+        Log.e("LAAAAAA","hi+"+language);
         return language;
     }
 

@@ -164,6 +164,8 @@
     <string name="detect_location">Detect Location</string>
 
     <string name="sort">Order By</string>
+    <string name="sorting">sort</string>
+
     <string name="cancel">Cancel</string>
     <string name="rate">Rate</string>
     <string name="rateLTH">Low to High</string>
