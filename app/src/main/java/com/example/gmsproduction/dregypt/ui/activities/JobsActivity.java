@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -66,6 +65,7 @@ public class JobsActivity extends BaseActivity {
     int page = 1;
     int last_page,mUSERid,language;
     private String lang;
+    private String sortKey,sortValue;
 
     @Override
     protected void onStart() {
@@ -74,7 +74,7 @@ public class JobsActivity extends BaseActivity {
         getFavID();
     }
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle  savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobs);
         fragmentManager = getSupportFragmentManager();
@@ -239,6 +239,9 @@ public class JobsActivity extends BaseActivity {
         int expLevel = prefs.getInt("experienceLevel", 0); //0 is the default value.
         int eduLevel = prefs.getInt("educationLevel", 0); //0 is the default value.
 
+        String sort_key= prefs.getString("order_by",""); //0 is the default value.
+        String sort_value= prefs.getString("sortingValue",""); //0 is the default value.
+
 
 
 
@@ -254,9 +257,12 @@ public class JobsActivity extends BaseActivity {
         body.put("type", String.valueOf(type));
         body.put("experienceLevel", String.valueOf(expLevel));
         body.put("educationLevel", String.valueOf(eduLevel));
-
-
         body.put("keyword",keyword);
+
+        body.put("orderBy",sort_key);
+        body.put("sort", sort_value);
+
+
 
 
         final SearchJobAdRequest searchJobAdRequest = new SearchJobAdRequest(JobsActivity.this, new Response.Listener<String>() {
@@ -410,7 +416,7 @@ public class JobsActivity extends BaseActivity {
             }
         });
 
-        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), modelArrayList.size() - 1);
+        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), modelArrayList.size());
 
     }
 
@@ -425,12 +431,17 @@ public class JobsActivity extends BaseActivity {
         int expLevel = prefs.getInt("experienceLevel", 0); //0 is the default value.
         int eduLevel = prefs.getInt("educationLevel", 0); //0 is the default value.
 
+        String sort_key= prefs.getString("order_by",""); //0 is the default value.
+        String sort_value= prefs.getString("sortingValue",""); //0 is the default value.
 
 
 
 
 
-        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category+"Type="+type+"ExperienceLevel="+expLevel+"educationLevel="+eduLevel);
+
+
+
+        Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category+"Type="+type+"ExperienceLevel="+expLevel+"educationLevel="+eduLevel+"SortKey="+sort_key+"SortValue="+sort_value);
 
 
         body.put("region", String.valueOf(city));
@@ -440,6 +451,10 @@ public class JobsActivity extends BaseActivity {
         body.put("type", String.valueOf(type));
         body.put("experienceLevel", String.valueOf(expLevel));
         body.put("educationLevel", String.valueOf(eduLevel));
+
+        body.put("orderBy",sort_key);
+        body.put("sort", sort_value);
+
 
 
         body.put("keyword",keyword);
@@ -494,6 +509,10 @@ public class JobsActivity extends BaseActivity {
         editor.putInt("experienceLevel", 0);
         editor.putInt("educationLevel", 0);
 
+        editor.putString("order_by", "");
+        editor.putString("sortingValue", "");
+
+
 
         editor.apply();
 
@@ -536,13 +555,20 @@ public class JobsActivity extends BaseActivity {
                 .titleColor(getResources().getColor(R.color.black))
                 .customView(R.layout.sorting_jobs, true)
                 .positiveText(R.string.aapply)
-                .positiveColor(getResources().getColor(R.color.greeny))
-                .negativeText(R.string.cancel)
-                .negativeColor(getResources().getColor(R.color.redy))
+                .positiveColor(getResources().getColor(R.color.colorPrimary))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
-                        Toast.makeText(JobsActivity.this, "done", Toast.LENGTH_SHORT).show();
+                        Log.e("Sorting=",sortKey+"  "+sortValue);
+
+
+                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putString("order_by",sortKey);
+                        editor.putString("sortingValue",sortValue);
+                        editor.apply();
+
+                        getJobs("");
+
 
                     }
                 })
@@ -550,7 +576,6 @@ public class JobsActivity extends BaseActivity {
         View views = dialog.getCustomView();
 
         RadioGroup radioGroupType = views.findViewById(R.id.Job_rate_RadioGroup);
-        RadioGroup radioSalary = views.findViewById(R.id.JobSalary_rate_RadioGroup);
 
         radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -559,37 +584,36 @@ public class JobsActivity extends BaseActivity {
                 switch (checkedId) {
 
                     case R.id.JobRadio_Oldest:
-                        Toast.makeText(JobsActivity.this, "Oldest", Toast.LENGTH_SHORT).show();
+                        sortKey="updated_at";
+                        sortValue="asc";
+
                         break;
                     case R.id.JobRadio_Newest:
-                        Toast.makeText(JobsActivity.this, "Newest", Toast.LENGTH_SHORT).show();
-                        break;
+                        sortKey="updated_at";
+                        sortValue="desc";
 
-                    default:
-                        Toast.makeText(JobsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
                         break;
-                }
-            }
-        });
-
-        radioSalary.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
-                switch (checkedId) {
 
                     case R.id.JobSalaryRadio_LTH:
-                        Toast.makeText(JobsActivity.this, "LTH", Toast.LENGTH_SHORT).show();
+                        sortKey="salary";
+                        sortValue="asc";
+
                         break;
                     case R.id.JobSalaryRadio_HTL:
-                        Toast.makeText(JobsActivity.this, "HTL", Toast.LENGTH_SHORT).show();
+                        sortKey="salary";
+                        sortValue="desc";
+
                         break;
 
                     default:
-                        Toast.makeText(JobsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        sortKey="";
+                        sortValue="";
+
                         break;
                 }
             }
         });
+
+
     }
 }

@@ -80,6 +80,7 @@ public class ProductsActivity extends BaseActivity {
     int last_page;
     private String lang;
     TextView txtFilter , txtSort;
+    private String sortKey,sortValue;
 
 
     @Override
@@ -325,6 +326,9 @@ public class ProductsActivity extends BaseActivity {
         int category = prefs.getInt("category", 0); //0 is the default value.
         int status = prefs.getInt("status", 0); //0 is the default value.
 
+        String sort_key= prefs.getString("order_by",""); //0 is the default value.
+        String sort_value= prefs.getString("sortingValue",""); //0 is the default value.
+
         Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Category=" + category + "Status=" + status);
 
 
@@ -334,6 +338,9 @@ public class ProductsActivity extends BaseActivity {
         body.put("category", String.valueOf(category));
         body.put("status", String.valueOf(status));
         body.put("keyword", keyword);
+
+        body.put("orderBy",sort_key);
+        body.put("sort", sort_value);
 
         final SearchProductAdRequest searchProductAdRequest = new SearchProductAdRequest(ProductsActivity.this, new Response.Listener<String>() {
             @Override
@@ -471,7 +478,7 @@ public class ProductsActivity extends BaseActivity {
             }
         });
 
-        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), modelArrayList.size() - 1);
+        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), modelArrayList.size());
 
     }
 
@@ -491,7 +498,8 @@ public class ProductsActivity extends BaseActivity {
         editor.putInt("category", 0);
         editor.putInt("status", 0);
 
-
+        editor.putString("order_by", "");
+        editor.putString("sortingValue", "");
         editor.apply();
 
 
@@ -582,21 +590,26 @@ public class ProductsActivity extends BaseActivity {
                 .titleColor(getResources().getColor(R.color.black))
                 .customView(R.layout.sorting_products, true)
                 .positiveText(R.string.aapply)
-                .positiveColor(getResources().getColor(R.color.greeny))
-                .negativeText(R.string.cancel)
-                .negativeColor(getResources().getColor(R.color.redy))
+                .positiveColor(getResources().getColor(R.color.colorPrimary))
+
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
-                        Toast.makeText(ProductsActivity.this, "done", Toast.LENGTH_SHORT).show();
+
+                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putString("order_by",sortKey);
+                        editor.putString("sortingValue",sortValue);
+                        editor.apply();
+
+                        getProducts("");
+
 
                     }
                 })
                 .show();
         View views = dialog.getCustomView();
 
-        RadioGroup radioGroupType = views.findViewById(R.id.Pro_rate_RadioGroup);
-        RadioGroup radioPrice = views.findViewById(R.id.Proprice_rate_RadioGroup);
+        final RadioGroup radioGroupType = views.findViewById(R.id.Pro_rate_RadioGroup);
 
         radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -605,38 +618,33 @@ public class ProductsActivity extends BaseActivity {
                 switch (checkedId) {
 
                     case R.id.ProRadio_Oldest:
-                        Toast.makeText(ProductsActivity.this, "Oldest", Toast.LENGTH_SHORT).show();
+                        sortKey="updated_at";
+                        sortValue="asc";
                         break;
                     case R.id.ProRadio_Newest:
-                        Toast.makeText(ProductsActivity.this, "Newest", Toast.LENGTH_SHORT).show();
+                        sortKey="updated_at";
+                        sortValue="desc";
                         break;
-
-                    default:
-                        Toast.makeText(ProductsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
-
-        radioPrice.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
-                switch (checkedId) {
 
                     case R.id.priceRadio_LTH:
-                        Toast.makeText(ProductsActivity.this, "LTH", Toast.LENGTH_SHORT).show();
+                        sortKey="price";
+                        sortValue="asc";
                         break;
                     case R.id.priceRadio_HTL:
-                        Toast.makeText(ProductsActivity.this, "HTL", Toast.LENGTH_SHORT).show();
+                        sortKey="price";
+                        sortValue="desc";
                         break;
 
+
                     default:
-                        Toast.makeText(ProductsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        sortKey="";
+                        sortValue="";
                         break;
                 }
             }
         });
+
+
     }
 }
 

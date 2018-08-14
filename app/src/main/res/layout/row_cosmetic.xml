@@ -40,7 +40,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_weight="5"
-                android:textColor="@color/black1"
+                android:textColor="@color/black"
                 android:text="heloow from the other side"
                 android:textStyle="bold" />
 

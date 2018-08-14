@@ -69,6 +69,8 @@ public class CosmeticsActivity extends BaseActivity {
     int page = 1;
     int last_page,language,userID;
     private String lang;
+    private String sortKey,sortValue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,45 +182,7 @@ public class CosmeticsActivity extends BaseActivity {
     }
 
 
-    private void sorting(){
-        MaterialDialog dialog = new MaterialDialog.Builder(CosmeticsActivity.this)
-                .title(R.string.sort)
-                .titleColor(getResources().getColor(R.color.black))
-                .customView(R.layout.sorting_medical, true)
-                .positiveText(R.string.aapply)
-                .positiveColor(getResources().getColor(R.color.greeny))
-                .negativeText(R.string.cancel)
-                .negativeColor(getResources().getColor(R.color.redy))
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(MaterialDialog dialog, DialogAction which) {
-                        Toast.makeText(CosmeticsActivity.this, "done", Toast.LENGTH_SHORT).show();
 
-                    }
-                })
-                .show();
-        View views = dialog.getCustomView();
-
-        RadioGroup radioGroupType = views.findViewById(R.id.Cosmetic_rate_RadioGroup);
-        radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // checkedId is the RadioButton selected
-                switch (checkedId) {
-
-                    case R.id.CosmeticRadio_LTH:
-                        Toast.makeText(CosmeticsActivity.this, "toast", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.CosmeticRadio_HTL:
-                        Toast.makeText(CosmeticsActivity.this, "toast2", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        Toast.makeText(CosmeticsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
-    }
 
     @Override
     protected void onStart() {
@@ -335,6 +299,9 @@ public class CosmeticsActivity extends BaseActivity {
         int rate = prefs.getInt("num_rate", 0); //0 is the default value.
         int speciality = prefs.getInt("speciality", 0); //0 is the default value.
 
+        String sort_key= prefs.getString("order_by",""); //0 is the default value.
+        String sort_value= prefs.getString("sortingValue",""); //0 is the default value.
+
         Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Specialty=" + speciality);
 
 
@@ -343,6 +310,11 @@ public class CosmeticsActivity extends BaseActivity {
         body.put("rate", String.valueOf(rate));
         body.put("speciality", String.valueOf(speciality));
         body.put("keyword", keyword);
+
+        body.put("orderBy",sort_key);
+        body.put("sort", sort_value);
+
+
 
         final SearchCosmeticClinicsRequest searchProductAdRequest = new SearchCosmeticClinicsRequest(CosmeticsActivity.this, new Response.Listener<String>() {
             @Override
@@ -509,7 +481,7 @@ public class CosmeticsActivity extends BaseActivity {
             }
         });
 
-        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), modelArrayList.size() - 1);
+        mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), modelArrayList.size());
 
 
     }
@@ -523,6 +495,9 @@ public class CosmeticsActivity extends BaseActivity {
         editor.putInt("city", 0);
         editor.putInt("area", 0);
         editor.putInt("speciality", 0);
+
+        editor.putString("order_by", "");
+        editor.putString("sortingValue", "");
 
         editor.apply();
 
@@ -559,4 +534,51 @@ public class CosmeticsActivity extends BaseActivity {
 
     }
 
+
+    private void sorting(){
+        MaterialDialog dialog = new MaterialDialog.Builder(CosmeticsActivity.this)
+                .title(R.string.sort)
+                .titleColor(getResources().getColor(R.color.black))
+                .customView(R.layout.sorting_medical, true)
+                .positiveText(R.string.aapply)
+                .positiveColor(getResources().getColor(R.color.colorPrimary))
+
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+
+                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putString("order_by",sortKey);
+                        editor.putString("sortingValue",sortValue);
+                        editor.apply();
+
+                        getCosmetics("");
+                    }
+                })
+                .show();
+        View views = dialog.getCustomView();
+
+        RadioGroup radioGroupType = views.findViewById(R.id.Cosmetic_rate_RadioGroup);
+        radioGroupType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // checkedId is the RadioButton selected
+                switch (checkedId) {
+
+                    case R.id.CosmeticRadio_LTH:
+                        sortKey="rate";
+                        sortValue="asc";
+                        break;
+                    case R.id.CosmeticRadio_HTL:
+                        sortKey="rate";
+                        sortValue="desc";
+                        break;
+                    default:
+                        sortKey="";
+                        sortValue="";
+                        break;
+                }
+            }
+        });
+    }
 }

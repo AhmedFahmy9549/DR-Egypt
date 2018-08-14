@@ -31,22 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/newest" />
-
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/salary"
-        android:textSize="20sp"
-        />
-    <RadioGroup
-        android:id="@+id/JobSalary_rate_RadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:weightSum="3">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/salary"
+            android:textSize="20sp" />
         <RadioButton
             android:id="@+id/JobSalaryRadio_LTH"
             android:layout_width="wrap_content"
@@ -63,6 +52,10 @@
             android:text="@string/rateHTL" />
 
     </RadioGroup>
+
+
+
+
 
 
 

@@ -163,6 +163,17 @@
     <string name="detect_location">تحديد الموقع</string>
 
 
+    <string name="sort">ترتيب</string>
+    <string name="cancel">رفض</string>
+    <string name="rate">تقييم</string>
+    <string name="rateLTH">الاقل الي الاكبر</string>
+    <string name="rateHTL">الاكبر الي الاقل</string>
+
+    <string name="newest">الاحدث</string>
+    <string name="oldest">الاقدم</string>
+    <string name="Updated">تم التحديث</string>
+
+
 
 
 </resources>

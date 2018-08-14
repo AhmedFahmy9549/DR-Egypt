@@ -66,6 +66,8 @@ public class PharmacyActivity extends BaseActivity {
     int last_page,language;
     private ProgressBar progressBar;
     private String lang;
+    private String sortKey,sortValue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +224,9 @@ public class PharmacyActivity extends BaseActivity {
         String fullDay = prefs.getString("fullDay", "");
         String delivery = prefs.getString("delivery", "");
 
+        String sort_key= prefs.getString("order_by",""); //0 is the default value.
+        String sort_value= prefs.getString("sortingValue",""); //0 is the default value.
+
 
         Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "FullDay=" + fullDay + "Delivery=" + delivery);
 
@@ -231,9 +236,10 @@ public class PharmacyActivity extends BaseActivity {
         body.put("rate", String.valueOf(rate));
         body.put("delivery", delivery);
         body.put("fullDay", fullDay);
-
-
         body.put("keyword", keyword);
+
+        body.put("orderBy",sort_key);
+        body.put("sort", sort_value);
 
 
         final SearchPharmacyRequest searchPharmacyRequest = new SearchPharmacyRequest(PharmacyActivity.this, new Response.Listener<String>() {
@@ -453,7 +459,7 @@ public class PharmacyActivity extends BaseActivity {
             }
         });
 
-        adapterx.notifyItemRangeInserted(adapterx.getItemCount(), arrayList.size() - 1);
+        adapterx.notifyItemRangeInserted(adapterx.getItemCount(), arrayList.size());
 
 
     }
@@ -470,6 +476,8 @@ public class PharmacyActivity extends BaseActivity {
         editor.putString("fullDay", "");
         editor.putString("delivery", "");
 
+        editor.putString("order_by", "");
+        editor.putString("sortingValue", "");
 
         editor.apply();
 
@@ -512,14 +520,17 @@ public class PharmacyActivity extends BaseActivity {
                 .titleColor(getResources().getColor(R.color.black))
                 .customView(R.layout.sorting_medical, true)
                 .positiveText(R.string.aapply)
-                .positiveColor(getResources().getColor(R.color.greeny))
-                .negativeText(R.string.cancel)
-                .negativeColor(getResources().getColor(R.color.redy))
+                .positiveColor(getResources().getColor(R.color.colorPrimary))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
-                        Toast.makeText(PharmacyActivity.this, "done", Toast.LENGTH_SHORT).show();
 
+                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putString("order_by",sortKey);
+                        editor.putString("sortingValue",sortValue);
+                        editor.apply();
+
+                        getPharmacy("");
                     }
                 })
                 .show();
@@ -533,13 +544,16 @@ public class PharmacyActivity extends BaseActivity {
                 switch (checkedId) {
 
                     case R.id.CosmeticRadio_LTH:
-                        Toast.makeText(PharmacyActivity.this, "toast", Toast.LENGTH_SHORT).show();
+                        sortKey="rate";
+                        sortValue="asc";
                         break;
                     case R.id.CosmeticRadio_HTL:
-                        Toast.makeText(PharmacyActivity.this, "toast2", Toast.LENGTH_SHORT).show();
+                        sortKey="rate";
+                        sortValue="desc";
                         break;
                     default:
-                        Toast.makeText(PharmacyActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        sortKey="";
+                        sortValue="";
                         break;
                 }
             }

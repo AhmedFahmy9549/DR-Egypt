@@ -65,6 +65,9 @@ public class ClinicsActivity extends BaseActivity {
     int last_page, language;
     private ProgressBar progressBar;
     String lang;
+
+    private String sortKey,sortValue;
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -233,6 +236,9 @@ public class ClinicsActivity extends BaseActivity {
         int rate = prefs.getInt("num_rate", 0); //0 is the default value.
         int speciality = prefs.getInt("speciality", 0); //0 is the default value.
 
+        String sort_key= prefs.getString("order_by",""); //0 is the default value.
+        String sort_value= prefs.getString("sortingValue",""); //0 is the default value.
+
         Log.e("CXAAAA", "city=" + city + "area=" + area + "rate=" + rate + "Specialty=" + speciality);
 
 
@@ -241,6 +247,9 @@ public class ClinicsActivity extends BaseActivity {
         body.put("rate", String.valueOf(rate));
         body.put("speciality", String.valueOf(speciality));
         body.put("keyword", keyword);
+
+        body.put("orderBy",sort_key);
+        body.put("sort", sort_value);
 
 
         final SearchClinicsRequest searchClinicsRequest = new SearchClinicsRequest(ClinicsActivity.this, new Response.Listener<String>() {
@@ -459,7 +468,7 @@ public class ClinicsActivity extends BaseActivity {
             }
         });
 
-        adapterx.notifyItemRangeInserted(adapterx.getItemCount(), arrayList.size() - 1);
+        adapterx.notifyItemRangeInserted(adapterx.getItemCount(), arrayList.size() );
 
 
     }
@@ -474,6 +483,9 @@ public class ClinicsActivity extends BaseActivity {
         editor.putInt("city", 0);
         editor.putInt("area", 0);
         editor.putInt("speciality", 0);
+
+        editor.putString("order_by", "");
+        editor.putString("sortingValue", "");
 
         editor.apply();
 
@@ -516,14 +528,18 @@ public class ClinicsActivity extends BaseActivity {
                 .titleColor(getResources().getColor(R.color.black))
                 .customView(R.layout.sorting_medical, true)
                 .positiveText(R.string.aapply)
-                .positiveColor(getResources().getColor(R.color.greeny))
-                .negativeText(R.string.cancel)
-                .negativeColor(getResources().getColor(R.color.redy))
+                .positiveColor(getResources().getColor(R.color.colorPrimary))
+
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(MaterialDialog dialog, DialogAction which) {
-                        Toast.makeText(ClinicsActivity.this, "done", Toast.LENGTH_SHORT).show();
 
+                        SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                        editor.putString("order_by",sortKey);
+                        editor.putString("sortingValue",sortValue);
+                        editor.apply();
+
+                        getClinics("");
                     }
                 })
                 .show();
@@ -537,13 +553,16 @@ public class ClinicsActivity extends BaseActivity {
                 switch (checkedId) {
 
                     case R.id.CosmeticRadio_LTH:
-                        Toast.makeText(ClinicsActivity.this, "toast", Toast.LENGTH_SHORT).show();
+                        sortKey="rate";
+                        sortValue="asc";
                         break;
                     case R.id.CosmeticRadio_HTL:
-                        Toast.makeText(ClinicsActivity.this, "toast2", Toast.LENGTH_SHORT).show();
+                        sortKey="rate";
+                        sortValue="desc";
                         break;
                     default:
-                        Toast.makeText(ClinicsActivity.this, "toast3", Toast.LENGTH_SHORT).show();
+                        sortKey="";
+                        sortValue="";
                         break;
                 }
             }
