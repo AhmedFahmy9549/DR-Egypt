@@ -147,7 +147,7 @@ public class ProductFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                        if(lan==1){
                              specName = object.getString("en_name");
 
                         }
@@ -166,6 +166,10 @@ public class ProductFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                if (getActivity()!=null){
+
+
                 // Creating adapter for spinner
                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
                 // Drop down layout style - list view with radio button
@@ -205,6 +209,7 @@ public class ProductFilters extends Fragment {
 
                     }
                 });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -219,8 +224,12 @@ public class ProductFilters extends Fragment {
     private void getArea(int name) {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
+        int lan = 1;
+        if (getActivity()!=null){
+            lan = ((FiltersActivity)getActivity()).getLanguage();
+        }
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+        if(lan==1){
             name_array2.add("All");
 
 
@@ -242,7 +251,12 @@ public class ProductFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                        int lan = 1;
+                        if (getActivity()!=null){
+                            lan = ((FiltersActivity)getActivity()).getLanguage();
+                        }
+
+                        if(lan==1){
                              specName1 = object.getString("en_name");
 
                         }
@@ -262,6 +276,9 @@ public class ProductFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (getActivity()!=null){
+
+
                 ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
                 dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner1.setAdapter(dataAdapter1);
@@ -284,12 +301,14 @@ public class ProductFilters extends Fragment {
 
                     }
 
+
+
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
                 });
-
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -348,7 +367,13 @@ public class ProductFilters extends Fragment {
         arrayModel = new ArrayList<>();
 
         arrayModel.add(new LocationModel("", -1));
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+
+        int lan = 1;
+        if (getActivity()!=null){
+            lan = ((FiltersActivity)getActivity()).getLanguage();
+        }
+
+        if(lan==1){
             CategoryNameArray.add("All");
 
 
@@ -366,16 +391,19 @@ public class ProductFilters extends Fragment {
                         JSONObject object = jsonArray.getJSONObject(i);
 
 
+                        int usless = 1;
+                        if (getActivity()!=null){
+                            usless = ((FiltersActivity)getActivity()).getLanguage();
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                        }
+
+                        if(usless==1){
                              categName = object.getString("en_name");
-                            Log.e("Msa","hi+"+((FiltersActivity)getActivity()).getLanguage());
 
                         }
                         else
 
                              categName = object.getString("ar_name");
-                        Log.e("Msa","hi+"+((FiltersActivity)getActivity()).getLanguage());
 
 
 
@@ -389,6 +417,9 @@ public class ProductFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                if (getActivity()!=null){
+
 
                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
                 // Drop down layout style - list view with radio button
@@ -422,6 +453,7 @@ public class ProductFilters extends Fragment {
 
                     }
                 });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -485,7 +517,13 @@ public class ProductFilters extends Fragment {
                 String x=((FiltersActivity)getActivity()).getMyCityName();
                 Log.e("MY Location=",""+x);
 
-                if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                int usless = 1;
+                if (getActivity()!=null){
+                    usless = ((FiltersActivity)getActivity()).getLanguage();
+
+                }
+
+                if(usless==1){
 
                     gbsText.setText("Location: " + x);
                 }
