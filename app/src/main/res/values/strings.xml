@@ -170,6 +170,8 @@
     <string name="rate">Rate</string>
     <string name="rateLTH">Low to High</string>
     <string name="rateHTL">High to Low</string>
+    <string name="addpro">Add Product</string>
+    <string name="addjob">Add Job</string>
 
     <string name="newest">Newest</string>
     <string name="oldest">Oldest</string>

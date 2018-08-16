@@ -59,7 +59,7 @@ public class JobsActivity extends BaseActivity {
     String test;
     private FragmentManager fragmentManager;
     private ArrayList<Integer> favArray = new ArrayList<>();
-    TextView txtFilter , txtSort;
+    TextView txtFilter , txtSort,addJob;
 
     LinearLayoutManager LayoutManagaer;
     int page = 1;
@@ -88,6 +88,8 @@ public class JobsActivity extends BaseActivity {
 
         txtFilter = findViewById(R.id.filtering);
         txtSort = findViewById(R.id.sorting);
+        addJob = findViewById(R.id.addJob);
+        addJob.setText(R.string.addjob);
         txtFilter.setText(R.string.nameActivity_Filters);
         txtSort.setText(R.string.sorting);
         txtFilter.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +100,20 @@ public class JobsActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
+        addJob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                if (mUSERid==0){
+                    intent = new Intent(getApplicationContext(), LogInActivity.class);
+                    startActivity(intent);
+                }else {
+                    intent = new Intent(getApplicationContext(), AddItemActivity.class);
+                    intent.putExtra("Add", 2002);
+                    startActivity(intent);
+                }
+            }
+        });
 
         txtSort.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +201,7 @@ public class JobsActivity extends BaseActivity {
 
         MenuItem item = menu.findItem(R.id.action_search);
         MenuItem itemAdd = menu.findItem(R.id.action_AddPro);
-        itemAdd.setVisible(true);
+        //itemAdd.setVisible(true);
         searchView.setMenuItem(item);
 
         return true;

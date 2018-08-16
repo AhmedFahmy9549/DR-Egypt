@@ -54,7 +54,7 @@ public class CosmeticsFilters extends Fragment {
     Button applay;
     RadioGroup radioGroup;
     RadioButton radioButton;
-    int x, numRate, city, area, speciality;
+    int x, numRate, city, area, speciality,language;
     String MY_PREFS_NAME = "FiltersCos";
     String specName,specName1,specName2;
 
@@ -83,6 +83,9 @@ public class CosmeticsFilters extends Fragment {
 
 
         click();
+        if (getActivity()!=null){
+        language = ((FiltersActivity)getActivity()).getLanguage();
+        }
         applay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +122,7 @@ public class CosmeticsFilters extends Fragment {
                 array = new ArrayList<>();
                 name_array = new ArrayList<>();
 
-                if(((FiltersActivity)getActivity()).getLanguage()==1){
+                if(language==1){
                     name_array.add("All");
 
 
@@ -134,7 +137,7 @@ public class CosmeticsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                        if(language==1) {
 
                              specName = object.getString("en_name");
 
@@ -154,45 +157,47 @@ public class CosmeticsFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // Creating adapter for spinner
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
-                // Drop down layout style - list view with radio button
+                if (getActivity()!=null) {
+                    // Creating adapter for spinner
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
+                    // Drop down layout style - list view with radio button
 
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                // attaching data adapter to spinner
-                spinner.setAdapter(dataAdapter);
+                    // attaching data adapter to spinner
+                    spinner.setAdapter(dataAdapter);
 
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String item = adapterView.getItemAtPosition(i).toString();
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            String item = adapterView.getItemAtPosition(i).toString();
 
-                        if (i == 0) {
-                            linearLayout.setVisibility(View.INVISIBLE);
-                            city = 0;
-
-
-                        } else {
-                            LocationModel locationModel = array.get(i);
-                            city = locationModel.getLocId();
+                            if (i == 0) {
+                                linearLayout.setVisibility(View.INVISIBLE);
+                                city = 0;
 
 
-                            Log.e("Ibrahim ateerfffffff al", "x" + x);
-                            linearLayout.setVisibility(View.VISIBLE);
-                            getArea(city);
+                            } else {
+                                LocationModel locationModel = array.get(i);
+                                city = locationModel.getLocId();
+
+
+                                Log.e("Ibrahim ateerfffffff al", "x" + x);
+                                linearLayout.setVisibility(View.VISIBLE);
+                                getArea(city);
+
+
+                            }
 
 
                         }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
+                        }
+                    });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -208,7 +213,7 @@ public class CosmeticsFilters extends Fragment {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+        if(language==1){
             name_array2.add("All");
 
 
@@ -230,7 +235,7 @@ public class CosmeticsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                        if(language==1) {
                              specName1 = object.getString("en_name");
 
                         }
@@ -249,34 +254,36 @@ public class CosmeticsFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
-                dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner1.setAdapter(dataAdapter1);
-                spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String item = adapterView.getItemAtPosition(i).toString();
+                if (getActivity()!=null) {
 
-                        if (i == 0) {
-                            area = 0;
+                    ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
+                    dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner1.setAdapter(dataAdapter1);
+                    spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            String item = adapterView.getItemAtPosition(i).toString();
+
+                            if (i == 0) {
+                                area = 0;
 
 
-                        } else {
-                            LocationModel locationModel = array2.get(i);
-                            area = locationModel.getLocId();
+                            } else {
+                                LocationModel locationModel = array2.get(i);
+                                area = locationModel.getLocId();
+
+
+                            }
 
 
                         }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-
+                        }
+                    });
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -337,7 +344,7 @@ public class CosmeticsFilters extends Fragment {
         array.add(new LocationModel("", -1));
 
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+        if(language==1){
             SpecialNameArray.add("All");
 
 
@@ -358,7 +365,7 @@ public class CosmeticsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                        if(language==1){
 
                              specName2 = object.getString("en_name");
                         }
@@ -378,39 +385,41 @@ public class CosmeticsFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (getActivity()!=null) {
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, SpecialNameArray);
-                // Drop down layout style - list view with radio button
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, SpecialNameArray);
+                    // Drop down layout style - list view with radio button
 
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                // attaching data adapter to spinner
-                spinner2.setAdapter(dataAdapter);
+                    // attaching data adapter to spinner
+                    spinner2.setAdapter(dataAdapter);
 
-                spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String item = adapterView.getItemAtPosition(i).toString();
+                    spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            String item = adapterView.getItemAtPosition(i).toString();
 
-                        if (i == 0) {
-                            speciality = 0;
+                            if (i == 0) {
+                                speciality = 0;
 
 
-                        } else {
-                            LocationModel locationModel = array.get(i);
-                            speciality = locationModel.getLocId();
+                            } else {
+                                LocationModel locationModel = array.get(i);
+                                speciality = locationModel.getLocId();
+
+
+                            }
 
 
                         }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
+                        }
+                    });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -446,7 +455,7 @@ public class CosmeticsFilters extends Fragment {
                 gbsText.setVisibility(View.VISIBLE);
                 ((FiltersActivity) getActivity()).getCurrLocation();
                 String x = ((FiltersActivity) getActivity()).getMyCityName();
-                if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                if(language==1) {
 
                     gbsText.setText("Location: " + x);
                 }

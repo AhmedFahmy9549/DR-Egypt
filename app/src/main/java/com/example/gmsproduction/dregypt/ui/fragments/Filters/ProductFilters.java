@@ -52,7 +52,7 @@ public class ProductFilters extends Fragment {
     LinearLayout linearLayout;
     Button applay;
     RadioGroup radioGroup, radioGroupStatus;
-    int x, numRate, numStatus, city, area, category;
+    int x, numRate, numStatus, city, area, category,language;
     String MY_PREFS_NAME = "FiltersPro";
     String specName,specName1,categName ;
 
@@ -84,6 +84,9 @@ public class ProductFilters extends Fragment {
         uselessTXT = view.findViewById(R.id.uselessCity);
         gbsText= view.findViewById(R.id.gbstext);
 
+        if (getActivity()!=null){
+            language = ((FiltersActivity)getActivity()).getLanguage();
+        }
 
 
         click();
@@ -127,12 +130,8 @@ public class ProductFilters extends Fragment {
             public void onResponse(String response) {
                 arrayModel = new ArrayList<>();
                 name_array = new ArrayList<>();
-                int lan = 1;
-                if (getActivity()!=null){
-                    lan = ((FiltersActivity)getActivity()).getLanguage();
-                }
 
-                if(lan==1){
+                if(language==1){
                     name_array.add("All");
 
 
@@ -147,7 +146,7 @@ public class ProductFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(lan==1){
+                        if(language==1){
                              specName = object.getString("en_name");
 
                         }
@@ -224,12 +223,9 @@ public class ProductFilters extends Fragment {
     private void getArea(int name) {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
-        int lan = 1;
-        if (getActivity()!=null){
-            lan = ((FiltersActivity)getActivity()).getLanguage();
-        }
 
-        if(lan==1){
+
+        if(language==1){
             name_array2.add("All");
 
 
@@ -368,12 +364,8 @@ public class ProductFilters extends Fragment {
 
         arrayModel.add(new LocationModel("", -1));
 
-        int lan = 1;
-        if (getActivity()!=null){
-            lan = ((FiltersActivity)getActivity()).getLanguage();
-        }
 
-        if(lan==1){
+        if(language==1){
             CategoryNameArray.add("All");
 
 

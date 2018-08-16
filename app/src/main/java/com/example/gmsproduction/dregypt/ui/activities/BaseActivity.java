@@ -51,11 +51,11 @@ public class BaseActivity extends AppCompatActivity {
 
 
         //the language sharedprefs
-        SharedPreferences prefs = getSharedPreferences("LangKey", MODE_PRIVATE);
+        //SharedPreferences prefs = getSharedPreferences("LangKey", MODE_PRIVATE);
         SharedPreferences.Editor editor = getSharedPreferences("notification", MODE_PRIVATE).edit();
         editor.apply();
 
-        idLANG = prefs.getInt("languageNum", 1); //0 is the default value.
+        //idLANG = prefs.getInt("languageNum", 1); //0 is the default value.
 
         SharedPreferences prefs2 = getSharedPreferences(Constants.USER_DETAILS, MODE_PRIVATE);
         userId = prefs2.getInt("User_id", 0);
@@ -133,6 +133,9 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public int getIdLANG() {
+        SharedPreferences prefs = getSharedPreferences("LangKey", MODE_PRIVATE);
+        idLANG = prefs.getInt("languageNum", 1); //0 is the default value.
+
         return idLANG;
     }
     //back button for all the activities

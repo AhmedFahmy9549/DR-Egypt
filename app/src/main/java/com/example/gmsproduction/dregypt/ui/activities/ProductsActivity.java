@@ -79,7 +79,7 @@ public class ProductsActivity extends BaseActivity {
     int page = 1;
     int last_page;
     private String lang;
-    TextView txtFilter , txtSort;
+    TextView txtFilter , txtSort,addPro;
     private String sortKey,sortValue;
 
 
@@ -97,8 +97,11 @@ public class ProductsActivity extends BaseActivity {
 
         txtFilter = findViewById(R.id.filtering);
         txtSort = findViewById(R.id.sorting);
+        addPro = findViewById(R.id.addProduct);
+        addPro.setText(R.string.addpro);
         txtFilter.setText(R.string.nameActivity_Filters);
         txtSort.setText(R.string.sorting);
+
         txtFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +119,20 @@ public class ProductsActivity extends BaseActivity {
             }
         });
 
-
+        addPro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent;
+                if (userid==0){
+                    intent = new Intent(getApplicationContext(), LogInActivity.class);
+                    startActivity(intent);
+                }else {
+                    intent = new Intent(getApplicationContext(), AddItemActivity.class);
+                    intent.putExtra("Add", 1001);
+                    startActivity(intent);
+                }
+            }
+        });
         progressBar = (ProgressBar) findViewById(R.id.pbHeaderProgress);
         progressBar.setVisibility(View.VISIBLE);
         fragmentManager = getSupportFragmentManager();
@@ -228,8 +244,6 @@ public class ProductsActivity extends BaseActivity {
 
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -272,7 +286,7 @@ public class ProductsActivity extends BaseActivity {
 
         MenuItem item = menu.findItem(R.id.action_search);
         MenuItem itemAdd = menu.findItem(R.id.action_AddPro);
-        itemAdd.setVisible(true);
+        //itemAdd.setVisible(true);
         searchView.setMenuItem(item);
 
         return true;

@@ -56,7 +56,7 @@ public class PharmacyFilters extends Fragment {
     RadioButton radioButton;
     CheckBox checkbox_delivery, checkbox_fullDay;
     String checkDelivery, checkFullDay;
-    int x, numRate, city, area, speciality;
+    int x, numRate, city, area, speciality,language;
     String MY_PREFS_NAME = "FiltersPha";
 
     TextView manuelTXT,uselessTXT,gpsBtn,gbsText;
@@ -85,6 +85,10 @@ public class PharmacyFilters extends Fragment {
         linearLocationManuel = view.findViewById(R.id.filter_location_select);
         uselessTXT = view.findViewById(R.id.uselessCity);
         gbsText= view.findViewById(R.id.gbstext);
+
+        if (getActivity()!=null){
+            language = ((FiltersActivity)getActivity()).getLanguage();
+        }
 
 
         click();
@@ -127,7 +131,7 @@ public class PharmacyFilters extends Fragment {
                 array = new ArrayList<>();
                 name_array = new ArrayList<>();
 
-                if(((FiltersActivity)getActivity()).getLanguage()==1){
+                if(language==1){
                     name_array.add("All");
 
 
@@ -142,7 +146,7 @@ public class PharmacyFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                        if(language==1) {
                              specName = object.getString("en_name");
 
                         }
@@ -161,6 +165,7 @@ public class PharmacyFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (getActivity()!=null){
                 // Creating adapter for spinner
                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
                 // Drop down layout style - list view with radio button
@@ -200,6 +205,7 @@ public class PharmacyFilters extends Fragment {
 
                     }
                 });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -215,7 +221,7 @@ public class PharmacyFilters extends Fragment {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+        if(language==1){
             name_array2.add("All");
 
 
@@ -237,7 +243,7 @@ public class PharmacyFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                        if(language==1){
                              specName1 = object.getString("en_name");
 
                         }
@@ -258,6 +264,7 @@ public class PharmacyFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (getActivity()!=null){
                 ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array2);
                 dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner1.setAdapter(dataAdapter1);
@@ -285,7 +292,7 @@ public class PharmacyFilters extends Fragment {
 
                     }
                 });
-
+                }
 
             }
         }, new Response.ErrorListener() {
@@ -379,7 +386,7 @@ public class PharmacyFilters extends Fragment {
                 String x=((FiltersActivity)getActivity()).getMyCityName();
                 Log.e("MY Location=",""+x);
 
-                if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                if(language==1) {
 
                     gbsText.setText("Location: " + x);
                 }

@@ -85,6 +85,19 @@
                             android:paddingStart="20dp"
                             android:paddingEnd="20dp"
                             android:textColor="@android:color/black" />
+                        <View
+                            android:layout_width="1px"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/darker_gray" />
+                        <TextView
+                            android:id="@+id/addJob"
+                            android:layout_width="0dp"
+                            android:gravity="start|center"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:drawableStart="@drawable/addicon"
+                            android:text="@string/addpro"
+                            android:textColor="@android:color/black" />
 
                     </LinearLayout>
 

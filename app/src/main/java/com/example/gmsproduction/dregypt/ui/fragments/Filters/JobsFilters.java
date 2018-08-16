@@ -56,7 +56,7 @@ public class JobsFilters extends Fragment {
     LinearLayout linearLayout;
     Button applay;
     RadioGroup radioGroup, radioGroupType;
-    int x, numRate, numType, city, area, category,expLevel,eduLevel;
+    int x, numRate, numType, city, area, category,expLevel,eduLevel,language;
     String MY_PREFS_NAME = "FiltersJob";
 
 
@@ -87,7 +87,7 @@ public class JobsFilters extends Fragment {
         uselessTXT = view.findViewById(R.id.uselessCity);
         gbsText= view.findViewById(R.id.gbstext);
 
-
+        if (getActivity()!=null){language = ((FiltersActivity)getActivity()).getLanguage();}
 
         click();
 
@@ -139,7 +139,7 @@ public class JobsFilters extends Fragment {
                 arrayModel = new ArrayList<>();
                 name_array = new ArrayList<>();
 
-                if(((FiltersActivity)getActivity()).getLanguage()==1){
+                if(language==1){
                     name_array.add("All");
 
 
@@ -154,7 +154,7 @@ public class JobsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                        if(language==1) {
                              specName = object.getString("en_name");
 
                         }
@@ -172,45 +172,47 @@ public class JobsFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                // Creating adapter for spinner
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
-                // Drop down layout style - list view with radio button
+                if (getActivity()!=null) {
+                    // Creating adapter for spinner
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
+                    // Drop down layout style - list view with radio button
 
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                // attaching data adapter to spinner
-                spinner.setAdapter(dataAdapter);
+                    // attaching data adapter to spinner
+                    spinner.setAdapter(dataAdapter);
 
-                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String item = adapterView.getItemAtPosition(i).toString();
+                    spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            String item = adapterView.getItemAtPosition(i).toString();
 
-                        if (i == 0) {
-                            linearLayout.setVisibility(View.INVISIBLE);
-                            city = 0;
-
-
-                        } else {
-                            LocationModel locationModel = arrayModel.get(i);
-                            city = locationModel.getLocId();
+                            if (i == 0) {
+                                linearLayout.setVisibility(View.INVISIBLE);
+                                city = 0;
 
 
-                            Log.e("Ibrahim ateerfffffff al", "x" + x);
-                            linearLayout.setVisibility(View.VISIBLE);
-                            getArea(city);
+                            } else {
+                                LocationModel locationModel = arrayModel.get(i);
+                                city = locationModel.getLocId();
+
+
+                                Log.e("Ibrahim ateerfffffff al", "x" + x);
+                                linearLayout.setVisibility(View.VISIBLE);
+                                getArea(city);
+
+
+                            }
 
 
                         }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
+                        }
+                    });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -226,7 +228,7 @@ public class JobsFilters extends Fragment {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+        if(language==1){
             name_array2.add("All");
 
 
@@ -249,7 +251,7 @@ public class JobsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                        if(language==1) {
                              specName1 = object.getString("en_name");
 
                         }
@@ -320,7 +322,7 @@ public class JobsFilters extends Fragment {
         arrayModel.add(new LocationModel("", -1));
 
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+        if(language==1){
             CategoryNameArray.add("All");
         }
         else
@@ -335,7 +337,7 @@ public class JobsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                        if(language==1){
 
                              categName = object.getString("en_name");
 
@@ -354,6 +356,7 @@ public class JobsFilters extends Fragment {
                     e.printStackTrace();
                 }
 
+                if (getActivity()!=null){
                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CategoryNameArray);
                 // Drop down layout style - list view with radio button
 
@@ -386,6 +389,7 @@ public class JobsFilters extends Fragment {
 
                     }
                 });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -432,7 +436,7 @@ public class JobsFilters extends Fragment {
         getArrayExiLevelModel.add(new LocationModel("", -1));
 
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+        if(language==1){
             ExpLebelNameArray.add("All");
         }
         else
@@ -446,7 +450,7 @@ public class JobsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                        if(language==1){
                              categName1 = object.getString("en_name");
 
                         }
@@ -464,38 +468,40 @@ public class JobsFilters extends Fragment {
                     e.printStackTrace();
                 }
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ExpLebelNameArray);
-                // Drop down layout style - list view with radio button
+                if (getActivity()!=null) {
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, ExpLebelNameArray);
+                    // Drop down layout style - list view with radio button
 
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                // attaching data adapter to spinner
-                spinnerExpLevel.setAdapter(dataAdapter);
+                    // attaching data adapter to spinner
+                    spinnerExpLevel.setAdapter(dataAdapter);
 
-                spinnerExpLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String item = adapterView.getItemAtPosition(i).toString();
+                    spinnerExpLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            String item = adapterView.getItemAtPosition(i).toString();
 
-                        if (i == 0) {
-                            expLevel = 0;
+                            if (i == 0) {
+                                expLevel = 0;
 
 
-                        } else {
-                            LocationModel locationModel = getArrayExiLevelModel.get(i);
-                            expLevel = locationModel.getLocId();
+                            } else {
+                                LocationModel locationModel = getArrayExiLevelModel.get(i);
+                                expLevel = locationModel.getLocId();
+
+
+                            }
 
 
                         }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
+                        }
+                    });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -515,7 +521,7 @@ public class JobsFilters extends Fragment {
         arrayEduLevelModel.add(new LocationModel("", -1));
 
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1){
+        if(language==1){
             EduLevelNameArray.add("All");
 
 
@@ -532,7 +538,7 @@ public class JobsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1){
+                        if(language==1){
                              categName2 = object.getString("en_name");
 
 
@@ -550,38 +556,40 @@ public class JobsFilters extends Fragment {
                     e.printStackTrace();
                 }
 
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EduLevelNameArray);
-                // Drop down layout style - list view with radio button
+                if (getActivity()!=null) {
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, EduLevelNameArray);
+                    // Drop down layout style - list view with radio button
 
-                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                // attaching data adapter to spinner
-                spinnerEducLevel.setAdapter(dataAdapter);
+                    // attaching data adapter to spinner
+                    spinnerEducLevel.setAdapter(dataAdapter);
 
-                spinnerEducLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        String item = adapterView.getItemAtPosition(i).toString();
+                    spinnerEducLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            String item = adapterView.getItemAtPosition(i).toString();
 
-                        if (i == 0) {
-                            eduLevel = 0;
+                            if (i == 0) {
+                                eduLevel = 0;
 
 
-                        } else {
-                            LocationModel locationModel = arrayEduLevelModel.get(i);
-                            eduLevel = locationModel.getLocId();
+                            } else {
+                                LocationModel locationModel = arrayEduLevelModel.get(i);
+                                eduLevel = locationModel.getLocId();
+
+
+                            }
 
 
                         }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
 
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
+                        }
+                    });
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -618,7 +626,7 @@ public class JobsFilters extends Fragment {
                 String x=((FiltersActivity)getActivity()).getMyCityName();
                 Log.e("MY Location=",""+x);
 
-                if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                if(language==1) {
 
                     gbsText.setText("Location: " + x);
                 }

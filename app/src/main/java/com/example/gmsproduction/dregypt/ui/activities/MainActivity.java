@@ -72,7 +72,7 @@ public class MainActivity extends BaseActivity
     ConstraintLayout menu_Notification;
     LinearLayout medicalCard, productsCard, jobsCard, cosmeticsCard;
     private static final int REQUEST_LOCATION = 1;
-
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +148,12 @@ public class MainActivity extends BaseActivity
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        language = getIdLANG();
+        Log.e("lan",""+language);
+    }
 
     private void premissionLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -206,6 +212,8 @@ public class MainActivity extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        this.menu = menu;
         return true;
     }
 
@@ -216,23 +224,47 @@ public class MainActivity extends BaseActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
+
+        MenuItem mitem = menu.findItem(R.id.action_en);
+
+
+        if (id==R.id.action_en){
+            if (getIdLANG()==1){
+                mitem.setTitle("En");
+                SharedPreferences.Editor editor = getSharedPreferences("LangKey", MODE_PRIVATE).edit();
+                editor.putInt("languageNum", 2);
+                editor.apply();
+                lang(2);
+                Log.e("fromx","ar");
+
+            }else if (getIdLANG()==2){
+                mitem.setTitle("Ar");
+                SharedPreferences.Editor editor = getSharedPreferences("LangKey", MODE_PRIVATE).edit();
+                editor.putInt("languageNum", 1);
+                editor.apply();
+                lang(1);
+                Log.e("fromx","english");
+            }
+        }
+
+
+
+
+
+
+        /*//noinspection SimplifiableIfStatement
         if (id == R.id.action_ar) {
 
-            SharedPreferences.Editor editor = getSharedPreferences("LangKey", MODE_PRIVATE).edit();
-            editor.putInt("languageNum", 2);
-            editor.apply();
-            lang(2);
+
 
         } else if (id == R.id.action_en) {
 
-            SharedPreferences.Editor editor = getSharedPreferences("LangKey", MODE_PRIVATE).edit();
-            editor.putInt("languageNum", 1);
-            editor.apply();
-            lang(1);
 
 
-        }
+
+
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

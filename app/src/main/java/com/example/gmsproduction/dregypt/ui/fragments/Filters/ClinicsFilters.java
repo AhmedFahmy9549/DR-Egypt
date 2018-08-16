@@ -54,7 +54,7 @@ public class ClinicsFilters extends Fragment {
     Button applay;
     RadioGroup radioGroup;
     RadioButton radioButton;
-    int x, numRate, city, area, speciality;
+    int x, numRate, city, area, speciality,language;
     String MY_PREFS_NAME = "FiltersCli";
     String specName,specName1,specName2;
 
@@ -85,6 +85,11 @@ public class ClinicsFilters extends Fragment {
         gbsText = view.findViewById(R.id.gbstext);
 
         click();
+
+        if (getActivity()!=null){
+            language = ((FiltersActivity)getActivity()).getLanguage();
+        }
+
 
         applay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +160,7 @@ public class ClinicsFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                if (getActivity()!=null){
                 // Creating adapter for spinner
                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, name_array);
                 // Drop down layout style - list view with radio button
@@ -193,7 +199,7 @@ public class ClinicsFilters extends Fragment {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                });
+                });}
             }
         }, new Response.ErrorListener() {
             @Override
@@ -209,7 +215,7 @@ public class ClinicsFilters extends Fragment {
         name_array2 = new ArrayList<>();
         array2 = new ArrayList<>();
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+        if(language==1) {
             name_array2.add("All");
 
         }
@@ -230,7 +236,7 @@ public class ClinicsFilters extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject object = jsonArray.getJSONObject(i);
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                        if(language==1) {
                              specName1 = object.getString("en_name");
 
                         }
@@ -338,7 +344,7 @@ public class ClinicsFilters extends Fragment {
 
         array.add(new LocationModel("", -1));
 
-        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+        if(language==1) {
             SpecialNameArray.add("All");
 
         }
@@ -356,7 +362,7 @@ public class ClinicsFilters extends Fragment {
                         JSONObject object = jsonArray.getJSONObject(i);
 
 
-                        if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                        if(language==1) {
                              specName2 = object.getString("en_name");
 
                         }
@@ -372,7 +378,7 @@ public class ClinicsFilters extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
+                if (getActivity()!=null){
                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, SpecialNameArray);
                 // Drop down layout style - list view with radio button
 
@@ -404,7 +410,7 @@ public class ClinicsFilters extends Fragment {
                     public void onNothingSelected(AdapterView<?> adapterView) {
 
                     }
-                });
+                });}
             }
         }, new Response.ErrorListener() {
             @Override
@@ -442,7 +448,7 @@ public class ClinicsFilters extends Fragment {
 
                 Log.e("MY Location=", "" + x);
 
-                if(((FiltersActivity)getActivity()).getLanguage()==1) {
+                if(language==1) {
 
                     gbsText.setText("Location: " + x);
                 }

@@ -76,7 +76,6 @@ public class NoInternt_Fragment extends Fragment {
 
         ((ProductsActivity) getActivity()).getProducts("");
         ((ProductsActivity) getActivity()).Progressbar();
-        Toast.makeText(getContext(), "Product", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
@@ -84,14 +83,12 @@ public class NoInternt_Fragment extends Fragment {
 
         ((CosmeticsActivity) getActivity()).getCosmetics("");
         //((CosmeticsActivity)getActivity()).Progressbar();
-        Toast.makeText(getContext(), "Cosmetic", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
     }
     public void ReloadJobs() {
 
         ((JobsActivity) getActivity()).getJobs("");
         //((CosmeticsActivity)getActivity()).Progressbar();
-        Toast.makeText(getContext(), "Jobs", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
@@ -99,7 +96,6 @@ public class NoInternt_Fragment extends Fragment {
 
         ((HospitalsActivity) getActivity()).getHospital("");
         //((CosmeticsActivity)getActivity()).Progressbar();
-        Toast.makeText(getContext(), "Hospital", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
@@ -107,7 +103,6 @@ public class NoInternt_Fragment extends Fragment {
 
         ((ClinicsActivity) getActivity()).getClinicsPagenation("");
         //((CosmeticsActivity)getActivity()).Progressbar();
-        Toast.makeText(getContext(), "Clinic", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
@@ -115,7 +110,6 @@ public class NoInternt_Fragment extends Fragment {
 
         ((PharmacyActivity) getActivity()).getPharmacy("");
         //((CosmeticsActivity)getActivity()).Progressbar();
-        Toast.makeText(getContext(), "Pharmacy", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
@@ -123,7 +117,6 @@ public class NoInternt_Fragment extends Fragment {
 
         ((AddItemActivity) getActivity()).ProductFragment();
         //((CosmeticsActivity)getActivity()).Progressbar();
-        Toast.makeText(getContext(), "Add Product", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
@@ -131,7 +124,6 @@ public class NoInternt_Fragment extends Fragment {
 
         ((AddItemActivity) getActivity()).JobFragment();
         //((CosmeticsActivity)getActivity()).Progressbar();
-        Toast.makeText(getContext(), "Add Job", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().beginTransaction().remove(NoInternt_Fragment.this).commit();
 
     }
